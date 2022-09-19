@@ -98,11 +98,11 @@ $(document).on("click", "#login-otp-btn", function () {
     var code = $("#login-otp-input").val();
     
 });
-
+/*
 $(window).on("hashchange", function (e) {
      hashchanged();
 });
-
+*/
 $(document).ready(function(){
     if($('.profile-parent-page').length!=0){
         if($('.tournament-page-content').length!=0){

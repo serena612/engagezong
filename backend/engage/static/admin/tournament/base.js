@@ -355,7 +355,7 @@ $('#id_time_compared_to_gmt').attr('placeholder','i.e +2 or -5');
             if($('#id_start_date_0').val()!="" && $('#id_start_date_1').val()!=""){
                 var date = ($('#id_start_date_0').val()+" "+$('#id_start_date_1').val());
                 var start_date  = moment(date, "YYYY-MM-DD HH:mm:ss")
-                if(start_date.isBefore(moment().add(-(moment().utcOffset()), 'm'))){
+                if(!tourn_state && start_date.isBefore(moment().add(-(moment().utcOffset()), 'm'))){
                     $('.module_0 .field-start_date').addClass('errors');
                     $('.module_0 .field-start_date').find('ul.errorlist').hide();
                     $('.module_0 .field-start_date').prepend("<ul class='errorlist'> <li>Start Date can't be in the past</li> </ul>" );

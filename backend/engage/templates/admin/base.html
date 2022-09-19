@@ -133,6 +133,7 @@
     src="{% static 'libs/bs4/bootstrap.bundle-4.5.2.min.js' %}"></script>
 
     <script type="text/javascript">
+        var tourn_state = {{ state }};
         $(document).ready(function () {
             $('.file-upload a').on('click', function (e) {
                 e.preventDefault();

@@ -236,7 +236,16 @@ class TournamentAdmin(admin.ModelAdmin):
     exclude = ('slug', 'job_id', 'created_by','format')
     inlines = [TournamentMatchInline, TournamentPrizeInline,
                TournamentParticipantInline]
-        
+
+    def change_view(self, request, object_id, extra_context=None):
+        extra_context = extra_context or {}
+         #print(object_id) # test
+         # print(models.Tournament.objects.filter(id=object_id).first().starts_in_full)
+        if object_id and models.Tournament.objects.filter(id=object_id).first().starts_in_full == 'In Progress':
+            extra_context['state'] = 'true'
+        else:
+            extra_context['state'] = 'false'
+        return super(TournamentAdmin, self).change_view(request, object_id, extra_context=extra_context)    
 
     def start(self, obj):
         now = timezone.now()
