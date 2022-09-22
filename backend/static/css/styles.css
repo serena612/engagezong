@@ -5789,8 +5789,8 @@ footer .bottom {
 }
 .sec-3-1 .date{
   position: absolute;    font-size: 0.9rem;
-  top: -15px;
-  left: 7px;}
+  top: -50px;
+  right: 28px;}
 
   .sec-3-1 .col-8 {
     max-width: 100%;

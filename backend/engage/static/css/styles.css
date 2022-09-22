@@ -5420,7 +5420,7 @@ font-size: 1.75rem;
   max-width: 255px;
   text-align: CENTER;}
 
-  .firstTab .drp_select select{background:none;margin-left: 51px;
+  .firstTab .drp_select select{background:#1F1343;margin-left: 51px;
   width:100%;max-width:259px;border:1px solid #513a96;color:#fff;height:40px;
   padding-left: 7px;
   }
@@ -5481,6 +5481,7 @@ font-size: 1.75rem;
   padding-top: 0;
   padding-bottom: 5px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 .newsbv-item  .label{
   color: white !important;
@@ -5789,8 +5790,8 @@ footer .bottom {
 }
 .sec-3-1 .date{
   position: absolute;    font-size: 0.9rem;
-  top: -15px;
-  left: 7px;}
+  top: -50px;
+  right: 28px;}
 
   .sec-3-1 .col-8 {
     max-width: 100%;
@@ -6149,7 +6150,7 @@ background:#fff;
 .page-box .text-container p { color: #000;font-size: 1.3rem;}
 #about-modal .content, #faq-modal .content,#terms-modal  .content,#disclaimer-modal .content,#privacy-modal .content{
   margin: 2% 6% 2% 6%;
-  max-height: 480px;
+  max-height: inherit;/*480px;*/
   overflow-y: auto;
   overflow-x: hidden;
   width:100%;
