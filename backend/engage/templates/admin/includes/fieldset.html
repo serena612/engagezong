@@ -24,10 +24,15 @@
                         {{ field.field }}{{ field.label_tag }}
                     {% else %}
                         {% if field.field.name == 'participants' and field.field.is_hidden %}
+                        
+                        
                         {% elif field.field.name == 'winners' and field.field.is_hidden %}
+                        {% elif field.field.name == 'image'%}
+                        <script>window.alert("{{field.field.hiddencustom}}");</script>
                         {% else %}
                         {{ field.label_tag }}
                         {% endif %}
+                        
                         {% if field.is_readonly %}
                             <p>{{ field.contents }}</p>
                         {% else %}

@@ -12,7 +12,7 @@ from django.db.models.functions import Cast
 from django.db.models import F, Q
 from django.contrib import messages as messagesss
 from django.forms.widgets import HiddenInput
-
+from django.core.exceptions import ValidationError
 
 class TournamentPrizeInline(CompactInline):
     model = models.TournamentPrize
@@ -38,8 +38,7 @@ class TournamentPrizeInline(CompactInline):
             if ha:
                 lastround = ha.round_number
                 winners = models.TournamentMatch.objects.filter(tournament=self.tournament).filter(round_number=lastround).values_list('winners',flat=True)
-                # winners = ha.winners
-            # print("last round", lastround)
+              
                 formfield.queryset = formfield.queryset.filter(
                     tournamentparticipant__tournament=self.tournament
                 ).filter(
@@ -159,6 +158,22 @@ class TournamentMatchInlineForm(forms.ModelForm):
             self.fields['winners'].queryset = self.fields['winners'].queryset.none() # self.fields['winners'].queryset.distinct()
             self.fields["participants"].widget = HiddenInput()
             self.fields["winners"].widget = HiddenInput()
+            self.fields["image"].widget.hiddencustom = True
+        
+    def clean(self):
+        """
+        This is the function that can be used to 
+        validate your model data from admin
+        """
+        super(TournamentMatchInlineForm, self).clean()
+        winners = self.cleaned_data.get('winners')
+        image = self.cleaned_data.get('image')
+
+        # The logic you were trying to filter..
+        if winners and winners.all() and not image:
+            raise ValidationError({
+                'image': _('An image is required when winners are specified')
+            })
             
             
             
@@ -173,23 +188,46 @@ class TournamentMatchInlineForm(forms.ModelForm):
     #         "winners": ParticipantsWidget,  # (attrs={'style': 'width: 100% !important', 'class':'multiselect dropdown-toggle mt-multiselect',})
     #     }
 
+class RequiredFormSet(forms.models.BaseInlineFormSet):
+    def __init__(self, *args, **kwargs):
+        super(RequiredFormSet, self).__init__(*args, **kwargs)
+    def clean(self):
+
+        super(RequiredFormSet, self).clean()
+        try:
+            querysets = [[form.cleaned_data['participants'].all(), form.cleaned_data['round_number']] for form in self.forms]
+        except:
+            return
+        combined = [[item, sublist[1]] for sublist in querysets for item in sublist[0]]
+        print(combined)
+
+        seen = set()
+        dups = [x for x in combined if tuple(x) in seen or seen.add(tuple(x))]  
+        print("Repeated: ", dups)
+        if len(dups)>0:
+            raise ValidationError([{
+                'participants': _('Participant(s): '+ ", ".join([dup[0].username for dup in dups]) +' is/are repeated!')
+            }])
+        
+
 
 class TournamentMatchInline(CompactInline):
     model = models.TournamentMatch
-    min_num = 0
     form = TournamentMatchInlineForm
+    formset = RequiredFormSet
     # readonly_fields = ('id',)
     exclude = ('match_data', 'id',)
     tournament = None
     extra = 0
-
-
+    min_num = 0
+    
 
     def get_fields(self, request, obj=None):
         fields = list(super().get_fields(request, obj=obj))
         if obj is None:
             fields.remove('winners')
             fields.remove('participants')
+            fields.remove('image')
         return fields
     
     def get_formset(self, request, obj=None, *args, **kwargs):

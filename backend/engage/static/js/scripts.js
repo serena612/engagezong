@@ -278,7 +278,7 @@ $(function () {
             $("body").removeClass("is-loading");
         });
     }, 500);
-    
+    checkSeenCoins();
 });
 
 $(function () {
@@ -352,27 +352,28 @@ function hashchanged() {
     
     setTimeout(function(){
     var hash = window.location.hash;
-   // // console.log("dddddd");
+   
     switch (hash) {
         case "#home-tournaments":
-            //console.log("heyyy");
+           
             var c=$("#sec-3").offset().top;
-            //console.log(c);
+           
     
             $([document.documentElement, document.body]).animate({
                     scrollTop: $("#sec-3").offset().top-200,
                 },
-                2500
+                c/0.65
             );
             $("#sec-3 a.tour-btn").click();
             resetStar($('#hometournaments'));
             break;
 
         case "#home-games":
+            var i=$("#sec-3").offset().top;
             $([document.documentElement, document.body]).animate({
                     scrollTop: $("#sec-3").offset().top-200,
                 },
-                2500
+                i/0.65
             );
             $("#sec-3 a.games-btn").click();
             resetStar($('#homegames'));
@@ -416,7 +417,44 @@ function hashchanged() {
             }
             break;
     }
+   },500);
+    $(window).trigger("resize");
     
+  
+}
+
+function hiya(){
+    
+window.location.href="/#home-tournaments";
+  
+}
+
+function hashchangeddd() {
+    
+    setTimeout(function(){
+    var hash = window.location.hash;
+   
+    switch (hash) {
+       
+         case "#winners":
+            var w=$(".sec-3-1").offset().top;
+            
+           
+                $([document.documentElement, document.body]).animate({
+                        scrollTop: $(".sec-3-1").offset().top-100,
+                    },
+                   1000
+                );
+                resetStar($('#li_winners'));
+    
+                break;
+
+        default:
+            if (hash.length > 1) {
+                $("a[href='" + hash + "']").click();
+            }
+            break;
+    }
     },500);
     $(window).trigger("resize");
 }

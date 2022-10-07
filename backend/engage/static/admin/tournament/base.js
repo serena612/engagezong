@@ -12,7 +12,8 @@
         //     }
         //   });
         $(document).ready(function() {
-            
+            $('#tournamentmatch_set-group').find('.errorlist').css('margin-left', '220px');
+            $('#tournamentmatch_set-group').find('.errorlist').prepend('<br>')
             $('.field-winners').find('select').multiselect({
                 includeSelectAllOption: true,
                 enableFiltering: true,

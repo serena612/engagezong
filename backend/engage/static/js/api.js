@@ -2,6 +2,18 @@ var tournaments_has_next = true;
 var tournaments_page = 1;
 var state='all'
 var game = '0';
+var t=0;
+
+
+
+function hoo(){
+    if(t>=1){
+       window.location.hash="#home-tournaments";
+      
+    }
+       }
+   
+
 
 // login phone
 function postLogin(data) {
@@ -572,6 +584,9 @@ function get_tournament(game,str) {
                 box.html("");
                 box.removeClass("is-loading");
                 box.find('.loading-item').remove();
+                t=t+1;
+
+                hashchangeddd();
 
                
                 var new_upcomings = [];
@@ -936,6 +951,7 @@ function goNext(){
 }
 
 function fillTournaments(){
+    hiya();
     if($('.firstTab').find('.button-small.active').hasClass('all')){
         getTournaments('all', $('.firstTab').find('.button-small.active'));
     }

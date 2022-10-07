@@ -379,7 +379,7 @@ class TournamentMatch(TimeStampedModel):
     match_data = models.JSONField(null=True)
     participants = models.ManyToManyField('account.User', blank=True, related_name='participants', related_query_name='participanto')
     winners = models.ManyToManyField('account.User', blank=True) # account.User, through='tournament.SerialUserGameLinkedAccount')
-    
+    image = models.ImageField(upload_to='winners/', null=True, blank=True)
 
     class Meta:
         verbose_name = 'match'
@@ -400,36 +400,6 @@ class TournamentMatch(TimeStampedModel):
                 'start_date': _('Match date must be between tournament start date and tournament end date')
             })
     
-    # def save(self, force_insert=False, force_update=False, *args, **kwargs):
-    #     print("save triggers!", self.winners, "old:", self.__original_winners, "self", self.__dict__)
-    #     if self.winners != self.__original_winners:
-    #         if self.winners  : # self.winners.has_changed:
-    #             print("Winners changed !!")
-    #             if len(self.winners) > 0 :
-    #                 for winner in self.winners :
-                        
-    #                     @notify_when(events=[NotificationTemplate.WIN_MATCH_INFORMATIVE], is_route=False, is_one_time=False)
-    #                     def notify(user,user_notifications):
-    #                         """ extra logic if needed """
-                            
-    #                         for notificationi in user_notifications:
-    #                             date_time = self.match.start_date.strftime("%H:%M")
-    #                             print(notificationi.text)
-    #                             notificationi.text=notificationi.notification.text.replace('MATCH_NAME',self.match.match_name) \
-    #                                 .replace('TOURNAMENT_NAME',self.match.tournament.name).replace('NBR', str(self.match.inform_participants)) \
-    #                                 .replace('GAMENAME',self.tournament.game.name).replace('MATCHID',str(self.match.match_id) \
-    #                                 if self.match.match_id else '').replace('PASSWORD', self.match.password if self.match.password else '') \
-    #                                 .replace('STARTDATE',date_time)
-    #                             print(notificationi.text)
-    #                             notificationi.link = "/tournaments/"+str(self.tournament.id)  
-    #                             notificationi.save()
-    #                             print(notificationi.text)
-    #                             print(notificationi.link)
-                
-                        
-    #                     notify(user=winner)
-    #     super().save(force_insert, force_update, *args, **kwargs)
-    #     self.__original_winners = self.winners
 
  
        

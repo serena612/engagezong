@@ -148,23 +148,24 @@
             <div id="tournaments" class="row max-page-width">
                     <div class="title-wrapper c2 with-tabs tabs-container">
                         <a class="tab-link tour-btn"
-                           data-id="#latest">{% translate 'Tournaments' %}</a>
-                        <a class="tab-link games-btn"  data-id="#html5">{% translate 'Play Games' %}</a>
+                           data-id="#latest" href="/#home-tournaments">{% translate 'Tournaments' %}</a>
+                        <a class="tab-link games-btn"  href="/#home-games"  data-id="#html5">{% translate 'Play Games' %}</a>
                     </div>
                     <ul class="nav nav-tabs firstTab">
                         <li class="">
-                            <a onclick="return getTournaments('all', this)" style='padding: 6px;'
+                           
+                            <a onclick="hoo();return getTournaments('all', this)" style='padding: 6px;'
                                class="button-small active all">{% translate 'ALL' %}</a>
                         </li>
                         <li class="">
-                            <a onclick="return getTournaments('upcoming', this)"
+                            <a onclick="hiya();return getTournaments('upcoming', this)"
                                class="button-small active upcoming">{% translate 'Upcoming' %}</a>
                         </li>
                         <li class="">
-                            <a onclick="return getTournaments('ongoing', this)" class="button-small ongoing">Ongoing</a>
+                            <a onclick="hiya();return getTournaments('ongoing', this)" class="button-small ongoing">Ongoing</a>
                         </li>
                         <li style="margin-right: 48px;" class="">
-                            <a onclick="return getTournaments('past', this)"
+                            <a onclick="hiya();return getTournaments('past', this)"
                                class="button-small previous">{% translate 'Previous' %}</a>
                         </li>
                         <li class='drp_select' onchange='fillTournaments()'>
