@@ -26,8 +26,8 @@ import sys, base64, hvac, json
 
 from .constants import (
     FriendStatus,
-    SectionLog,
     SubscriptionPlan,
+    SectionLog,
     Transaction
 )
 from engage.core.constants import WinAction, NotificationTemplate
@@ -43,16 +43,21 @@ from .models import (
     SendCoinsHistory,
     UserGamePlayed,
     UserBattlePass,
-    UserSectionLog,
-    UserTransactionHistory
+    UserTransactionHistory,
+    UserSectionLog
 )
 from .serializers import EditProfileSerializer
 from ..core.serializers import TrophySerializer, StickerSerializer
 from ..services import notify_when
 from ..tournament.models import Tournament, TournamentPrize
 from ..tournament.serializers import TournamentSerializer
+from .constants import (	
+    FriendStatus,	
+    SubscriptionPlan	
+)
+from engage.operator.models import RedeemPackage
 
-
+from engage.core.models import HTML5Game
 UserModel = get_user_model()
 
 class EncryptedMessageSender:
@@ -616,7 +621,6 @@ class AuthViewSet(viewsets.GenericViewSet):
                         
                         if avatar :
                             user.avatar = avatar
-
                         user.save()
 
                     @notify_when(events=[NotificationTemplate.LOGIN],
@@ -654,6 +658,7 @@ class UserViewSet(mixins.ListModelMixin,
 
     def get_queryset(self):
         user = self.request.user
+
         queryset = self.queryset.filter(region=self.request.region,is_staff=False)
         if self.action == 'send_coins':
             if user.is_authenticated:
@@ -1034,7 +1039,6 @@ class UserViewSet(mixins.ListModelMixin,
             end_date__gt=now,
             tournamentparticipant__is_waiting_list = False
         ).all()
-    
         if size:
             tournaments = tournaments[:int(size)]
 
@@ -1139,6 +1143,7 @@ class UserViewSet(mixins.ListModelMixin,
             user_section_log.save()                                             
         return Response(status=status.HTTP_200_OK)
     
+    
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def check_usercoin(self, request,uid):
         redFlag  = False
@@ -1152,7 +1157,6 @@ class UserViewSet(mixins.ListModelMixin,
             redFlag = True                                        
         return Response({'redFlag':redFlag},status=status.HTTP_200_OK)
     
-
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def remove_friend(self, request, uid):
         instance = self.get_object()
@@ -1204,7 +1208,6 @@ class UserViewSet(mixins.ListModelMixin,
 
         return Response(status=status.HTTP_200_OK)
 
-
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def add_new_friend(self, request, uid):
         instance = self.get_object()
@@ -1231,6 +1234,7 @@ class UserViewSet(mixins.ListModelMixin,
     @transaction.atomic()
     def send_coins(self, request, uid):
         instance = self.get_object()
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -1297,6 +1301,7 @@ class FriendViewSet(mixins.ListModelMixin,
     @action(['POST'], detail=False)
     def accept_friend_request(self, request):
         friend_uid = request.POST.get('friend', None)
+
         try:
             friend = UserModel.objects.filter(
                 uid=friend_uid,
@@ -1319,7 +1324,7 @@ class FriendViewSet(mixins.ListModelMixin,
                 friend_uid=friend_uid,
                 user=request.user
             ).first()
-            print(get_notification)
+
             if get_notification: get_notification.delete()
 
         return Response(status=status.HTTP_200_OK)
@@ -1327,6 +1332,7 @@ class FriendViewSet(mixins.ListModelMixin,
     @action(['POST'], detail=False)
     def reject_friend_request(self, request):
         friend_uid = request.POST.get('friend', None)
+
         try:
             friend = UserModel.objects.filter(
                 uid=friend_uid,
@@ -1346,8 +1352,9 @@ class FriendViewSet(mixins.ListModelMixin,
 
             get_notification = UserNotification.objects.filter(
                 friend_uid=friend_uid,
+                
             ).first()
-            print(get_notification)
+
             if get_notification: get_notification.delete()
 
         return Response(status=status.HTTP_200_OK)
@@ -1453,6 +1460,7 @@ class FCMViewSet(mixins.ListModelMixin, viewsets.GenericViewSet, PaginationMixin
     @action(detail=False, methods=['post'])
     def claim_gift(self, request):
         notification_id = request.POST.get('id', None)
+
         try:
             notification = Notifications.objects.get(id=notification_id,
                                                      is_gift=True)

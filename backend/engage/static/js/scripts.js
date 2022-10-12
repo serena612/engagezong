@@ -5,16 +5,12 @@ $(function () {
         const element = timers[i];
         countdownTimeStart(element);
     }
+
 })
-
-
-
-
 if(window.location.href=='https://cms.engage.devapp.co/' || window.location.href=='https://cms.engage.devapp.co')
 {
     window.location.href='https://cms.engage.devapp.co/admin/'
 }
-
 $(document).on('show.bs.modal', '#login-modal', function (e) {
     var message = '';
 
@@ -98,11 +94,10 @@ $(document).on("click", "#login-otp-btn", function () {
     var code = $("#login-otp-input").val();
     
 });
-/*
-$(window).on("hashchange", function (e) {
+
+/* $(window).on("hashchange", function (e) {
      hashchanged();
-});
-*/
+}); */
 $(document).ready(function(){
     if($('.profile-parent-page').length!=0){
         if($('.tournament-page-content').length!=0){
@@ -118,7 +113,6 @@ $(document).ready(function(){
      }
     
 })
-
 $(window).on('load', function() {
     hashchanged();
 
@@ -352,7 +346,6 @@ function hashchanged() {
     
     setTimeout(function(){
     var hash = window.location.hash;
-   
     switch (hash) {
         case "#home-tournaments":
            
@@ -386,6 +379,8 @@ function hashchanged() {
                     },
                     w/0.65
                 );
+                
+               
                 resetStar($('#li_winners'));
                 
                 break;
@@ -393,23 +388,23 @@ function hashchanged() {
         case "#redeem-coins":
             var t=$("#prizes_page").offset().top;
             $("#prizes_page #coins").click();
-            $([document.documentElement, document.body]).animate({
-                    scrollTop: $("#prizes_page").offset().top-100,
-                },
-                t/0.65
-            );
-            resetStar($('#a-redeem'));
+            // $([document.documentElement, document.body]).animate({
+            //         scrollTop: $("#prizes_page").offset().top-100,
+            //     },
+            //     t/0.65
+            // );
+           // resetStar($('#a-redeem'));
             break;
         
          case"#tournament-prizes":
-                var t=$("#prizes_page").offset().top;
-                $("#prizes_page #tournaments").click();
-                $([document.documentElement, document.body]).animate({
-                        scrollTop: $("#prizes_page").offset().top-100,
-                    },
-                    t/0.65
-                );
-                resetStar($('#a-prize'));
+                //var t=$("#prizes_page").offset().top;
+               // $("#prizes_page #tournaments").click();
+                // $([document.documentElement, document.body]).animate({
+                //         scrollTop: $("#prizes_page").offset().top-100,
+                //     },
+                //     t/0.65
+                // );
+              //  resetStar($('#a-prize'));
                 break;
         default:
             if (hash.length > 1) {
@@ -455,6 +450,7 @@ function hashchangeddd() {
             }
             break;
     }
+    
     },500);
     $(window).trigger("resize");
 }
@@ -1145,7 +1141,6 @@ function countdownTimeStart(element) {
         }, 1000);
     }
 }
-
 function positiveNumber(input) {
     input = $(input);
     if (input.val().length > 0) {

@@ -158,7 +158,7 @@ class TournamentMatchInlineForm(forms.ModelForm):
             self.fields['winners'].queryset = self.fields['winners'].queryset.none() # self.fields['winners'].queryset.distinct()
             self.fields["participants"].widget = HiddenInput()
             self.fields["winners"].widget = HiddenInput()
-            self.fields["image"].widget.hiddencustom = True
+            # self.fields["image"].widget.hiddencustom = True
         
     def clean(self):
         """

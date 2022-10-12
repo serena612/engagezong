@@ -225,7 +225,7 @@ function load (pg) {
         box.html("");
         box.addClass("is-loading");
         box.append(
-            "<li class='loading-item'><img class='loading-img' src='/static/img/loading1.gif' /></li>"
+            "<li class='loading-item'><img class='loading-img white' src='/static/img/loading1.gif' /></li>" //me
         );
 		tournaments_page = pg;
         $.ajax({
@@ -565,7 +565,7 @@ function get_tournament(game,str) {
         box.html("");
         box.addClass("is-loading");
         box.append(
-            "<li class='loading-item'><img class='loading-img' src='/static/img/loading1.gif' /></li>"
+            "<li class='loading-item'><img class='loading-img white' src='/static/img/loading1.gif' /></li>"
         );
         $.ajax({
             url: get_list_tournaments,
@@ -1198,7 +1198,7 @@ function getWinners(game, tournament) {
     box.append(
         `
             <tr class="loading-tr">
-                <td><img class='loading-img' src='/static/img/loading1.gif' /></td>
+                <td><img class='loading-img white' src='/static/img/loading1.gif' /></td>
             </tr>
         `
     );

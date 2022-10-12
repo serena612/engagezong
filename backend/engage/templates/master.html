@@ -227,9 +227,17 @@
     {% endblock %}
 </head>
 
-<body>
+
+
+
+
+
+
+
+
    
     
+<body>
 <nav class="hih">
   
     <div class="top-nav">
@@ -371,7 +379,7 @@
                     </a>
                 </li>
                 <li>
-                    <a id='li_winners' href="/#winners">{% translate 'WINNERS' %}
+                    <a id='li_winners' href='/#winners'>{% translate 'WINNERS' %}
                         {% if user.is_authenticated %}
                         <i>{% translate 'new' %}</i>
                         {% endif%}

@@ -10,7 +10,7 @@ from engage.core.models import HTML5Game, Event, FeaturedGame, Game
 from engage.core.constants import NotificationTemplate
 from engage.operator.models import OperatorAd
 from engage.services import notify_when
-
+from engage.tournament.models import Tournament,TournamentPrize
 
 @notify_when(events=[
     NotificationTemplate.HOME,
@@ -18,6 +18,7 @@ from engage.services import notify_when
 ])
 def home_view(request):
     now = timezone.now()
+
     featured_games = FeaturedGame.objects.all()
     games = Game.objects.all()
     ad = OperatorAd.objects.filter(
@@ -48,7 +49,10 @@ def home_view(request):
                                           'user_id': user_id})
 
 
+    
 def about_view(request):
+    if  request.user.is_staff or request.user.is_superuser :
+        return redirect('/auth/logout/')  
     return render(request, 'about.html', {})
 
 
@@ -131,7 +135,6 @@ def firebase_sw_view(request):
     return HttpResponse("""
         importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js');
         importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-messaging-compat.js');
-        
 
         firebase.initializeApp({
             apiKey: "AIzaSyA0HHeMbJieI4Qp5tyxn765mk0IWllTCco",
@@ -144,7 +147,6 @@ def firebase_sw_view(request):
         });
 
         const messaging = firebase.messaging();
-
        
     """, status=200, content_type='application/javascript')
 
@@ -152,6 +154,8 @@ def firebase_sw_view(request):
 def view_404(request, exception=None): 
     return redirect('/')
 
+def view_403(request, exception=None): 
+    return redirect('/admin')
 
 # def error_403(request, exception):
 #         return render(request,'403.html') 

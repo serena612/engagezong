@@ -201,6 +201,7 @@ function in_array(value, array){
 		return index;
 	}
 }
+
 function get_wait_modal() {
     $.ajax({
         url:"/wait", //the page containing python script
