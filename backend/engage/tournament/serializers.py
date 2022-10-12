@@ -79,9 +79,9 @@ class TournamentSerializer(serializers.ModelSerializer):
     
     def get_tournament_started(self,obj):
         tournament_started = obj.start_date
-        if obj.time_compared_to_gmt and obj.time_compared_to_gmt>=0 :  # '+' in 
+        if obj.time_compared_to_gmt and int(obj.time_compared_to_gmt)>=0 :  # '+' in 
             tournament_started = obj.start_date + timedelta(hours=int(obj.time_compared_to_gmt))
-        if obj.time_compared_to_gmt and obj.time_compared_to_gmt<0 :  # '-' in 
+        if obj.time_compared_to_gmt and int(obj.time_compared_to_gmt)<0 :  # '-' in 
             tournament_started = obj.start_date - timedelta(hours=int(obj.time_compared_to_gmt))
         return tournament_started
 

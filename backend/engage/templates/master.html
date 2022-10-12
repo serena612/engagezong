@@ -255,9 +255,9 @@
                         <form action="#" class="search-box"
                               style="display: none;">
                             <select name="option" id="nav-search-select">
-                                {% comment %} <option value="tournaments">Tournaments</option>
-                                <option value="games">Games</option> {% endcomment %}
                                 <option value="users">Users</option>
+                                <option value="tournaments">Tournaments</option>
+                                <option value="games">Games</option>  
                             </select>
                             <input name="search" type="text"
                                    placeholder="Search"/>
@@ -1803,5 +1803,15 @@
  {% endif %}        
 {% endblock %}
 
+<div class="page_loder" id="page_loder">
+    <div class="pg_loader"></div>
+</div>
+ 
+
+<script type="text/javascript">
+window.addEventListener('load', function () {
+    document.getElementById("page_loder").style.display = "none";
+})
+</script>
 </body>
 </html>

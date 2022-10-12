@@ -10,13 +10,20 @@
     <script src="{% static 'js/paginate.js' %}"></script>
     <script src="{% static 'js/selectize.min.js' %}" ></script>
     <link rel="stylesheet" href="{% static 'css/selectize.bootstrap3.min.css' %}"  />
-    <script src="{% static 'js/pages/home.js' %}"></script>
 
+    <script src="{% static 'js/pages/home.js' %}"></script>
+    <script>
+        $('nav').removeClass('hih')
+    </script>
     <style>
-        @media (max-width:767px){
-            .sec-1{background-image:url('{{ operator.operatorwebsite.second_section_image.url }}')!important;}
-            .sec-4 img{content: url('{{ ad.ad_file_mobile.url }}');}
+        #are_you_engager{
+           max-width: 460px;
+           width: 58%;
         }
+              
+       
+      
+       .sec-1{ width: 100%; overflow: hidden;background-position: left top!important; margin-top: -46px;height:auto!important; padding: 0;min-height:300px;}
         .home-btn-main{
             font-weight: bold;
             font-style: italic;
@@ -27,14 +34,62 @@
             /* text-transform: capitalize;
             margin-bottom: -10px;
             color:#eb1ab6; */
+       }
+       #mobileImg, #deskImg
+       {
+           visibility: hidden;
+           width: 100%;
+       }
+       #mobileImg{
+           display: none;
+       }
+       #deskImg
+       {
+           display: block;
+       }
+       .sec-1 .text-container
+       {
+           position: absolute;
+           top: 0;
+           left: 0;
+           margin: 240px 8%;
+       }
+       @media (max-width:767px){
+           .sec-1{background-image:url('{{ operator.operatorwebsite.second_section_image.url }}')!important;   }
+           .sec-4 img{content: url('{{ ad.ad_file_mobile.url }}');}
+           #mobileImg{display: block!important;}
+           #deskImg { display: none!important; } 
+           .sec-1 .text-container{margin: 125px 5%!important;}  
+           #are_you_engager{
+           max-width: 320px;
+           width: 100%;
+        }         
+       }
+       @media (device-width:768px) {
+         nav .bottom-nav {
+                 margin-top: -34px;
+           padding-left: 19px;
+             }
         }
+       @media (device-width:820px) and (device-height:1180px){
+         nav .bottom-nav {
+                  margin-top: -40px;     margin-left: -4px;
+                       }
+        }
+    @media (max-width: 320px){
+     .firstTab .drp_select select {
+         margin-left:0;
+     }}
+    
     </style>
 {% endblock %}
 
 {% block top_section %}
     <section class="sec-1"
-             style="background-image: url('{{ operator.operatorwebsite.first_section_image.url }}')">
-        <div class="text-container max-page-width">
+             style="background-image: url('{{ operator.operatorwebsite.first_section_image.url }}'); height:auto!important; padding:0px;">
+             <img src="{{ operator.operatorwebsite.first_section_image.url }}" id="deskImg" title="Engage"/>
+             <img src="{{ operator.operatorwebsite.second_section_image.url  }}" id="mobileImg" title="Engage" />
+        <div class="text-container max-page-width" style="display: none;">
             <div class="title-home">
             {{ operator.operatorwebsite.first_section_description|safe }}
 </div>
@@ -83,8 +138,11 @@
 
     <section class="page-container featured-title"
              style="text-align: center; margin-top:60px; padding-bottom: 50px">
-        <h1 class='h1_home'>{% translate 'PLAY, WIN AND EARN COINS' %}</h3>     
-        <h3 class='h3_home'>{% translate 'PLAY ANY OF THE FEATURED GAMES' %}</h3>
+        <!-- <h1 class='h1_home'>{% translate 'PLAY, WIN AND EARN COINS' %}</h3>     
+        <h3 class='h3_home'>{% translate 'PLAY ANY OF THE FEATURED GAMES' %}</h3> -->
+        <div class="text-center">
+            <img src="/static/img/Homepage-are-you-an-engager.png" id="are_you_engager" />
+        </div>
         <div class="featured-games-parent"></div>
         <div class="featured-games max-page-width" id="main-featured-games">
             {% if user.is_authenticated %}
@@ -165,12 +223,13 @@
                             <a onclick="hiya();return getTournaments('past', this)"
                                class="button-small previous">{% translate 'Previous' %}</a>
                         </li>
-                        <li class='drp_select' onchange='fillTournaments()'>
+                        <li class='drp_select' onchange='fillTournaments()' style="position: relative;">
                             <select><option value="0">{% translate 'All Games Tournaments' %}</option>
                                 {% for game in games %}
                                 <option value="{{game.id}}">{{game.name}} </option>
                                 {% endfor %}
                             </select>
+                            <i class="fas fa-angle-down" style="position: absolute; top: 16px; right: -31px; width: 13px; height: 12px; color: #FFF;font-size: 14px;"></i>
                         </li>
                         <li style='float:right;color: #fff;'>
                             <div id="demoB"></div>
