@@ -54,6 +54,10 @@
            left: 0;
            margin: 240px 8%;
        }
+       .firstTab .drp_select select
+       {
+        appearance: none;
+       }
        @media (max-width:767px){
            .sec-1{background-image:url('{{ operator.operatorwebsite.second_section_image.url }}')!important;   }
            .sec-4 img{content: url('{{ ad.ad_file_mobile.url }}');}
@@ -85,18 +89,18 @@
 {% endblock %}
 
 {% block top_section %}
-    <section class="sec-1"
-             style="background-image: url('{{ operator.operatorwebsite.first_section_image.url }}'); height:auto!important; padding:0px;">
+    <section class="sec-1" onclick="window.location.href='{{ operator.operatorwebsite.first_section_url }}'"
+             style="background-image: url('{{ operator.operatorwebsite.first_section_image.url }}'); height:auto!important; padding:0px; cursor: pointer;">
              <img src="{{ operator.operatorwebsite.first_section_image.url }}" id="deskImg" title="Engage"/>
              <img src="{{ operator.operatorwebsite.second_section_image.url  }}" id="mobileImg" title="Engage" />
         <div class="text-container max-page-width" style="display: none;">
             <div class="title-home">
             {{ operator.operatorwebsite.first_section_description|safe }}
 </div>
-            <a class="btn1 home-btn-main"
+            <!-- <a class="btn1 home-btn-main"
                href="{{ operator.operatorwebsite.first_section_url }}">
                 {{ operator.operatorwebsite.first_section_button_title }}
-            </a>
+            </a> -->
         </div>
     </section>
 {% endblock %}
@@ -142,6 +146,9 @@
         <h3 class='h3_home'>{% translate 'PLAY ANY OF THE FEATURED GAMES' %}</h3> -->
         <div class="text-center">
             <img src="/static/img/Homepage-are-you-an-engager.png" id="are_you_engager" />
+        </div>
+        <div class="text-center">
+            <img src="/static/img/whitePic.jpg" id="are_you_engager" />
         </div>
         <div class="featured-games-parent"></div>
         <div class="featured-games max-page-width" id="main-featured-games">

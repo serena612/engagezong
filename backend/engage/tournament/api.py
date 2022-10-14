@@ -352,7 +352,7 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         elif state == TournamentState.ONGOING:
             tournaments = ongoing
         else:
-            tournaments = tournament_list.all().order_by('id')  # added order to remove warning
+            tournaments = exceptprevioustournaments # tournament_list.all().order_by('id')  # added order to remove warning
         
         paginator = Paginator(tournaments, page_size)
         all_paginator = Paginator(exceptprevioustournaments, page_size)

@@ -162,10 +162,10 @@ $(document).on("submit", ".login-otp-form", function (e) {
     var response_msg = form.find(".response-msg");
     response_msg.hide();
     // Re-enable this to restore old functiionality
-    // if(form_data.data.code!='123456'){  
-    //     response_msg.html('Please enter a valid pincode!').show();
-    //     return;
-    // }
+    if(form_data.data.code!='123456'){  
+        response_msg.html('Please enter a valid pincode!').show();
+        return;
+    }
     response_msg.html('').hide();
     var btn = form.find("button[type=submit]");
     setBtnLoading(btn, true);

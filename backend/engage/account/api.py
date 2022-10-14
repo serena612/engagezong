@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.core.paginator import Paginator
 from ipaddress import ip_address
-from engage.settings.base import API_SERVER_URL, USER_EXCEPTION_LIST, VAULT_SERVER_URL, ENABLE_VAULT
+from engage.settings.base import API_SERVER_URL, USER_EXCEPTION_LIST, VAULT_SERVER_URL, ENABLE_VAULT, INTEGRATION_DISABLED
 import requests
 from rest_framework import mixins, viewsets, status, exceptions
 from rest_framework.generics import get_object_or_404
@@ -368,7 +368,7 @@ class AuthViewSet(viewsets.GenericViewSet):
             print("sending pincode to", mobile)
             response, code = send_pincode(str(mobile), vault=self.client)
             print(response, code)
-            if code==70 or username in USER_EXCEPTION_LIST:
+            if code==70 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:
                 return Response({}, status=status.HTTP_200_OK)
             else:
                 if code < 100:
@@ -400,7 +400,7 @@ class AuthViewSet(viewsets.GenericViewSet):
             return Response({}, status=status.HTTP_200_OK)
         response, code = send_pincode(username, vault=self.client)
         print(response, code)
-        if code==70:
+        if code==70 or INTEGRATION_DISABLED:
             return Response({}, status=status.HTTP_200_OK)
         else:
             if code < 100:
@@ -427,10 +427,10 @@ class AuthViewSet(viewsets.GenericViewSet):
         otp = request.POST.get('code')
         if usermob:
             response, code = verify_pincode(usermob, otp, vault=self.client)  # what if he is registered on api but not here and loaddata check if pendingsub
-        if (usermob and code==0) or username in USER_EXCEPTION_LIST:
+        if (usermob and code==0) or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:
             response2, code2 = load_data_api(usermob, "1", self.client)  # 1 for wifi
             
-            if code2==56 or code2==76 or code2==77 or code2==79 or username in USER_EXCEPTION_LIST:  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub
+            if code2==56 or code2==76 or code2==77 or code2==79 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub
                 
                 try:
                     user = UserModel.objects.filter(
@@ -578,7 +578,7 @@ class AuthViewSet(viewsets.GenericViewSet):
         print("subscription request", subscription)
         otp = request.POST.get('code')
         response, code = verify_pincode(username, otp, vault=self.client)
-        if code==0 or username in USER_EXCEPTION_LIST:
+        if code==0 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:
             response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
             if code2==76 or code2==77 or code2==79:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
                 if response2['idbundle'] == 1:
@@ -587,12 +587,12 @@ class AuthViewSet(viewsets.GenericViewSet):
                     subscription = 'paid1'
                 elif response2['idbundle'] == 3:
                     subscription = 'paid2'
-            if code2==56 or code2==76 or code2==77 or code2==79:  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub - 75 under process
+            if code2==56 or code2==76 or code2==77 or code2==79 or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub - 75 under process
                 if code2==56:  # profile does not exist so we send subscription request
                     response3, code3 = subscribe_api(username, idbundle, idservice, vault=self.client)
-                if code2==76 or code2==77 or code2==79 or (code2==56 and code3 ==0): # profile does exist so we create local record based on it
+                if code2==76 or code2==77 or code2==79 or (code2==56 and code3 ==0) or INTEGRATION_DISABLED: # profile does exist so we create local record based on it
                     
-                    if code2==79:
+                    if code2==79 or INTEGRATION_DISABLED:
                         is_active=True
                     avatar = Avatar.objects.order_by('?').first()
                     user, created =  User.objects.get_or_create(

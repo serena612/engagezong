@@ -71,9 +71,9 @@ def tournament_view(request, slug):
         starts_in_full = f'{int(starts_in.seconds // 3600)} hours and {int((starts_in.seconds // 60) % 60)} minutes'
     
     tournament_started = tournament.start_date
-    if tournament.time_compared_to_gmt and '+' in tournament.time_compared_to_gmt :
+    if tournament.time_compared_to_gmt and int(tournament.time_compared_to_gmt)>=0 :  # '+' in 
         tournament_started = tournament.start_date + timedelta(hours=int(tournament.time_compared_to_gmt))
-    if tournament.time_compared_to_gmt and '-' in tournament.time_compared_to_gmt :
+    if tournament.time_compared_to_gmt and int(tournament.time_compared_to_gmt)<0 :  # '-' in 
         tournament_started = tournament.start_date - timedelta(hours=int(tournament.time_compared_to_gmt))
 
 

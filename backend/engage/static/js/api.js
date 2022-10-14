@@ -1330,6 +1330,7 @@ $(function () {
    $('.top-nav .search-box').find('input[name="search"]').keyup(function(){
      if($(this).val().length < 3){
         $('.results-box').hide();
+        console.log("jjjjjjj");
         return;
      }
      $('.results-box').show();
