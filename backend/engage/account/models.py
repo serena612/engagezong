@@ -34,10 +34,14 @@ from .managers import (
 #             params={'value': value},
 #         )
 class PhonyNumberField(models.CharField):
-    prefs1 = [703, 704, 706, 803, 806, 810, 813, 814, 816, 903, 906,913,916]
-    prefs2 = [7025, 7026]
+    
+
     def clean(self, value, *args, **kwargs):
+        
         cleaned_data = super().clean(value, *args, **kwargs)
+        subdata = cleaned_data
+        prefs1 = [703, 704, 706, 803, 806, 810, 813, 814, 816, 903, 906,913,916]
+        prefs2 = [7025, 7026]
         if len(cleaned_data)==15 and cleaned_data.startswith("00"):
             cleaned_data = cleaned_data[2:]
         elif len(cleaned_data)==14 and cleaned_data.startswith("+"):
@@ -47,13 +51,13 @@ class PhonyNumberField(models.CharField):
         elif len(cleaned_data)==11 and cleaned_data.startswith("0"):
             cleaned_data = cleaned_data[1:]
         if len(cleaned_data)==10:
-            if cleaned_data[0:3] in self.prefs1 or cleaned_data[0:4] in self.prefs2:
+            if int(cleaned_data[0:3]) in prefs1 or int(cleaned_data[0:4]) in prefs2:
                 print("Valid Number passing through")
-                return
+                return '234'+cleaned_data
     
         raise ValidationError(
-            _('%(cleaned_data)s is not a valid phone number'),
-            params={'cleaned_data': cleaned_data},
+            _('%(subdata)s is not a valid MTN phone number!'),
+            params={'subdata': subdata},
         )
 
 class User(AbstractUser, TimeStampedModel):
