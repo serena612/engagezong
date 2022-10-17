@@ -344,15 +344,16 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
 
         upcoming = tournament_list.filter(end_date__gte=now,started_on__isnull=True).order_by('start_date')
         ongoing = tournament_list.filter(end_date__gt=now,started_on__isnull=False).order_by('-live_null', 'start_date')
+        previous = tournament_list.filter(end_date__lt=now)
         exceptprevioustournaments = list(ongoing) + list(upcoming)
         if state == TournamentState.UPCOMING:
             tournaments = upcoming
         elif state == TournamentState.PAST:
-            tournaments =  tournament_list.filter(end_date__lt=now)
+            tournaments =  previous
         elif state == TournamentState.ONGOING:
             tournaments = ongoing
         else:
-            tournaments = exceptprevioustournaments # tournament_list.all().order_by('id')  # added order to remove warning
+            tournaments = list(exceptprevioustournaments) + list(previous) # tournament_list.all().order_by('id')  # added order to remove warning
         
         paginator = Paginator(tournaments, page_size)
         all_paginator = Paginator(exceptprevioustournaments, page_size)

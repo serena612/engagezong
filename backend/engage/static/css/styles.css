@@ -6543,6 +6543,10 @@ a:hover, #contact-form button:hover, #support-form button:hover, .login-form but
   top:50vh;
   left:50vw;
 }
+.upcoming .up_on_pre_year, .ongoing .up_on_pre_year
+{
+  display: none;
+}
 
 /* Safari */
 @-webkit-keyframes spin {

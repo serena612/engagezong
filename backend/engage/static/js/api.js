@@ -166,7 +166,7 @@ function fillTopUpcomingTournaments(data){
                         <a rel="bookmark"
                         href="/tournaments/${item.slug}">${item.name}</a>
                     </h4>
-                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()}, ${start_date.getFullYear()} - <span style='color:#F6236F;'>${tConvert(start_date)}  ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
+                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()} <span class="up_on_pre_year">, ${start_date.getFullYear()} </span> - <span style='color:#F6236F;'>${tConvert(start_date)}  ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
                     <div class='middle-text'>
                         <div class='image1'>
                             <i class='fas fa-male'></i>
@@ -309,7 +309,7 @@ function load (pg) {
                                         <a rel="bookmark"
                                         href="/tournaments/${item.slug}">${item.name}</a>
                                     </h4>
-                                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()}, ${start_date.getFullYear()} - <span style='color:#F6236F;'>${tConvert(start_date)} ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
+                                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()} <span class="up_on_pre_year">, ${start_date.getFullYear()} </span> - <span style='color:#F6236F;'>${tConvert(start_date)} ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
                                     <div class='middle-text'>
                                         <div class='image1'>
                                             <i class='fas fa-male'></i>
@@ -433,7 +433,7 @@ function load (pg) {
                                         <a rel="bookmark"
                                         href="/tournaments/${item.slug}">${item.name}</a>
                                     </h4>
-                                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()}, ${start_date.getFullYear()} - <span style='color:#F6236F;'>${tConvert(start_date)} ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
+                                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()} <span class="up_on_pre_year">, ${start_date.getFullYear()}</span> - <span style='color:#F6236F;'>${tConvert(start_date)} ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
                                     <div class='middle-text'>
                                         <div class='image1'>
                                             <i class='fas fa-male'></i>
@@ -657,7 +657,7 @@ function get_tournament(game,str) {
                                         <a rel="bookmark"
                                         href="/tournaments/${item.slug}">${item.name}</a>
                                     </h4>
-                                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()}, ${start_date.getFullYear()} - <span style='color:#F6236F;'>${tConvert(start_date)} ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
+                                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()} <span class="up_on_pre_year">, ${start_date.getFullYear()} </span> - <span style='color:#F6236F;'>${tConvert(start_date)} ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
                                     <div class='middle-text'>
                                         <div class='image1'>
                                             <i class='fas fa-male'></i>
@@ -783,7 +783,7 @@ function get_tournament(game,str) {
                                         <a rel="bookmark"
                                         href="/tournaments/${item.slug}">${item.name}</a>
                                     </h4>
-                                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()},${start_date.getFullYear()}  - <span style='color:#F6236F;'>${tConvert(start_date)} ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
+                                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()} <span class="up_on_pre_year">,${start_date.getFullYear()}</span>  - <span style='color:#F6236F;'>${tConvert(start_date)} ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
                                     <div class='middle-text'>
                                         <div class='image1'>
                                             <i class='fas fa-male'></i>
@@ -1330,7 +1330,6 @@ $(function () {
    $('.top-nav .search-box').find('input[name="search"]').keyup(function(){
      if($(this).val().length < 3){
         $('.results-box').hide();
-        console.log("jjjjjjj");
         return;
      }
      $('.results-box').show();

@@ -445,4 +445,4 @@ API_SERVER_URL='http://192.168.153.62:8099'
 USER_EXCEPTION_LIST = ['admin', 'player483', 'player488']
 ENABLE_VAULT = False
 VAULT_SERVER_URL = 'https://engage.devapp.co/'
-INTEGRATION_DISABLED = False
+INTEGRATION_DISABLED = True

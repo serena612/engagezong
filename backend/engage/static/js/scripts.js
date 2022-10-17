@@ -353,9 +353,9 @@ function hashchanged() {
            
     
             $([document.documentElement, document.body]).animate({
-                    scrollTop: $("#sec-3").offset().top-200,
+                    scrollTop: $("#sec-3").offset().top-50,
                 },
-                c/0.65
+                c/1.35
             );
             $("#sec-3 a.tour-btn").click();
             resetStar($('#hometournaments'));
@@ -364,9 +364,9 @@ function hashchanged() {
         case "#home-games":
             var i=$("#sec-3").offset().top;
             $([document.documentElement, document.body]).animate({
-                    scrollTop: $("#sec-3").offset().top-200,
+                    scrollTop: $("#sec-3").offset().top-50,
                 },
-                i/0.65
+                i/1.35
             );
             $("#sec-3 a.games-btn").click();
             resetStar($('#homegames'));
@@ -375,9 +375,9 @@ function hashchanged() {
          case "#winners":
             var w=$(".sec-3-1").offset().top;
                 $([document.documentElement, document.body]).animate({
-                        scrollTop: $(".sec-3-1").offset().top-100,
+                        scrollTop: $(".sec-3-1").offset().top-50,
                     },
-                    w/0.65
+                    w/1.35
                 );
                 
                
@@ -389,9 +389,9 @@ function hashchanged() {
             var t=$("#prizes_page").offset().top;
             $("#prizes_page #coins").click();
             // $([document.documentElement, document.body]).animate({
-            //         scrollTop: $("#prizes_page").offset().top-100,
+            //         scrollTop: $("#prizes_page").offset().top-50,
             //     },
-            //     t/0.65
+            //     t/1.35
             // );
            // resetStar($('#a-redeem'));
             break;
@@ -400,9 +400,9 @@ function hashchanged() {
                 //var t=$("#prizes_page").offset().top;
                // $("#prizes_page #tournaments").click();
                 // $([document.documentElement, document.body]).animate({
-                //         scrollTop: $("#prizes_page").offset().top-100,
+                //         scrollTop: $("#prizes_page").offset().top-50,
                 //     },
-                //     t/0.65
+                //     t/1.35
                 // );
               //  resetStar($('#a-prize'));
                 break;
@@ -436,7 +436,7 @@ function hashchangeddd() {
             
            
                 $([document.documentElement, document.body]).animate({
-                        scrollTop: $(".sec-3-1").offset().top-100,
+                        scrollTop: $(".sec-3-1").offset().top-50,
                     },
                    1000
                 );

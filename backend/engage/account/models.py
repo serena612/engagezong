@@ -11,6 +11,8 @@ from django.templatetags.static import static
 from model_utils import FieldTracker
 from phonenumber_field.modelfields import PhoneNumberField
 from timezone_field import TimeZoneField
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 
 from common.models import TimeStampedModel
 from .constants import (
@@ -24,15 +26,43 @@ from .managers import (
     CustomUserManager,
     UserActivityManager
 )
-
+# def validate_phone(value):
+#     print("Validating", value, "length", len(value))
+#     if len(value)!=10:
+#         raise ValidationError(
+#             _('%(value)s is not a valid phone number'),
+#             params={'value': value},
+#         )
+class PhonyNumberField(models.CharField):
+    prefs1 = [703, 704, 706, 803, 806, 810, 813, 814, 816, 903, 906,913,916]
+    prefs2 = [7025, 7026]
+    def clean(self, value, *args, **kwargs):
+        cleaned_data = super().clean(value, *args, **kwargs)
+        if len(cleaned_data)==15 and cleaned_data.startswith("00"):
+            cleaned_data = cleaned_data[2:]
+        elif len(cleaned_data)==14 and cleaned_data.startswith("+"):
+            cleaned_data = cleaned_data[1:]
+        if len(cleaned_data) == 13 and cleaned_data.startswith("234"):
+            cleaned_data = cleaned_data[3:]
+        elif len(cleaned_data)==11 and cleaned_data.startswith("0"):
+            cleaned_data = cleaned_data[1:]
+        if len(cleaned_data)==10:
+            if cleaned_data[0:3] in self.prefs1 or cleaned_data[0:4] in self.prefs2:
+                print("Valid Number passing through")
+                return
+    
+        raise ValidationError(
+            _('%(cleaned_data)s is not a valid phone number'),
+            params={'cleaned_data': cleaned_data},
+        )
 
 class User(AbstractUser, TimeStampedModel):
     uid = models.UUIDField(default=uuid.uuid4, editable=False)
     avatar = models.ForeignKey('core.Avatar', on_delete=models.SET_NULL,
                                blank=True, null=True)
     nickname = models.CharField(max_length=64, blank=True, null=True)
-    mobile = PhoneNumberField(blank=True, null=True)
-
+    # mobile = models.CharField(max_length=15, blank=True, null=True,validators=[validate_phone])
+    mobile = PhonyNumberField(max_length=15, blank=True, null=True)
     app_fcm_token = models.CharField(max_length=256, blank=True, null=True)
     web_fcm_token = models.CharField(max_length=256, blank=True, null=True)
 
