@@ -165,6 +165,8 @@ class User(AbstractUser, TimeStampedModel):
             return 0.3
         else:
             return 0
+
+
        
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

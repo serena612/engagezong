@@ -1646,6 +1646,29 @@ body .modal {
       }
     }
    
+    @media (max-width: 1280px) and (orientation:landscape) {
+      footer .brand img {
+        margin: auto !important;
+        display: block;
+      }
+      .sec-2 .slid-parent .text-content p {
+          font-size: 4vw;
+      }
+       nav .bottom-nav ul {
+        display: none;
+      }
+      nav .top-nav .left #open-left {
+        display: block;
+      }
+      footer .middle {
+        margin: 25px 0 !important;
+      }
+      nav .midlle {
+        padding-left: 3%;
+        padding-right: 3%;
+       }
+    }
+
     @media (max-width:500px){
       .sec-2 .slid-parent .text-content {
         height: 35%;
@@ -1665,6 +1688,7 @@ body .modal {
     @media (max-width:410px){
       .sec-2 .slid-parent .text-content {
         height: 46%;
+      }
     }
 
 
