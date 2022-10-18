@@ -1644,6 +1644,16 @@ body .modal {
       footer .middle {
         margin: 25px 0 !important;
       }
+      .banner{
+        width:96%!important;
+        margin: 0px auto;
+      }
+      #banner5{
+        display: block!important;
+      }
+      #banner4{
+        left: 0px!important;
+      }
     }
    
     @media (max-width: 1280px) and (orientation:landscape) {

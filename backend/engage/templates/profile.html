@@ -91,7 +91,7 @@
                                data-id="#choice-1">{% translate 'Profile' %}</a>
                         </li>
                         <li>
-                            <a href="#friends" class="link-item"
+                            <a href="#friends" class="link-item view_all_friends"
                                data-id="#choice-2">{% translate 'Friends' %}
                             </a>
                         </li>
@@ -146,6 +146,20 @@
                         </div>
                         <div class="col-md-6 expand-box joined-tournaments-box"
                              data-min-size="6">
+                             <div class="banner mobile" id="banner5" style="width: 100%!important; height:150px; margin-bottom: 20px;">
+                                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1363749472822465"
+                                crossorigin="anonymous"></script>
+                           <!-- banner 5 - profile -->
+                           <ins class="adsbygoogle"
+                                style="display:block"
+                                data-ad-client="ca-pub-1363749472822465"
+                                data-ad-slot="7077498601"
+                                data-ad-format="auto"
+                                data-full-width-responsive="true"></ins>
+                           <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                           </script>
+                            </div>
                             <div class="card-wrapper">
 
                                 <div class="title-wrapper type-2">
@@ -558,7 +572,7 @@
         <section class="side-friends">
             <div class="x-header">
                 {% if user.friends.count > 0 %}
-                <a href="#friends">
+                <a href="javascript:$('.view_all_friends').click()">
                     {% translate 'View All' %}
                 </a>
                 {% endif %}    

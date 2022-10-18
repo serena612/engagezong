@@ -6547,7 +6547,13 @@ a:hover, #contact-form button:hover, #support-form button:hover, .login-form but
 {
   display: none;
 }
-
+#banner5{
+  display: none;
+}
+#banner3{
+  height: 319px;
+  /* background-color: red; */
+}
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }

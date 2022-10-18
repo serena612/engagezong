@@ -559,7 +559,13 @@
                                     <input class="input1" required
                                            name="code" step="1"
                                            placeholder="Enter 6 Digits Code" autocomplete="off">
-                                    <div class="text-right">
+
+                                    <div class="previous_btn">
+                                        <button type="button" class="btn3" onclick="$('.login-otp-form').fadeOut(function(){ $('.login-otp-form').hide(); $('.login-form').show() })">
+                                            {% translate 'Previous' %}
+                                        </button>
+                                    </div>      
+                                    <div class="text-right" style="margin-top: -44px;">
                                         <button type="submit" class="btn3">
                                             {% translate 'Next' %}
                                         </button>

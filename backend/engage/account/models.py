@@ -66,7 +66,7 @@ class User(AbstractUser, TimeStampedModel):
                                blank=True, null=True)
     nickname = models.CharField(max_length=64, blank=True, null=True)
     # mobile = models.CharField(max_length=15, blank=True, null=True,validators=[validate_phone])
-    mobile = PhonyNumberField(max_length=15, blank=True, null=True)
+    mobile = PhonyNumberField(max_length=15, blank=True, null=True, unique=True)
     app_fcm_token = models.CharField(max_length=256, blank=True, null=True)
     web_fcm_token = models.CharField(max_length=256, blank=True, null=True)
 
