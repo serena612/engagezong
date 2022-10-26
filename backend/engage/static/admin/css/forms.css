@@ -69,3 +69,7 @@
         text-transform: uppercase;
         margin: 10px auto;
     }
+
+    .submit-row{
+        overflow: visible!important;
+    }

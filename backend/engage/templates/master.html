@@ -227,17 +227,9 @@
     {% endblock %}
 </head>
 
-
-
-
-
-
-
-
-
+<body>
    
     
-<body>
 <nav class="hih">
   
     <div class="top-nav">
@@ -1626,7 +1618,7 @@
                                 <div class="input2 mb-3">
                                     <label for="">{% translate 'Name' %}</label>
                                     <div class="right">
-                                        <input name="name" type="text" required
+                                        <input name="name" type="text" spellcheck="false" required id="profile_name"
                                                value="{{ user.nickname|default_if_none:"" }}">
                                     </div>
                                 </div>
@@ -1809,6 +1801,7 @@
  {% endif %}        
 {% endblock %}
 
+{% comment %}
 <div class="page_loder" id="page_loder">
     <div class="pg_loader"></div>
 </div>
@@ -1819,5 +1812,7 @@ window.addEventListener('load', function () {
     document.getElementById("page_loder").style.display = "none";
 })
 </script>
+
+{% endcomment %}
 </body>
 </html>

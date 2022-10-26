@@ -10,7 +10,7 @@ from engage.core.models import HTML5Game, Event, FeaturedGame, Game
 from engage.core.constants import NotificationTemplate
 from engage.operator.models import OperatorAd
 from engage.services import notify_when
-from engage.tournament.models import Tournament,TournamentPrize
+
 
 @notify_when(events=[
     NotificationTemplate.HOME,
@@ -103,6 +103,15 @@ def new_register_view(request):
         return redirect('/')
     else :
         return render(request, 'register1.html', {})
+
+
+def header_view(request):
+    strr = "<html>"
+    for k in request.headers:
+        strr += str(k) + ': '+ str(request.headers[k])
+        strr += "<br>"
+    strr += "</html>"
+    return HttpResponse(strr)
 
 def faq_view(request):
     return render(request, 'FAQ.html', {})

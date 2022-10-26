@@ -63,6 +63,7 @@ class OperatorHomeSection(models.Model):
     button_label = models.CharField(max_length=400,blank=True, null=True)
     def __str__(self):
         return self.title
+        
     class Meta:
         ordering = ['id']
 

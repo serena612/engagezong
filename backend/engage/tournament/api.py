@@ -9,6 +9,9 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from django.db.models import Value
+from engage.account.models import User
+from engage.services import notify_when
+from engage.core.constants import NotificationTemplate
 
 from engage.account.exceptions import (
     GameAccountUnavailable,
@@ -213,6 +216,76 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         tournament.closed_on = timezone.now()
         tournament.save()
         tournament.send_notification_close()
+        # tournament_prizes = TournamentPrize.objects.filter(
+        # tournament__id=tournament.id
+        #  )
+        # tournament_winners= tournament_prizes.values_list('winner', flat=True)
+        # failed_participants_ids = TournamentParticipant.objects.filter(
+        #     tournament__id=tournament.id,
+        # ).exclude(participant__id__in=tournament_winners).values_list('participant', flat=True)
+        # failed_participants = User.objects.filter(id__in=failed_participants_ids)
+
+        # # print(failed_participants)
+        # for prize in tournament_prizes :
+        #     # USER_FIRST_TOURNAMENT
+
+        #     if prize.position == 1 :
+        #         @notify_when(events=[NotificationTemplate.USER_FIRST_TOURNAMENT], is_route=False, is_one_time=False)
+        #         def notify(user, user_notifications):
+        #             """ extra logic if needed """
+        #             for notificationi in user_notifications:
+        #                 notificationi.link=self.name+";"+prize.title+";"+str(prize.image)
+        #                 notificationi.save()
+        #         notify(prize.winner)
+
+        # # USER_SECOND_THIRD_TOURNAMENT >> Users who are second, third or positions that win a prize.
+        #     elif  prize.position >= 2 :
+
+        #         @notify_when(events=[NotificationTemplate.USER_SECOND_THIRD_TOURNAMENT], is_route=False, is_one_time=False)
+        #         def notify(user, user_notifications):
+        #             """ extra logic if needed """
+        #             for notificationi in user_notifications:
+        #                 notificationi.link=self.name+";"+prize.title+";"+str(prize.image)
+        #                 notificationi.save()
+        #         notify(prize.winner)
+ 
+        # print("failed participants", failed_participants)
+        # if failed_participants :
+        #     for participant in  failed_participants :
+        #         print("processing sticker for", participant)
+        #         sticker = Sticker.objects.filter(  # .select_for_update()
+        #                     ~Q(id__in=participant.stickers.all())
+        #                 ).order_by('?').first()
+        #         print("sticker", sticker)
+        #         print("tourn giff", tournament.give_sticker)
+        #         if tournament.give_sticker:
+        #             if sticker :
+                        
+        #                 participant.stickers.add(sticker)
+        #                 #participant.refresh_from_db()
+        #                 participant.save()
+        #                 print("participantid", participant.id)
+        #                 print("stickerid", sticker.id)
+        #                 print("sticker added !")
+        #                 print("stickers after save", participant.stickers.all())
+        #         print("coins per participant", tournament.coins_per_participant)
+        #         print("weird condition", participant.stickers.all())
+        #         if tournament.coins_per_participant > 0 :
+        #             if participant.stickers.all() :
+        #                 participant.old_coins = participant.coins
+        #                 print("adding", tournament.coins_per_participant, "coins to", participant.coins)
+        #                 participant.coins = participant.coins + tournament.coins_per_participant
+        #                 participant.seen_coins = False
+        #                 participant.save()            
+            
+        #         @notify_when(events=[NotificationTemplate.USER_OUTSIDE_THE_WINNING_POSITIONS], is_route=False, is_one_time=False)
+        #         def notify(user, user_notifications):
+        #             """ extra logic if needed """
+        #             for notificationi in user_notifications:
+        #                 notificationi.link=("1" if tournament.give_sticker else "0")+";"+(str(tournament.coins_per_participant) if tournament.coins_per_participant else "0")+";"+(str(sticker.image) if tournament.give_sticker and sticker and sticker.image  else "-")
+        #                 notificationi.save()
+        #                 # print(notificationi.link)
+        #         notify(participant)
         return redirect(request.META["HTTP_REFERER"])
 
 
@@ -320,10 +393,8 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                     'tournamentprize_set',
                     queryset=TournamentPrize.objects.order_by('position')
                 )).filter(regions__in=[self.request.region])
-       
         if game != '0' :
             tournament_list = tournament_list.filter(game__id=int(game))
-        
         
         if not user.is_authenticated:
             tournament_list = tournament_list.filter(
@@ -341,7 +412,6 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                  Q(free_open_date__lte=now) |
                 (Q(Q(minimum_profile_level__lte=user.level) | Q(minimum_profile_level__isnull=True)) & Q(free_open_date__gt=now))
             ).annotate(live_null=Count('live_link'),started_null=Count('started_on'))
-
         upcoming = tournament_list.filter(end_date__gte=now,started_on__isnull=True).order_by('start_date')
         ongoing = tournament_list.filter(end_date__gt=now,started_on__isnull=False).order_by('-live_null', 'start_date')
         previous = tournament_list.filter(end_date__lt=now)

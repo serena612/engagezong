@@ -19,6 +19,7 @@ class CoinTransaction(LabelChoices):
     RECEIVE = 'receive', 'Receive'
     REDEEM = 'redeem', 'Redeem',
     PAY = 'pay','Pay Fee'
+    RETRIEVE = 'retrieve','Retrieve'
 
 class Transaction(LabelChoices):
     ADD = 'add', 'Add'

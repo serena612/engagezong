@@ -122,6 +122,7 @@ class Tournament(TimeStampedModel):
         return self.game.name
 
     def send_notification_close(self):
+        print("Triggered on close")
         tournament_prizes = TournamentPrize.objects.filter(
         tournament__id=self.id
          )
@@ -130,7 +131,8 @@ class Tournament(TimeStampedModel):
             tournament__id=self.id,
         ).exclude(participant__id__in=tournament_winners).values_list('participant', flat=True)
         failed_participants = User.objects.filter(id__in=failed_participants_ids)
-        print(failed_participants)
+
+        # print(failed_participants)
         for prize in tournament_prizes :
             # USER_FIRST_TOURNAMENT
 
@@ -154,19 +156,29 @@ class Tournament(TimeStampedModel):
                         notificationi.save()
                 notify(prize.winner)
  
-
+        print("failed participants", failed_participants)
         if failed_participants :
             for participant in  failed_participants :
-                sticker = Sticker.objects.filter(
+                print("processing sticker for", participant)
+                sticker = Sticker.objects.filter(  # .select_for_update()
                             ~Q(id__in=participant.stickers.all())
                         ).order_by('?').first()
+                print("sticker", sticker)
                 if self.give_sticker:
                     if sticker :
-                        participant.stickers.add(sticker)
-                        participant.save()
+                        if not participant.stickers.all():
+                            participant.stickers.create()
+                        participant.stickers.add(sticker)                        
+                        #participant.refresh_from_db()
+                        # participant.save()
+                        print("sticker added !")
+                        print("stickers after save", participant.stickers.all())
+                print("coins per participant", self.coins_per_participant)
+                print("weird condition", participant.stickers.all())
                 if self.coins_per_participant > 0 :
                     if participant.stickers.all() :
                         participant.old_coins = participant.coins
+                        print("adding", self.coins_per_participant, "coins to", participant.coins)
                         participant.coins = participant.coins + self.coins_per_participant
                         participant.seen_coins = False
                         participant.save()            

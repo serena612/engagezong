@@ -109,7 +109,8 @@ class User(AbstractUser, TimeStampedModel):
 
     game_nicknames = property(_get_nicknames)
 
- 
+
+
     def __str__(self):
         if self.is_staff:
             return self.username
@@ -243,7 +244,14 @@ class UserTransactionHistory(TimeStampedModel):
             total_amount=Coalesce(Sum('amount'), 0)
         )
         return coins_history.get('total_amount', 0)
-    
+
+    def claimed(self):
+        now = timezone.now()
+        return UserTransactionHistory.objects.filter(
+            user=self.user,
+            action=CoinTransaction.RETRIEVE,
+            created__date=now.date()
+        ).exists()
    
     @transaction.atomic()
     def save(self, *args, **kwargs):
@@ -266,6 +274,14 @@ class UserTransactionHistory(TimeStampedModel):
             # else:
                 
             #     self.actual_amount = 0
+        elif self.action == CoinTransaction.RETRIEVE:
+            # check if already claimed today
+            print("Claimed today", self.claimed())
+            if not self.claimed():
+                self.actual_amount = self.amount
+                self.user.coins += self.amount
+            else:
+                self.actual_amount = 0
         else:
             self.actual_amount = self.amount
             self.user.coins += self.amount

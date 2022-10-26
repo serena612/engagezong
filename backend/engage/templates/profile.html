@@ -16,7 +16,6 @@
 {% endblock %}
 
 {% block javascript %}
-
 <script src="{% static 'js/paginate.js' %}"></script>
     <script src="{% static 'js/pages/profile.js' %}"></script>
 {% endblock %}
@@ -573,7 +572,7 @@
         <section class="side-friends">
             <div class="x-header">
                 {% if user.friends.count > 0 %}
-                <a href="javascript:$('.view_all_friends').click()">
+                <a href="#" onclick="$('.view_all_friends').click()">
                     {% translate 'View All' %}
                 </a>
                 {% endif %}    

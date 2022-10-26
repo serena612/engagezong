@@ -9,7 +9,7 @@ from django.dispatch import receiver
 from engage.core.models import Notifications
 from engage.services import Notifications as NotificationsService
 from engage.core.constants import WinAction, NotificationTemplate
-from engage.core.models import BattlePassMission
+from engage.core.models import BattlePassMission, Sticker
 from engage.services import notify_when, FCM
 from .constants import FriendStatus, CoinTransaction, Transaction
 from .models import (
@@ -246,5 +246,4 @@ def user_send_coins(sender, instance, created, **kwargs):
     instance.user.save()
     instance.receiver.seen_coins = False
     instance.receiver.save()
-
 

@@ -158,8 +158,8 @@ class TournamentMatchInlineForm(forms.ModelForm):
             self.fields['winners'].queryset = self.fields['winners'].queryset.none() # self.fields['winners'].queryset.distinct()
             self.fields["participants"].widget = HiddenInput()
             self.fields["winners"].widget = HiddenInput()
-            # self.fields["image"].widget.hiddencustom = True
-        
+            self.fields["image"].widget.attrs.update({'hidden': True})
+
     def clean(self):
         """
         This is the function that can be used to 
@@ -199,16 +199,15 @@ class RequiredFormSet(forms.models.BaseInlineFormSet):
         except:
             return
         combined = [[item, sublist[1]] for sublist in querysets for item in sublist[0]]
-        print(combined)
+        #print(combined)
 
         seen = set()
         dups = [x for x in combined if tuple(x) in seen or seen.add(tuple(x))]  
-        print("Repeated: ", dups)
+        #print("Repeated: ", dups)
         if len(dups)>0:
             raise ValidationError([{
                 'participants': _('Participant(s): '+ ", ".join([dup[0].username for dup in dups]) +' is/are repeated!')
             }])
-        
 
 
 class TournamentMatchInline(CompactInline):

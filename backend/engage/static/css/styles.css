@@ -6504,7 +6504,8 @@ color: white !important;
   font-weight: 600 !important;
 }
 
-a:hover, #contact-form button:hover, #support-form button:hover, .login-form button:hover, .frmregister button:hover {
+a:hover, #contact-form button:hover, #support-form button:hover, .login-form button:hover, .frmregister button:hover, .notification-btn:hover,
+#edit-profile-form button:hover {
    /* IE 8 */
    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)" !important;
 
@@ -6554,6 +6555,27 @@ a:hover, #contact-form button:hover, #support-form button:hover, .login-form but
   height: 319px;
   /* background-color: red; */
 }
+.edit-profile .title-wrapper.type-2 h3.box-title{
+    cursor: auto!important;
+}
+.home-winners-results .container{
+  overflow-x: auto;
+}
+@media (min-width: 576px){
+  #game-fullscreen-modal{
+    overflow-y: hidden!important;
+  }
+  #game-fullscreen-modal .modal-dialog {    
+      margin: 0px auto;
+  }
+  #game-fullscreen-modal .modal-dialog .modal-content {    
+    height: auto!important;
+  }
+  #game-fullscreen-modal .modal-dialog .modal-content iframe{    
+    height: calc(100vh - 44px)!important;
+  }
+}
+
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }

@@ -15,8 +15,12 @@ $(function () {
   $('.drp_game').on('change', function() {
     var value = $(this).val();
     if($('.drp_tournament .selectize-dropdown-content').find('.option').length==0){
+      
+      setTimeout(() => {
       $('.drp_tournament  .selectize-input').click();
       $('.drp_tournament  .selectize-dropdown').addClass('invisible');
+      }, 500);
+      
     }
      setTimeout(function(){
       $('.drp_tournament  .selectize-dropdown-content').find('.option').hide();
@@ -58,7 +62,9 @@ $(function () {
         $('.drp_tournament  .selectize-input').find('.item').attr('data-value',$('.drp_tournament  .selectize-dropdown-content').find('.option.active').attr('data-value'));
         getWinners($('.drp_game').val(),$('.drp_tournament  .selectize-input').find('.item').attr('data-value'));
 
-       
+       var valueTournament = $('.drp_tournament  .selectize-input').find('.item').attr('data-value');
+       if(valueTournament == undefined)
+          $(".loading-tr").find(".loading-img").hide();
       },600)
     
     })
@@ -138,7 +144,7 @@ $(function () {
     // });
 
   //scroll to tournaments section or games section when user clicks the navbar links
-  $("#hometournaments, #homegames,#li_winners,#a-redeem,#a-prize").on("click", function () {
+  $("#hometournaments, #homegames,#li_winners").on("click", function () { //,#a-redeem,#a-prize
     hashchanged();
   });
 

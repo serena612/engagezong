@@ -3,7 +3,7 @@ from rest_framework import mixins, viewsets, status, permissions, exceptions
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from engage.account.constants import Transaction
+from engage.account.constants import Transaction, CoinTransaction
 
 from engage.core.models import HTML5Game, Avatar, FeaturedGame
 from engage.account.exceptions import CoinLimitReached
@@ -72,13 +72,16 @@ class FeaturedGameViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        transaction = UserTransactionHistory.objects.create(
-            user=request.user,
-            amount=10,
-            info=Transaction.Retrieve
-        )
         featured_game = self.queryset.get(name=instance)
         new_coins = featured_game.nbr_of_coins if  featured_game else 10
+        transaction = UserTransactionHistory.objects.create(
+            user=request.user,
+            amount=new_coins,
+            action=CoinTransaction.RETRIEVE,
+            info=Transaction.RETRIEVE
+        )
+        print(transaction.actual_amount)
+        print(transaction.__dict__)
         if transaction.actual_amount == 0:
             raise CoinLimitReached()
         else:
