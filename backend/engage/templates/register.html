@@ -46,6 +46,7 @@
 
             var is_complete_profile = false;
             var is_authenticated = false;
+            var refid = '{{ refid }}';
             
         </script>
        
@@ -1930,7 +1931,7 @@
                 
                     <div class="text-color-4-light"
                             style="font-size: .9rem; color: red;width:100%;">
-                            <span style="color: #fff;margin-left: auto;position: relative;display: block;text-align: right; margin-top: 9px;">{% translate "Didn't receive pincode? " %} <u style="cursor:pointer" onclick="sendPinCode()">{% translate "Send again" %} </u></span>
+                            <span style="color: #fff;margin-left: auto;position: relative;display: block;text-align: right; margin-top: 9px;">{% translate "Didn't receive pincode? " %} <u style="cursor:pointer" onclick="$('.frmregister').find('.btn3').click()">{% translate "Send again" %} </u></span>
                             <span class="response-msg" style="top:-4px;position:relative;float:left;"></span>
                     </div>
                

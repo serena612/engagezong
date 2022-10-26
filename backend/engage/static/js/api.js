@@ -1328,7 +1328,7 @@ function checkLogMenus(){
 //**********/
 $(function () {
    $('.top-nav .search-box').find('input[name="search"]').keyup(function(){
-     if($(this).val().length < 3){
+     if($(this).val().length < 1){
         $('.results-box').hide();
         return;
      }
@@ -1350,7 +1350,7 @@ $(function () {
 
         switch (option) {
             case "tournaments":
-                url = "/api/tournaments/?size=6&search=" + text;
+                url = "/api/tournaments/get_tournaments2/?search="+text;
                 break;
 
             case "games":
@@ -1358,7 +1358,7 @@ $(function () {
                 break;
 
             case "users":
-                url = "/api/users/?size=30&search=" + text;
+                url = "/api/users/?size=999&search=" + text;
                 break;
         }
 
@@ -1385,7 +1385,7 @@ $(function () {
                         headers: {},
                         type: "get",
                         data: {},
-                        error: function (value) {
+                        error: function (data) {
                             search_ajax = null;
                             var html = `
                                     <li class="msg-text">
@@ -1394,18 +1394,18 @@ $(function () {
                                     `;
                             box.html(html);
                         },
-                        success: function (value) {
+                        success: function (data) {
                             box.find(".loading-item").remove();
                             search_ajax = null;
 
-                            if (value.next) {
+                            if (data.next) {
                                 has_next = true;
-                                url = value.next;
+                                url = data.next;
                             } else {
                                 has_next = false;
                             }
-
-                            if (value.results.length == 0) {
+                            if(option != "tournaments"){
+                            if (data.results.length == 0) {
                                 var html = `
                                     <li class="msg-text">
                                         No Results Found!
@@ -1414,10 +1414,19 @@ $(function () {
 
                                 box.append(html);
                             }
+                            }
+                            else{
+                                if (data.data.length == 0) {
+                                    var html = `
+                                        <li class="msg-text">
+                                            No Results Found!
+                                        </li>
+                                        `;
 
-                            value.results.forEach((item) => {
+                                    box.append(html);
+                                }
+                                data.data.forEach((item) => { 
                                 var html = "";
-                                if (option == "tournaments") {
                                     html = `
                                         <li>
                                             <a href="/tournaments/${item.slug}">
@@ -1434,9 +1443,9 @@ $(function () {
                                                     <p class="post-meta">
                                                         <i class="fas fa-clock"></i>
                                                         <span>${
-                                                          item.starts_in < 0
+                                                          item.start_date < 0
                                                             ? "Past"
-                                                            : "Starts in: " + item.starts_in
+                                                            : "Starts in: " + item.start_date
                                                         }</span>
                                                         <i class="fas fa-users"></i>
                                                         <span>${
@@ -1447,7 +1456,19 @@ $(function () {
                                             </a>
                                         </li>
                                     `;
+                                    box.append(html); 
+
+
+
+
+
+
+                                });
+
                                 }
+
+                            data.results.forEach((item) => {
+                                
 
                                 if (option == "games") {
                                     html = `

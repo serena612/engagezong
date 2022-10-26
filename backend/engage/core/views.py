@@ -61,8 +61,10 @@ def register_view(request):
     if request.user and request.user.is_authenticated :
        return redirect('/')
     else :
-       print(request.headers)
-       return render(request, 'register.html', {'wifi':True})
+       # print(request.headers)
+       refid = request.GET.get('referrer')
+       print(refid)
+       return render(request, 'register.html', {'wifi':True, 'refid':refid})
 
 def waiting_view(request):
     # print('user_id' in request.session)
@@ -72,7 +74,7 @@ def waiting_view(request):
         userid = request.session.pop('user_id', None)
         return redirect('/')
     else :
-        print(request.headers)
+        # print(request.headers)
         # print("user", request.user)
         user = User.objects.get(pk=request.session['user_id'])
         return render(request, 'wait.html', {'wifi':True, 'user':user})
@@ -102,7 +104,8 @@ def new_register_view(request):
     if request.user and request.user.is_authenticated :
         return redirect('/')
     else :
-        return render(request, 'register1.html', {})
+        refid = request.GET.get('referrer')
+        return render(request, 'register1.html', {'refid':refid})
 
 
 def header_view(request):

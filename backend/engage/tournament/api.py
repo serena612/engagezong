@@ -392,26 +392,11 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                 Prefetch(
                     'tournamentprize_set',
                     queryset=TournamentPrize.objects.order_by('position')
-                )).filter(regions__in=[self.request.region])
+                ))
+        tournament_list = gettour(user,tournament_list,self.request.region)
         if game != '0' :
             tournament_list = tournament_list.filter(game__id=int(game))
         
-        if not user.is_authenticated:
-            tournament_list = tournament_list.filter(
-                free_open_date__lte=now,
-            ).annotate(live_null=Count('live_link'),started_null=Count('started_on')) 
-        else :
-            tournament_list = tournament_list.annotate(
-                is_min_level=Case(
-                    When(Q(minimum_profile_level__isnull=False) &
-                         Q(minimum_profile_level__gt=user.level),
-                         then=False),
-                    default=True
-                )
-            ).filter(
-                 Q(free_open_date__lte=now) |
-                (Q(Q(minimum_profile_level__lte=user.level) | Q(minimum_profile_level__isnull=True)) & Q(free_open_date__gt=now))
-            ).annotate(live_null=Count('live_link'),started_null=Count('started_on'))
         upcoming = tournament_list.filter(end_date__gte=now,started_on__isnull=True).order_by('start_date')
         ongoing = tournament_list.filter(end_date__gt=now,started_on__isnull=False).order_by('-live_null', 'start_date')
         previous = tournament_list.filter(end_date__lt=now)
@@ -447,7 +432,60 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
             },
             
         })  
+
+    
+    @action(detail=False, methods=['get'], permission_classes=(permissions.AllowAny,))
+    def get_tournaments2(self, request):
+        user = self.request.user
+       
+        search = self.request.query_params.get('search',None)
+       
+        queryset = Tournament.objects.all().order_by('name')
+        tournament_list = queryset
+        tournament_list = gettour(user,tournament_list,self.request.region)
+        tournament_list=tournament_list.filter(name__icontains=search)
         
+        serializer = TournamentSerializer(tournament_list,many=True, context={'requesto': request})
+        return  Response({
+            "data": serializer.data,
+            
+        
+        })  
+        
+
+def gettour(user,tournament_list,region):
+    
+  
+    now = timezone.now()
+   
+       
+    if not user.is_authenticated:
+            tournament_list = tournament_list.filter(
+                free_open_date__lte=now,
+            ).annotate(live_null=Count('live_link'),started_null=Count('started_on')) 
+    else :
+            tournament_list = tournament_list.annotate(
+                is_min_level=Case(
+                    When(Q(minimum_profile_level__isnull=False) &
+                         Q(minimum_profile_level__gt=user.level),
+                         then=False),
+                    default=True
+                )
+            ).filter(
+                Q(minimum_profile_level__lte=user.level)  &  Q(free_open_date__lte=now)
+            ).annotate(live_null=Count('live_link'),started_null=Count('started_on'))
+  
+    return tournament_list.filter(regions__in=[region])
+
+
+    
+
+ 
+   
+
+
+
+
 
 class TournamentPrizeViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = TournamentPrize.objects.select_related(

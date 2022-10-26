@@ -4,7 +4,6 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from engage.account.constants import Transaction, CoinTransaction
-
 from engage.core.models import HTML5Game, Avatar, FeaturedGame
 from engage.account.exceptions import CoinLimitReached
 from engage.account.models import UserTransactionHistory
@@ -80,8 +79,8 @@ class FeaturedGameViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             action=CoinTransaction.RETRIEVE,
             info=Transaction.RETRIEVE
         )
-        print(transaction.actual_amount)
-        print(transaction.__dict__)
+        # print(transaction.actual_amount)
+        # print(transaction.__dict__)
         if transaction.actual_amount == 0:
             raise CoinLimitReached()
         else:

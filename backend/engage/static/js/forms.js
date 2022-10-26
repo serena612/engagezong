@@ -406,6 +406,7 @@ $(document).on("submit", ".frmregister", function (e) {
     var response_msg = form.find(".response-msg");
     response_msg.hide();response_msg.html('');
     var btn = form.find("button[type=submit]");
+    
     if($('input[name="phone_number"]').css('display')!="none" && data.data.phone_number=="")
        return;
    
@@ -473,6 +474,7 @@ $(document).on("submit", ".register-otp-form", function (e) {
     var response_msg = form.find(".response-msg");
     var data = getFormData(form);
     data.data.phone_number = $('.frmregister').find('input[name="phone_number"]').val();
+    data.data.refid = refid;
     if(data.data.phone_number!=undefined){
         var firststr = data.data.phone_number;
         if(data.data.phone_number.length == 11){ 

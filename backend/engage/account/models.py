@@ -110,7 +110,6 @@ class User(AbstractUser, TimeStampedModel):
     game_nicknames = property(_get_nicknames)
 
 
-
     def __str__(self):
         if self.is_staff:
             return self.username
