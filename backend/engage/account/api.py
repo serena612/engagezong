@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.core.paginator import Paginator
 from ipaddress import ip_address
-from engage.settings.base import API_SERVER_URL, USER_EXCEPTION_LIST, VAULT_SERVER_URL, ENABLE_VAULT, INTEGRATION_DISABLED
+from engage.settings.base import API_SERVER_URL, USER_EXCEPTION_LIST, VAULT_SERVER_URL, ENABLE_VAULT, INTEGRATION_DISABLED, TRUSTED_IP
 import requests
 from rest_framework import mixins, viewsets, status, exceptions
 from rest_framework.generics import get_object_or_404
@@ -26,8 +26,8 @@ import sys, base64, hvac, json
 
 from .constants import (
     FriendStatus,
-    SubscriptionPlan,
     SectionLog,
+    SubscriptionPlan,
     Transaction
 )
 from engage.core.constants import WinAction, NotificationTemplate
@@ -70,7 +70,7 @@ class EncryptedMessageSender:
         # self.request_url = request_url
         # self.headers = headers
         # self.data = data
-        self.client = hvac.Client(url=vault_url, timeout=1)
+        self.client = hvac.Client(url=vault_url, timeout=2)
         self.keys = keys
         self.username = username
         self.password = password
@@ -165,7 +165,7 @@ class EncryptedMessageSender:
             enc_data = data
         
         try:
-            api_call = requests.post(url, headers={'message': enc_headers}, json={'message': enc_data}, timeout=1)
+            api_call = requests.post(url, headers={'message': enc_headers}, json={'message': enc_data}, timeout=2)
         except requests.exceptions.RequestException as e:
             print(e)
             return 'Server error', 555
@@ -196,7 +196,7 @@ def send_pincode(phone_number, idnetwork="1", vault=None):
     url = API_SERVER_URL+command
     
     try:
-        api_call = requests.post(url, headers=headers, data={}, timeout=1)
+        api_call = requests.post(url, headers=headers, data={}, timeout=2)
     except requests.exceptions.RequestException as e:
         print(e)
         return 'Server error', 555
@@ -225,7 +225,7 @@ def verify_pincode(phone_number, pincode, vault=None):
     url = API_SERVER_URL+command
     
     try:
-        api_call = requests.post(url, headers=headers, json=data, timeout=1)
+        api_call = requests.post(url, headers=headers, json=data, timeout=2)
     except requests.exceptions.RequestException as e:  
         print(e)
         return 'Server error', 555
@@ -247,7 +247,7 @@ def load_data_api(phone_number, idnetwork, vault=None):
     if vault:
         return vault.send(command=command, headers=headers)
     try:
-        api_call = requests.post(url, headers=headers, data={}, timeout=1)
+        api_call = requests.post(url, headers=headers, data={}, timeout=2)
     except requests.exceptions.RequestException as e:  
         print(e)
         return 'Server error', 555
@@ -328,6 +328,8 @@ class AuthViewSet(viewsets.GenericViewSet):
                 request.session['subscribed']=response['idbundle']
                 return Response({}, status=status.HTTP_200_OK)
             else:
+                if code==80:
+                    request.session['renewing']=True
                 if code < 100:
                     code += 400
                 return Response({'error': response}, status=code)
@@ -387,14 +389,15 @@ class AuthViewSet(viewsets.GenericViewSet):
                 username__iexact=username,
                 region=request.region
             )
-            if user:
+            if user and user.first().is_active:
                 return Response({}, status=status.HTTP_306_RESERVED)
                 
             user = UserModel.objects.filter(
                 mobile__iexact=username,
                 region=request.region
             )
-            if user:
+            
+            if user and user.first().is_active:
                 return Response({}, status=status.HTTP_306_RESERVED)
         except UserModel.DoesNotExist:
             return Response({}, status=status.HTTP_200_OK)
@@ -430,7 +433,7 @@ class AuthViewSet(viewsets.GenericViewSet):
         if (usermob and code==0) or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:
             response2, code2 = load_data_api(usermob, "1", self.client)  # 1 for wifi
             
-            if code2==56 or code2==76 or code2==77 or code2==79 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub
+            if code2==56 or code2==75 or code2==76 or code2==77 or code2==79 or code2==80 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub
                 
                 try:
                     user = UserModel.objects.filter(
@@ -463,7 +466,7 @@ class AuthViewSet(viewsets.GenericViewSet):
 
 
                             # if the user has already sent a subscription via other means but does not have a profile registered on the website
-                            if code2==76 or code2==77 or code2==79:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
+                            if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
                                 if response2['idbundle'] == 1:
                                     subscription = 'free'
                                 elif response2['idbundle'] == 2:
@@ -471,7 +474,7 @@ class AuthViewSet(viewsets.GenericViewSet):
                                 elif response2['idbundle'] == 3:
                                     subscription = 'paid2'
                                 if not user:  # attempt to create a profile
-                                    if code2==79:
+                                    if code2==77:
                                         is_active=True
                                     else:
                                         is_active=False
@@ -504,12 +507,12 @@ class AuthViewSet(viewsets.GenericViewSet):
                                             user.avatar = avatar
 
                                         user.save()
-
-                                    @notify_when(events=[NotificationTemplate.LOGIN],
-                                                is_route=False, is_one_time=False)
-                                    def notify(user, user_notifications):
-                                        """ extra logic if needed """
-                                    notify(user=user)
+                                    if is_active:
+                                        @notify_when(events=[NotificationTemplate.LOGIN],
+                                                    is_route=False, is_one_time=False)
+                                        def notify(user, user_notifications):
+                                            """ extra logic if needed """
+                                        notify(user=user)
 
                                     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                                     request.session['user_id'] = user.pk
@@ -532,18 +535,18 @@ class AuthViewSet(viewsets.GenericViewSet):
                 except UserModel.DoesNotExist:
                     raise exceptions.ValidationError({'error':'Invalid Mobile Number'})
 
-                if code2==76 or code2==77 or not user.is_active:
+                if code2==76 or code2==79 or code2==80 or code2==75 or not user.is_active:
                     print("user", user, "is not active redirect to wait page")
                     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                     request.session['user_id'] = user.pk
                     # return redirect('/wait')
                     return Response({'message': response2}, status=514)
-                
-                @notify_when(events=[NotificationTemplate.LOGIN],
-                            is_route=False, is_one_time=False)
-                def notify(user, user_notifications):
-                    """ extra logic if needed """
-                notify(user=user)
+                if user.is_active:
+                    @notify_when(events=[NotificationTemplate.LOGIN],
+                                is_route=False, is_one_time=False)
+                    def notify(user, user_notifications):
+                        """ extra logic if needed """
+                    notify(user=user)
 
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 
@@ -580,19 +583,19 @@ class AuthViewSet(viewsets.GenericViewSet):
         response, code = verify_pincode(username, otp, vault=self.client)
         if code==0 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:
             response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
-            if code2==76 or code2==77 or code2==79:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
+            if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
                 if response2['idbundle'] == 1:
                     subscription = 'free'
                 elif response2['idbundle'] == 2:
                     subscription = 'paid1'
                 elif response2['idbundle'] == 3:
                     subscription = 'paid2'
-            if code2==56 or code2==76 or code2==77 or code2==79 or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub - 75 under process
-                if code2==56:  # profile does not exist so we send subscription request
+            if code2==56 or code2==80 or code2==76 or code2==77 or code2==79 or code2==75 or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 79 pending unsub - 77 sub - 75 under process
+                if code2==56 or code2==80:  # profile does not exist so we send subscription request
                     response3, code3 = subscribe_api(username, idbundle, idservice, vault=self.client)
-                if code2==76 or code2==77 or code2==79 or (code2==56 and code3 ==0) or INTEGRATION_DISABLED: # profile does exist so we create local record based on it
-                    
-                    if code2==79 or INTEGRATION_DISABLED:
+                if code2==76 or code2==77 or code2==75 or code2==79 or (code2==56 and code3 ==0) or (code2==80 and code3 ==0) or INTEGRATION_DISABLED: # profile does exist so we create local record based on it
+                    request.session.pop('renewing', None)
+                    if code2==77 or INTEGRATION_DISABLED:
                         is_active=True
                     avatar = Avatar.objects.order_by('?').first()
                     user, created =  User.objects.get_or_create(
@@ -622,12 +625,12 @@ class AuthViewSet(viewsets.GenericViewSet):
                         if avatar :
                             user.avatar = avatar
                         user.save()
-
-                    @notify_when(events=[NotificationTemplate.LOGIN],
-                                is_route=False, is_one_time=False)
-                    def notify(user, user_notifications):
-                        """ extra logic if needed """
-                    notify(user=user)
+                    if is_active:
+                        @notify_when(events=[NotificationTemplate.LOGIN],
+                                    is_route=False, is_one_time=False)
+                        def notify(user, user_notifications):
+                            """ extra logic if needed """
+                        notify(user=user)
                     
                     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                     request.session['user_id'] = user.pk
@@ -782,16 +785,21 @@ class UserViewSet(mixins.ListModelMixin,
         except:
             refid = None
         new_substatus = serializer.validated_data['new_substatus']
-        
+        if new_substatus.lower() == 'p30':
+            subscription = 'paid1'
+        elif new_substatus.lower() == 'p50':
+            subscription = 'paid2'
+        else:
+            subscription = 'free'
         
         print(request.META.get('HTTP_X_FORWARDED_FOR'))
         ip = ip_address(request.META.get('HTTP_X_FORWARDED_FOR').split(",")[0])
-        if not ip.is_private:
+        if str(ip) != TRUSTED_IP: # not ip.is_private:
             raise exceptions.PermissionDenied('Request not Allowed!')
         userexist = User.objects.filter(mobile=msisdn)
-        if new_substatus not in SubscriptionPlan.values:
+        if subscription not in SubscriptionPlan.values:
             raise exceptions.ValidationError({'new_substatus':'The subscription plan provided is not valid!'})
-        elif userexist and userexist.first().subscription==new_substatus:
+        elif userexist and userexist.first().subscription==subscription:
             raise exceptions.ValidationError({'new_substatus': 'User already has subscription '+ new_substatus})
         
         else:
@@ -812,7 +820,7 @@ class UserViewSet(mixins.ListModelMixin,
                             'email': '',
                             'is_active': True,
                             'is_staff': False,
-                            'subscription': new_substatus,
+                            'subscription': subscription,
                             'date_joined': datetime.now(),
                             'modified' : datetime.now(),
                             'newsletter_subscription': True,
@@ -842,7 +850,7 @@ class UserViewSet(mixins.ListModelMixin,
                     return Response({'error': 'Error in creating new user profile!'}, status=474)
                 
             else:
-                num = userexist.update(subscription=new_substatus)
+                num = userexist.update(subscription=subscription)
                 if num >0:
                     resp['message'] = 'User subscription has been successfully updated!'
                     resp['subscription'] = new_substatus
@@ -903,9 +911,10 @@ class UserViewSet(mixins.ListModelMixin,
         msisdn = serializer.validated_data['msisdn']
         resp = {}
                 
-        print(request.META.get('HTTP_X_FORWARDED_FOR'))
+        # print(request.META.get('HTTP_X_FORWARDED_FOR'))
         ip = ip_address(request.META.get('HTTP_X_FORWARDED_FOR').split(",")[0])
-        if not ip.is_private:
+        print(ip, str(ip)!=TRUSTED_IP)
+        if str(ip) != TRUSTED_IP: # not ip.is_private:
             raise exceptions.PermissionDenied('Request not Allowed!')
         userexist = User.objects.filter(mobile=msisdn)
         if not userexist:

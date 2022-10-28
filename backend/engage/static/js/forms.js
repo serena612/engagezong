@@ -108,8 +108,10 @@ $(document).on("submit", ".login-form", function (e) {
         response_msg.html('The number you have provided is invalid!').show();
         else if(e.status==458)
         response_msg.html('The max allowed sent pin codes have been reached! Please try again tomorrow.').show();
+        else if(e.status==555)
+        response_msg.html('No connection available, please try again later.').show();
         else
-        response_msg.html('Unkown error! Please contact the site administrator. Error code: '+e.status).show();
+        response_msg.html('Something went wrong. Please try again later. Error code: '+e.status).show();
         setBtnLoading(btn, false);
 
         
@@ -188,7 +190,7 @@ $(document).on("submit", ".login-otp-form", function (e) {
             $('#wait-modal').modal("show");
             get_wait_modal();}
         else
-        response_msg.html('Unkown error! Please contact the site administrator. Error code: '+e.status).show();
+        response_msg.html('Something went wrong. Please try again later. Error code: '+e.status).show();
         setBtnLoading(btn, false);
     });
 })
@@ -459,8 +461,10 @@ $(document).on("submit", ".frmregister", function (e) {
         response_msg.html('The number you have provided is invalid!').show();
         else if(e.status==458)
         response_msg.html('The max allowed sent pin codes have been reached! Please try again tomorrow.').show();
+        else if(e.status==555)
+        response_msg.html('No connection available, please try again later.').show();
         else
-        response_msg.html('Unkown error! Please contact the site administrator. Error code: '+e.status).show();
+        response_msg.html('Something went wrong. Please try again later. Error code: '+e.status).show();
         setBtnLoading(btn, false);
     });
 
@@ -532,7 +536,7 @@ $(document).on("submit", ".register-otp-form", function (e) {
             $('#wait-modal').modal("show");
             get_wait_modal();}
         else
-        response_msg.html('Unkown error! Please contact the site administrator. Error code: '+e.status).show();
+        response_msg.html('Something went wrong. Please try again later. Error code: '+e.status).show();
         setBtnLoading(btn, false);
         ///location.reload();
     });

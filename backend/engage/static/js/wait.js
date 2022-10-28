@@ -50,10 +50,12 @@ function keepUpdated() {
         response_msg.html("<img class='loading-img' src='/static/img/loading1.gif' /><br>Unsubscription Request pending...").show();
         else if(e.status==456)
         response_msg.html("<img class='loading-img' src='/static/img/loading1.gif' /><br>Profile Creation pending...").show();
+        else if(e.status==480)
+        response_msg.html("<br>Your subscription has ended. Please renew your subscription <a href='/register'>here</a>.").show();
         else if(e.status==0)
         response_msg.html("<img class='loading-img' src='/static/img/loading1.gif' /><br>Request interrupted. Refreshing page...").show();
         else
-        response_msg.html('Unkown error! Please contact the site administrator. '+e.status).show();
+        response_msg.html('Something went wrong. Please try again later. '+e.status).show();
         //setBtnLoading(btn, false); 
         setTimeout(keepUpdated, 5000);
     });

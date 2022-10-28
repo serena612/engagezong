@@ -70,7 +70,7 @@ class UserTransactionInline(admin.TabularInline):
 @admin.register(models.User)
 class UserAdmin(UserAdmin):
     list_display = ('username', 'nickname', 'subscription', 'date_joined', 'last_login', 'last_updated')
-    readonly_fields = ('last_login', 'date_joined', 'coins','game_nicknames')
+    readonly_fields = ('last_login', 'date_joined', 'coins','game_nicknames', 'subscription')
     fieldsets = (
         (None, {'fields': ('avatar', 'nickname', 'username', 'password', 'coins', 'subscription', 'last_login', 'date_joined','game_nicknames')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'mobile', 'country')}),
@@ -150,7 +150,7 @@ admin.site.register(StaffUser, MiniUserAdmin)
 class EndUserAdmin(UserAdmin):
     list_display = ('username', 'nickname', 'subscription', 'date_joined', 'last_login', 'last_updated')
     list_filter = ['is_active', 'is_superuser', ]
-    readonly_fields = ('last_login', 'date_joined', 'coins','game_nicknames')
+    readonly_fields = ('last_login', 'date_joined', 'coins','game_nicknames', 'subscription')
     fieldsets = (
         (None, {'fields': ('avatar', 'nickname', 'username', 'password', 'coins', 'subscription', 'last_login', 'date_joined','game_nicknames')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'mobile', 'country')}),

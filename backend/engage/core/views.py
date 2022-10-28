@@ -58,7 +58,7 @@ def about_view(request):
 
 ## TODO: to handle header enrichment here
 def register_view(request):
-    if request.user and request.user.is_authenticated :
+    if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
        return redirect('/')
     else :
        # print(request.headers)
@@ -101,7 +101,7 @@ def clear_session_view(request):
     return redirect('/')
 
 def new_register_view(request):
-    if request.user and request.user.is_authenticated :
+    if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
         return redirect('/')
     else :
         refid = request.GET.get('referrer')

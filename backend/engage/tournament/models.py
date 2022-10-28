@@ -166,9 +166,10 @@ class Tournament(TimeStampedModel):
                 print("sticker", sticker)
                 if self.give_sticker:
                     if sticker :
+                        participant.stickers.add(sticker)
                         if not participant.stickers.all():
                             participant.stickers.create()
-                        participant.stickers.add(sticker)                        
+                            participant.stickers.add(sticker)                        
                         #participant.refresh_from_db()
                         # participant.save()
                         print("sticker added !")

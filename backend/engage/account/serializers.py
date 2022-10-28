@@ -106,7 +106,7 @@ class SendCoinsSerializer(serializers.Serializer):
 class UpdateSubscriptionSerializer(serializers.Serializer):
     msisdn = serializers.CharField()
     refid = serializers.CharField(required=False)
-    new_substatus = serializers.ChoiceField(choices=SubscriptionPlan.choices)
+    new_substatus = serializers.CharField() # serializers.ChoiceField(choices=SubscriptionPlan.choices)
 
     def validate(self, attrs):
         msisdn = attrs.get('msisdn')

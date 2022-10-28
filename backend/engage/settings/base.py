@@ -446,3 +446,6 @@ USER_EXCEPTION_LIST = ['admin', 'player483', 'player488']
 ENABLE_VAULT = False
 VAULT_SERVER_URL = 'https://engage.devapp.co/'
 INTEGRATION_DISABLED = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_GAGADED_PROTO', 'https')
+TRUSTED_IP = '157.230.100.145'
