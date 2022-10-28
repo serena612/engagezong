@@ -328,8 +328,8 @@ class AuthViewSet(viewsets.GenericViewSet):
                 request.session['subscribed']=response['idbundle']
                 return Response({}, status=status.HTTP_200_OK)
             else:
-                if code==80:
-                    request.session['renewing']=True
+                # if code==80:
+                #     request.session['renewing']=True
                 if code < 100:
                     code += 400
                 return Response({'error': response}, status=code)
@@ -433,7 +433,7 @@ class AuthViewSet(viewsets.GenericViewSet):
         if (usermob and code==0) or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:
             response2, code2 = load_data_api(usermob, "1", self.client)  # 1 for wifi
             
-            if code2==56 or code2==75 or code2==76 or code2==77 or code2==79 or code2==80 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub
+            if code2==56 or code2==75 or code2==76 or code2==77 or code2==79 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub
                 
                 try:
                     user = UserModel.objects.filter(
@@ -535,7 +535,7 @@ class AuthViewSet(viewsets.GenericViewSet):
                 except UserModel.DoesNotExist:
                     raise exceptions.ValidationError({'error':'Invalid Mobile Number'})
 
-                if code2==76 or code2==79 or code2==80 or code2==75 or not user.is_active:
+                if code2==76 or code2==79 or code2==75 or not user.is_active:
                     print("user", user, "is not active redirect to wait page")
                     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                     request.session['user_id'] = user.pk
@@ -594,7 +594,7 @@ class AuthViewSet(viewsets.GenericViewSet):
                 if code2==56 or code2==80:  # profile does not exist so we send subscription request
                     response3, code3 = subscribe_api(username, idbundle, idservice, vault=self.client)
                 if code2==76 or code2==77 or code2==75 or code2==79 or (code2==56 and code3 ==0) or (code2==80 and code3 ==0) or INTEGRATION_DISABLED: # profile does exist so we create local record based on it
-                    request.session.pop('renewing', None)
+                    # request.session.pop('renewing', None)
                     if code2==77 or INTEGRATION_DISABLED:
                         is_active=True
                     avatar = Avatar.objects.order_by('?').first()

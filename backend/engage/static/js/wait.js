@@ -55,10 +55,35 @@ function keepUpdated() {
         else if(e.status==0)
         response_msg.html("<img class='loading-img' src='/static/img/loading1.gif' /><br>Request interrupted. Refreshing page...").show();
         else
-        response_msg.html('Something went wrong. Please try again later. '+e.status).show();
+        response_msg.html('Something went wrong. Please try again later.').show();  // + +e.status
         //setBtnLoading(btn, false); 
         setTimeout(keepUpdated, 5000);
     });
     //setTimeout(keepUpdated(), 5000);
+    var t = setInterval(() => {
+         
+        var statusW = $(".sub_status").html();
+        if(statusW != "" && statusW == "Subscription Success !")
+        {
+            $("#wait-modal .preload").addClass("d-none");
+            $("#wait-modal .msg").removeClass("d-none");  
+            $("#wait-modal").find(".error-bd").addClass("d-none");  
+            $("#wait-modal").find(".success-bd").removeClass("d-none");          
+            $(".please_wait").addClass("d-none");
+            clearInterval(t);
+        } 
+        else if(statusW != "" && statusW != "Subscription Success !")
+        {
+            $("#wait-modal .preload").addClass("d-none");
+            $("#wait-modal .msg").removeClass("d-none");  
+            $("#wait-modal").find(".error-bd").removeClass("d-none");  
+            $("#wait-modal").find(".success-bd").addClass("d-none");          
+            $(".please_wait").addClass("d-none");
+            clearInterval(t);
+        } 
+         
+    }, 50);
+
+    
 }
 setTimeout(keepUpdated, 5000);

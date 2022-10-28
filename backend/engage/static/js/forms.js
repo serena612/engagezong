@@ -111,7 +111,7 @@ $(document).on("submit", ".login-form", function (e) {
         else if(e.status==555)
         response_msg.html('No connection available, please try again later.').show();
         else
-        response_msg.html('Something went wrong. Please try again later. Error code: '+e.status).show();
+        response_msg.html('Something went wrong. Please try again later.').show();  // Error code: '+e.status
         setBtnLoading(btn, false);
 
         
@@ -184,13 +184,15 @@ $(document).on("submit", ".login-otp-form", function (e) {
         response_msg.html('Exceed maximum allowed attempts! Please try again later.').show();
         else if(e.status==472)
         response_msg.html('Invalid Phone Number provided!').show();
+        else if(e.status==480)
+        response_msg.html('Your subscription has ended. Please renew your subscription <a href="/register">here</a>.').show();
         else if(e.status==514){
             $('#login-modal').modal("hide");
             // $('.login-form').trigger("reset");
             $('#wait-modal').modal("show");
             get_wait_modal();}
         else
-        response_msg.html('Something went wrong. Please try again later. Error code: '+e.status).show();
+        response_msg.html('Something went wrong. Please try again later.').show();  //  Error code: '+e.status
         setBtnLoading(btn, false);
     });
 })
@@ -211,10 +213,25 @@ function get_wait_modal() {
         data: {},
         async:true,
         beforeSend: function(){
-                $('#waitmodalcontent').html("<img class='loading-img' src='/static/img/loading1.gif' /><br><div style='text-align: center;'>Loading...</div>");
+                //$('#waitmodalcontent').html("<img class='loading-img' src='/static/img/loading1.gif' /><br><div style='text-align: center;'>Loading...</div>");
+                $("#wait-modal .preload").removeClass("d-none");
               },
         success:function(result){
-            $('#waitmodalcontent').html(result);
+           // $('#waitmodalcontent').html(result); 
+           alert("res:" + result);
+           if(result == "Subscription Success !")
+           { 
+            $("#wait-modal .msg").removeClass("d-none"); 
+            $(".success-bd").removeClass("d-none");
+            $(".error-bd").addClass("d-none");
+            $('#waitmodalcontent').find(".success-bd").find(".desc").html(result);}
+           else
+           {  
+            $("#wait-modal .msg").removeClass("d-none"); 
+            $(".success-bd").addClass("d-none");
+            $(".error-bd").removeClass("d-none");
+            $('#waitmodalcontent').find(".error-bd").find(".desc").html(result);}            
+            
         }
     });
 }
@@ -407,8 +424,10 @@ $(document).on("submit", ".frmregister", function (e) {
     var data = getFormData(form);
     var response_msg = form.find(".response-msg");
     response_msg.hide();response_msg.html('');
-    var btn = form.find("button[type=submit]");
+
+    $(".sendcodemsg").html('').hide();
     
+    var btn = form.find("button[type=submit]");
     if($('input[name="phone_number"]').css('display')!="none" && data.data.phone_number=="")
        return;
    
@@ -454,6 +473,9 @@ $(document).on("submit", ".frmregister", function (e) {
         form.hide();
         $('body').addClass('tab2');
         $(".register-otp-form").show();
+
+        $(".sendcodemsg").html('Pin Code has been sent.').show();       
+
     }).catch(e => {
         if(e.status==306)
         response_msg.html('The mobile number you have provided already exists!').show();
@@ -464,7 +486,7 @@ $(document).on("submit", ".frmregister", function (e) {
         else if(e.status==555)
         response_msg.html('No connection available, please try again later.').show();
         else
-        response_msg.html('Something went wrong. Please try again later. Error code: '+e.status).show();
+        response_msg.html('Something went wrong. Please try again later.').show();  //  Error code: '+e.status
         setBtnLoading(btn, false);
     });
 
@@ -536,7 +558,7 @@ $(document).on("submit", ".register-otp-form", function (e) {
             $('#wait-modal').modal("show");
             get_wait_modal();}
         else
-        response_msg.html('Something went wrong. Please try again later. Error code: '+e.status).show();
+        response_msg.html('Something went wrong. Please try again later.').show(); //  Error code: '+e.status
         setBtnLoading(btn, false);
         ///location.reload();
     });
