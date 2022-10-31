@@ -220,7 +220,7 @@ function get_wait_modal() {
               },
         success:function(result){
            // $('#waitmodalcontent').html(result); 
-           alert("res:" + result);
+           //alert("res:" + result);
            if(result == "Subscription Success !")
            { 
             $("#wait-modal .msg").removeClass("d-none"); 
