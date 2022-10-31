@@ -60,7 +60,7 @@ def about_view(request):
 def register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
        return redirect('/')
-    elif 'headeren' not in request.session:
+    elif 'headeren' not in request.session and request.is_secure():
         return request.build_absolute_uri().replace('https', 'http')
         # return redirect(gaga)
     else :
@@ -125,7 +125,7 @@ def clear_session_view(request):
 def new_register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
         return redirect('/')
-    elif 'headeren' not in request.session:
+    elif 'headeren' not in request.session and request.is_secure():
         return request.build_absolute_uri().replace('https', 'http')
         # return redirect(gaga)
     else :
