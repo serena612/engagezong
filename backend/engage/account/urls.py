@@ -61,6 +61,7 @@ router.register('auth', api.AuthViewSet, 'auth')
 urlpatterns = [
     path('api/', include(router.urls)),
     path('auth/logout/', views.logout_view, name='logout'),
+    path('auth/logout2/', views.logout2_view, name='logout3'),
     path('profile/', views.profile_view, name='profile'),
     path('profile/<uuid:uid>', views.public_profile_view, name='public-profile'),
     path('profile/set-game-account/', views.set_game_linked_account,name='set-game-account'),

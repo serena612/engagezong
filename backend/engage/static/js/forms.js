@@ -671,7 +671,6 @@ $(document).on("submit", "#send-coins-form", function (e) {
         response_msg.html("Coins are now transferred to your friend.").show();
         setTimeout(function(){ $("#send-coins").modal("hide");},3000);
         $('#user-coins').css('background','#EA2D2D');
-        
     }).fail(function (ee) {
         response_msg.html("This amount exceeds your balance.").show();
         setBtnLoading(btn, false);

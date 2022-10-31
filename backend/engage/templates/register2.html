@@ -1104,6 +1104,9 @@
             .frmregister2 .row  {
                 display: block;letter-spacing: -0.3em;
             }
+            .frmregister2 .row .logout {
+               letter-spacing: normal;
+            }
              .frmregister2 button{padding-left:10px;padding-right:10px;width:73px;font-size:11px!important;}
              .is4G .frmregister2 .input1.mb-3 {
                 width: calc(100% - 74px)!important;
@@ -1828,6 +1831,14 @@
             $('.register-otp-form').find('.response-msg').html('A new pincode has been sent!');
             setTimeout(function(){ $('.register-otp-form').find('.response-msg').html('');},3000);
         }
+
+        function fn_logout(url){
+    if(!$('.logout').hasClass('freeze')){
+        window.location.href=url;
+        $('.logout').addClass('freeze');
+    }
+}
+
     </script>
     {% endblock %}
 </head>
@@ -1842,12 +1853,12 @@
             
             <div class="row row_1">
                 
-                    <!-- <input type="text" step="1" class="input1" 
-                        name="phone_number"
-                        placeholder="Enter MTN Number" required/> -->
+                     <input type="text" step="1" class="input1" 
+                        name="phone_number" readonly value="{{ msisdn }}"
+                        placeholder="Enter MTN Number" required/>  
                 
                 
-                    <select name="subscription" class="input1 mb-3" style="width:calc(100% - 102px)!important">
+                    <select name="subscription" class="input1 mb-3">
                         <option value="paid1"  selected>
                             {% translate 'N30 Daily' %}
                         </option>
@@ -1862,6 +1873,7 @@
                 
                     <button type="submit" class="btn3">{% translate 'Join Now' %}</button>
                 
+                    <a  class='logout' style='cursor:pointer; color: #FFF; text-decoration: underline;' onclick=fn_logout("{% url 'logout3' %}")>{% translate 'Change Number' %}</a>
                 
                     <div class=" text-center text-color-4-light"
                             style="color: red;width:95%;">

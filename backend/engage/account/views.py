@@ -147,6 +147,11 @@ def logout_view(request):
     return redirect('/')
 
 
+def logout2_view(request):
+    request.session.flush()
+    logout(request)
+    return redirect('/register')
+
 @login_required
 def set_game_linked_account(request):
     account = request.POST.get('account')
