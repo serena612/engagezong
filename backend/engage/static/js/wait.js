@@ -64,15 +64,14 @@ function keepUpdated() {
         else
         response_msg.html('Something went wrong. Please try again later.').show();  // + +e.status
         //setBtnLoading(btn, false); 
-        setTimeout(keepUpdated, 5000);
-    });
-    //setTimeout(keepUpdated(), 5000);
+
+        $("#wait-modal .preload").addClass("d-none");
+
     var t = setInterval(() => {
          
         var statusW = $(".sub_status").html();
         if(statusW != "" && statusW == "Subscription Success !")
         {
-            $("#wait-modal .preload").addClass("d-none");
             $("#wait-modal .msg").removeClass("d-none");  
             $("#wait-modal").find(".error-bd").addClass("d-none");  
             $("#wait-modal").find(".success-bd").removeClass("d-none");          
@@ -81,7 +80,6 @@ function keepUpdated() {
         } 
         else if(statusW != "" && statusW != "Subscription Success !")
         {
-            $("#wait-modal .preload").addClass("d-none");
             $("#wait-modal .msg").removeClass("d-none");  
             $("#wait-modal").find(".error-bd").removeClass("d-none");  
             $("#wait-modal").find(".success-bd").addClass("d-none");          
@@ -90,6 +88,11 @@ function keepUpdated() {
         } 
          
     }, 50);
+
+        setTimeout(keepUpdated, 5000);
+    });
+    //setTimeout(keepUpdated(), 5000);
+   
 
     
 }
