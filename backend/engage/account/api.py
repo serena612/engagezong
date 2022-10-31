@@ -669,8 +669,7 @@ class AuthViewSet(viewsets.GenericViewSet):
             return Response({'error': 'Unknown Subscription'}, status=577)
 
         print("subscription request", subscription)
-        
-        
+
         response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
         if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
             if response2['idbundle'] == 1:

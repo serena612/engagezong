@@ -568,6 +568,38 @@ $(document).on("submit", ".register-otp-form", function (e) {
     });
 })
 
+// Register Form Submit
+$(document).on("submit", ".frmregister2", function (e) {
+    e.preventDefault();
+    var form = $(this);
+    var response_msg = form.find(".response-msg");
+    var data = getFormData(form);
+    
+    data.data.refid = refid;
+   
+    data.data.subscription = $('.frmregister').find('select[name="subscription"]').val();
+  
+    response_msg.hide();
+    var btn = form.find("button[type=submit]");
+    setBtnLoading(btn, true);
+
+    postRegister2OTP(data.data).then(res => {
+        localStorage.removeItem("last_profile_edit");
+        location.href = location.href.replace('/register','');
+    }).catch(e => {
+        console.log("e", e);
+        if(e.status==471) //406 ?
+        response_msg.html('Exceed maximum allowed attempts! Please try again later.').show();
+        else if(e.status==514){
+            $('#wait-modal').modal("show");
+            get_wait_modal();}
+        else
+        response_msg.html('Something went wrong. Please try again later.').show(); //  Error code: '+e.status
+        setBtnLoading(btn, false);
+        ///location.reload();
+    });
+})
+
 
 // Edit Profile Form Submit
 $(document).on("submit", "#edit-profile-form", function (e) {

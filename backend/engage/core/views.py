@@ -66,8 +66,22 @@ def register_view(request):
        print(refid)
        if 'msisdn' in request.session:
             print(request.session['msisdn'])
-            return render(request, 'register1.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
+            return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
        return render(request, 'register.html', {'wifi':True, 'refid':refid})
+
+def test_register_view(request):
+    if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
+       return redirect('/')
+    else :
+       # print(request.headers)
+       refid = request.GET.get('referrer')
+       print(refid)
+    if 'msisdn' in request.session:  
+        print(request.session['msisdn'])
+        return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
+    else:
+        return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':'DummyNumberHere'})
+    
 
 def waiting_view(request):
     # print('user_id' in request.session)
@@ -110,6 +124,9 @@ def new_register_view(request):
         return redirect('/')
     else :
         refid = request.GET.get('referrer')
+        if 'msisdn' in request.session:
+            print(request.session['msisdn'])
+            return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
         return render(request, 'register1.html', {'refid':refid})
 
 
