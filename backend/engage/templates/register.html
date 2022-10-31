@@ -297,6 +297,27 @@
             }
             .frmregister .text-center{position:absolute;top:51px!important;}
         }  
+        @media (device-width:600px) and (device-height:1024px) and (orientation:portrait) {
+            .less768 .frmregister .input1, .less768 .response-msg,.less768 .register-otp-form .input1,.less768 .btn3 {
+                font-size: 17px!important;
+            }
+            .less768 .row_2 h2 {
+                font-size: 19px;
+            }
+            .less768 .frmregister button {
+                width: 84px;
+                font-size: 17px!important;
+            }
+            .less768  .frmregister .input1 {
+                width: calc(50% - 43px)!important;
+            }
+            .register-otp-form {
+                margin-top: -53px!important;
+            }
+            .less768  .register-otp-form .input1 {
+                width: calc(100% - 98px);
+            }
+        }  
         @media (device-width:1600px) and (device-height:2560px) and (orientation:portrait) {
             .text, .less768 .text {
                 margin-top: 219px!important;
@@ -573,6 +594,9 @@
             .text, .less768 .text {
                 margin-top: 65px!important;
             }
+            .less768 .frmregister .input1, .less768 .response-msg {
+                font-size: 14px;
+        }
         }
         @media (device-width:844px) and (device-height:390px) and (orientation:landscape) {
             body,.sec-1{min-height:100vh!important;}
@@ -608,6 +632,7 @@
              .bottomimages, .less768 .bottomimages,.isAndroid .bottomimages {
                 margin-top: 0px!important;bottom:auto!important;
             }
+            
         }
         @media (device-width:1024px) and (device-height:768px)  and (orientation:landscape){
             .bottomimages { top: 60vh!important;}
@@ -637,15 +662,32 @@
                 max-width: 707px;
                 margin-top:41px!important;
             }
+            .text-color-4-light{font-size: 1.3rem;}
+            .row_2 h2 {
+                font-size: 29px;
+            }
             .text-center{
                 font-size: 16px;
                 top: 56px;
                 position: absolute;}
-            .frmregister .input1,.frmregister .mb-3{    width: calc(50% - 43px)!important;} 
+            .frmregister .input1,.frmregister .mb-3{    width: calc(50% - 62px)!important;} 
             .is4G .frmregister .input1.mb-3 {
                 width: calc(100% - 86px)!important;
             }   
             .bg1{min-height:auto!important;}
+            .less768 .sec-1, .isAndroid .sec-1,.isIpad .sec-1{margin-left: 0px!important;}
+            .response-msg{line-height:26px;}
+            .frmregister .input1, .btn3, .response-msg, .register-otp-form .input1 {
+                font-size: 22px;
+                padding-top: 0;
+                padding-bottom: 0;
+        }
+            .register-otp-form {
+                margin-top: -76px!important;
+            }
+            .register-otp-form .input1 {
+                width: calc(100% - 124px);
+            }
         }
         @media (device-width:1180px) and (device-height:820px) and (orientation:landscape) {
             .bottomimages { top: 60vh;}
@@ -722,24 +764,31 @@
                 top: 59px!important;
                 height: 137px!important;
             }
+            .text-color-4-light {
+                font-size: 1.5rem!important;}
             .register-otp-form {
-                margin-top: -50px!important;
+                margin-top: -74px!important;
             }
+            .row_2 h2 {
+                font-size: 28px;}
             .text-center{    font-size: 22px;}
             .row_1 .input1 {
-                width: calc(64% - 179px)!important;}
+                width: calc(64% - 189px)!important;}
             .logos, .less768 .logos {
                 width: 56%!important;
             }
             .text {
                 width: 74%!important;
             }
-            .frmregister .input1, .btn3,.response-msg {
-                font-size: 17px;
+            .frmregister .input1, .btn3,.response-msg,.register-otp-form .input1 {
+                font-size: 25px;
+                padding-top: 0;
+                padding-bottom: 0;
             }
             .btn3{
-                width: 85px;
+                width: 105px;
                 padding: 0;}
+                .register-otp-form  .btn3{padding-left:8px;width: 101px;}
             .frmregister .text-center{ width: 95%;position: absolute; top: 58px;}
             .bottomimages, .less768 .bottomimages {
                 margin-top: 6px!important;  width: 70%;
@@ -881,6 +930,12 @@
             }
             .text, .less768 .text {
                 margin-top: 83px!important;
+            }
+            .less768 .frmregister .input1, .less768 .response-msg, .less768 .register-otp-form .input1 {
+                font-size: 14px;
+                padding-top:0;
+                padding-bottom:0;
+
             }
         }
         @media (device-width:658px) and (device-height:320px) and (orientation:landscape) {
@@ -1049,7 +1104,31 @@
                 position: absolute;
                 top: 55px;
             }
-            
+             .row_2 h2,.less768 .row_2 h2 {
+                font-size: 22px;
+            }
+            .text-color-4-light,.less768   .text-color-4-light{font-size: 1.3rem!important;}
+            .less768 .frmregister .input1, .less768 .response-msg,.less768 .register-otp-form .input1 {
+                font-size: 22px;
+                padding-top:0;
+                padding-bottom:0;
+            }
+            .less768 .frmregister button ,.isAndroid .frmregister button{
+                width: 104px;
+                font-size: 22px!important;
+            }
+            .register-otp-form  button {
+                font-size: 22px!important;
+            }
+            .register-otp-form {
+                margin-top: -60px!important;
+            }
+            .frmregister .input1,.less768  .frmregister .input1,.isAndroid .frmregister .input1{
+                width: calc(50% - 59px)!important;
+            }
+            .register-otp-form .input1 ,.less768 .register-otp-form .input1,.isAndroid .register-otp-form .input1{
+                width: calc(100% - 114px);
+            }
         }
         @media (device-width:1644px) and (device-height:1302px) and (orientation:landscape) {
             .bottomimages {
@@ -1256,6 +1335,18 @@
                 margin-top: 74px!important;
             }
             .text-center{font-size: 14px;}
+
+            .tab2 .bottomimages ,.less768.tab2 .bottomimages{
+                margin-top: 40px!important;
+            }
+            .frmregister .input1, .btn3, .response-msg,.register-otp-form  .input1 {
+                font-size: 17px!important;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+            .register-otp-form .input1 {
+                width: calc(100% - 97px)!important;
+            }
         }
         @media (device-width:914px) and (device-height:412px) and (orientation:landscape) {
             .bottomimages {
@@ -1304,13 +1395,39 @@
                 margin-top: 25px!important;
                 max-width: 347px!important;
             }
-            
+            .register-otp-form {
+                margin-top: -46px!important;
+            }
+            .less768 .row_2 h2 {
+                font-size: 17px;
+            }
+            .less768 .frmregister .input1, .less768 .response-msg ,.less768 .register-otp-form .input1{
+                font-size: 15px;
+            }
+            .frmregister .input1 {
+                width: calc(50% - 40px)!important;
+            }
+            .register-otp-form  button{
+                width: 90px;
+                font-size: 15px!important;
+            }
+            .frmregister button{
+                width: 79px;
+                font-size: 15px!important;
+            }
+            .register-otp-form .input1 {
+                width: calc(100% - 90px);
+            }
             .logos, .less768 .logos {
                 margin-top: 33px!important;}
         }
         @media (device-width:600px) and (device-height:960px) and (orientation:portrait) {
             .text, .less768 .text {
                 max-width: 389px!important;    margin-top: 90px!important;
+            }
+            .text-color-4-light{    font-size: 1.1rem!important;}
+            .less768 .row_2 h2 {
+                font-size: 21px;
             }
             .logos, .less768 .logos {
                 margin-top: 23px!important;
@@ -1320,11 +1437,36 @@
                 margin-top: 41px!important;
                 max-width: 419px!important;
             }
+            .frmregister .input1, .btn3, .response-msg, .register-otp-form .input1 {
+                font-size: 18px!important;
+                padding-top:0;
+                padding-bottom:0;
+            }
+            .frmregister button {
+                width: 88px;
+                font-size: 18px!important;
+            }
+            .frmregister .input1 {
+                width: calc(50% - 45px)!important;
+            }
+            .register-otp-form .input1 {
+                width: calc(100% - 101px);
+            }
+            .register-otp-form {
+                margin-top: -57px!important;
+            }
         }
         @media (device-width:414px) and (device-height:896px) and (orientation:portrait) {
             .logos, .less768 .logos {
                 margin-top: 27px!important;
                 max-width: 239px!important;
+            }
+            .less768 .row_2 h2 {
+                font-size: 17px;
+            }
+            
+            .frmregister .input1 {
+                width: calc(50% - 40px)!important;
             }
             .bottomimages, .less768 .bottomimages {
                 margin-top: 31px!important;
@@ -1332,6 +1474,21 @@
             }
             .text, .less768 .text {
                 margin-top: 64px!important;
+            }
+            .frmregister .input1, .btn3, .response-msg,.register-otp-form .input1 {
+                font-size: 15px!important;
+            }
+            .frmregister button {
+                width: 80px;
+                font-size: 16px!important;
+            }
+            .register-otp-form button { font-size: 16px!important;
+            }
+            .register-otp-form .input1 {
+                width: calc(100% - 94px);
+            }
+            .register-otp-form {
+                margin-top: -47px!important;
             }
         }
         @media (device-width:896px) and (device-height:414px) and (orientation:landscape) {
@@ -1389,12 +1546,12 @@
             }
         }
         @media (device-width:800px) and (device-height:1280px) and (orientation:portrait) {
-             .sec-1 {
+            .less768 .sec-1, .isAndroid .sec-1, .fordesktop .sec-1 {
                 margin-left: 0!important;
             }
             .frmregister, .register-otp-form {
                 margin: 0 20px;
-                width: calc(100% - 70px)!important;
+                width: calc(100% - 40px)!important;
             }
              .register-otp-form {
                 margin-top:-49px!important;
@@ -1406,12 +1563,23 @@
                 position: absolute;
                 top: 53px;
             }
+            .response-msg{line-height:27px;}
             .row_1 .input1 {
-                width: calc(64% - 145px)!important;}
+                width: calc(64% - 166px)!important;
+            }
             .bg1 {min-height:auto!important;}
             .is4G .frmregister .input1.mb-3 {
                 width: calc(100% - 86px)!important;
             }
+            .frmregister .input1, .btn3, .response-msg,.register-otp-form  .input1{
+                font-size: 21px;
+                padding-top:0;
+                padding-bottom:0;
+            }
+            .register-otp-form .input1 {
+                width: calc(100% - 124px);
+            }
+            .text-color-4-light{    font-size: 1.4rem!important;}
             
         }
         @media (device-width:640px) and (device-height:360px) and (orientation:landscape) {
@@ -1455,6 +1623,20 @@
                 top: 34vh!important;
             }
         }
+
+        @media (device-width:414px) and (device-height:736px) and (orientation:portrait) {
+            .frmregister .input1, .btn3, .response-msg {
+            font-size: 14px!important;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .frmregister button {
+            font-size: 14px!important;
+        }
+        .register-otp-form .input1 {
+            width: calc(100% - 94px)!important;
+            }
+        }
         @media (device-width:736px) and (device-height:414px) and (orientation:landscape) {
             .is4G .frmregister .input1.mb-3 {
                 width: calc(100% - 93px)!important;
@@ -1472,6 +1654,7 @@
                 top: 27px!important;
             }
         }
+        
         @media (device-width:812px) and (device-height:375px) and (orientation:landscape) {
             .fordesktop .title {
                 width: 88%;
@@ -1638,7 +1821,7 @@
         }
         @media (device-width:912px) and (device-height:1368px) and (orientation:portrait) {
             .row_1 .input1 {
-                width: calc(64% - 163px)!important;
+                width: calc(64% - 174px)!important;
             }
             .frmregister, .register-otp-form {
                 max-width: 93%!important;
@@ -1648,6 +1831,12 @@
                 position: absolute;
                 font-size: 19px;
             }
+            .frmregister .input1, .btn3, .response-msg ,.register-otp-form .input1{
+                font-size: 18px;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+            
             .tab2 .text {
                 top: 37vh;
             }
@@ -1694,14 +1883,18 @@
             .sec-1, .fordesktop .sec-1 {
                 margin: 0 10px;
             }
+            .text-color-4-light {
+                font-size: 1.5rem!important;}
             .bg1{min-height:auto!important;}
             .logos, .less768 .logos {
                 margin-top: 18px!important;
                 width: 41%!important;
             }
-            
+            .row_2 h2 {
+                font-size: 25px;}
+            .response-msg{    line-height: 12px;}
             .register-otp-form {
-                margin-top: -49px!important;
+                margin-top: -68px!important;
             }
             .isIpad .title {
                 width: 337px;
@@ -1713,12 +1906,20 @@
                 max-width: 556px!important;
             }
             .frmregister .text-center{    position: absolute;top: 60px;font-size:18px!important;}
-            .frmregister .input1, .btn3,.response-msg {font-size: 15px;}
-            .frmregister button { width: 94px!important; padding: 0;}
+            .frmregister .input1, .btn3, .response-msg,.register-otp-form .input1 {
+                font-size: 21px;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+            .frmregister button { width: 94px!important; padding: 0;font-size: 19px!important;}
             .frmregister .input1 {width: calc(50% - 48px)!important;}
             .is4G .frmregister .input1.mb-3 {
                 width: calc(100% - 95px)!important;
             }
+            .register-otp-form .input1 {
+                width: calc(100% - 124px)!important;}
+            
+            
         }
         @media (device-width:1536px) and (device-height:864px) and (orientation:landscape) {
             .row_1 .input1 {
@@ -1751,6 +1952,28 @@
             }
             .text {top: 43vh!important;}
             .tab2 .text {top: 35vh!important;}
+        }
+        @media (device-width:280px) and (device-height:653px) and (orientation:portrait) {
+            .less768 .frmregister .input1, .less768 .response-msg ,.less768 .register-otp-form .input1{
+                font-size: 11px;
+        }
+            .frmregister button {
+                padding-left: 5px;
+                padding-right: 5px;
+                width: 59px;
+            }
+            .register-otp-form{padding: 0 0px;    margin-top: -58px!important;}
+        }
+        @media (device-width:1280px) and (device-height:800px)  {
+            .row_1 .input1,.response-msg,.row_2 .input1 {
+                font-size: 1.1rem;
+                padding-top:0;
+                padding-bottom:0;
+            }
+            .btn3{padding: 8px 9px;font-size: 1.1rem;}
+            .fordesktop .bottomimages {
+                top: 49vh!important;
+            }
         }
         @media (device-width:1280px) and (device-height:720px) and (orientation:landscape) {
             .row_1 .input1 {
@@ -1909,7 +2132,7 @@
                 
                 
                     <div class=" text-center text-color-4-light"
-                            style="font-size: 13px; color: red;width:95%;">
+                            style="font-size: 13px; color: red;width:100%;">
                         <span class="response-msg"></span>
                     </div>
                 

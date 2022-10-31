@@ -49,9 +49,16 @@ function keepUpdated() {
         else if(e.status==476)
         response_msg.html("<img class='loading-img' src='/static/img/loading1.gif' /><br>Unsubscription Request pending...").show();
         else if(e.status==456)
+        if (times<5)
         response_msg.html("<img class='loading-img' src='/static/img/loading1.gif' /><br>Profile Creation pending...").show();
-        else if(e.status==480)
+        else{
+        response_msg.html("<br>Subscription Failed. Please <a href='/register'>try again</a>.").show();
+        return
+        }
+        else if(e.status==480){
         response_msg.html("<br>Your subscription has ended. Please renew your subscription <a href='/register'>here</a>.").show();
+        return
+        }
         else if(e.status==0)
         response_msg.html("<img class='loading-img' src='/static/img/loading1.gif' /><br>Request interrupted. Refreshing page...").show();
         else

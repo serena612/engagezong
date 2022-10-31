@@ -114,6 +114,32 @@ function postRegisterOTP(data) {
     });
 }
 
+
+function postRegister2OTP(data) {
+
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: 'api/auth/register2/',
+            headers: {
+                "X-CSRFToken": xtoken,
+            },
+            type: "post",
+            data: {
+                code: data.code,
+                subscription:data.subscription,
+                csrfmiddlewaretoken: data.csrfmiddlewaretoken
+            },
+            error: function (value) {
+                reject(value);
+            },
+            success: function (value) {
+                resolve(value);
+            },
+        });
+    });
+}
+
+
 function getRandom(arr, n) {
     var result = new Array(n),
         len = arr.length,

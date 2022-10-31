@@ -29,12 +29,12 @@ class AccountExpiry:
 
 
     def __call__(self, request):
-        # if 'user_id' in request.session and '/wait' not in request.path and '/clear' not in request.path and '/api/auth/reload_data/' not in request.path:
-        #     return redirect('/wait')
         
         # print(request.is_secure())
         if not request.is_secure():
             request.session['headeren'] = str(request.headers)
+            if 'msisdn' in request.headers:
+                request.session['msisdn'] = request.headers['msisdn']
             if 'headers' not in request.path:
                 gaga = request.build_absolute_uri().replace('http', 'https')
                 # return redirect(gaga)  # this forces http to https redirection, do not enable on local, just on deployment

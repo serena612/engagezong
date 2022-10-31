@@ -2,7 +2,11 @@
 var mobileOS = mobilecheck();
 if(mobileOS=='pc')
    $('body').addClass('desktop');
+
+
+   
 $(function () {
+
     $('.sec-3-1 .drp_tournament').selectize({
       sortField: 'text'
     });
@@ -66,6 +70,7 @@ $(function () {
         $('.drp_tournament  .selectize-input').find('.item').attr('data-value',$('.drp_tournament  .selectize-dropdown-content').find('.option.active').attr('data-value'));
         getWinners($('.drp_game').val(),$('.drp_tournament  .selectize-input').find('.item').attr('data-value'));
 
+
        var valueTournament = $('.drp_tournament  .selectize-input').find('.item').attr('data-value');
        if(valueTournament == undefined)
           $(".loading-tr").find(".loading-img").hide();
@@ -85,8 +90,6 @@ $(function () {
                
           },700)
      });
-     
-     
 
   // load tournaments on page load
   $(".tour-btn").click();
@@ -94,6 +97,7 @@ $(function () {
   // add scroll for winners list
     $('.scroll_wrapper').css('width',($('.package').outerWidth(true) + 20)*$('.package').length + 'px');
   //
+  
   //   make featured games in multiple rows (5 items in the columns)
   var f_games_parent = $(".featured-games-parent");
   var main_f_games = $("#main-featured-games");
@@ -194,14 +198,11 @@ $(".featured-item a").on("click", function(e) {
         if(data.coins > 0){
           $('#user-coins').css('background','#EA2D2D');
         }
-
         const user_coins = parseInt($("#actual-user-coins").text()) + data.coins;
         $("#actual-user-coins, .user-coins").html(user_coins);
       },
   });
 })
-
-
 
 //handle upgrade subscription click
 $("#upgrade-btn").on("click", function () {
@@ -237,10 +238,3 @@ $("#upgrade-btn").on("click", function () {
       showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
   });
 });
-
-
-
-
-
-
-

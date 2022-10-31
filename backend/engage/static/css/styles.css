@@ -1005,7 +1005,6 @@ nav .bottom-nav ul li a:hover {
   /* background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.678309)), color-stop(75%, rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0)));
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.678309) 0%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0) 100%); */
 }
-
 .sec-1 .text-container {
   position: relative;
   z-index: 2;

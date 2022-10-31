@@ -49,7 +49,6 @@ def public_profile_view(request, uid):
                                                    'friend_status': friend_status})
 
 
-
 # TODO: Refactor
 @login_required(login_url='/')
 def profile_view(request):
@@ -140,9 +139,11 @@ def login_view(request):
 @login_required
 def logout_view(request):
     request.user.app_fcm_token = None
-    # request.user.web_fcm_token = None
+    request.user.web_fcm_token = None
     request.user.save()
+    request.session.flush()
     logout(request)
+
     return redirect('/')
 
 
@@ -151,6 +152,7 @@ def set_game_linked_account(request):
     account = request.POST.get('account')
     game = request.POST.get('game')
     tournament = request.POST.get('tournament')
+
 
     try:
         user_game_account = UserGameLinkedAccount.objects.update_or_create(

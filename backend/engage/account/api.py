@@ -513,7 +513,7 @@ class AuthViewSet(viewsets.GenericViewSet):
                                         def notify(user, user_notifications):
                                             """ extra logic if needed """
                                         notify(user=user)
-
+                                    request.session['msisdn'] = user.mobile
                                     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                                     request.session['user_id'] = user.pk
                                     # return redirect('/')
@@ -539,6 +539,7 @@ class AuthViewSet(viewsets.GenericViewSet):
                     print("user", user, "is not active redirect to wait page")
                     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                     request.session['user_id'] = user.pk
+                    request.session['msisdn'] = user.mobile
                     # return redirect('/wait')
                     return Response({'message': response2}, status=514)
                 if user.is_active:
@@ -549,7 +550,7 @@ class AuthViewSet(viewsets.GenericViewSet):
                     notify(user=user)
 
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-
+                request.session['msisdn'] = user.mobile
                 return redirect('/')
             else:
                 if code2<100:
@@ -649,6 +650,91 @@ class AuthViewSet(viewsets.GenericViewSet):
             if code<100:
                 code+=400
             return Response({'error': response}, status=code)
+
+    @action(methods=['POST'], detail=False)
+    def register2(self, request):
+        is_active = False
+        username = request.session['msisdn']
+        subscription = request.POST.get('subscription')
+        if subscription == 'free':
+            idbundle = 1
+            idservice = 'FREE'
+        elif subscription == 'paid1':
+            idbundle = 2
+            idservice = 'P30'
+        elif subscription == 'paid2':
+            idbundle = 3
+            idservice = 'P50'
+        else:
+            return Response({'error': 'Unknown Subscription'}, status=577)
+
+        print("subscription request", subscription)
+        
+        
+        response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
+        if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
+            if response2['idbundle'] == 1:
+                subscription = 'free'
+            elif response2['idbundle'] == 2:
+                subscription = 'paid1'
+            elif response2['idbundle'] == 3:
+                subscription = 'paid2'
+        if code2==56 or code2==80 or code2==76 or code2==77 or code2==79 or code2==75 or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 79 pending unsub - 77 sub - 75 under process
+            if code2==56 or code2==80:  # profile does not exist so we send subscription request
+                response3, code3 = subscribe_api(username, idbundle, idservice, vault=self.client)
+            if code2==76 or code2==77 or code2==75 or code2==79 or (code2==56 and code3 ==0) or (code2==80 and code3 ==0) or INTEGRATION_DISABLED: # profile does exist so we create local record based on it
+                # request.session.pop('renewing', None)
+                if code2==77 or INTEGRATION_DISABLED:
+                    is_active=True
+                avatar = Avatar.objects.order_by('?').first()
+                user, created =  User.objects.get_or_create(
+                        mobile = username,
+                        defaults={
+                            'is_superuser': False,
+                            'first_name': '',
+                            'last_name': '',
+                            'email': '',
+                            'is_active': is_active,
+                            'is_staff': False,
+                            'subscription': subscription,
+                            'date_joined': datetime.now(),
+                            'modified' : datetime.now(),
+                            'newsletter_subscription': True,
+                            'timezone': '',
+                            'country': request.region.code,
+                            'region_id': request.region.id,
+                            'is_billed' : False,
+                            'password': 'pbkdf2_sha256$260000$aMwTW2Wr3K2J2WmodFFd5W$pZUAfNohO77wQbo4oRgMYybD8Vph9HdUSoeWOHkwT9w='
+                        },
+                    )
+                if created:
+                    user.username= 'player'+str(user.id)
+                    user.nickname= 'player'+str(user.id)
+                    
+                    if avatar :
+                        user.avatar = avatar
+                    user.save()
+                if is_active:
+                    @notify_when(events=[NotificationTemplate.LOGIN],
+                                is_route=False, is_one_time=False)
+                    def notify(user, user_notifications):
+                        """ extra logic if needed """
+                    notify(user=user)
+                
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                request.session['user_id'] = user.pk
+                return redirect('/')
+                # return Response({'message': response2}, status=514)
+            
+            elif code2==56:
+                if code3<100:
+                    code3+=400
+                return Response({'error': response3}, status=code3)
+        else:
+            if code2<100:
+                code2+=400
+            return Response({'error': response2}, status=code2)
+        
 
 class UserViewSet(mixins.ListModelMixin,
                   mixins.RetrieveModelMixin,

@@ -64,6 +64,9 @@ def register_view(request):
        # print(request.headers)
        refid = request.GET.get('referrer')
        print(refid)
+       if 'msisdn' in request.session:
+            print(request.session['msisdn'])
+            return render(request, 'register1.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
        return render(request, 'register.html', {'wifi':True, 'refid':refid})
 
 def waiting_view(request):
@@ -98,6 +101,8 @@ def clear_session_view(request):
             user.subscription=subscription
             user.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        else:
+            request.session.flush()
     return redirect('/')
 
 def new_register_view(request):
