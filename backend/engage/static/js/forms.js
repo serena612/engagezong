@@ -222,6 +222,7 @@ function get_wait_modal() {
            // $('#waitmodalcontent').html(result); 
            //alert("res:" + result);
            $("#wait-modal .preload").addClass("d-none");
+           $(".please_wait").addClass("d-none");
             
            if(result == "Subscription Success !")
            { 
