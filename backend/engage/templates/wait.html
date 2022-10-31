@@ -39,28 +39,17 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 Subscription status is being updated please wait...
 <br>
 <br>
-User: <p class="user_id">{{user.username}} </p> 
-
-Phone Number:
-<div class="d-flex justify-content-between">
-    <div>
-        <p class="user_mobile">{{user.mobile}}</p>
-    </div>
-    <div>
-        <a href="/clear">Change Number / Logout</a>
-    </div>
-    <div></div><div></div>
-</div>
+User: <span class="user_id">{{user.username}} </span> 
+<br/>
+Phone Number: <span class="user_mobile">{{user.mobile}}</span> <br> <a href="/clear">Change Number / Logout</a>
+<br/>
 
 <!-- <p class="user_mobile">{{user.mobile}} <a href="/clear">Change Number</a> </p> -->
 
-Active: <p class="user_active">{{user.is_active}}</p>
+Active: <span class="user_active">{{user.is_active}}</span>
 
 <div style="text-align: center;">
-<span class="sub_status text-center">
-    <img class='loading-img' src='/static/img/loading1.gif' />
-    <br>Please wait while we process your request...
-</span>
+<span class="sub_status text-center"></span>
 </div>
 {% endblock %}
 </div>

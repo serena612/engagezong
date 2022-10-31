@@ -6561,6 +6561,27 @@ a:hover, #contact-form button:hover, #support-form button:hover, .login-form but
 .home-winners-results .container{
   overflow-x: auto;
 }
+#waitmodalcontent button{
+    width: 175px;
+    background-color: #0057B7;
+    color: #fff;
+    line-height: 39px;
+    font-size: 16px;
+    margin: 0px auto;
+    border-radius: 75px;
+    text-align: center;
+    margin-top: 40px;
+}
+#waitmodalcontent .msg-bd img {
+  max-width: 100px;
+  margin-bottom: 40px;
+}
+#waitmodalcontent.modal-body {
+  padding: 3rem;
+}
+#wait-modal .modal-content{
+  border-radius: 0.6rem;
+}
 @media (min-width: 576px){
   #game-fullscreen-modal{
     overflow-y: hidden!important;

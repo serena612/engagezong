@@ -51,6 +51,10 @@ $(function () {
       $('.sec-3-1 select.drp_tournament option').eq(0).text($('.drp_tournament .selectize-input').find('.item').text());
       $('.drp_tournament  .selectize-dropdown-content').find('.option').removeClass('selected').removeClass('active');
       $('.drp_tournament  .selectize-dropdown-content').find('.option[data-value='+$('.drp_tournament  .selectize-input').find('.item').attr('data-value')+']').addClass('selected').addClass('active');
+    
+      var valueTournament = $('.drp_tournament  .selectize-input').find('.item').attr('data-value');
+      if(valueTournament == undefined)
+            $(".loading-tr").find(".loading-img").hide();
      },500);
       
     

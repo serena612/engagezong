@@ -696,6 +696,29 @@ $(function () {
           `);
             } 
             else if (i.notification.action == "text" && i.friend_uid == undefined) {
+              /////////////////////////////////////////////////////////
+              if(i.notification.template == "complete_profile")
+              {
+                  var profileUrl = $('.nav-my-profile').attr('href');
+                  $("#notification-list").append(`
+                  <li class="new-notification">
+                      <a
+                        id="${i.notification.id}"
+                        data-id="${i.id}"
+                        url="${i.notification.url}"
+                        action="${i.notification.action}"
+                        onclick="openEditProfileModal(event)"                      
+                        class="notification"
+                      >
+                          <span class="title">${i.title}</span>  
+                          <span class="desc">${i.text}</span>
+                          <span class="date">${moment(i.created).format(
+                            "MMMM DD YYYY, h:mm:ss a"
+                          )}</span>
+                      </a>
+                  </li>
+              `);            
+              }else{
               $("#notification-list").append(`
               <li class="new-notification">
                   <a
@@ -713,6 +736,9 @@ $(function () {
                   </a>
               </li>
           `);
+                
+              }
+
             } 
             else {
               var friend_request = i.friend_uid
@@ -950,6 +976,23 @@ $(function () {
                 i.notification.action == "text" &&
                 i.friend_uid == undefined 
               ) {
+                    if(i.title == "Complete profile and get rewarded")
+                    {
+                      $("#notification-list").append(`
+                <li class="earlier-notification">
+                    <a id="${i.notification.id}"  url="${
+                  i.notification.url
+                }"  data-id="${i.id}" action="${i.notification.action}" class="notification" href="#settings-modal" onclick="openEditProfileModal(event)">
+                        <span class="title">${i.title}</span>
+                        <span class="desc">${i.text}</span>
+                        <span class="date">${moment(i.created).format(
+                          "MMMM DD YYYY, h:mm:ss a"
+                        )}</span>
+                    </a>
+                </li>
+            `);                     
+                    }
+                    else{
                 $("#notification-list").append(`
                 <li class="earlier-notification">
                     <a id="${i.notification.id}"  url="${
@@ -963,6 +1006,7 @@ $(function () {
                     </a>
                 </li>
             `);
+                    }
               } else {
                 var friend_request = i.friend_uid
                   ? `

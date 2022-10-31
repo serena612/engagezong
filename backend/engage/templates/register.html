@@ -1931,8 +1931,8 @@
                 
                     <div class="text-color-4-light"
                             style="font-size: .9rem; color: red;width:100%;">
-                            <span style="color: #fff;margin-left: auto;position: relative;display: block;text-align: right; margin-top: 9px;">{% translate "Didn't receive pincode? " %} <u style="cursor:pointer" onclick="$('.frmregister').find('.btn3').click()">{% translate "Send again" %} </u></span>
-                            <span class="response-msg" style="top:-4px;position:relative;float:left;"></span>
+                            <span style="color: #fff;margin-left: auto;position: relative;display: block;text-align: right; margin-top: 9px;">{% translate "Didn't receive pincode? " %} <u class="sendagain" style="cursor:pointer" onclick="$('.frmregister').find('.btn3').click();$('.sendagain').css('pointer-events', 'none'); $('.sendagain').css('opacity', '0.7'); setTimeout(() => { $('.sendagain').css('pointer-events', ''); $('.sendagain').css('opacity', '1'); }, 60000);">{% translate "Send again" %} </u></span>
+                            <span class="response-msg sendcodemsg" style="top:-4px;position:relative;float:left;"></span>
                     </div>
                
             

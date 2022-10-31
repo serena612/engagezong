@@ -164,16 +164,16 @@ $(document).on("submit", ".login-otp-form", function (e) {
     var response_msg = form.find(".response-msg");
     response_msg.hide();
     // Re-enable this to restore old functiionality
-    if(form_data.data.code!='123456'){  
-        response_msg.html('Please enter a valid pincode!').show();
-        return;
-    }
+    // if(form_data.data.code!='123456'){  
+    //     response_msg.html('Please enter a valid pincode!').show();
+    //     return;
+    // }
     response_msg.html('').hide();
     var btn = form.find("button[type=submit]");
     setBtnLoading(btn, true);
 
     postLoginOTP(form_data.data).then(res => {
-        console.log(res);
+        //console.log(res);
         $('.login-form').trigger("reset");
         setBtnLoading(btn, false);
     }).catch(e => {
@@ -186,6 +186,8 @@ $(document).on("submit", ".login-otp-form", function (e) {
         response_msg.html('Invalid Phone Number provided!').show();
         else if(e.status==480)
         response_msg.html('Your subscription has ended. Please renew your subscription <a href="/register">here</a>.').show();
+        else if(e.status==481) 
+        response_msg.html('Your pincode has expired. Please try again.').show();
         else if(e.status==514){
             $('#login-modal').modal("hide");
             // $('.login-form').trigger("reset");
@@ -554,6 +556,8 @@ $(document).on("submit", ".register-otp-form", function (e) {
         response_msg.html('Exceed maximum allowed attempts! Please try again later.').show();
         else if(e.status==472)
         response_msg.html('Invalid Phone Number provided!').show();
+        else if(e.status==481) 
+        response_msg.html('Your pincode has expired. Please try again.').show();
         else if(e.status==514){
             $('#wait-modal').modal("show");
             get_wait_modal();}
