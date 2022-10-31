@@ -476,7 +476,7 @@ $(document).on("submit", ".frmregister", function (e) {
         $('body').addClass('tab2');
         $(".register-otp-form").show();
 
-        $(".sendcodemsg").html('Pin Code has been sent.').show();       
+        $(".sendcodemsg").html('A pin code has been sent to you. Please enter the pin code to proceed.').show();       
 
     }).catch(e => {
         if(e.status==306)
@@ -577,7 +577,7 @@ $(document).on("submit", ".frmregister2", function (e) {
     
     data.data.refid = refid;
    
-    data.data.subscription = $('.frmregister').find('select[name="subscription"]').val();
+    data.data.subscription = $('.frmregister2').find('select[name="subscription"]').val();
   
     response_msg.hide();
     var btn = form.find("button[type=submit]");

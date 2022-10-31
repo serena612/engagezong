@@ -126,7 +126,7 @@ def new_register_view(request):
         refid = request.GET.get('referrer')
         if 'msisdn' in request.session:
             print(request.session['msisdn'])
-            return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
+            return render(request, 'register3.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
         return render(request, 'register1.html', {'refid':refid})
 
 
