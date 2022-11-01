@@ -534,7 +534,8 @@ class AuthViewSet(viewsets.GenericViewSet):
                             )
                 except UserModel.DoesNotExist:
                     raise exceptions.ValidationError({'error':'Invalid Mobile Number'})
-
+                if not user:
+                    raise exceptions.ValidationError({'error':'Invalid Mobile Number'})
                 if code2==76 or code2==79 or code2==75 or not user.is_active:
                     print("user", user, "is not active redirect to wait page")
                     login(request, user, backend='django.contrib.auth.backends.ModelBackend')

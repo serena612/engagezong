@@ -91,6 +91,8 @@
                 color: #16094F;
               }
               .response-msg{font-size:1rem;}
+            #count_send{display: none; margin-right: 12px; }
+              
         @media screen and (orientation:portrait) { body,.bgimg{overflow:hidden!important;height:100vh!important;}}
           body{height: 100vh;background: #1C1026;}
          .input1{width: calc(64% - 102px);padding: 10px; height: 45px;}
@@ -2154,7 +2156,7 @@
                 
                     <div class="text-color-4-light"
                             style="font-size: .9rem; color: red;width:100%;">
-                            <span style="color: #fff;margin-left: auto;position: relative;display: block;text-align: right; margin-top: 9px;">{% translate "Didn't receive pincode? " %} <u class="sendagain" style="cursor:pointer" onclick="$('.frmregister').find('.btn3').click();$('.sendagain').css('pointer-events', 'none'); $('.sendagain').css('opacity', '0.7'); setTimeout(() => { $('.sendagain').css('pointer-events', ''); $('.sendagain').css('opacity', '1'); }, 60000);">{% translate "Send again" %} </u></span>
+                            <span style="color: #fff;margin-left: auto;position: relative;display: block;text-align: right; margin-top: 9px;"> <span id="count_send">60 sec</span> {% translate "Didn't receive pincode? " %} <u class="sendagain" style="cursor:pointer" onclick="resendCode()">{% translate "Send again" %} </u></span>
                             <span class="response-msg sendcodemsg" style="top:-4px;position:relative;float:left;"></span>
                     </div>
                
@@ -2170,6 +2172,31 @@
 
 {% block javascript %}
 <script>
+    
+     function resendCode(){
+        $('.frmregister').find('.btn3').click();
+        $('.sendagain').css('pointer-events', 'none'); 
+        $('.sendagain').css('opacity', '0.7'); 
+        setTimeout(() => { 
+                $('.sendagain').css('pointer-events', ''); 
+                $('.sendagain').css('opacity', '1');
+        }, 60000);
+
+        $("#count_send").show();
+        var i=60;
+        var st = setInterval(() => {            
+            if(i > 0)
+            {
+                i--;
+                $("#count_send").html(i + " sec");    
+            }
+            else{
+                clearInterval(st); 
+                $("#count_send").hide();
+                $("#count_send").html("60 sec");
+            }
+        }, 1000);
+     }
     
     window.onload = (event) => {
         setTimeout(function(){frmregister.reset();
