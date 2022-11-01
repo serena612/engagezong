@@ -115,6 +115,8 @@ nav {
   left: 0;
   right: 0;
   top: 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#0c112f), to(rgba(12, 17, 47, 0.392595)));
+  background: linear-gradient(180deg, #0c112f 0%, rgba(12, 17, 47, 0.392595) 100%);
   z-index: 1100;
   padding: 0 7%;
 }
@@ -1002,8 +1004,8 @@ nav .bottom-nav ul li a:hover {
   width: 100%;
   height: 100%;
   z-index: 1;
-  /* background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.678309)), color-stop(75%, rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0)));
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.678309) 0%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0) 100%); */
+ /* background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.678309)), color-stop(75%, rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0)));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.678309) 0%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0) 100%);*/
 }
 .sec-1 .text-container {
   position: relative;
