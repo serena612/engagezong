@@ -45,7 +45,7 @@ function keepUpdated() {
     if (times>50){
         // response_msg.html("<img class='loading-img' src='/static/img/loading1.gif' /><br>Your request is under process. Please check back later. <a href='/'>Refresh</a>").show();
        /////// clearInterval(tt);
-        response_msg.html("Your request is under process. Please check back later. <a href='/'>Refresh</a>").show();
+        response_msg.html("Your request is under process. Please check back later.").show();  //  <a href='/'>Refresh</a>
         showloader();
         return;}
     // console.log("Updating using token "+xtoken);
