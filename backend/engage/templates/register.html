@@ -2087,7 +2087,7 @@
                 
             }).catch(e => {
                 if(e.status==306)
-                response_msg.html('The mobile number you have provided already exists!').show();
+                response_msg.html('The mobile number you have provided is already subscribed to engage service. Please login <a href="/">here</a>.').show();
                 else if(e.status==72) //406 ?
                 response_msg.html('The number you have provided is invalid!').show();
                 else if(e.status==58)

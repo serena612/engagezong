@@ -221,23 +221,15 @@ function get_wait_modal() {
         success:function(result){
            // $('#waitmodalcontent').html(result); 
            //alert("res:" + result);
-           $("#wait-modal .preload").addClass("d-none");
-           $(".please_wait").addClass("d-none");
+           //$("#wait-modal .preload").addClass("d-none");
+           //$(".please_wait").addClass("d-none");
             
-           if(result == "Subscription Success !")
-           { 
-            $("#wait-modal .msg").removeClass("d-none"); 
-            $(".success-bd").removeClass("d-none");
-            $(".error-bd").addClass("d-none");
-            $('#waitmodalcontent').find(".success-bd").find(".desc").html(result);}
-           else
-           {  
-            $("#wait-modal .msg").removeClass("d-none"); 
-            $(".success-bd").addClass("d-none");
-            $(".error-bd").removeClass("d-none");
-            $('#waitmodalcontent').find(".error-bd").find(".desc").html(result);}            
-            
+           
+            $('#waitmodalcontent').find(".success-bd").find(".desc").html(result);
+            $('#waitmodalcontent').find(".error-bd").find(".desc").html(result);
+                      
         }
+        
     });
 }
 function checkValidMtnNumber(number){
