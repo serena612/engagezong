@@ -552,16 +552,16 @@
                                            name="code" step="1"
                                            placeholder="Enter 6 Digits Code" autocomplete="off">
 
-                                    <div class="previous_btn">
-                                        <button type="button" class="btn3" onclick="$('.login-otp-form').fadeOut(function(){ $('.login-otp-form').hide(); $('.login-form').show() })">
+                                        <div class="previous_btn">
+                                        <a style="text-decoration: underline;" onclick="$('.login-otp-form').fadeOut(function(){ $('.login-otp-form').hide(); $('.login-form').show() })">
                                             {% translate 'Change Number' %}
-                                        </button>
-                                    </div>      
-                                    <div class="text-right" style="margin-top: -44px;">
-                                        <button type="submit" class="btn3">
-                                            {% translate 'Next' %}
-                                        </button>
-                                    </div>
+                                        </a>
+                                        </div>      
+                                        <div class="text-right" style="margin-top: -24px;">
+                                            <button type="submit" class="btn3">
+                                                {% translate 'Next' %}
+                                            </button>
+                                        </div>
 
                                     <br>
                                     <div class=" text-center text-color-4-light font-weight-bold"
