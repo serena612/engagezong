@@ -23,11 +23,20 @@ function CheckStatus(data) {
     });
 }
 
+var tt=0;
 function keepUpdated() {
     times += 1;
     // console.log("times = "+times);
     if (times>50){
-        response_msg.html("<img class='loading-img' src='/static/img/loading1.gif' /><br>Your request is under process. Please check back later. <a href='/'>Refresh</a>").show();
+        // response_msg.html("<img class='loading-img' src='/static/img/loading1.gif' /><br>Your request is under process. Please check back later. <a href='/'>Refresh</a>").show();
+       /////// clearInterval(tt);
+        response_msg.html("<div class='preload justify-content-center'> <img src='/static/img/preloader.svg' /> </div><br>Your request is under process. Please check back later. <a href='/'>Refresh</a>").show();
+        $("#wait-modal .msg").removeClass("d-none");  
+        $("#wait-modal").find(".error-bd").removeClass("d-none");  
+        $("#wait-modal").find(".success-bd").addClass("d-none");          
+        $(".please_wait").addClass("d-none");
+         $(".waitText").addClass("d-none");
+         $(".errico").addClass("d-none");
         return;}
     // console.log("Updating using token "+xtoken);
     data = {}
@@ -67,7 +76,7 @@ function keepUpdated() {
 
         $("#wait-modal .preload").addClass("d-none");
 
-    var t = setInterval(() => {
+   ////////////////////// tt = setInterval(() => {
          
         var statusW = $(".sub_status").html();
         if(statusW != "" && statusW == "Subscription Success !")
@@ -76,7 +85,7 @@ function keepUpdated() {
             $("#wait-modal").find(".error-bd").addClass("d-none");  
             $("#wait-modal").find(".success-bd").removeClass("d-none");          
             $(".please_wait").addClass("d-none");
-            clearInterval(t);
+           //////////////////// clearInterval(t);
         } 
         else if(statusW != "" && statusW != "Subscription Success !")
         {
@@ -84,10 +93,10 @@ function keepUpdated() {
             $("#wait-modal").find(".error-bd").removeClass("d-none");  
             $("#wait-modal").find(".success-bd").addClass("d-none");          
             $(".please_wait").addClass("d-none");
-            clearInterval(t);
+            ////////////clearInterval(t);
         } 
          
-    }, 50);
+    /////////////////////}, 50);
 
         setTimeout(keepUpdated, 5000);
     });
