@@ -1289,19 +1289,20 @@ class UserViewSet(mixins.ListModelMixin,
 
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def upgrade_subscription(self, request, uid):
-        user = request.user
-        if user.subscription == SubscriptionPlan.FREE :
-            user.subscription = SubscriptionPlan.PAID1
-            @notify_when(events=[NotificationTemplate.ONWARDANDUPWARD], is_route=False, is_one_time=False)
-            def notify(user, user_notifications):
-                """ extra logic if needed """
-            notify(user=user)  
-        else :  
-            user.subscription = SubscriptionPlan.PAID2   
-        user.save()
+        # user = request.user
+        # if user.subscription == SubscriptionPlan.FREE :
+        #     user.subscription = SubscriptionPlan.PAID1
+        #     @notify_when(events=[NotificationTemplate.ONWARDANDUPWARD], is_route=False, is_one_time=False)
+        #     def notify(user, user_notifications):
+        #         """ extra logic if needed """
+        #     notify(user=user)  
+        # else :  
+        #     user.subscription = SubscriptionPlan.PAID2   
+        # user.save()
 
 
-        return Response(status=status.HTTP_200_OK)
+        # return Response(status=status.HTTP_200_OK)
+        return exceptions.ValidationError('Functionality not yet available.')
 
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def add_new_friend(self, request, uid):

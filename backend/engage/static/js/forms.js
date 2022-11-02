@@ -225,8 +225,9 @@ function get_wait_modal() {
            //$(".please_wait").addClass("d-none");
             
            
-            $('#waitmodalcontent').find(".success-bd").find(".desc").html(result);
-            $('#waitmodalcontent').find(".error-bd").find(".desc").html(result);
+            // $('#waitmodalcontent').find(".success-bd").find(".desc").html(result);
+            // $('#waitmodalcontent').find(".error-bd").find(".desc").html(result);
+            $('#waitmodalcontent').find(".desc").html(result);
                       
         }
         
