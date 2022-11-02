@@ -85,6 +85,11 @@
          margin-left:0;
      }}
     
+     @media (max-width: 1280px) and (orientation: landscape){
+        .sec-2 .slid-parent .text-content p {
+            font-size: 1.5vw!important;
+        }
+    }
     </style>
 {% endblock %}
 
@@ -545,4 +550,10 @@
             </div>
         </div>
     </section>
+    <form class="frmregister3 d-none" method="post" name="frmregister3" id="frmregister3"> 
+        {% csrf_token %}
+     
+                <button type="submit" class="btn3">{% translate 'Join Now' %}</button>
+    
+    </form>
 {% endblock %}

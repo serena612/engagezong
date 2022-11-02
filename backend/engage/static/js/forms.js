@@ -597,6 +597,28 @@ $(document).on("submit", ".frmregister2", function (e) {
 })
 
 
+$(document).on("submit", ".frmregister3", function (e) {
+    e.preventDefault();
+    var form = $(this);
+    
+    var data = getFormData(form);
+    
+    // data.data.refid = refid;
+   
+    // data.data.subscription = $('.frmregister2').find('select[name="subscription"]').val();
+  
+    postRegister3OTP(data.data).then(res => {
+        location.reload();
+    }).catch(e => {
+        console.log("e", e);
+        if(e.status==514){
+            $('#wait-modal').modal("show");
+            get_wait_modal();}
+        
+        ///location.reload();
+    });
+})
+
 // Edit Profile Form Submit
 $(document).on("submit", "#edit-profile-form", function (e) {
     e.preventDefault();

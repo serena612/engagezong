@@ -5,7 +5,6 @@ from django.utils import timezone
 from engage.account.models import User
 from engage.tournament.models import Tournament,TournamentPrize
 from django.contrib.auth import login
-
 from engage.core.models import HTML5Game, Event, FeaturedGame, Game
 from engage.core.constants import NotificationTemplate
 from engage.operator.models import OperatorAd
@@ -118,9 +117,12 @@ def clear_session_view(request):
             user.subscription=subscription
             user.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return redirect('/')
         else:
             request.session.flush()
-    return redirect('/')
+    return redirect('/register')
+
+
 
 def new_register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):

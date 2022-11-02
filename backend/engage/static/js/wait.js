@@ -30,6 +30,7 @@ $("#wait-modal .msg").removeClass("d-none");
          $(".waitText").addClass("d-none");
          $(".errico").addClass("d-none");
          $(".preload").removeClass("d-none");
+         $("#subscribeRetry").addClass("d-none");
 }
 function hideloader(){
 $("#wait-modal .msg").removeClass("d-none");          
@@ -38,6 +39,8 @@ $("#wait-modal .msg").removeClass("d-none");
          $(".errico").removeClass("d-none");
          $(".preload").addClass("d-none");
          $(".is_updated").addClass("d-none");
+         $("#subscribeRetry").removeClass("d-none");
+         
 }
 function keepUpdated() {
     times += 1;
@@ -47,6 +50,7 @@ function keepUpdated() {
        /////// clearInterval(tt);
         response_msg.html("Your request is under process. Please check back later.").show();  //  <a href='/'>Refresh</a>
         showloader();
+        $("#subscribeRetry").removeClass("d-none");
         return;}
     // console.log("Updating using token "+xtoken);
     data = {}
@@ -68,19 +72,25 @@ function keepUpdated() {
         hideloader();
         $("#wait-modal").find(".error-bd").removeClass("d-none"); }
         else if(e.status==475){
-        response_msg.html("Subscription Request pending...").show();
+        response_msg.html("We are subscribing you to Engage. You will receive a message on your number to confirm. Please wait...").show();
         showloader();}
         else if(e.status==476){
         response_msg.html("Unsubscription Request pending...").show();
         showloader();}
         else if(e.status==456){
         if (times<5){
-        response_msg.html("Profile Creation pending...").show();
+        response_msg.html("Your subscription is under process...").show();
         showloader();}
         else{//invisible
-        response_msg.html("Subscription Failed. Please <a href='/register'>try again</a>.").show();
+        response_msg.html("Subscription Failed. Please <a href=\"javascript:document.getElementById('frmregister3').submit();\">try again</a>.").show(); //$('.frmregister3').submit();
         hideloader();
         $("#wait-modal").find(".error-bd").removeClass("d-none"); 
+        $("#subSubscribe").html('Try Again');
+        $("#subscribeRetry").on('click', firstClick);
+
+        function firstClick() {
+            document.getElementById('frmregister3').submit();
+        }
         return
         }}
         else if(e.status==480){//invisible

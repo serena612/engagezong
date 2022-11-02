@@ -140,6 +140,29 @@ function postRegister2OTP(data) {
 }
 
 
+function postRegister3OTP(data) {
+
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: 'api/auth/register3/',
+            headers: {
+                "X-CSRFToken": xtoken,
+            },
+            type: "post",
+            data: {
+                code: data.code,
+                csrfmiddlewaretoken: data.csrfmiddlewaretoken
+            },
+            error: function (value) {
+                reject(value);
+            },
+            success: function (value) {
+                resolve(value);
+            },
+        });
+    });
+}
+
 function getRandom(arr, n) {
     var result = new Array(n),
         len = arr.length,
@@ -950,6 +973,46 @@ function getTournaments(status, btn) {
         btn.addClass("active");
     }
 
+    if(status == 'upcoming')
+    {
+        $(".newsbv.tournaments-list").find(".package").each(function(){
+            var item = $(this).find(".newsbv-item").eq(0);
+            if(!$(item).hasClass("upcoming"))
+            $(this).remove();
+        });       
+        
+        if($(".newsbv-item.upcoming").length == 0)
+        {
+            $(".newsbv.tournaments-list").html('<span class="no-data">No Data Found</span>');
+        }
+         
+    }  
+    if(status == 'ongoing')
+    {
+        $(".newsbv.tournaments-list").find(".package").each(function(){
+            var item = $(this).find(".newsbv-item").eq(0);
+            if(!$(item).hasClass("ongoing"))
+            $(this).remove();
+        });
+        
+        if($(".newsbv-item.ongoing").length == 0)
+        {
+            $(".newsbv.tournaments-list").html('<span class="no-data">No Data Found</span>');
+        }
+    }  
+    if(status == 'previous')
+    {
+        $(".newsbv.tournaments-list").find(".package").each(function(){
+            var item = $(this).find(".newsbv-item").eq(0);
+            if(!$(item).hasClass("previous"))
+                $(this).remove();
+        });
+
+        if($(".newsbv-item.previous").length == 0)
+        {
+            $(".newsbv.tournaments-list").html('<span class="no-data">No Data Found</span>');
+        }         
+    }    
     return false;
 }
 
