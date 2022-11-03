@@ -23,6 +23,7 @@ from engage.operator.models import PurchaseCoin, RedeemPackage
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
+from engage.settings.base import SHOWADS
 
 def public_profile_view(request, uid):
     try:
@@ -106,7 +107,8 @@ def profile_view(request):
                                             'activity_points': activity_points,
                                             'purchase_coins': purchase_coins,
                                             'redeem_packages': redeem_packages,
-                                            'is_battlepass_vip': is_battlepass_vip}) # TODO: fix
+                                            'is_battlepass_vip': is_battlepass_vip,
+                                            'show_ads': SHOWADS}) # TODO: fix
 
 
 @require_http_methods(['POST'])

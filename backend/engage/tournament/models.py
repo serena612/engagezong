@@ -53,10 +53,10 @@ class Tournament(TimeStampedModel):
     open_date = models.DateTimeField(null=True,verbose_name = 'VIP Open Date (in GMT)')
     
     free_open_date = models.DateTimeField(null=True,verbose_name = 'Public Open Date (in GMT)')
-    close_date = models.DateTimeField(null=True,verbose_name = 'Close Date (in GMT)')
+    close_date = models.DateTimeField(null=True,verbose_name = 'Registration closes (in GMT)')
 
-    start_date = models.DateTimeField(null=True, verbose_name = 'Start Date (in GMT)')
-    end_date = models.DateTimeField(null=True,verbose_name = 'End Date (in GMT)')
+    start_date = models.DateTimeField(null=True, verbose_name = 'Tournament starts (in GMT)')
+    end_date = models.DateTimeField(null=True,verbose_name = 'Tournament ends (in GMT)')
 
     description = RichTextField(null=True)
     rules = RichTextField(blank=True, null=True)

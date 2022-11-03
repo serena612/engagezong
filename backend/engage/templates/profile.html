@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <link rel="stylesheet" href="{% static 'flags/sprite-hq.css' %}">
     <link rel="stylesheet" href="{% static 'css/paginate.css' %}">
-    
 {% endblock %}
 
 {% block javascript %}
@@ -145,6 +144,7 @@
                         </div>
                         <div class="col-md-6 expand-box joined-tournaments-box"
                              data-min-size="6">
+                             {% if show_ads %}
                              <div class="banner mobile" id="banner5" style="width: 100%!important; height:150px; margin-bottom: 20px;">
                                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1363749472822465"
                                 crossorigin="anonymous"></script>
@@ -160,6 +160,7 @@
                                 (adsbygoogle = window.adsbygoogle || []).push({});
                            </script>
                             </div>
+                            {% endif %}
                             <div class="card-wrapper">
 
                                 <div class="title-wrapper type-2">
@@ -240,7 +241,6 @@
                                    placeholder="{% translate 'Search users and friends' %}"/>
                         </div>
                     </div>
-                    
                 </div>
                 <ul class="friends-list grid" id="friends-list">
                 </ul>

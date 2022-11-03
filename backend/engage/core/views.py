@@ -5,11 +5,12 @@ from django.utils import timezone
 from engage.account.models import User
 from engage.tournament.models import Tournament,TournamentPrize
 from django.contrib.auth import login
+
 from engage.core.models import HTML5Game, Event, FeaturedGame, Game
 from engage.core.constants import NotificationTemplate
 from engage.operator.models import OperatorAd
 from engage.services import notify_when
-
+from engage.settings.base import SHOWADS
 
 @notify_when(events=[
     NotificationTemplate.HOME,
@@ -45,7 +46,8 @@ def home_view(request):
                                           'ad': ad,
                                           'events': events,
                                           'previous_tournaments':previous_tournaments,
-                                          'user_id': user_id})
+                                          'user_id': user_id,
+                                          'show_ads': SHOWADS})
 
 
     
@@ -60,7 +62,7 @@ def register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
        return redirect('/')
     elif 'headeren' not in request.session and request.is_secure() and 'msisdn' not in request.session:
-        return request.build_absolute_uri().replace('https', 'http')
+        gaga = request.build_absolute_uri().replace('https', 'http')
         # return redirect(gaga)
     else :
        # print(request.headers)
@@ -128,7 +130,7 @@ def new_register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
         return redirect('/')
     elif 'headeren' not in request.session and request.is_secure() and 'msisdn' not in request.session:
-        return request.build_absolute_uri().replace('https', 'http')
+        gaga = request.build_absolute_uri().replace('https', 'http')
         # return redirect(gaga)
     else :
         refid = request.GET.get('referrer')

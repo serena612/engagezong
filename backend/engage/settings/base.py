@@ -213,16 +213,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# from django.utils.translation import gettext_lazy as _
-
-
-# LANGUAGES = [
-#     ('en-us', _('English')),
-# ]
-
-# LOCALE_PATHS = ( "/xxx/xxx/Projects/xxx/sites/avb/locale/",)
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -434,7 +424,6 @@ CUSTOM_COOKIE_RENEW = True
 
 AXES_ONLY_USER_FAILURES = True
 AXES_META_PRECEDENCE_ORDER = ('HTTP_X_FORWARDED_FOR', 'X_FORWARDED_FOR', 'REMOTE_ADDR') # should fix ip issue needs testing 'HTTP_X_REAL_IP', 'HTTP_X_FORWARDED_FOR', 'X_FORWARDED_FOR', 'REMOTE_ADDR'
-# AXES_PROXY_COUNT = 1
 AXES_ENABLE_ACCESS_FAILURE_LOG = True
 AXES_LOCKOUT_CALLABLE = "engage.account.views.lockout"
 AXES_ONLY_ADMIN_SITE = True
@@ -449,3 +438,4 @@ INTEGRATION_DISABLED = True
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_GAGADED_PROTO', 'https')
 TRUSTED_IP = '157.230.100.145'
+SHOWADS = False
