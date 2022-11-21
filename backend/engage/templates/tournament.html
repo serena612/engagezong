@@ -34,12 +34,16 @@ document.getElementById("ctsecs").innerHTML = seconds ==1 ? seconds + " second" 
 // Display the message when countdown is over
 if (timeleft < 0) {
     clearInterval(myfunc);
-    document.getElementById("ctdays").innerHTML = ""
-    document.getElementById("cthours").innerHTML = "" 
-    document.getElementById("ctmins").innerHTML = ""
-    document.getElementById("ctsecs").innerHTML = ""
+    myfunc=0;
+    document.getElementById("ctdays").innerHTML = "";
+    document.getElementById("cthours").innerHTML = "" ;
+    document.getElementById("ctmins").innerHTML = "";
+    document.getElementById("ctsecs").innerHTML = "";
+
+    document.getElementById("is_started").innerHTML =  "{% translate 'Tournament Started' %}";    
+    document.getElementById("ct_down").style.display = "none";
     //document.getElementById("end").innerHTML = "TIME UP!!";
-    location.reload();
+    //////location.reload();
 }
 }, 1000);
  
@@ -74,9 +78,9 @@ if (timeleft < 0) {
                     <h2 class="game">{{ tournament.game.name }}</h2>
                     <h2 class="date">
                         {% if tournament.state == 'upcoming' %}
-                            <div class="pull-left">{% translate 'Tournament Starts in' %} </div> 
+                            <div class="pull-left" id="is_started">{% translate 'Tournament Starts in' %} </div> 
                             <!-- <span>{{ starts_in_full }}</span> -->
-                            <span class="countdown pull-left">
+                            <span class="countdown pull-left" id="ct_down">
                                 <p id="ctdays" ></p> <p id="cthours"></p> <p id="ctmins"></p> <p id="ctsecs"></p> <div style="clear:both"></div>
                                 <!-- <h2 id="end"></h2> -->
                             </span>
