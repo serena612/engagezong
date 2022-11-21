@@ -17,6 +17,11 @@
 {% block javascript %}
 <script src="{% static 'js/paginate.js' %}"></script>
     <script src="{% static 'js/pages/profile.js' %}"></script>
+    <style>
+        #st-1 .st-btn{
+        display: inline-block!important;
+    }
+    </style>
 {% endblock %}
 
 {% block top_section %}
@@ -761,14 +766,25 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12 mb-3">
+                            {% if user.is_authenticated %}
                             <input type="text" class="input1 share-link-input"
                                    value="https://www.engageplaywin.com/register?referrer={{ user.uid }}"
                                    readonly>
+                            {% else %}
+                            <input type="text" class="input1 share-link-input"
+                                   value="https://www.engageplaywin.com/register"
+                                   readonly>
+                            {% endif %}
                             <div class="text-right">
                                 <button onclick="copyToClipboard($('.share-link-input').val()); $(this).html('COPIED')"
                                         class="btn3">
                                     {% translate 'COPY' %}
                                 </button>
+                                {% if user.is_authenticated %}
+                                <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons" data-url="https://wwww.engageplaywin.com/register?referrer={{ user_uid }}"></div><!-- ShareThis END -->
+                                {% else %}
+                                <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons" data-url="https://wwww.engageplaywin.com/register"></div><!-- ShareThis END -->
+                                {% endif %}
                             </div>
                         </div>
                     </div>

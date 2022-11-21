@@ -9,6 +9,7 @@ from engage.account.exceptions import CoinLimitReached
 from engage.account.models import UserTransactionHistory
 from . import serializers
 from .constants import HTML5GameType, NotificationTemplate
+from django.core.mail import send_mail
 
 
 class AvatarViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -46,6 +47,7 @@ class HTML5GameViewSet(mixins.ListModelMixin,
 
 
 class ContactViewSet(viewsets.GenericViewSet):
+    permission_classes = (permissions.AllowAny,)
     def get_serializer_class(self):
         if self.action == 'support':
             return serializers.ContactSupportSerializer
@@ -56,12 +58,52 @@ class ContactViewSet(viewsets.GenericViewSet):
     def support(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        username = serializer.validated_data['username']
+        phone_number = serializer.validated_data['phone_number']
+        country = serializer.validated_data['country']
+        email = serializer.validated_data['email']
+        support_type = serializer.validated_data['support_type']
+        message = serializer.validated_data['message']
+        try:
+            send_mail(  # send email function is success
+                        'Support Ticket '+support_type,
+                        'User '+username+ ' - PN#: '+phone_number+' from '+country+' - email: '+email+' has filed a support ticket.\n' \
+                        'Message: \n'+message,
+                        'engagetest4@outlook.com',  # engagetest4@outlook.com support@engageplaywin.com
+                        ['support@8zonegames.com', 'engagetest4@outlook.com'],  # engagetest4@outlook.com support@8zonegames.com
+                        fail_silently=False,  # do not trigger errors
+                    )
+        except Exception as e:
+            print(str(e))
+            return Response({'error': 'Error submitting ticket'}, status=444)
         return Response(status=status.HTTP_200_OK)
 
     @action(methods=['POST'], detail=False)
     def engage(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        name = serializer.validated_data['name']
+        phone_number = serializer.validated_data['phone_number']
+        country = serializer.validated_data['country']
+        email = serializer.validated_data['email']
+        company = serializer.validated_data['company']
+        message = serializer.validated_data['message']
+        if company and company != '':
+            companystr = ' in: '+company
+        else:
+            companystr = ''
+        try:
+            send_mail(  # send email function is success
+                        'Contact Engage',
+                        'User '+name+ ' - PN#: '+phone_number+' from '+country+companystr+' - email: '+email+' has sent a contact request.\n' \
+                        'Message: \n'+message,
+                        'engagetest4@outlook.com',  # engagetest4@outlook.com support@engageplaywin.com
+                        ['support@8zonegames.com', 'engagetest4@outlook.com'],  # engagetest4@outlook.com support@8zonegames.com
+                        fail_silently=False,  # do not trigger errors
+                    )
+        except Exception as e:
+            print(str(e))
+            return Response({'error': 'Error submitting ticket'}, status=444)
         return Response(status=status.HTTP_200_OK)
 
 

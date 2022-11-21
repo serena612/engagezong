@@ -1,5 +1,3 @@
-
-
 from ckeditor.fields import RichTextField
 import datetime
 from datetime import timedelta
@@ -155,6 +153,7 @@ class Tournament(TimeStampedModel):
                         notificationi.link=self.name+";"+prize.title+";"+str(prize.image)
                         notificationi.save()
                 notify(prize.winner)
+
  
         print("failed participants", failed_participants)
         if failed_participants :
@@ -297,6 +296,14 @@ class TournamentPrize(TimeStampedModel):
     def __str__(self):
         return f'{self.position} - {self.prize_type}'
 
+class TournamentPrizeList(TimeStampedModel):
+    operator = models.CharField(max_length=30, blank=False)
+    amount = models.PositiveIntegerField()
+    data_plan = models.CharField(max_length=30, blank=True, null=True)
+    data_plan_desc = models.TextField()
+    prize_type = models.CharField(max_length=20, null=True,
+                                  choices=TournamentPrizeType.choices)    
+
 
 class TournamentModerator(TimeStampedModel):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
@@ -412,7 +419,6 @@ class TournamentMatch(TimeStampedModel):
             raise ValidationError({
                 'start_date': _('Match date must be between tournament start date and tournament end date')
             })
-    
 
  
        

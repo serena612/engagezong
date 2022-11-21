@@ -120,25 +120,25 @@ def protected_games(request, path, *args, **kwargs):
             ).first()
         
             
-            if today_user_game_played:
+            # if today_user_game_played:
             
-                return HttpResponseForbidden(
-                    'You are only allowed to play one premium or exclusive game per day.',
-                    status=410
-                )
+            #     return HttpResponseForbidden(
+            #         'You are only allowed to play one premium or exclusive game per day.',
+            #         status=410
+            #     )
 
         obj, created = UserGamePlayed.objects.select_related('game').get_or_create(
             user=user,
             game=game,
         )
 
-        if user.subscription == SubscriptionPlan.FREE:
-            if not created and \
-                    now - obj.last_played_at >= timedelta(seconds=15) and \
-                    obj.game.game_type == HTML5GameType.EXCLUSIVE:
-                return HttpResponseForbidden(
-                    'You are only allowed to play this game 1 time'
-                )
+        # if user.subscription == SubscriptionPlan.FREE:
+        #     if not created and \
+        #             now - obj.last_played_at >= timedelta(seconds=15) and \
+        #             obj.game.game_type == HTML5GameType.EXCLUSIVE:
+        #         return HttpResponseForbidden(
+        #             'You are only allowed to play this game 1 time'
+        #         )
 
         if not created:
             obj.last_played_at = now
@@ -174,6 +174,7 @@ urlpatterns = [
     re_path(r'^games/(.*)$', protected_games),
     url(r'^sitemap\.xml$',TemplateView.as_view(template_name='sitemap.xml',content_type='text/xml')),
     path("robots.txt",TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path("ads.txt",TemplateView.as_view(template_name="ads.txt", content_type="text/plain")),
     path("google2f20d53d86be3675.html",TemplateView.as_view(template_name="google2f20d53d86be3675.html",content_type='text/html'))
 ]
 

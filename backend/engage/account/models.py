@@ -93,6 +93,8 @@ class User(AbstractUser, TimeStampedModel):
     is_billed = models.BooleanField(default=False)
     old_coins = models.PositiveIntegerField(default=0, null=True)
     seen_coins = models.BooleanField(default=False)
+    referrer = models.ForeignKey('self', on_delete=models.SET_NULL,
+                               blank=True, null=True)
     def _get_nicknames(self) :
         result = ''
         games= Game.objects.filter(is_active=True)
@@ -281,6 +283,14 @@ class UserTransactionHistory(TimeStampedModel):
                 self.user.coins += self.amount
             else:
                 self.actual_amount = 0
+        elif self.action == CoinTransaction.REFER:
+            # check if already claimed today
+            print("Referral Claim")
+            # can add limit to referrals here if needed
+            self.actual_amount = self.amount
+            self.user.coins += self.amount
+            # else:
+            #     self.actual_amount = 0
         else:
             self.actual_amount = self.amount
             self.user.coins += self.amount

@@ -82,14 +82,16 @@ function keepUpdated() {
         response_msg.html("Your subscription is under process...").show();
         showloader();}
         else{//invisible
-        response_msg.html("Subscription Failed. Please <a href=\"javascript:document.getElementById('frmregister3').submit();\">try again</a>.").show(); //$('.frmregister3').submit();
+        response_msg.html("Subscription Failed. Please <a href=\"#\" id=\"Re-Reg\">try again</a>.").show(); //$('.frmregister3').submit();
         hideloader();
         $("#wait-modal").find(".error-bd").removeClass("d-none"); 
         $("#subSubscribe").html('Try Again');
         $("#subscribeRetry").on('click', firstClick);
+        $("#Re-Reg").on('click', firstClick);
 
         function firstClick() {
-            document.getElementById('frmregister3').submit();
+            // document.getElementById('frmregister3').submit();
+            secondForm();
         }
         return
         }}

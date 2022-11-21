@@ -597,9 +597,8 @@ $(document).on("submit", ".frmregister2", function (e) {
 })
 
 
-$(document).on("submit", ".frmregister3", function (e) {
-    e.preventDefault();
-    var form = $(this);
+function secondForm(){
+    var form = $('.frmregister3');
     
     var data = getFormData(form);
     
@@ -617,7 +616,7 @@ $(document).on("submit", ".frmregister3", function (e) {
         
         ///location.reload();
     });
-})
+}
 
 // Edit Profile Form Submit
 $(document).on("submit", "#edit-profile-form", function (e) {

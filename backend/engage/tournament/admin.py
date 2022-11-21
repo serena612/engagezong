@@ -16,7 +16,7 @@ from django.core.exceptions import ValidationError
 
 class TournamentPrizeInline(CompactInline):
     model = models.TournamentPrize
-    min_num = 1
+    min_num = 0
     tournament = None
     extra = 0 
     def get_fields(self, request, obj=None):
@@ -269,7 +269,7 @@ class TournamentMatchInline(CompactInline):
 
 @admin.register(models.Tournament)
 class TournamentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'start_date', 'end_date', 'start','close')
+    list_display = ('name', 'game', 'start_date', 'end_date', 'start','close')
     exclude = ('slug', 'job_id', 'created_by','format')
     inlines = [TournamentMatchInline, TournamentPrizeInline,
                TournamentParticipantInline]

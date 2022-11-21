@@ -100,6 +100,10 @@ def profile_view(request):
 
     purchase_coins = PurchaseCoin.objects.all()
     redeem_packages = RedeemPackage.objects.all()
+    if request.user and request.user.is_authenticated:
+        user_uid = request.user.uid
+    else:
+        user_uid = ""
     return render(request, 'profile.html', {'battle_pass': battle_pass,
                                             'missions': missions,
                                             'max_battlepass_level': max_battlepass_level,
@@ -108,7 +112,8 @@ def profile_view(request):
                                             'purchase_coins': purchase_coins,
                                             'redeem_packages': redeem_packages,
                                             'is_battlepass_vip': is_battlepass_vip,
-                                            'show_ads': SHOWADS}) # TODO: fix
+                                            'show_ads': SHOWADS,
+                                            'user_uid': user_uid}) # TODO: fix
 
 
 @require_http_methods(['POST'])

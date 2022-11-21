@@ -1,4 +1,3 @@
-
 var mobileOS = mobilecheck();
 if(mobileOS=='pc')
    $('body').addClass('desktop');
@@ -104,8 +103,8 @@ $(function () {
   var f_games_items = $(main_f_games.find(".featured-item"));
   var new_item = $("<div></div>");
   new_item.attr("class", main_f_games.attr("class"));
+  var mobileOS = mobilecheck();
   
-
     for (let i = 0; i < f_games_items.length; i++) {
     const item = $(f_games_items[i]);
 
@@ -155,8 +154,6 @@ $(function () {
   $("#hometournaments, #homegames,#li_winners").on("click", function () { //,#a-redeem,#a-prize
     hashchanged();
   });
-
-  
 });
 
 function matchCustom(params, data) {
@@ -238,3 +235,44 @@ $("#upgrade-btn").on("click", function () {
       showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
   });
 });
+
+var tInt = setInterval(function(){
+
+  if($('.st-btn[data-network="sms"]').length > 0){
+    clearInterval(tInt);
+    if(!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))){
+      // true for not mobile device
+     $('.st-btn[data-network="sms"]').attr("style", "display:none!important");
+    }else{
+      // false for  mobile device
+      $('.st-btn[data-network="sms"]').attr("style", "display:inline-block!important");
+    }
+  }
+
+},50);
+ 
+ 
+// function showSocialLinks(){
+//   $('.sharethis-inline-share-buttons').show();
+//   $('.st-btn').attr("style", "display:inline-block");
+//   if(!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))){
+//     // true for not mobile device
+//    $('.st-btn[data-network="sms"]').attr("style", "display:none");
+//   }else{
+//     // false for  mobile device
+//     $('.st-btn[data-network="sms"]').attr("style", "display:inline-block");
+//   }
+// }
+
+// function hideSocialLinks(){
+//   $('.sharethis-inline-share-buttons').hide();
+//   $('.st-btn').attr("style", "display:none");
+//   $('.st-btn[data-network="sms"]').attr("style", "display:none");
+// }
+ 
+// $(document).on('click', function (e) {
+//   if (!$(e.target).hasClass('sharethis-inline-share-buttons') && !$(e.target).hasClass('st-btn') && !$(e.target).hasClass('scl') && !$(e.target).hasClass('aitem')
+//   && !$(e.target).hasClass('slid-item') && !$(e.target).hasClass('slick-slide') && !$(e.target).hasClass('small_btn')) {
+//     hideSocialLinks();
+//   }
+// });

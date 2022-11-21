@@ -5,7 +5,7 @@ from django.utils import timezone
 from engage.account.models import User
 from engage.tournament.models import Tournament,TournamentPrize
 from django.contrib.auth import login
-
+from engage.account.api import grant_referral_gift
 from engage.core.models import HTML5Game, Event, FeaturedGame, Game
 from engage.core.constants import NotificationTemplate
 from engage.operator.models import OperatorAd
@@ -41,13 +41,19 @@ def home_view(request):
         user_id = True
     else:
         user_id = False
+    if request.user and request.user.is_authenticated:
+        user_uid = request.user.uid
+    else:
+        user_uid = ""
+    
     return render(request, 'index.html', {'featured_games': featured_games,
                                           'games': games,
                                           'ad': ad,
                                           'events': events,
                                           'previous_tournaments':previous_tournaments,
                                           'user_id': user_id,
-                                          'show_ads': SHOWADS})
+                                          'show_ads': SHOWADS,
+                                          'user_uid': user_uid})
 
 
     
@@ -66,27 +72,32 @@ def register_view(request):
         # return redirect(gaga)
     else :
        # print(request.headers)
-       refid = request.GET.get('referrer')
-       print(refid)
-       if 'msisdn' in request.session:
+        refid = request.GET.get('referrer')
+        if refid != "":
+            ref = User.objects.filter(uid=refid).first()
+        else:
+            ref = None
+        if ref:
+            request.session['refid'] = ref.id
+        if 'msisdn' in request.session:
             print(request.session['msisdn'])
             return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
-       return render(request, 'register.html', {'wifi':True, 'refid':refid})
+        return render(request, 'register.html', {'wifi':True, 'refid':refid})
 
 def test_register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
        return redirect('/')
     else :
-       # print(request.headers)
-       refid = request.GET.get('referrer')
-       print(refid)
+        refid = request.GET.get('referrer')
+        ref = User.objects.filter(uid=refid).first()
+        if ref:
+            request.session['refid'] = ref.id
     if 'msisdn' in request.session:  
         print(request.session['msisdn'])
         return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
     else:
         return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':'DummyNumberHere'})
     
-
 def waiting_view(request):
     # print('user_id' in request.session)
     if not 'user_id' in request.session:
@@ -118,13 +129,13 @@ def clear_session_view(request):
             user.is_active=True
             user.subscription=subscription
             user.save()
+            if 'refid' in request.session:
+                grant_referral_gift(user, request.session['refid'])
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('/')
         else:
             request.session.flush()
     return redirect('/register')
-
-
 
 def new_register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
@@ -134,6 +145,9 @@ def new_register_view(request):
         # return redirect(gaga)
     else :
         refid = request.GET.get('referrer')
+        ref = User.objects.filter(uid=refid).first()
+        if ref:
+            request.session['refid'] = ref.id
         if 'msisdn' in request.session:
             print(request.session['msisdn'])
             return render(request, 'register3.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})

@@ -35,6 +35,7 @@ from ..core.models import Sticker
 from ..operator.constants import SubscriptionType
 
 
+
 class TournamentFilter(django_filters.FilterSet):
     state = django_filters.ChoiceFilter(choices=TournamentState.choices,
                                         method='filter_state')
@@ -148,7 +149,7 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
             ).filter(
                  Q(free_open_date__lte=now) |
                 (Q(Q(minimum_profile_level__lte=user.level) | Q(minimum_profile_level__isnull=True)) & Q(free_open_date__gt=now))
-            ).order_by('free_open_date')
+            ).filter(open_date__lte=now).order_by('free_open_date')
         
 
         if self.action == 'list':
@@ -472,14 +473,15 @@ def gettour(user,tournament_list,region):
                     default=True
                 )
             ).filter(
-                Q(minimum_profile_level__lte=user.level)  &  Q(free_open_date__lte=now)
-            ).annotate(live_null=Count('live_link'),started_null=Count('started_on'))
+                Q(free_open_date__lte=now) |
+                (Q(Q(minimum_profile_level__lte=user.level) | Q(minimum_profile_level__isnull=True)) & Q(free_open_date__gt=now))
+            ).filter(open_date__lte=now).annotate(live_null=Count('live_link'),started_null=Count('started_on'))
   
     return tournament_list.filter(regions__in=[region])
 
 
-    
 
+    
  
    
 
@@ -496,10 +498,21 @@ class TournamentPrizeViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
     def get_queryset(self):
         now = timezone.now()
-        return self.queryset.filter(
+        user = self.request.user
+        prize_list = self.queryset.filter(
             tournament__regions__in=[self.request.region],
             tournament__end_date__gt=now
         ).exclude(image='')
+        if not user.is_authenticated:
+            prize_list = prize_list.filter(
+                tournament__free_open_date__lte=now,
+            )
+        else:
+            prize_list = prize_list.filter(
+                Q(tournament__free_open_date__lte=now) |
+                (Q(Q(tournament__minimum_profile_level__lte=user.level) | Q(tournament__minimum_profile_level__isnull=True)) & Q(tournament__free_open_date__gt=now))
+            ).filter(tournament__open_date__lte=now)
+        return prize_list
 
 
 class TournamentWinnerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -529,7 +542,6 @@ class TournamentWinnerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
        
         game = request.query_params['game']
         tournament = request.query_params['tournament']
-
         if game and game!= '':
             queryset = TournamentPrize.objects.filter(
                 winner__isnull=False,

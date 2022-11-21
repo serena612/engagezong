@@ -43,7 +43,7 @@ class MatchStatus(LabelChoices):
 
 class TournamentPrizeType(LabelChoices):
     CASH = 'cash', 'Cash'
-    TICKETS = 'tickets', 'Tickets'
+    # TICKETS = 'tickets', 'Tickets'
     DATA = 'data', 'Data'
 
 

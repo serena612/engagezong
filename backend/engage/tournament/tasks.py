@@ -6,16 +6,71 @@ from django.db.models import F, OuterRef, Subquery
 from django.utils import timezone
 from engage.services import notify_when
 from engage.account.models import UserGameLinkedAccount, User
+from engage.tournament.models import TournamentPrizeList
 from engage.core.constants import SupportedGame
 from engage.tournament.game.clash_royale import ClashRoyaleClient
 from engage.core.constants import NotificationTemplate
-
-
+from engage.settings.base import API_SERVER_URL, PRIZE_SERVER_URL
+from uuid import uuid4
 from engage.tournament.models import (
     TournamentMatch
 )
 from engage.account.models import User
 from datetime import datetime, timedelta
+def get_prize_list(vault=None):
+    headers = {'Content-type':'application/json', 
+                'accept': 'text/plain'} # post data
+    command = '/api/Features/get_data_plan_details'
+    
+    if vault:
+        return vault.send(command=command, headers=headers)
+    url = PRIZE_SERVER_URL+command
+    
+    try:
+        api_call = requests.get(url, timeout=2) # , headers=headers
+    except requests.exceptions.RequestException as e:
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        # print(api_call)
+        res = api_call.json()
+        return res['plan_list'], res['code']
+    else:
+        return api_call.content, api_call.status_code
+
+
+def send_sms(user, message, vault=None):
+    headers = {'Content-type':'application/json', 
+                'accept': 'text/plain'} # post data
+    command = '/api/User/SendSms'
+    if user.subscription=='free':
+        subs = 'FREE'
+    elif user.subscription=='paid1':
+        subs = 'P30'
+    else:
+        subs = 'P50'
+    data = {
+            'msisdn': user.mobile,
+            'message': message.replace('<br/>', ''),
+            'message_id': str(uuid4()),
+            'service_id': subs
+            } 
+    if vault:
+        return vault.send(command=command, headers=headers, data=data)
+    url = API_SERVER_URL+command
+    
+    try:
+        api_call = requests.post(url, headers=headers, json=data, timeout=2)
+    except requests.exceptions.RequestException as e:
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        # print(api_call)
+        res = api_call.json()['statusCode']
+        return res['message'], res['code']
+    else:
+        return api_call.content, api_call.status_code
+
 @shared_task
 def check_active_matches_winners():
     now = datetime.now(tz=timezone.utc)
@@ -27,6 +82,21 @@ def check_active_matches_winners():
         for match in matches:
             fetch_match_details.delay(match.id)
 
+@shared_task
+def fill_prize_list():
+    prize_list, code = get_prize_list()
+    if code==0:
+        TournamentPrizeList.objects.all().delete()    
+        for package in prize_list:
+            m = TournamentPrizeList(operator=package['OPERATOR'],
+                    amount=package['AMOUNT'],
+                    data_plan=package['DATA_PLAN'],
+                    data_plan_desc=package['DATAPLAN_DESC'],
+                    prize_type='data'
+                    )
+            m.save()
+    else:
+        print("An error has occured", code)
 
 @shared_task
 def fetch_match_details(match_id):
@@ -80,6 +150,8 @@ def fetch_match_details(match_id):
                         notificationi.save()
                         print(notificationi.text)
                         print(notificationi.link)
+                        resp, code = send_sms(user, notificationi.text)
+                        print(resp, code)
         
                 
                 notify(user=participant)

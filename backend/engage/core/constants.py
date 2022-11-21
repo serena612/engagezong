@@ -148,6 +148,7 @@ class NotificationTemplate(LabelChoices):
     FRIEND_ADDED = 'friend_added', 'Friend Added'
     FRIEND_REMOVE = 'friend_remove', 'Friend Remove'
     FRIEND_REQUEST = 'friend_request', 'Friend Request'
+    FRIEND_REFER = 'friend_refer', 'Friend Refer'
 
     VIDEO_ADDED = 'video_added', 'New Video Added'
     USER_WATCH_VIDEO = 'user_watch_video', 'If User Watches Any Video'

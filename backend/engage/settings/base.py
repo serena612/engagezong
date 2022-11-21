@@ -266,18 +266,22 @@ app.conf.beat_schedule = {
         'task': 'engage.tournament.tasks.check_active_matches_winners',
         'schedule': crontab(minute='*/1'),
     },
+    'fill_prize_list': {
+        'task': 'engage.tournament.tasks.fill_prize_list',
+        'schedule': crontab(hour=3, day_of_week=0),  # execute every sunday at 3 AM
+    },
     'how_to_use_notification': {
       'task': 'engage.account.schedulers.how_to_use_notification',
       'schedule': crontab(hour=12)
+    },
+    'check_users_level': {
+        'task': 'engage.account.schedulers.check_users_level',
+        'schedule': crontab(minute=0, hour=0)
     },
     # 'active_days_notification': {
     #     'task': 'engage.account.schedulers.active_days_notification',
     #     'schedule': crontab(minute=0, hour=0)
     # },
-    'check_users_level': {
-        'task': 'engage.account.schedulers.check_users_level',
-        'schedule': crontab(minute=0, hour=0)
-    },
     'happy_birthday_notification': {
         'task': 'engage.account.schedulers.happy_birthday_notification',
         'schedule': crontab(hour=0, minute=10)
@@ -397,15 +401,14 @@ FCM_CONFIG = {
 
 # Regions
 REGION_COOKIE_NAME = 'region'
-
 #Captcha
 RECAPTCHA_PUBLIC_KEY = '6LfgQHkgAAAAALOSa2gHJKxSLSINgKWNKrEF2d7O'
 RECAPTCHA_PRIVATE_KEY = '6LfgQHkgAAAAABqHnQmpqbvfwo2TgiXY_L0LIT00'
 RECAPTCHA_REQUIRED_SCORE = 0.5
 
+
 #Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 EMAIL_HOST = 'smtp-mail.outlook.com'  # SMTP Server
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  # sender email
 EMAIL_PORT = 25  # Server port
@@ -429,8 +432,8 @@ AXES_LOCKOUT_CALLABLE = "engage.account.views.lockout"
 AXES_ONLY_ADMIN_SITE = True
 AXES_ENABLE_ADMIN = False
 # CORS_ORIGIN_WHITELIST=('example.net')
-API_SERVER_URL='http://192.168.153.62:8099'
-
+API_SERVER_URL='http://192.168.153.62:8099'  # 'http://157.230.100.145:5052'
+PRIZE_SERVER_URL='http://192.168.153.62:8058' # 'http://157.230.100.145:5053'
 USER_EXCEPTION_LIST = ['admin', 'player483', 'player488']
 ENABLE_VAULT = False
 VAULT_SERVER_URL = 'https://engage.devapp.co/'

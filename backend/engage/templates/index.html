@@ -90,6 +90,9 @@
             font-size: 1.5vw!important;
         }
     }
+    #st-1 .st-btn{
+        display: inline-block!important;
+    }
     </style>
 {% endblock %}
 
@@ -117,10 +120,29 @@
                 <div>
                     <div class="slid-item">
                         {% if section.image_link %}
-                        <a href="{{ section.image_link }}"><img src="{{ section.image.url }}" alt=""></a>
+
+                        {% if 'socialLnk' in section.image_link %}
+                        <a class="a_item" data-toggle="modal" data-target="#share-modal" href="#share-engage"><img src="{{ section.image.url }}" alt=""></a>
+                        {% else %}
+                        <a class="a_item" href="{{ section.image_link }}"><img src="{{ section.image.url }}" alt=""></a>
                         {% endif %}
+
+                        {% endif %}
+                        
                         {% if section.title or section.summary %}
                         <div  class="text-content">
+                            {% if 'socialLnk' in section.image_link %}
+
+                            <a class="scl" data-toggle="modal" data-target="#share-modal" href="#share-engage">
+                                <p class="t">{{ section.title }}</p>
+                                <p>{{ section.summary }}</p>
+                                {% if section.button_label%}
+                                   <div class="small_btn">{{ section.button_label }}</div>
+                                {% endif %}
+                            </a>
+
+                            {% else %}
+
                             <a href="{{ section.image_link }}">
                             <p class="t">{{ section.title }}</p>
                             <p>{{ section.summary }}</p>
@@ -128,6 +150,12 @@
                                <div class="small_btn">{{ section.button_label }}</div>
                             {% endif %}
                             </a>
+                                
+                            {% endif %}
+
+                            
+
+
                         </div>
                         {% endif %}
                         {% comment %} <a class="close-btn"><i class="fas fa-times"></i></a>
@@ -311,7 +339,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-4 leaderboards" id='leaderboards'>
                         <div class="widget-3 widget">
                             
@@ -474,10 +501,9 @@
                     <div class="drp_select"><select class='drp_tournament' placeholder="Search for a tournament here" >
                         {% for tournament in previous_tournaments %}
                             {% if tournament.current_participants > 0 %}
-                              <option value="{{tournament.id}}" date="{{ tournament.modified|date:"d M Y" }} {{tournament.modified|time:"h:i A"}}" label="{{tournament.label_next_time}}" game="{{tournament.game.slug}}"  gname="{{tournament.name}}" participants="{{tournament.current_participants}}/{{tournament.max_participants}}"> {{tournament.name}} </font></option>
+                              <option value="{{tournament.id}}" date="{{ tournament.modified|date:"d M Y" }} {{tournament.modified|time:"h:i A"}}" label="{{tournament.label_next_time}}" game="{{tournament.game.slug}}"  gname="{{tournament.name}}" participants="{{tournament.current_participants}}/{{tournament.max_participants}}"> {{tournament.name}}</option>	
                             {% endif %}
-                        {% endfor %}</select>
-                        <i class='fas fa-angle-down'></i>
+                        {% endfor %}</select>	<i class='fas fa-angle-down'></i>
                     </div>
                     <div class='date winners-date'><div class='winners-date-updated'>{% translate 'Last Updated:' %} </div> <span></span></div>
                     </div>
@@ -493,6 +519,7 @@
                                 </div>   
                                     
                             </div>
+	
                         </div>
                     </div>
                 </div>
@@ -517,7 +544,7 @@
         </div>
     </section>
 
-    <section class="sec-5">
+    <!-- <section class="sec-5">
         <div class="layer"></div>
         <div class="rx_isotope_ui max-page-width">
             <ul class="isotopeMenu">
@@ -554,11 +581,50 @@
                 {% endif %}
             </div>
         </div>
-    </section>
+    </section> -->
     <form class="frmregister3 d-none" method="post" name="frmregister3" id="frmregister3"> 
         {% csrf_token %}
      
                 <button type="submit" class="btn3">{% translate 'Join Now' %}</button>
     
     </form>
+
+    <div id="share-modal" class="modal fade">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="close-box">
+                    <a data-dismiss="modal" href=""><i class="fas fa-times"></i></a>
+                </div>
+                <div class="modal-header">
+                    <h3>{% translate 'Share Engage' %}</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            {% if user.is_authenticated %}
+                            <input type="text" class="input1 share-link-input"
+                                   value="https://www.engageplaywin.com/register?referrer={{ user.uid }}"
+                                   readonly>
+                            {% else %}
+                            <input type="text" class="input1 share-link-input"
+                                   value="https://www.engageplaywin.com/register"
+                                   readonly>
+                            {% endif %}
+                            <div class="text-right">
+                                <button onclick="copyToClipboard($('.share-link-input').val()); $(this).html('COPIED')"
+                                        class="btn3">
+                                    {% translate 'COPY' %}
+                                </button>
+                                {% if user.is_authenticated %}
+                                <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons" data-url="https://www.engageplaywin.com/register?referrer={{ user_uid }}"></div><!-- ShareThis END -->
+                                {% else %}
+                                <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons" data-url="https://www.engageplaywin.com/register"></div><!-- ShareThis END -->
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

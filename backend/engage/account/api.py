@@ -28,7 +28,8 @@ from .constants import (
     FriendStatus,
     SectionLog,
     SubscriptionPlan,
-    Transaction
+    Transaction,
+    CoinTransaction
 )
 from engage.core.constants import WinAction, NotificationTemplate
 from engage.core.models import Notifications, BattlePassMission, BattlePass,Avatar
@@ -264,7 +265,7 @@ def load_data_api(phone_number, idnetwork, vault=None):
         return api_call.content, api_call.status_code
 
 
-def subscribe_api(phone_number, idbundle, idservice, idchannel=2, vault=None):  # default channel id is web
+def subscribe_api(phone_number, idbundle, idservice, referrer=None, idchannel=2, vault=None):  # default channel id is web
     print("Subscribing", phone_number, "to", idbundle, "service", idservice)
     command = '/api/User/Subscribe'
     uniqueid = str(uuid4())
@@ -274,6 +275,8 @@ def subscribe_api(phone_number, idbundle, idservice, idchannel=2, vault=None):  
             'idService':idservice,
             'transactionId':uniqueid,
             }
+    if referrer:
+        data['inviteeId'] = referrer
     if vault:
         return vault.send(command=command, data=data)       
     url = API_SERVER_URL+command
@@ -290,6 +293,129 @@ def subscribe_api(phone_number, idbundle, idservice, idchannel=2, vault=None):  
     else:
         return api_call.content, api_call.status_code
 
+
+def grant_referral_gift(user, referrer):
+    print("User", user, "being referred by", referrer, "instead of", user.referrer)
+    refgift = 500
+    if not user.referrer:
+        user.referrer = referrer
+        user.save()
+        transaction = UserTransactionHistory.objects.create(
+            user=referrer,
+            amount=refgift, # amount of coins to grant
+            action=CoinTransaction.REFER,
+            info=Transaction.REFER
+        )
+        # if transaction.actual_amount == 0:  # handle here if want to add limit to referrals
+        #     raise CoinLimitReached()
+        # else:
+        #     return Response({'coins': new_coins})
+        print("Transaction succeeded", transaction.actual_amount)
+        # Send Notification of successful referral to referrer (can add refered too if needed)
+        stri_repl = {}
+        stri_repl['FRIEND'] = user.username
+        stri_repl['FR_MOBILE'] = user.mobile
+        stri_repl['AMOUNT'] = str(refgift)
+        @notify_when(events=[NotificationTemplate.FRIEND_REFER],
+                         is_route=False, is_one_time=False, str_repl=stri_repl)
+        def notify(user, user_notifications):
+            """ extra logic if needed """
+        notify(user=referrer)
+    # if 'refid' in request.session:
+    #     referrer = request.session['refid']
+        ## TODO: give coins here - add as referrer permanently if needed ?? - send notification of successful referral
+
+
+def do_register(self, request, username, subscription):
+    is_active = False
+    if 'refid' in request.session:
+        ref = User.objects.filter(id=request.session['refid']).first()
+        referrer = ref.uid
+    else:
+        referrer=None
+    if subscription == 'free':
+        idbundle = 1
+        idservice = 'FREE'
+    elif subscription == 'paid1':
+        idbundle = 2
+        idservice = 'P30'
+    elif subscription == 'paid2':
+        idbundle = 3
+        idservice = 'P50'
+    else:
+        return Response({'error': 'Unknown Subscription'}, status=577)
+
+    
+
+    response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
+    if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
+        if response2['idbundle'] == 1:
+            subscription = 'free'
+        elif response2['idbundle'] == 2:
+            subscription = 'paid1'
+        elif response2['idbundle'] == 3:
+            subscription = 'paid2'
+    if code2==56 or code2==80 or code2==76 or code2==77 or code2==79 or code2==75 or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 79 pending unsub - 77 sub - 75 under process
+        if code2==56 or code2==80:  # profile does not exist so we send subscription request
+            print("subscription request", subscription)
+            response3, code3 = subscribe_api(username, idbundle, idservice, referrer=referrer, vault=self.client)
+        if code2==76 or code2==77 or code2==75 or code2==79 or (code2==56 and code3 ==0) or (code2==80 and code3 ==0) or INTEGRATION_DISABLED: # profile does exist so we create local record based on it
+            # request.session.pop('renewing', None)
+            if code2==77 or INTEGRATION_DISABLED:
+                is_active=True
+            
+            avatar = Avatar.objects.order_by('?').first()
+            user, created =  User.objects.get_or_create(
+                    mobile = username,
+                    defaults={
+                        'is_superuser': False,
+                        'first_name': '',
+                        'last_name': '',
+                        'email': '',
+                        'is_active': is_active,
+                        'is_staff': False,
+                        'subscription': subscription,
+                        'date_joined': datetime.now(),
+                        'modified' : datetime.now(),
+                        'newsletter_subscription': True,
+                        'timezone': '',
+                        'country': request.region.code,
+                        'region_id': request.region.id,
+                        'is_billed' : False,
+                        'password': 'pbkdf2_sha256$260000$aMwTW2Wr3K2J2WmodFFd5W$pZUAfNohO77wQbo4oRgMYybD8Vph9HdUSoeWOHkwT9w='
+                    },
+                )
+            if created:
+                user.username= 'player'+str(user.id)
+                user.nickname= 'player'+str(user.id)
+                
+                if avatar :
+                    user.avatar = avatar
+                user.save()
+            if is_active:
+                if 'refid' in request.session:
+                    referr = User.objects.filter(id=request.session['refid']).first()
+                    grant_referral_gift(user, referr)
+
+                @notify_when(events=[NotificationTemplate.LOGIN],
+                            is_route=False, is_one_time=False)
+                def notify(user, user_notifications):
+                    """ extra logic if needed """
+                notify(user=user)
+            
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            request.session['user_id'] = user.pk
+            return redirect('/')
+            # return Response({'message': response2}, status=514)
+        
+        elif code2==56:
+            if code3<100:
+                code3+=400
+            return Response({'error': response3}, status=code3)
+    else:
+        if code2<100:
+            code2+=400
+        return Response({'error': response2}, status=code2)
 
 class AuthViewSet(viewsets.GenericViewSet):
     serializer_class = None
@@ -476,6 +602,7 @@ class AuthViewSet(viewsets.GenericViewSet):
                                 if not user:  # attempt to create a profile
                                     if code2==77:
                                         is_active=True
+                                        
                                     else:
                                         is_active=False
                                     avatar = Avatar.objects.order_by('?').first()
@@ -508,11 +635,16 @@ class AuthViewSet(viewsets.GenericViewSet):
 
                                         user.save()
                                     if is_active:
+                                        if 'refid' in request.session:
+                                            referr = User.objects.filter(id=request.session['refid']).first()
+                                            grant_referral_gift(user, referr)
+
                                         @notify_when(events=[NotificationTemplate.LOGIN],
                                                     is_route=False, is_one_time=False)
                                         def notify(user, user_notifications):
                                             """ extra logic if needed """
                                         notify(user=user)
+                                        
                                     request.session['msisdn'] = user.mobile
                                     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                                     request.session['user_id'] = user.pk
@@ -565,90 +697,15 @@ class AuthViewSet(viewsets.GenericViewSet):
     
     @action(methods=['POST'], detail=False)
     def register(self, request):
-        is_active = False
+        
         username = request.POST.get('phone_number')
         subscription = request.POST.get('subscription')
         request.session['phone_number'] = username
         request.session['subscription'] = subscription
-        if subscription == 'free':
-            idbundle = 1
-            idservice = 'FREE'
-        elif subscription == 'paid1':
-            idbundle = 2
-            idservice = 'P30'
-        elif subscription == 'paid2':
-            idbundle = 3
-            idservice = 'P50'
-        else:
-            return Response({'error': 'Unknown Subscription'}, status=577)
-
-        print("subscription request", subscription)
         otp = request.POST.get('code')
         response, code = verify_pincode(username, otp, vault=self.client)
         if code==0 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED:
-            response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
-            if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
-                if response2['idbundle'] == 1:
-                    subscription = 'free'
-                elif response2['idbundle'] == 2:
-                    subscription = 'paid1'
-                elif response2['idbundle'] == 3:
-                    subscription = 'paid2'
-            if code2==56 or code2==80 or code2==76 or code2==77 or code2==79 or code2==75 or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 79 pending unsub - 77 sub - 75 under process
-                if code2==56 or code2==80:  # profile does not exist so we send subscription request
-                    response3, code3 = subscribe_api(username, idbundle, idservice, vault=self.client)
-                if code2==76 or code2==77 or code2==75 or code2==79 or (code2==56 and code3 ==0) or (code2==80 and code3 ==0) or INTEGRATION_DISABLED: # profile does exist so we create local record based on it
-                    # request.session.pop('renewing', None)
-                    if code2==77 or INTEGRATION_DISABLED:
-                        is_active=True
-                    avatar = Avatar.objects.order_by('?').first()
-                    user, created =  User.objects.get_or_create(
-                            mobile = username,
-                            defaults={
-                                'is_superuser': False,
-                                'first_name': '',
-                                'last_name': '',
-                                'email': '',
-                                'is_active': is_active,
-                                'is_staff': False,
-                                'subscription': subscription,
-                                'date_joined': datetime.now(),
-                                'modified' : datetime.now(),
-                                'newsletter_subscription': True,
-                                'timezone': '',
-                                'country': request.region.code,
-                                'region_id': request.region.id,
-                                'is_billed' : False,
-                                'password': 'pbkdf2_sha256$260000$aMwTW2Wr3K2J2WmodFFd5W$pZUAfNohO77wQbo4oRgMYybD8Vph9HdUSoeWOHkwT9w='
-                            },
-                        )
-                    if created:
-                        user.username= 'player'+str(user.id)
-                        user.nickname= 'player'+str(user.id)
-                        
-                        if avatar :
-                            user.avatar = avatar
-                        user.save()
-                    if is_active:
-                        @notify_when(events=[NotificationTemplate.LOGIN],
-                                    is_route=False, is_one_time=False)
-                        def notify(user, user_notifications):
-                            """ extra logic if needed """
-                        notify(user=user)
-                    
-                    login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                    request.session['user_id'] = user.pk
-                    return redirect('/')
-                    # return Response({'message': response2}, status=514)
-                
-                elif code2==56:
-                    if code3<100:
-                        code3+=400
-                    return Response({'error': response3}, status=code3)
-            else:
-                if code2<100:
-                    code2+=400
-                return Response({'error': response2}, status=code2)
+            return do_register(self, request, username, subscription)
         else:
             if code<100:
                 code+=400
@@ -656,175 +713,25 @@ class AuthViewSet(viewsets.GenericViewSet):
 
     @action(methods=['POST'], detail=False)
     def register2(self, request):
-        is_active = False
+        
         username = request.session['msisdn']
         subscription = request.POST.get('subscription')
         request.session['phone_number'] = username
         request.session['subscription'] = subscription
-        if subscription == 'free':
-            idbundle = 1
-            idservice = 'FREE'
-        elif subscription == 'paid1':
-            idbundle = 2
-            idservice = 'P30'
-        elif subscription == 'paid2':
-            idbundle = 3
-            idservice = 'P50'
-        else:
-            return Response({'error': 'Unknown Subscription'}, status=577)
-
-        print("subscription request", subscription)
-
-        response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
-        if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
-            if response2['idbundle'] == 1:
-                subscription = 'free'
-            elif response2['idbundle'] == 2:
-                subscription = 'paid1'
-            elif response2['idbundle'] == 3:
-                subscription = 'paid2'
-        if code2==56 or code2==80 or code2==76 or code2==77 or code2==79 or code2==75 or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 79 pending unsub - 77 sub - 75 under process
-            if code2==56 or code2==80:  # profile does not exist so we send subscription request
-                response3, code3 = subscribe_api(username, idbundle, idservice, vault=self.client)
-            if code2==76 or code2==77 or code2==75 or code2==79 or (code2==56 and code3 ==0) or (code2==80 and code3 ==0) or INTEGRATION_DISABLED: # profile does exist so we create local record based on it
-                # request.session.pop('renewing', None)
-                if code2==77 or INTEGRATION_DISABLED:
-                    is_active=True
-                avatar = Avatar.objects.order_by('?').first()
-                user, created =  User.objects.get_or_create(
-                        mobile = username,
-                        defaults={
-                            'is_superuser': False,
-                            'first_name': '',
-                            'last_name': '',
-                            'email': '',
-                            'is_active': is_active,
-                            'is_staff': False,
-                            'subscription': subscription,
-                            'date_joined': datetime.now(),
-                            'modified' : datetime.now(),
-                            'newsletter_subscription': True,
-                            'timezone': '',
-                            'country': request.region.code,
-                            'region_id': request.region.id,
-                            'is_billed' : False,
-                            'password': 'pbkdf2_sha256$260000$aMwTW2Wr3K2J2WmodFFd5W$pZUAfNohO77wQbo4oRgMYybD8Vph9HdUSoeWOHkwT9w='
-                        },
-                    )
-                if created:
-                    user.username= 'player'+str(user.id)
-                    user.nickname= 'player'+str(user.id)
-                    
-                    if avatar :
-                        user.avatar = avatar
-                    user.save()
-                if is_active:
-                    @notify_when(events=[NotificationTemplate.LOGIN],
-                                is_route=False, is_one_time=False)
-                    def notify(user, user_notifications):
-                        """ extra logic if needed """
-                    notify(user=user)
-                
-                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                request.session['user_id'] = user.pk
-                return redirect('/')
-                # return Response({'message': response2}, status=514)
-            
-            elif code2==56:
-                if code3<100:
-                    code3+=400
-                return Response({'error': response3}, status=code3)
-        else:
-            if code2<100:
-                code2+=400
-            return Response({'error': response2}, status=code2)
+        return do_register(self, request, username, subscription)
+        
 
     @action(methods=['POST'], detail=False)
     def register3(self, request):
-        is_active = False
+        
         if 'phone_number' in request.session and 'subscription' in request.session:
             username = request.session['phone_number']
             subscription = request.session['subscription']
+            print("Calling Re-reg function")
         else:
             return redirect('/register')
-            
-        if subscription == 'free':
-            idbundle = 1
-            idservice = 'FREE'
-        elif subscription == 'paid1':
-            idbundle = 2
-            idservice = 'P30'
-        elif subscription == 'paid2':
-            idbundle = 3
-            idservice = 'P50'
-        else:
-            return Response({'error': 'Unknown Subscription'}, status=577)
-
-        print("subscription request", subscription)
-
-        response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
-        if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
-            if response2['idbundle'] == 1:
-                subscription = 'free'
-            elif response2['idbundle'] == 2:
-                subscription = 'paid1'
-            elif response2['idbundle'] == 3:
-                subscription = 'paid2'
-        if code2==56 or code2==80 or code2==76 or code2==77 or code2==79 or code2==75 or INTEGRATION_DISABLED:  # 56 profile does not exist - 76 pending sub - 79 pending unsub - 77 sub - 75 under process
-            if code2==56 or code2==80:  # profile does not exist so we send subscription request
-                response3, code3 = subscribe_api(username, idbundle, idservice, vault=self.client)
-            if code2==76 or code2==77 or code2==75 or code2==79 or (code2==56 and code3 ==0) or (code2==80 and code3 ==0) or INTEGRATION_DISABLED: # profile does exist so we create local record based on it
-                # request.session.pop('renewing', None)
-                if code2==77 or INTEGRATION_DISABLED:
-                    is_active=True
-                avatar = Avatar.objects.order_by('?').first()
-                user, created =  User.objects.get_or_create(
-                        mobile = username,
-                        defaults={
-                            'is_superuser': False,
-                            'first_name': '',
-                            'last_name': '',
-                            'email': '',
-                            'is_active': is_active,
-                            'is_staff': False,
-                            'subscription': subscription,
-                            'date_joined': datetime.now(),
-                            'modified' : datetime.now(),
-                            'newsletter_subscription': True,
-                            'timezone': '',
-                            'country': request.region.code,
-                            'region_id': request.region.id,
-                            'is_billed' : False,
-                            'password': 'pbkdf2_sha256$260000$aMwTW2Wr3K2J2WmodFFd5W$pZUAfNohO77wQbo4oRgMYybD8Vph9HdUSoeWOHkwT9w='
-                        },
-                    )
-                if created:
-                    user.username= 'player'+str(user.id)
-                    user.nickname= 'player'+str(user.id)
-                    
-                    if avatar :
-                        user.avatar = avatar
-                    user.save()
-                if is_active:
-                    @notify_when(events=[NotificationTemplate.LOGIN],
-                                is_route=False, is_one_time=False)
-                    def notify(user, user_notifications):
-                        """ extra logic if needed """
-                    notify(user=user)
-                
-                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                request.session['user_id'] = user.pk
-                return redirect('/')
-                # return Response({'message': response2}, status=514)
-            
-            elif code2==56:
-                if code3<100:
-                    code3+=400
-                return Response({'error': response3}, status=code3)
-        else:
-            if code2<100:
-                code2+=400
-            return Response({'error': response2}, status=code2)
+        return do_register(self, request, username, subscription)   
+        
         
 
 class UserViewSet(mixins.ListModelMixin,
@@ -981,9 +888,9 @@ class UserViewSet(mixins.ListModelMixin,
         
         else:
             if refid and refid != "":
-                refexist = User.objects.filter(id=refid)
+                refexist = User.objects.filter(uid=refid)
                 if not refexist:
-                    raise exceptions.ValidationError({'refid':'No referring user with the provided id was found!'})
+                    raise exceptions.ValidationError({'refid':'No referring user with the provided uid was found!'})
             if not userexist:
                 # a subscription is received from operator thus we can create a new profile instead of exception
                 # raise exceptions.ValidationError({'msisdn':'No user with the provided phone number was found!'})
@@ -1019,8 +926,9 @@ class UserViewSet(mixins.ListModelMixin,
                     resp['message'] = 'Unexisting user profile has been created!'
                     resp['subscription'] = new_substatus
                     resp['username'] = user.username
-                    if refid and refid != "" and refexist:
-                        resp['refmsisdn'] = refexist.first().mobile
+                    if refexist:
+                        resp['refuid'] = refexist.first().uid
+                        grant_referral_gift(user, refexist.first())
                     return Response(resp, status=status.HTTP_200_OK)
                 else:
                     # raise exceptions.APIException("Error in creating new user profile!")
@@ -1032,8 +940,9 @@ class UserViewSet(mixins.ListModelMixin,
                     resp['message'] = 'User subscription has been successfully updated!'
                     resp['subscription'] = new_substatus
                     resp['username'] = userexist.first().username
-                    if refid and refid != "" and refexist:
-                        resp['refmsisdn'] = refexist.first().mobile
+                    if refexist:
+                        resp['refuid'] = refexist.first().uid
+                        grant_referral_gift(userexist.first(), refexist.first())
                     return Response(resp, status=status.HTTP_200_OK)
                 else:
                     # raise exceptions.APIException("Error in updating user subscription!")

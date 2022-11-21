@@ -20,6 +20,7 @@ class CoinTransaction(LabelChoices):
     REDEEM = 'redeem', 'Redeem',
     PAY = 'pay','Pay Fee'
     RETRIEVE = 'retrieve','Retrieve'
+    REFER = 'refer', 'Refer'
 
 class Transaction(LabelChoices):
     ADD = 'add', 'Add'
@@ -30,6 +31,7 @@ class Transaction(LabelChoices):
     PAY = 'pay','Pay Fee',
     NOTIFICATION_CLAIM = 'notification','Notification Claim',
     RETRIEVE = 'retrieve','Retrieve'
+    REFER = 'refer', 'Refer'
 
 
 class NotificationType(LabelChoices):
