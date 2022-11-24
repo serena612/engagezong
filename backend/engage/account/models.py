@@ -40,7 +40,7 @@ class PhonyNumberField(models.CharField):
         
         cleaned_data = super().clean(value, *args, **kwargs)
         subdata = cleaned_data
-        prefs1 = [703, 704, 706, 803, 806, 810, 813, 814, 816, 903, 906,913,916]
+        prefs1 = [703, 704, 706, 803, 806, 810, 813, 814, 816, 903, 906,913,916, 102] # added 102 exception
         prefs2 = [7025, 7026]
         if len(cleaned_data)==15 and cleaned_data.startswith("00"):
             cleaned_data = cleaned_data[2:]

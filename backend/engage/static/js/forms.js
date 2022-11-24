@@ -236,11 +236,11 @@ function get_wait_modal() {
 function checkValidMtnNumber(number){
     var valid=true;
     var telcoPrefixes = [803, 806,703, 706, 813, 816, 810,  814, 903];
-    var xpref=[7025, 7026, 703, 704, 706, 803, 806, 810, 813, 814, 816, 903, 906,913,916]
+    var xpref=[7025, 7026, 703, 704, 706, 803, 806, 810, 813, 814, 816, 903, 906,913,916,102]; //added 102 for test
 
 
     //get value from textbox
-	phoneInputValue = number
+	phoneInputValue = number;
 
 	//get value length
 	var inputLength = phoneInputValue.length;
