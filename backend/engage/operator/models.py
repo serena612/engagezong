@@ -7,6 +7,8 @@ from django.utils.text import slugify
 
 from common.models import TimeStampedModel, MetadataModel
 from engage.operator.constants import AdType, Currencies
+from engage.tournament.models import TournamentPrizeType # TournamentPrizeList, 
+from django.core.exceptions import ValidationError
 
 
 class Region(TimeStampedModel):
@@ -105,9 +107,19 @@ class RedeemPackage(TimeStampedModel):
     title = models.CharField(max_length=256)
     image = models.ImageField(upload_to='packages/')
     coins = models.PositiveIntegerField(null=True)
+    prize_type = models.CharField(max_length=20, null=True,
+                                  choices=TournamentPrizeType.choices)
+    actual_package = models.ForeignKey('tournament.TournamentPrizeList', null=True, blank=True, on_delete=models.SET_NULL)
+    cash_amount = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.title
+
+    def clean(self):
+        if self.prize_type == 'data' and not self.actual_package:
+            raise ValidationError('A package must be selected if prize type is data.')
+        elif self.prize_type == 'cash' and not self.cash_amount:
+            raise ValidationError('A cash amount must be entered if prize type is cash.')
 
     class Meta:
         verbose_name_plural = 'Redeem Packages'

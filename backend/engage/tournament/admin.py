@@ -13,12 +13,31 @@ from django.db.models import F, Q
 from django.contrib import messages as messagesss
 from django.forms.widgets import HiddenInput
 from django.core.exceptions import ValidationError
+from ..tournament.models import get_prize
+
+
+class TournamentPrizeInlineForm(forms.ModelForm):
+    def clean(self):
+        super(TournamentPrizeInlineForm, self).clean()
+        if 'winner' in self.changed_data:  # we only try to grant prize if winner is changed, this is to prevent redundance
+            winner = self.cleaned_data.get('winner')
+            prize_type = self.cleaned_data.get('prize_type')
+            if winner:
+                if prize_type == 'cash':
+                    prize = self.cleaned_data.get('cash_amount')
+                else:
+                    prize = self.cleaned_data.get('actual_data_package')
+                if not get_prize(winner.mobile, prize, prize_type):
+                    raise ValidationError('Failed to give prize to selected winner. Please try saving again.')
+
 
 class TournamentPrizeInline(CompactInline):
     model = models.TournamentPrize
     min_num = 0
+    form = TournamentPrizeInlineForm
     tournament = None
     extra = 0 
+
     def get_fields(self, request, obj=None):
         fields = super().get_fields(request, obj)
         if not obj:

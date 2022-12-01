@@ -12,6 +12,7 @@ from engage.tournament.game.clash_royale import ClashRoyaleClient
 from engage.core.constants import NotificationTemplate
 from engage.settings.base import API_SERVER_URL, PRIZE_SERVER_URL
 from uuid import uuid4
+from django.db import transaction
 from engage.tournament.models import (
     TournamentMatch
 )
@@ -82,19 +83,36 @@ def check_active_matches_winners():
         for match in matches:
             fetch_match_details.delay(match.id)
 
+
+@transaction.atomic
 @shared_task
 def fill_prize_list():
     prize_list, code = get_prize_list()
     if code==0:
-        TournamentPrizeList.objects.all().delete()    
+        packages = [package['DATA_PLAN'] for package in prize_list]
+        items_by_pk = TournamentPrizeList.objects.in_bulk(packages)
+        all_items_by_pk = TournamentPrizeList.objects.in_bulk()
         for package in prize_list:
-            m = TournamentPrizeList(operator=package['OPERATOR'],
+            if package['DATA_PLAN'] in items_by_pk:
+                item = items_by_pk[package['DATA_PLAN']]
+                for key in package:
+                    if key == 'DATAPLAN_DESC':
+                        setattr(item, 'data_plan_desc', package[key])
+                    else:
+                        setattr(item, key.lower(), package[key])
+                    setattr(item, 'prize_type', 'data')
+                item.save()
+            else:
+                m = TournamentPrizeList(operator=package['OPERATOR'],
                     amount=package['AMOUNT'],
                     data_plan=package['DATA_PLAN'],
                     data_plan_desc=package['DATAPLAN_DESC'],
                     prize_type='data'
                     )
-            m.save()
+                m.save()
+        # get all packages that have been removed and delete them
+        items_to_delete = [k for k in all_items_by_pk if k not in items_by_pk]
+        TournamentPrizeList.objects.filter(pk__in=items_to_delete).delete()
     else:
         print("An error has occured", code)
 
@@ -105,7 +123,7 @@ def fetch_match_details(match_id):
     )
     now = datetime.now(tz=timezone.utc)
     started_date = (match.start_date  - now - timedelta(minutes=match.inform_participants))
-    print(started_date.total_seconds())
+    print(match.start_date, now, started_date.total_seconds())
     if int(started_date.total_seconds()) >=0  and  int(started_date.total_seconds()) < 30:
         participants = User.objects.filter(participanto=match)
         print("participants",participants)
@@ -127,7 +145,7 @@ def fetch_match_details(match_id):
         stri_repl['PASSWORD'] = match.password if match.password else ''
 
         
-        print(participants)
+        # print(participants)
         if len(participants) > 0 :
             for participant in participants :
                 

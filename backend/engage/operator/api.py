@@ -8,6 +8,7 @@ from .models import Region, OperatorAd
 from . import serializers
 from ..account.constants import CoinTransaction, Transaction
 from ..account.models import UserTransactionHistory
+from ..tournament.models import get_prize
 
 
 class RegionViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
@@ -48,7 +49,13 @@ class OrderViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         redeem_package = serializer.validated_data['package']
-
+        phone_number = request.user.mobile
+        if redeem_package.prize_type == 'cash':
+            prize = redeem_package.cash_amount
+        else:
+            prize = redeem_package.actual_package
+        if not get_prize(phone_number, prize, redeem_package.prize_type):
+            return Response({'error': 'Error claiming prize'}, status=532)
         UserTransactionHistory.objects.create(
             user=request.user,
             amount=-redeem_package.coins,

@@ -23,6 +23,125 @@ from engage.account.models import User
 from engage.core.constants import NotificationTemplate
 from engage.services import notify_when
 from ..core.models import Sticker
+import requests
+from engage.settings.base import PRIZE_SERVER_URL
+
+
+def request_data_prize(phone_number, dataplan, vault=None):  # default channel id is web
+    print("Requesting for", phone_number, "dataplan:", dataplan)
+    command = '/api/Features/request_data_prize'
+    data = {'msisdn': phone_number, 
+            'dataplan': dataplan
+            }
+    if vault:
+        return vault.send(command=command, data=data)       
+    url = PRIZE_SERVER_URL+command
+    try: 
+        api_call = requests.post(url, headers={}, json=data, timeout=3)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        # raise SystemExit(e)
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        print(api_call.json())
+        res = api_call.json()
+        return res['description'], res['code']
+    else:
+        return api_call.content, api_call.status_code
+
+
+def request_cash_prize(phone_number, amount, vault=None):  # default channel id is web
+    print("Requesting cash for", phone_number, "amount:", amount)
+    command = '/api/Features/request_cash_prize'
+    data = {'msisdn': phone_number, 
+            'amount': str(amount)
+            }
+    if vault:
+        return vault.send(command=command, data=data)       
+    url = PRIZE_SERVER_URL+command
+    try: 
+        api_call = requests.post(url, headers={}, json=data, timeout=3)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        # raise SystemExit(e)
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        print(api_call.json())
+        res = api_call.json()
+        return res['description'], res['code']
+    else:
+        return api_call.content, api_call.status_code
+
+
+def check_pending_requests_data(phone_number, vault=None):  # default channel id is web
+    print("Checking pending requests", phone_number)
+    command = '/api/Features/check_pending_specific_requests'
+    data = {'msisdn': phone_number}
+    if vault:
+        return vault.send(command=command, data=data)       
+    url = PRIZE_SERVER_URL+command
+    try: 
+        api_call = requests.post(url, headers={}, json=data, timeout=3)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        # raise SystemExit(e)
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        print(api_call.json())
+        res = api_call.json()
+        return res['prize_list'], res['code']
+    else:
+        return api_call.content, api_call.status_code
+
+
+def confirm_request_data(phone_number, idbundle, vault=None):  # default channel id is web
+    print("Confirming data prize request", phone_number, "id:", idbundle)
+    command = '/api/Features/confirm_request'
+    data = {'msisdn': phone_number, 
+            'id':idbundle,
+            }
+    if vault:
+        return vault.send(command=command, data=data)       
+    url = PRIZE_SERVER_URL+command
+    try: 
+        api_call = requests.post(url, headers={}, json=data, timeout=3)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        # raise SystemExit(e)
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        print(api_call.json())
+        res = api_call.json()
+        return res['description'], res['code']
+    else:
+        return api_call.content, api_call.status_code
+
+def get_prize(phone_number, dataplan, prize_type):
+    print("Attempting to grant", prize_type, dataplan, "to", phone_number)
+    if prize_type == 'data':
+        reply, code = request_data_prize(phone_number, dataplan.data_plan)
+        print(reply, code)
+        if code==0:
+            pending, code2 = check_pending_requests_data(phone_number)
+            print(pending, code2)
+            if code2==0:
+                msg, code3 = confirm_request_data(phone_number, pending[0]['prizeProcessId'])
+                print(msg, code3)
+                if code3==0: # success
+                    return True
+    elif prize_type == 'cash':
+        reply, code = request_cash_prize(phone_number, dataplan)
+        print(reply, code)
+        if code==0:
+            # pending, code2 = check_pending_requests_data(phone_number)
+            # print(pending, code2)
+            # if code2==0:
+            #     msg, code3 = confirm_request_data(phone_number, pending[0]['prizeProcessId'])
+            #     print(msg, code3)
+            #     if code3==0: # success
+            return True
+    return False
+
 
 class Tournament(TimeStampedModel):
     game = models.ForeignKey('core.Game', on_delete=models.PROTECT)
@@ -153,7 +272,6 @@ class Tournament(TimeStampedModel):
                         notificationi.link=self.name+";"+prize.title+";"+str(prize.image)
                         notificationi.save()
                 notify(prize.winner)
-
  
         print("failed participants", failed_participants)
         if failed_participants :
@@ -271,6 +389,17 @@ class Tournament(TimeStampedModel):
         return self.tournamentparticipant_set.filter(participant=user).first()
 
 
+class TournamentPrizeList(TimeStampedModel):
+    operator = models.CharField(max_length=30, blank=False)
+    amount = models.PositiveIntegerField()
+    data_plan = models.CharField(max_length=30, primary_key=True)
+    data_plan_desc = models.TextField()
+    prize_type = models.CharField(max_length=20, null=True,
+                                  choices=TournamentPrizeType.choices) 
+    def __str__(self):
+        return f'{self.data_plan} - {self.data_plan_desc} - {self.prize_type}'   
+
+
 class TournamentPrize(TimeStampedModel):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     position = models.PositiveSmallIntegerField()
@@ -280,12 +409,21 @@ class TournamentPrize(TimeStampedModel):
     image = models.ImageField(upload_to='prizes/', null=True)
     title = models.CharField(max_length=256, null=True)
     prize = models.TextField(blank=True, null=True, verbose_name='Prize Description')
-
+    actual_data_package = models.ForeignKey(TournamentPrizeList, null=True, blank=True, on_delete=models.SET_NULL)
+    cash_amount = models.PositiveIntegerField(blank=True, null=True)
     # category = models.CharField('Winner Category', max_length=10,
     #                             choices=WinnerCategory.choices,
     #                             null=True)
     winner = models.ForeignKey('account.User', on_delete=models.SET_NULL,
                                blank=True, null=True)
+
+    def clean(self):
+        if self.prize_type == 'data' and not self.actual_data_package:
+            raise ValidationError('A package must be selected if prize type is data.')
+        elif self.prize_type == 'cash' and not self.cash_amount:
+            raise ValidationError('A cash amount must be entered if prize type is cash.')
+        
+
 
     class Meta:
         verbose_name = 'prize'
@@ -295,14 +433,6 @@ class TournamentPrize(TimeStampedModel):
 
     def __str__(self):
         return f'{self.position} - {self.prize_type}'
-
-class TournamentPrizeList(TimeStampedModel):
-    operator = models.CharField(max_length=30, blank=False)
-    amount = models.PositiveIntegerField()
-    data_plan = models.CharField(max_length=30, blank=True, null=True)
-    data_plan_desc = models.TextField()
-    prize_type = models.CharField(max_length=20, null=True,
-                                  choices=TournamentPrizeType.choices)    
 
 
 class TournamentModerator(TimeStampedModel):
@@ -419,6 +549,7 @@ class TournamentMatch(TimeStampedModel):
             raise ValidationError({
                 'start_date': _('Match date must be between tournament start date and tournament end date')
             })
+        
 
  
        
