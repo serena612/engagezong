@@ -162,7 +162,7 @@ function load_friends(pg) {
             })
         }
         else{
-            $("#friends-list").append('No data found.').css('padding-left','31px');
+            $("#friends-list").append('You currently have no friends. <a data-toggle="modal" data-target="#share-modal" style="cursor:pointer; margin:0px 6px; text-decoration:underline;"> Click here </a> to start adding friends').css('padding-left','31px');
         }
  
         loading = false;

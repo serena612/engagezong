@@ -411,7 +411,11 @@ if (timeleft < 0) {
                     </div>
                     <div class="modal-body">
                         <div class="row" style="margin: auto">
+                            {% if user.subscription == 'free' %}
+                            <p>{% translate 'Please upgrade from free package to N50 package to be able to join tournaments. To upgrade, simply deactivate from the free package by sending "DEAC SUB3" to “8561” then send "SUB2" to “8561”.' %}</p>  
+                            {% else %}
                             <p>{% translate 'Subscribe now to be able to join any upcoming tournament.' %}</p>
+                            {% endif %}
                         </div>
                     </div>
                 {% elif not can_join %}

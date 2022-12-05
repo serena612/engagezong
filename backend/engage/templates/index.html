@@ -59,7 +59,7 @@
         appearance: none;
        }
        @media (max-width:767px){
-           .sec-1{background-image:url('{{ operator.operatorwebsite.second_section_image.url }}')!important; margin-top: 51px; }
+           .sec-1{background-image:url('{{ operator.operatorwebsite.second_section_image.url }}')!important;     margin-top: 61px!important;}
            .sec-4 img{content: url('{{ ad.ad_file_mobile.url }}');}
            #mobileImg{display: block!important;}
            #deskImg { display: none!important; } 
@@ -98,7 +98,7 @@
 
 {% block top_section %}
     <section class="sec-1" onclick="window.location.href='{{ operator.operatorwebsite.first_section_url }}'"
-             style="background-image: url('{{ operator.operatorwebsite.first_section_image.url }}'); height:auto!important; padding:0px; cursor: pointer;">
+             style="background-image: url('{{ operator.operatorwebsite.first_section_image.url }}'); height:auto!important; padding:0px; cursor: pointer;margin-top:10px;">
              <img src="{{ operator.operatorwebsite.first_section_image.url }}" id="deskImg" title="Engage"/>
              <img src="{{ operator.operatorwebsite.second_section_image.url  }}" id="mobileImg" title="Engage" />
         <div class="text-container max-page-width" style="display: none;">
@@ -501,9 +501,10 @@
                     <div class="drp_select"><select class='drp_tournament' placeholder="Search for a tournament here" >
                         {% for tournament in previous_tournaments %}
                             {% if tournament.current_participants > 0 %}
-                              <option value="{{tournament.id}}" date="{{ tournament.modified|date:"d M Y" }} {{tournament.modified|time:"h:i A"}}" label="{{tournament.label_next_time}}" game="{{tournament.game.slug}}"  gname="{{tournament.name}}" participants="{{tournament.current_participants}}/{{tournament.max_participants}}"> {{tournament.name}}</option>	
+                              <option value="{{tournament.id}}" date="{{ tournament.modified|date:"d M Y" }} {{tournament.modified|time:"h:i A"}}" label="{{tournament.label_next_time}}" game="{{tournament.game.slug}}"  gname="{{tournament.name}}" participants="{{tournament.current_participants}}/{{tournament.max_participants}}"> {{tournament.name}} </font></option>
                             {% endif %}
-                        {% endfor %}</select>	<i class='fas fa-angle-down'></i>
+                        {% endfor %}</select>
+                        <i class='fas fa-angle-down'></i>
                     </div>
                     <div class='date winners-date'><div class='winners-date-updated'>{% translate 'Last Updated:' %} </div> <span></span></div>
                     </div>

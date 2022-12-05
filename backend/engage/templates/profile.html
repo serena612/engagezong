@@ -201,7 +201,7 @@
                         </div>
                         <div class="col-md-6 expand-box trophies-box"
                              data-min-size="12">
-                            <div class="card-wrapper">
+                            <!-- <div class="card-wrapper">
                                 <div class="title-wrapper type-2 bg-2">
                                     <h3 class="box-title">{% translate 'Trophies' %}</h3>
 
@@ -221,7 +221,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -615,7 +615,11 @@
                         </li>
                     {% endfor %}
                 {% else %}
-                    <li>{% translate 'You don\'t have friends yet on MTN Engage. Invite your friends anytime and engage with them.' %}</li>
+                    <li>
+                        {% translate 'You don\'t have friends yet on Engage. Invite your friends anytime and engage with them.' %}                       
+                    </li>
+                    <button data-toggle="modal" class="btn3" style="margin-left: 30px; width: calc(100% - 60px); text-align: center; display: block; padding: 4px 20px; margin-top: 20px;"
+                    data-target="#share-modal">Add friends</button>
                 {% endif %}    
             </ul>
         </section>

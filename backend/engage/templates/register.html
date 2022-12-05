@@ -94,8 +94,25 @@
             #count_send{display: none; margin-right: 12px; }
               
         @media screen and (orientation:portrait) { body,.bgimg{overflow:hidden!important;height:100vh!important;}}
+
+        @media (min-width: 807px)
+        { 
+           .frmregister .input1 {
+                width: 32%!important;
+            }
+        }
+
+
+  @media (max-width: 767px){
+            .frmregister .input1 {
+                width: 40%!important;
+                font-size: 1rem!important;
+            }
+ 
+        }
+
           body{height: 100vh;background: #1C1026;}
-         .input1{width: calc(64% - 102px);padding: 10px; height: 45px;}
+         .input1{width: calc(64% - 102px);padding: 10px; height: 87px;}
          .frmregister .input1,.frmregister button{display:inline-block;color: #16094F;vertical-align:top;}
          .frmregister{ margin-top: 45vh;position: relative;z-index: 2;text-align:center; margin:0 auto; }
          .register-otp-form{top: calc(100% - 572px);position: relative;z-index: 2;text-align:center; display:none;  margin:0 auto; padding:0 8px; }
@@ -128,6 +145,7 @@
                 padding-left: 10px;
                 padding-right: 10px;
             }
+             
     .text img,.logos img,.bottomimages img{width:100%;}
    
     .logos {
@@ -136,19 +154,24 @@
         position: relative;
         margin: 0 auto;
     }
+     
 
        .bg{background: #1C1026;position: absolute; bottom: 0;left: 0;height: 312px;width: 100%;} 
        .bottomimages{    width: 100%;
-        position: relative;
+        /* position: relative; */
         margin: 0 auto;
-        top: 53vh;}
+        /* top: 53vh; */
+        top: auto !important;;
+        bottom: 10px!important;
+        position: absolute!important;
+    }
        .fordesktop .bg1{
         position: absolute;
         top:0;left:0;
         background-repeat: no-repeat;
         width: 50vw;
         height: 100vh;
-        background-image: url(/static/img/assets/aa.jpg);
+        background-image:url(/static/img/assets/image.png);/* url(/static/img/assets/aa.jpg);*/
         background-size: cover;
     }
     .register-otp-form .input1{width:calc(100% - 101px);}
@@ -181,7 +204,7 @@
            .less768 .frmregister .input1,.less768 .response-msg {font-size: 12px;}
            .less768 .row_2 h2{font-size:14px;}
            .less768 .frmregister button {font-size: 14px;}
-           .less768 .title{width: 86%; top: 59px!important;height: 89px!important;}
+           .less768 .title{width: 86%; top: 0px!important;height: 89px!important; margin-top:0px!important; }
            .less768 .logos{width:86%;}
            .less768 .bg{ height: 280px;}
         
@@ -200,7 +223,7 @@
         }
       
         @media (max-width:1800px) and (max-height:540px) and (min-width:960px) and (orientation:landscape) {
-            .frmregister ,.register-otp-form
+            .frmregister ,.register-otp-form{
                 top: 6%;
             }
             .text,.bottomimages,.logos{position:relative!important;}
@@ -212,7 +235,7 @@
             .text {bottom: 171px!important;}
              {% comment %} .row_1 input, .row_1 select{width:100%!important;    margin-bottom: 0!important;} {% endcomment %}
              .frmregister button {
-                /* margin: 0 auto; */
+                margin: 0 auto;
             }
             .bg1 ,.bgimg,.sec-1{
                 min-height: 393px!important;
@@ -234,7 +257,7 @@
         }
         @media (max-height:728px) and (orientation:landscape) {
             .bottomimages {
-                top: 45vh!important;
+                top: auto!important;
             }
             .tab2 .bottomimages {
                 top: 40vh!important;
@@ -242,7 +265,7 @@
         }
         .sec-1::after{display:none;}
         @media (max-width:1600px) and (orientation:portrait) {
-            .bg1{background-size:cover!important; background-position:right bottom!important;background-image: url(/static/img/assets/aa.jpg)!important;
+            .bg1{background-size:cover!important; background-position:right bottom!important;background-image: url(/static/img/assets/aa.png)!important;
             width:100%!important;height:55vh!important;position: relative!important;
             }
             .bg{display:none!important;}
@@ -257,17 +280,32 @@
                 margin-left: auto!important;top:auto!important;
                 background-image: none!important;position:relative!important;
                 margin-right: auto!important;}
+            .isAndroid  .bottomimages,.bottomimages,.less768 .bottomimages{
+                bottom: 28px!important;   
+    margin-left: 0px!important;
+    top: auto!important; 
+    position: absolute!important;
+    margin-right: 0px!important;
+            }
             .logos,.less768 .logos{    margin-top: 55px!important;
                 width: 63%!important;left:auto!important;
                 max-width: 707px;}
-            .bottomimages,.less768 .bottomimages{margin-top:20px!important;}
+            .bottomimages,.less768 .bottomimages{margin-top:0px!important;}
            
             .register-otp-form{ margin-top: -41px!important;}
             img{display:block;width:100%;}
             .text{width: 83%!important;left:auto!important;
                 max-width: 1154px;}
            
-            .bottomimages{width:77%!important;left:auto!important;}
+            .bottomimages{
+                /* width:77%!important;left:auto!important; */
+                width: 97%!important;
+    left: 0px!important;
+    margin-left: 0px!important;
+    margin-right: 0px!important;
+    right: auto!important;
+    margin-top: 0px!important;
+            }
              .frmregister,  .register-otp-form {
                 margin: 0 auto;
                 max-width: 95%!important;
@@ -288,14 +326,14 @@
         }
 
         @media (max-width:600px) and (orientation:portrait) {
-            .text, .less768 .text{ max-width: 379px!important; margin-top: 50px!important;}
+            .text, .less768 .text{ max-width: 379px!important; margin-top: 26px!important;margin-bottom: 40px!important;}
             .logos, .less768 .logos {
                 margin-top:10px!important;
                 max-width: 217px!important;
             }
             .bottomimages, .less768 .bottomimages {
-                margin-top: 7px!important;
-                max-width:347px!important;
+                margin-top: 0px!important;
+                max-width:100%!important;
             }
             .frmregister .text-center{position:absolute;top:51px!important;}
         }  
@@ -311,13 +349,17 @@
                 font-size: 17px!important;
             }
             .less768  .frmregister .input1 {
-                width: calc(50% - 46px)!important;
+                width: calc(50% - 75px)!important;
             }
             .register-otp-form {
                 margin-top: -53px!important;
             }
             .less768  .register-otp-form .input1 {
                 width: calc(100% - 98px);
+            }
+            .btn_join_now.btn3#btn_join_now
+            {
+                width:88px!important;
             }
         }  
         @media (device-width:1600px) and (device-height:2560px) and (orientation:portrait) {
@@ -360,7 +402,7 @@
                 top: 40px!important;
             }
             .bottomimages {
-                top: 56vh!important;
+                top: 60vh!important;
             }
             .tab2 .bottomimages {
                 top: 45vh!important;
@@ -371,6 +413,7 @@
             .tab2 .text {
                 top: 33vh;
             }
+
         }
         @media (device-width:480px) and (device-height:320px) and (orientation:landscape) {
             .fordesktop .title {
@@ -403,13 +446,13 @@
                 position: relative!important;
                 top: 28vh;}
             .less768.isIphone .input1.mb-3 {
-                width: 100%!important;    margin-bottom: 0!important;
+                width: 40%!important;    margin-bottom: 0!important;
             }
             .frmregister {
                 top: 7vh!important;
             }
             .less768.isIphone .input1 {
-                width: 100%!important;
+                width: 22%!important;
             }
             .text-center{font-size:11px!important;}
             .fordesktop .bottomimages, .isAndroid .bottomimages, .bottomimages {
@@ -429,7 +472,8 @@
             }
             .tab2 .bottomimages {
                 top: 24vh!important;
-            }
+            }            
+            
         }
         @media (max-width:896px)  and (orientation:landscape) {
             .register-otp-form .btn3{font-size:12px;width:80px!important; font-size: 12px;}
@@ -444,7 +488,7 @@
              .input1.mb-3{width:85px!important;}
              .frmregister button {
                 font-size: 12px;
-                width: 60px;
+                width: 92px;
                 padding: 0 4px;
             }
             .response-msg {
@@ -557,6 +601,18 @@
                 width: calc(100% - 96px)!important;
             }
             .fordesktop .title{    width: 89%!important;    top: 23px!important;    max-width: 324px;}
+            .text {
+                top: 19vh!important;
+            }
+            .logos, .less768 .logos { 
+                bottom: -86px!important;
+            }
+            .bottomimages {
+                top: 44vh!important;
+            }
+            .less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now{
+                height: 44px!important;
+            }
         }
         @media (device-width:411px) and (device-height:823px) and (orientation:portrait) {
             .logos, .less768 .logos { margin-top: 35px!important;}
@@ -575,6 +631,14 @@
                 top: 29vh!important;
             }
             .row_1 .input1{    width: calc(100% - 196px)!important;}
+
+            .bottomimages
+            {
+                position: absolute!important;
+            }
+            .text{
+                top: 24vh!important; 
+            }
         }
         @media (device-width:320px) and (device-height:568px) and (orientation:portrait) {
             .logos, .less768 .logos {    margin-top: 12px!important;
@@ -607,12 +671,12 @@
                 top: 16px!important;
                 max-width: 398px;
             }
-            .text{   padding: 0;}
+            .text{   padding: 0;    top: 20vh!important;}
             .text, .bottomimages, .logos {
                 position: relative!important;
             }
             .bottomimages {
-                top: 39vh!important;
+                top: 46vh!important;
             }
             .fordesktop .frmregister, .fordesktop .register-otp-form{padding:0;}
             .tab2 .bottomimages {
@@ -689,12 +753,12 @@
             }
             .register-otp-form .input1 {
                 width: calc(100% - 124px);
-            }
+            } 
         }
         @media (device-width:1180px) and (device-height:820px) and (orientation:landscape) {
-            .bottomimages { top: 60vh;}
+            .bottomimages { top: 60vh;position: absolute!important;}
             .isIpad .text {
-                top: 46vh!important;
+                top: 34vh!important;
             }
             .tab2.isIpad .text { top: 35vh!important;}
             .logos {
@@ -759,12 +823,19 @@
             .row_1 .input1 {
                 width: calc(64% - 136px)!important;
             }
+
+            .bottomimages {
+                top: auto!important;
+                position: absolute!important;
+                bottom: 22px!important;
+            }
         }
         @media (device-width:1024px) and (device-height:1366px) and (orientation:portrait) {
             .less768 .title {
                 width: 392px;
                 top: 59px!important;
                 height: 137px!important;
+                margin-top:0px!important;
             }
             .text-color-4-light {
                 font-size: 1.5rem!important;}
@@ -812,7 +883,7 @@
             .fordesktop .title{width: 54%;    top: 42px;}
             .row_1 .input1 { width: calc(64% - 96px)!important;}
             .bottomimages {
-                top: 37vh!important;
+                top: 46vh!important;
             }
             .tab2 .bottomimages {
                 top: 24vh!important;
@@ -843,6 +914,12 @@
                 position: relative!important;
             }
             .row_2 h2 {font-size: 14px;}
+
+
+            .text {
+                top: 21vh!important;
+            }
+
             
         }
         @media (device-width:1024px) and (device-height:600px) and (orientation:landscape) {
@@ -859,7 +936,11 @@
                     bottom: auto!important;
                     position: relative!important;
                 }
-                .logos,.bottomimages{position: relative!important;}
+                .logos{position: relative!important;}
+                .bottomimages {
+                    position: absolute!important;
+                    bottom: 16px!important;
+                }
                 .row_1 .input1 {
                     width: calc(64% - 112px)!important;
                 }
@@ -887,7 +968,7 @@
         @media (device-width:1920px) and (device-height:1080px) and (orientation:landscape){
           
             .text {
-                top: 40vh!important;
+                top: 25vh!important;
                 width: 46vw;
                 bottom:auto!important;
             }
@@ -900,13 +981,13 @@
                 top: auto!important;
             }
             .frmregister .input1 {
-                width: calc(64% - 105px)!important;
+                width: calc(64% - 184px)!important;
             }
             .row_1 .mb-3 {
                 width: 36%!important;
             }
              .logos {
-                top: 45vh!important;
+                top: 39vh!important;
                 position: relative!important;
                 width: 25vw;
                 bottom:auto!important;
@@ -928,7 +1009,9 @@
                 width: calc(50% - 50px)!important;
             }
             .bottomimages, .less768 .bottomimages,.isAndroid  .bottomimages {
-                margin-top: 67px!important;
+                margin-top: 0px!important;
+    position: absolute!important;
+    bottom: 29px!important;
             }
             .text, .less768 .text {
                 margin-top: 83px!important;
@@ -959,6 +1042,8 @@
             .fordesktop .title{    
                 width: 88%!important;
                 top: 18px!important;}
+
+            
         }
         @media (device-width:320px) and (device-height:533px) and (orientation:portrait) {
             .logos, .less768 .logos {
@@ -968,6 +1053,7 @@
                 width: 203px;
                 top: 36px!important;
                 height: 74px!important;
+                margin-top:0px!important;
             }
             .text-center{font-size:11px;}
         }
@@ -983,7 +1069,7 @@
                 position: relative!important;
             }
             .bottomimages {
-                top: 53vh!important;
+                top: 43vh!important;
             }
             .sec-1,body{min-height:100vh!important;    height: 393px!important;}
             .tab2 .text {
@@ -1000,7 +1086,7 @@
                 width: 27vw;
             }
             .text {
-                top: 44vh;}
+                top: 13vh!important;}
             .tab2 .text {
                     top: 29vh;}    
             .tab2 .logos {
@@ -1009,6 +1095,16 @@
             .tab2 .bottomimages {
                 top: 25vh;
 
+            }
+
+
+            .frmregister .input1 {
+                width: 28%!important;
+                font-size: 14px!important;
+            }
+            .less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now
+            {
+                height: 45px;
             }
         }
 
@@ -1025,7 +1121,7 @@
             .logos{width:22vw!important;top:40vh;}
             .tab2 .logos{top:30vh;}
             .bottomimages {
-                top: 39vh!important;
+                top: 48vh!important;
             }
             .tab2 .bottomimages {
                 top: 25vh!important;
@@ -1033,12 +1129,16 @@
             .row_1 .input1 {
                 width: calc(100% - 214px)!important;
             }
+
+            .text {
+                top: 22vh!important;
+            }
         }
         @media (device-width:393px) and (device-height:851px) and (orientation:portrait){
             .fordesktop .title{    width: 95%;top:19px;max-width: 378px;}
             .bottomimages, .less768 .bottomimages {
                 margin-top: 63px!important;
-                max-width: 347px!important;
+                max-width: 100%!important;
             }
             .text, .less768 .text {
                 margin-top: 66px!important;
@@ -1084,7 +1184,7 @@
                 padding: 0 27px;}
             .logos{width:27vw!important;}    
             .bottomimages {
-                top: 40vh!important;
+                top: 48vh!important;
             }
             .tab2 .logos {
                 top: 31vh!important;
@@ -1131,6 +1231,11 @@
             .register-otp-form .input1 ,.less768 .register-otp-form .input1,.isAndroid .register-otp-form .input1{
                 width: calc(100% - 114px);
             }
+            .btn_join_now.btn3#btn_join_now
+            {
+                width:105px!important;
+                font-size: 1.1rem!important;
+            }
         }
         @media (device-width:1644px) and (device-height:1302px) and (orientation:landscape) {
             .bottomimages {
@@ -1153,7 +1258,7 @@
                 position: relative!important;
             }
             .bottomimages {
-                top: 56vh;
+                top: 36vh!important;
             }
             .text {
                 top: 40vh;
@@ -1213,7 +1318,7 @@
             }
             .sec-1,body{min-height:100vh!important;}
             .bottomimages {
-                top: 42vh!important;
+                top: 44vh!important;
             }
             .logos{width: 22vw;}
             .tab2 .logos {
@@ -1227,6 +1332,19 @@
                 .text, .bottomimages, .logos {
                     position: relative!important;
                 }
+
+
+            .text{
+                top:23vh!important;
+            }
+            .logos {
+    top: auto!important;
+    position: absolute!important;
+    bottom: 24px!important;
+    width: 25vw!important;
+    left: 12.5vw!important;
+}
+
         }
         @media (device-width:640px) and (device-height:384px) and (orientation:landscape) {
             .fordesktop .title{    width: 87%!important;
@@ -1241,6 +1359,8 @@
              .tab2 .bottomimages {
                 top: 32vh!important;
             }
+
+            
         }
         
 
@@ -1258,10 +1378,13 @@
                 width: 224px;
                 top: 29px!important;
                 height: 82px!important;
+                margin-top:0px!important;
             }
             .bottomimages, .less768 .bottomimages,.isAndroid  .bottomimages {
                 margin-top: 13px!important;
-                max-width: 249px!important;
+                /* max-width: 249px!important; */
+                max-width: 97%!important;
+                width: 100%!important;
             }
             .register-otp-form .input1 {
                 width: calc(100% - 84px)!important;font-size: 12px!important;
@@ -1277,7 +1400,7 @@
         @media (device-width:412px) and (device-height:732px) and (orientation:portrait) {
             .bottomimages, .less768 .bottomimages {
                 margin-top: 2px!important;
-                max-width: 347px!important;
+                max-width: 100%!important;/*347px!important;*/
             }
             .isAndroid .title {
                 width: 225px;
@@ -1299,6 +1422,28 @@
             }
             .tab2 .bottomimages {
                 top: 32vh!important;
+            }
+
+            .less768 .input1.mb-3 {
+                width: 80px!important;
+            }
+            .less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now
+            {
+                height:45px;
+            }
+            .logos {
+                top: auto!important;
+                position: absolute!important;
+                bottom: 41px!important;
+                width: 25vw!important;
+                left: 12.5vw!important;
+            }
+            .bottomimages {
+                top: 50vh!important;
+            }
+            .less768 .frmregister .input1
+            {
+                font-size: 14px!important;
             }
         }
      
@@ -1335,7 +1480,10 @@
                 max-width: 246px!important;
             }
             .bottomimages, .less768 .bottomimages {
-                margin-top: 74px!important;
+                margin-top: 0px!important;
+    position: absolute!important;
+    top: auto!important;
+    bottom: 24px!important;
             }
             .text-center{font-size: 14px;}
 
@@ -1353,7 +1501,7 @@
         }
         @media (device-width:914px) and (device-height:412px) and (orientation:landscape) {
             .bottomimages {
-                top: 41vh!important;
+                top: 48vh!important;
             }
             .input1, .frmregister button{font-size:12px;}
             .frmregister .input1 {
@@ -1392,11 +1540,14 @@
             }
             .tab2 .logos{
                 top: 32vh!important;}
+                .btn_join_now.btn3{
+                width: 97px!important;
+            }
         }
         @media (device-width:480px) and (device-height:854px) and (orientation:portrait) {
             .bottomimages, .less768 .bottomimages {
                 margin-top: 25px!important;
-                max-width: 347px!important;
+                max-width: 100%!important;
             }
             .register-otp-form {
                 margin-top: -46px!important;
@@ -1438,7 +1589,7 @@
             }
             .bottomimages, .less768 .bottomimages {
                 margin-top: 41px!important;
-                max-width: 419px!important;
+                max-width: 100%!important;
             }
             .frmregister .input1, .btn3, .response-msg, .register-otp-form .input1 {
                 font-size: 18px!important;
@@ -1506,7 +1657,7 @@
                 position: relative!important;
             }
             .text {
-                top: 39vh;
+                top: 22vh!important;
             }
             
             .tab2 .text {top: 27vh;}
@@ -1514,7 +1665,7 @@
             .logos{width:236px!important;top:43vh!Important;}
             .tab2 .logos{top:30vh!Important;}
             .bottomimages {
-                top: 42vh!important;
+                top: 48vh!important;
             }
             .tab2  .bottomimages {
                 top: 27vh!important;
@@ -1546,6 +1697,7 @@
                 width: 244px;
                 top: 46px!important;
                 height: 89px!important;
+                margin-top:0px!important;
             }
         }
         @media (device-width:800px) and (device-height:1280px) and (orientation:portrait) {
@@ -1584,6 +1736,7 @@
             }
             .text-color-4-light{    font-size: 1.4rem!important;}
             
+
         }
         @media (device-width:640px) and (device-height:360px) and (orientation:landscape) {
         .is4G .frmregister .input1.mb-3 {
@@ -1625,6 +1778,15 @@
             .tab2 .bottomimages {
                 top: 34vh!important;
             }
+
+            .less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now
+            {
+                height:44px;
+            }
+            .bottomimages {
+                position: absolute!important;
+                bottom: 21px!important;
+            }
         }
 
         @media (device-width:414px) and (device-height:736px) and (orientation:portrait) {
@@ -1655,7 +1817,9 @@
             .less768 .title {
                 width: 87%;
                 top: 27px!important;
-            }
+                margin-top:0px!important;
+            }            
+            
         }
         
         @media (device-width:812px) and (device-height:375px) and (orientation:landscape) {
@@ -1671,7 +1835,7 @@
                 position: relative!important;
             }
             .bottomimages {
-                top: 37vh!important;
+                top: 46vh!important;
             }
             .sec-1 {
                 padding: 0 33px;
@@ -1686,6 +1850,9 @@
                 top: 24vh!important;
             }
             body,.bg1,.sec-1{min-height:100vh!important;}
+            .text {
+                top: 20vh!important;
+            }
         }
        
        
@@ -1707,7 +1874,7 @@
             width: 27vw;
         }
          .bottomimages {
-            top: 42vh!important;
+            top: 55vh!important;
         }
         .tab2 .bottomimages {
             top: 36vh!important;
@@ -1735,7 +1902,9 @@
                 
                 }
                 .bottomimages {
-                    top: 39vh!important;
+                    top: auto!important;
+    position: absolute!important;
+    bottom: 13px!important;
                 }
            .logos{width:29vw!important;}
            .tab2 .logos {
@@ -1745,12 +1914,28 @@
             .tab2 .bottomimages {
                 top: 22vh!important;
             }
+
+
+            .frmregister .input1 {
+                width: 30%!important;
+                font-size: 14px!important;
+            }
+            .less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now
+            {
+                height: 44px;
+            }
+            .text, .less768 .text {
+                margin-top: 0px!important;
+                top: 19vh!important;
+            }
+
         }
         @media (device-width:320px) and (device-height:480px) and (orientation:portrait) {
             .less768 .title {
                 width: 191px;
                 top: 20px!important;
                 height: 67px!important;
+                margin-top:0px!important;
             }
             .less768 .row_2 h2 {
                 font-size: 12px;
@@ -1857,7 +2042,7 @@
             .text, .bottomimages, .logos {
                 position: relative!important;
             }
-            .text {top: 44vh;}
+            .text {top: 31vh!important;}
             .tab2 .text {
                 top: 35vh;
             }
@@ -1867,7 +2052,7 @@
                 top: 39vh;
             }
             .bottomimages {
-                top: 59vh;
+                top: 48vh!important;
             }
             .tab2 .bottomimages {
                 top: 50vh;
@@ -1906,7 +2091,7 @@
             }
             .bottomimages, .less768 .bottomimages {
                 margin-top: 38px!important;
-                max-width: 556px!important;
+                max-width: 100%!important;
             }
             .frmregister .text-center{    position: absolute;top: 60px;font-size:18px!important;}
             .frmregister .input1, .btn3, .response-msg,.register-otp-form .input1 {
@@ -1922,7 +2107,8 @@
             .register-otp-form .input1 {
                 width: calc(100% - 124px)!important;}
             
-            
+               
+
         }
         @media (device-width:1536px) and (device-height:864px) and (orientation:landscape) {
             .row_1 .input1 {
@@ -2034,7 +2220,11 @@
                 .row_1 .input1{    width: calc(100% - 304px)!important;}
                 .row_1 .input1.mb-3{width:200px!important;}
                 .bottomimages {
-                    top: 45vh!important;
+                    top: auto!important;
+                    bottom: 10px!important;
+                }
+                .text {
+                   top: 26vh!important;
                 }
                 .register-otp-form .input1{width:calc(100% - 100px)!important;}
                 .tab2 .text{top:35vh!important;}
@@ -2050,6 +2240,607 @@
                     width: calc(100% - 320px);
                 }
             }
+            #logodesk{
+                display: block;
+            }
+            #logomob{
+                display: none;
+            }
+            @media (max-width:767px)
+            {
+                #logodesk{
+                display: none;
+                }
+                #logomob{
+                    display: block;
+                    max-width: 350px;
+                }
+            }
+
+            @media (max-width:1500px){
+                .frmregister .input1, .btn_join_now.btn3
+                {
+                    height:66px;
+                    font-size: 1.5rem;
+                }
+                .frmregister select.input1{
+                    background-size: 24px;
+                }
+            }
+
+            @media (max-width:1314px){
+                /* (max-width:1102px)  */
+                .frmregister .input1, .btn_join_now.btn3
+                {
+                    height: 48px;
+                     font-size: 1rem;
+                }
+                .frmregister .input1 {
+    width: calc(64% - 140px)!important;
+    background-size: 19px!important;
+}
+            }
+
+        @media (max-width: 987px)
+        {
+            .frmregister .input1, .btn_join_now.btn3 {
+                height: 45px;
+                font-size: 1rem;
+                font-weight: normal;
+            }
+
+            .frmregister .input1 {
+                    width: 35%!important;
+                }
+        }
+
+         @media (max-width: 806px)
+        { 
+           .frmregister .input1 {
+                width: 42%!important;
+            }
+        } 
+
+        @media (max-width: 767px){
+            /* .frmregister .input1 {
+                width: 40%!important;
+                font-size: 1rem!important;
+            } */
+            .btn3.btn_join_now
+            {
+                font-size: 1rem!important;
+                width: 82px!important;
+            }
+        }
+
+        @media (max-width: 533px)
+        { 
+           .frmregister .input1 {
+                width: 36%!important;
+            }
+        } 
+
+        @media (min-width:768px) and (max-width:806px)
+        {
+            .title{
+                top:0px;
+            }
+        }
+
+        @media (device-width:640px) and (device-height:360px) and (orientation:landscape)
+{
+	.frmregister .input1 {
+		width: 33%!important;
+	}
+	.less768 .frmregister button, .frmregister button
+	{
+	height:44px!important;
+	}
+}
+@media (device-width:1024px) and (device-height:1366px) and (orientation:portrait)
+{
+	.frmregister .input1 {
+		width: 44%!important;
+	}
+	 
+}
+
+@media (max-width:1250px)
+{
+    .text{
+        top:25vh;
+    }
+}
+@media (min-width:1251px)
+{
+    .text{
+        top:23vh;
+    }
+}
+@media (max-width:656px){
+    .text, .less768 .text {
+    margin-top: 32px!important;
+}
+}
+
+@media (min-width:915px){
+    .logos {
+        top: auto!important;
+    position: absolute!important;
+    bottom: 42px!important;
+    /* width: 100%; */
+    text-align: center;
+    left: 12.5vw;
+}
+}
+@media (max-width:914px){
+    .logos {
+    top: auto!important;
+    position: relative!important;
+    bottom: auto!important;
+}
+}
+@media (min-width: 807px) and (max-width: 914px)
+{
+.frmregister .input1 {
+    width: 43%!important;
+}
+}
+@media (min-width: 1315px) and (max-width: 1500px)
+{
+.frmregister .input1 {
+    width: calc(64% - 170px)!important;
+}
+.btn3 {
+    width: 130px;
+}
+}
+@media (min-width: 1501px) and (max-width: 3333px)
+{
+    .row_1 .input1 {
+    width: calc(50% - 95px)!important;
+}
+.btn3 {
+    width: 170px;
+}
+}
+@media (min-width: 989px) and (max-width: 1195px)
+{
+.frmregister .input1 {
+    width: calc(64% - 124px)!important;
+}
+}
+@media (width: 1366px) and (height: 657px) and (orientation: landscape)
+{.btn3 {
+    width: 130px;
+}
+}
+@media (device-width: 640px) and (device-height: 360px) and (orientation: landscape){
+    .logos {
+    bottom: -95px!important;
+}
+.bottomimages {
+    top: auto!important;
+    position: absolute!important;
+    bottom: 10px!important;
+}
+.text, .less768 .text {
+    margin-top: 0px!important;
+    margin-bottom: 32px;
+}
+.frmregister .input1 {
+    font-size: 14px!important;
+    width: 30%!important;
+}
+}
+@media (device-width: 912px) and (device-height: 1368px) and (orientation: portrait){
+    .bottomimages {
+        top: auto!important;
+    position: absolute!important;
+}
+}
+@media (device-width: 1280px) and (device-height: 800px)
+{
+.fordesktop .bottomimages, .bottomimages {
+    top: auto!important;
+    bottom: 10px!important;
+    position: absolute!important;
+}
+}
+@media (device-width: 1024px) and (device-height: 1366px)
+{
+    .frmregister .input1 {
+    width: calc(64% - 191px)!important;
+}
+.logos {
+    top: auto!important;
+    position: relative!important;
+    bottom: auto!important;
+}
+}
+
+@media (min-width:831px) and (max-width:914px)
+{
+    .logos {
+    top: auto!important;
+    position: absolute!important;
+    bottom: 27px!important;
+   }
+   .frmregister .input1 {
+    width: 34%!important;
+    font-size: 15px;
+}
+}
+
+@media (min-width: 1930px){ 
+.text { 
+    width: 85%;
+}
+.frmregister .input1, .frmregister button{
+    font-size: 29px;
+}
+}
+
+@media (min-width: 754px) and (max-width: 767px){
+.btn3.btn_join_now {
+    height: 44px!important;
+}
+}
+@media (min-width: 754px) and (max-width: 830px){
+    .logos {
+    top: auto!important;
+    position: absolute!important;
+    bottom: 28px!important;
+}
+}
+@media (min-width: 768px) and (max-width: 830px){
+.frmregister .input1 {
+    width: 33%!important;
+}
+}
+@media (min-width: 754px) and (max-width: 914px){
+    .logos {
+    width: 25vw!important;
+    left:12.5vw!important;
+   }
+}
+
+@media (device-width:658px) and (device-height:320px) and (orientation:landscape) {
+.frmregister .input1 {
+                width: 34%!important;
+                font-size: 15px!important;
+            }
+            .less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now
+            {
+                height:44px;
+            }
+            .logos {
+                top: auto!important;
+                position: absolute!important;
+                bottom: 22px!important;
+                width: 25vw!important;
+                left: 12.5vw;
+            }
+            .bottomimages {
+                top: 42vh!important;
+            }
+}
+
+@media (device-width:800px) and (device-height:1280px) and (orientation:portrait) {
+.frmregister .input1 {
+                width: 43%!important;
+            }
+            .logos {
+                width: 54vw!important;
+                left: 0px!important;
+                position: relative!important;
+                margin-top: 69px!important;
+            }
+}
+
+@media (device-width:640px) and (device-height:384px) and (orientation:landscape) {
+.frmregister .input1 {
+    width: 33%!important;
+    font-size: 14px!important;
+}
+.less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now{
+    height:45px;
+}
+.text, .less768 .text {
+    margin-top: 0px!important;
+    top: 22vh!important;
+}
+.logos {
+    top: auto!important;
+    position: absolute!important;
+    bottom: 62px!important;
+    width: 25vw!important;
+    left: 12.5vw!important;
+}
+}
+
+@media (device-width: 732px) and (device-height: 412px) and (orientation: landscape)
+{
+.logos {
+    top: auto!important;
+    position: absolute!important;
+    bottom: 41px!important;
+    width: 25vw!important;
+    left: 12.5vw!important;
+}
+}
+
+@media (device-width: 533px) and (device-height: 320px) and (orientation: landscape)
+{
+.frmregister .input1 {
+    width: 28%!important;
+    font-size: 14px!important;
+}
+.logos {
+    top: auto!important;
+    position: absolute!important;
+    bottom: 100px!important;
+    width: 25vw!important;
+    left: 12.5vw!important;
+}
+}
+@media (device-width:745px) and (device-height:353px) and (orientation:landscape) {
+ .logos {
+    top: auto!important;
+    position: absolute!important;
+    bottom: 24px!important;
+    width: 25vw!important;
+    left: 12.5vw!important;
+}
+}
+@media (device-width:480px) and (device-height:320px) and (orientation:landscape) {
+    .less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now,
+            .frmregister .input1, .btn_join_now.btn3 
+            {
+                height:36px;
+                font-size: 14px!important;
+            }
+            .text, .less768 .text {
+                margin-top: 0px!important;
+                top: 24vh;
+            }
+            .logos {
+                top: auto!important;
+                position: absolute!important;
+                bottom: 12px!important;
+                width: 28vw!important;
+                left: 10vw!important;
+            }
+            .fordesktop .bottomimages, .isAndroid .bottomimages, .bottomimages {
+                top: auto!important;
+                width: 232px;
+                height: 47px;
+                bottom: 24px!important;
+                position: absolute!important;
+            }
+}
+
+@media (device-width:240px) and (device-height:320px) and (orientation:portrait) {
+    .frmregister .input1 {
+    width: 27%!important;
+    height: 40px;
+    font-size: 12px!important;
+   }
+   .btn3.btn_join_now {
+    height: 40px;
+    font-size: 14px!important;
+   }
+   .text, .less768 .text {
+    margin-top: 13px!important;
+    margin-bottom: 25px!important;
+  }
+  .isAndroid .bottomimages, .bottomimages, .less768 .bottomimages {
+    bottom: 12px!important;
+  }
+}
+
+@media (device-width:320px) and (device-height:240px) and (orientation:landscape) {
+    .frmregister .input1 {
+    width: 100%!important;
+    height: 26px;
+    font-size: 12px!important;
+   }   
+   .less768 .input1.mb-3 {
+    margin-bottom: 1px!important;
+    width: 100%!important;
+    }
+    .btn3.btn_join_now {
+    font-size: 12px!important;
+    width: 100%!important;
+    height: 28px!important;
+   }
+   .text, .less768 .text {
+    margin-top: 0px!important;
+    top: 25vh!important;
+    }
+    .logos {
+    top: auto!important;
+    position: absolute!important;
+    bottom: 178px!important;
+    width: 25vw!important;
+    left: 12.5vw!important;
+    }
+
+}
+
+@media (device-width:667px) and (device-height:375px) and (orientation:landscape) {
+.frmregister .input1 {
+	width: 35%!important;
+    font-size: 14px!important;
+}
+.less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now
+{
+	height:45px;
+    font-size: 14px!important;
+}
+.logos, .less768 .logos {
+    margin-top: 0px!important;
+    max-width: 100vw!important;
+    width: 25vw!important;
+    left: 12.5vw!important;
+    position: absolute!important;
+    bottom: 34px!important;
+}
+.fordesktop .bottomimages, .isAndroid .bottomimages, .bottomimages {
+    left: 0px;
+    width: 100%!important;
+    height: 46px!important;
+    bottom: 40px!important;
+    position: absolute!important;
+}
+}
+
+@media (device-width:820px) and (device-height:1180px) and (orientation:portrait) {
+ .frmregister .input1 {
+                width: 43%!important;
+            }
+            .logos {
+                width: 40vw!important;
+                left: 0px!important;
+                position: relative!important;
+                margin: 58px auto;
+                bottom: auto!important;
+            }
+ }
+
+ @media (device-width:1180px) and (device-height:820px) and (orientation:landscape) {
+    .bottomimages {
+        position: absolute!important;
+    }
+ }
+
+ @media (device-width:768px) and (device-height:1024px) and (orientation:portrait) {
+ .frmregister .input1 {
+                    width: 42%!important;
+                }
+                .logos {
+    width: 44vw!important;
+    left: 0px!important;
+    position: relative!important;
+    margin: 55px auto!important;
+    bottom: auto!important;
+}
+}
+
+@media (device-width:1024px) and (device-height:768px)  and (orientation:landscape){
+            .bottomimages {     
+			position: absolute!important;
+    top: auto!important;
+    bottom: 10px!important;}
+}
+
+@media (device-width:912px) and (device-height:1368px) and (orientation:portrait) {
+    .frmregister .input1 {
+    width: 43%!important;
+    font-size: 16px;
+   }
+   .logos {
+    top: auto!important;
+    width: 40vw!important;
+    left: 0px!important;
+    position: relative!important;
+    bottom: auto!important;
+    margin: 0px auto;
+}
+}
+@media (device-width:720px) and (device-height:540px) and (orientation:landscape) {
+            .less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now
+            {
+                height:44px;
+            }
+            .logos {
+                top: auto!important;
+                position: absolute!important;
+                bottom: 43px!important;
+                width: 25vw!important;
+                left: 12.5vw!important;
+            }
+            .frmregister .input1 {
+                font-size: 14px!important;
+            }
+}
+
+@media (device-width:280px) and (device-height:653px) and (orientation:portrait) {
+.frmregister .input1 {
+                width: 29%!important;
+                font-size: 12px!important;
+            }
+            .btn3.btn_join_now {
+    font-size: 14px!important;
+            }
+}
+
+@media (device-width:653px) and (device-height:280px) and (orientation:landscape) {
+    .frmregister .input1 {
+    width: 32%!important;
+    font-size: 14px!important;
+   }
+   .less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now
+   {
+      height: 44px;
+   }
+   .text, .less768 .text {
+    margin-top: 0px!important;
+    top: 16vh!important;
+   }
+   .logos {
+    top: auto!important;
+    position: absolute!important;
+    bottom: 136px!important;
+    width: 25vw!important;
+    left: 12.5vw!important;
+}
+}
+
+@media (device-width: 731px) and (device-height: 411px) and (orientation: landscape)
+{
+	.logos {
+		width: 25vw!important;
+		position: absolute!important;
+		left: 12.5vw!important;
+		bottom: 40px!important;
+	}
+}
+@media (device-width: 568px) and (device-height: 320px) and (orientation: landscape){
+.logos {
+    width: 25vw!important;
+    position: absolute!important;
+    top: auto!important;
+    bottom: 21px!important;
+    left: 12.5vw!important;
+}
+.frmregister .input1 {
+    width: 30%!important;
+}
+.text, .less768 .text {
+    margin-top: 0px!important;
+    top: 21vh!important;
+}
+}
+
+@media (device-width:736px) and (device-height:414px) and (orientation:landscape) {
+	.bottomimages {
+		position: absolute!important;
+		bottom: 17px!important;
+	}
+	.logos {
+		top: auto!important;
+		position: absolute!important;
+		bottom: 29px!important;
+		width: 25vw!important;
+		left: 12.5vw!important;
+	}
+	.less768 .frmregister button.btn3.btn_join_now, .btn3.btn_join_now
+	{
+		height:44px;
+	}
+}
+ 
     </style>
     <script type="text/javascript" > 
         
@@ -2099,13 +2890,35 @@
             response_msg.html('A new pincode has been sent!').show();;
             setTimeout(function(){ response_msg.html('');},3000);
         }
+
+        $(document).ready(function(){
+            $('select[name="subscription"]').on('change', function (e) { 
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value; 
+            var imgSrc = $(".text").find("img").attr("src");
+            if(valueSelected == "paid2")
+            {                
+               // $(".text").find("img").attr("src", imgSrc.replace("text-2.png","text1.png"));
+               $(".text").find("img.text2").hide();
+                $(".text").find("img.text1").show();
+            }
+            else if(valueSelected == "free")
+            { 
+                //$(".text").find("img").attr("src", imgSrc.replace("text1.png","text-2.png"));
+                $(".text").find("img.text1").hide();
+                $(".text").find("img.text2").show();
+            }
+           });
+        });
     </script>
     {% endblock %}
 </head>
 
 <body>
 <div class="bgimg">
-    <div class="bg1"><div class="title"><img src="/static/img/assets/join-the-action1.png" width="100%"/></div></div>
+    <div class="bg1"><div class="title" style="margin-top: 0px;padding-top: 58px;"><img src="/static/img/assets/join-the-action1.png" width="100%"/></div>
+    <div class="bottomimages"><img  src="/static/img/games-logos.png"  /></div>
+</div>
     <section class="sec-1">
         
         <form class="frmregister" method="post" name="frmregister"> 
@@ -2131,7 +2944,7 @@
                     </select>                       
                
                 
-                    <button type="submit" class="btn3">{% translate 'Join Now' %}</button>
+                    <button type="submit" class="btn3 btn_join_now" id="btn_join_now">{% translate 'Join Now' %}</button>
                 
                 
                     <div class=" text-center text-color-4-light"
@@ -2166,9 +2979,16 @@
             </div>
         </form> 
        <div class="bg"></div>
-       <div class="text"><img src="/static/img/assets/text.png"  /></div>
-    <div class="logos"><img src="/static/img/assets/mtn-presents.png"  /></div>
-    <div class="bottomimages"><img  src="/static/img/games-logos.png"  /></div>
+       <div class="text">
+        <!-- <img src="/static/img/assets/text.png"  /> -->
+        <img src="/static/img/assets/text1.png" class="text1"  />
+         <img src="/static/img/assets/text-2.png" class="text2" /> 
+       </div>
+    <div class="logos">
+        <img src="/static/img/assets/mtn-presents.png" id="logodesk" />
+        <img src="/static/img/assets/mtn-engage.png" id="logomob"  /> 
+    </div>
+   
     </section>
     
 

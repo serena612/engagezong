@@ -62,11 +62,11 @@
 
             
             var is_authenticated = false;
-            var get_tournaments_url = '/api/tournaments/'
-            var get_list_tournaments = '/api/tournaments/get_tournaments'
-            var get_html5games_url = '/api/html5_games/'
-            var get_prizes_url = '/api/tournaments-prizes/'
-            var get_winners_url = '/api/winners/'
+            var get_tournaments_url = '/api/tournaments/';
+            var get_list_tournaments = '/api/tournaments/get_tournaments';
+            var get_html5games_url = '/api/html5_games/';
+            var get_prizes_url = '/api/tournaments-prizes/';
+            var get_winners_url = '/api/winners/';
             var post_contact_engage_url = "/api/contact/engage/";
             var post_contact_support_url = "/api/contact/support/";
             var get_tournament_participants = '{% url "tournament-get-participants" %}';
@@ -457,12 +457,12 @@
                     </ul>
                 </div>
                 <div class="col-md-3 right">
-                    <div class="social">
+                    <!-- <div class="social">
                         <a href=""><i class="fab fa-youtube"></i></a>
                         <a href=""><i class="fab fa-twitch"></i></a>
                         <a href=""><i class="fab fa-twitter"></i></a>
                         <a href=""><i class="fab fa-facebook-f"></i></a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -470,7 +470,7 @@
 {% endblock %}
 
 {% block social_icons %}
-    <div class="social-fixed" style="z-index: 1200">
+    <!-- <div class="social-fixed" style="z-index: 1200">
         <ul>
             <li>
                 <a href="" style="background: #4469b0;">
@@ -493,7 +493,7 @@
                 </a>
             </li>
         </ul>
-    </div>
+    </div> -->
 {% endblock %}
 
 {% block modals %}
@@ -550,7 +550,7 @@
                                            placeholder="Enter 6 Digits Code" autocomplete="off">
 
                                         <div class="previous_btn">
-                                        <a style="text-decoration: underline;" onclick="$('.login-otp-form').fadeOut(function(){ $('.login-otp-form').hide(); $('.login-form').show() })">
+                                        <a style="text-decoration: underline;cursor: pointer;" onclick="$('.login-otp-form').fadeOut(function(){ $('.login-otp-form').hide(); $('.login-form').show() })">
                                             {% translate 'Change Number' %}
                                         </a>
                                         </div>      
@@ -558,7 +558,18 @@
                                             <button type="submit" class="btn3">
                                                 {% translate 'Next' %}
                                             </button>
+                                        </div>  
+
+                                        <!-- <div class="previous_btn">
+                                            <button type="button" class="btn3" onclick="$('.login-otp-form').fadeOut(function(){ $('.login-otp-form').hide(); $('.login-form').show() })">
+                                                {% translate 'Change Number' %}
+                                            </button>
                                         </div>
+                                        <div class="text-right" style="margin-top: -44px;">
+                                            <button type="submit" class="btn3" style="float:right!important">
+                                                {% translate 'Next' %}
+                                            </button>
+                                        </div> -->
 
                                     <br>
                                     <div class=" text-center text-color-4-light font-weight-bold"
@@ -1231,12 +1242,12 @@
             </div>
             <div class="col-md-12 text-center">
                 <div class="info-box"></div>
-                <button id="upgrade-btn" data-dismiss="modal" class="btn2 big c2">
+                <!-- <button id="upgrade-btn" data-dismiss="modal" class="btn2 big c2">
                     {% translate 'Upgrade' %}
                 </button>
                 <button data-dismiss="modal" class="btn2 big">
                     {% translate 'Cancel' %}
-                </button>
+                </button> -->
                 <p></p>
             </div>
         </div>
@@ -1329,6 +1340,22 @@
 
                 </div>
                 
+                {% if user.subscription == 'free' %}
+                <!-- <div id="video_Ad" style="position: absolute; top: 0px; left: 0px; width: 100vw; height: 100vh;">
+                    <div id="page-content">
+                        <div id="video-container">
+                            <video id="video-element">
+                            <source src="https://storage.googleapis.com/interactive-media-ads/media/android.mp4">
+                            <source src="https://storage.googleapis.com/interactive-media-ads/media/android.webm">
+                            </video>
+            </div>   
+                
+                        <div style="cursor: pointer; position:absolute; top:20px; right:20px;" onclick="closeVideoAd()">
+                            <i class="fas fa-times" style="color:#fff; font-size: 24px;"></i></div>   
+            </div>
+                    <script src="{% static 'js/ads.js' %}"></script> 
+                    </div> -->
+                    {% endif %}
             </div>
         </div>
     </div>
@@ -1603,11 +1630,11 @@
                                     </div>
                                 </div>
 
-                                <div class="input2 mb-3">
+                                <div class="input2 mb-3"  {% if user.profile.birthdate %} style="background-color: #ddd;" {% endif %}>
                                     <label for="">{% translate 'Date Of Birth' %}</label>
                                     <div class="right">
 
-                                        <select value="{{ user.profile.birthdate|date:'m' }}"
+                                        <select value="{{ user.profile.birthdate|date:'m' }}" {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
                                                 name="data_month" required
                                                 class="text-center">
                                             <option value="01"
@@ -1660,7 +1687,7 @@
                                             </option>
                                         </select>
 
-                                        <select name="data_day" required
+                                        <select name="data_day" required {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
                                                 class="text-center">
                                             {% for day in days %}
                                                 <option value="{{ day }}"
@@ -1668,7 +1695,7 @@
                                             {% endfor %}
                                         </select>
 
-                                        <select name="data_year" required
+                                        <select name="data_year" required {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
                                                 class="text-center"
                                                 id="">
                                             {% for year in years %}
@@ -1762,6 +1789,8 @@
             </div>
         </div>
     </div>
+    
+ 
 {% endif %}
 
 {% block javascript %}
@@ -1785,5 +1814,31 @@ window.addEventListener('load', function () {
 </script>
 
 {% endcomment %}
+
+<input type="hidden" id="userSub" value="{{user.subscription}}" />
+
+
+
+    <!-- {% if user.subscription == 'free' %} -->
+<!-- Begin Video Ads -->
+<!-- <div id="video_Ad">
+    <div id="page-content">
+        <div id="video-container">
+            <video id="video-element">
+            <source src="https://storage.googleapis.com/interactive-media-ads/media/android.mp4">
+            <source src="https://storage.googleapis.com/interactive-media-ads/media/android.webm">
+            </video>
+        </div>
+       
+        <div style="cursor: pointer; position:absolute; top:20px; right:20px;" onclick="closeVideoAd()">
+            <i class="fas fa-times" style="color:#fff; font-size: 24px;"></i></div>   
+    </div>
+    <script src="{% static 'js/ads.js' %}"></script> 
+    </div> -->
+    <!-- End Video Ads -->
+    <!-- {% endif %} -->
+    
 </body>
 </html>
+
+ <!-- <button id="play-button" style="position: absolute; top: 45vh; left: 47vw; color: #fff; font-size: 30px; z-index: 9999999999999; background-color: #000; padding: 8px 20px; border-radius: 13px;">Play</button> -->

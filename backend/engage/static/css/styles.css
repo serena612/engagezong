@@ -768,11 +768,11 @@ nav .bottom-nav ul {
   z-index: 10;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display: flex;    height: 39px;
 }
 
 nav .bottom-nav ul li {
-  padding: 23px 0px 22px 0px;
+  padding:15px 0px 15px 0px;
 }
 
 nav .bottom-nav ul li a {
@@ -6608,3 +6608,71 @@ a:hover, #contact-form button:hover, #support-form button:hover, .login-form but
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.btn_join_now.btn3
+{
+  font-size: 2rem;
+  height: 86px;
+}
+.frmregister .input1
+{
+  font-size: 2rem;
+  font-weight: 600;
+}
+.frmregister .input1
+{
+  -webkit-appearance: none;
+   -moz-appearance:none;
+   appearance:none;
+}
+.frmregister select.input1
+{
+  background-image: url("/static/img/assets/drop-down-arrow.png");
+    background-position: 96% center;
+    background-repeat: no-repeat;
+    padding-right: 7px;
+}
+@media (max-width: 1102px)
+{
+  .frmregister select.input1
+  {
+    background-image: url("/static/img/assets/drop-down-arrow-mobi.png");
+    background-size: 15px!important;
+  }
+}
+.text2
+{
+  display: none;
+}
+/* begin video ads */
+#page-content {
+  
+  /* this element's width controls the effective height */
+  /* of the video container's padding-bottom */
+  /* max-width: 640px;
+  margin: 10px auto; 
+  position: relative;*/
+  position: fixed;
+  top:42px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  z-index: 9999999;
+}
+
+#video-container {
+  position: relative;
+  /* forces the container to match a 16x9 aspect ratio */
+  /* replace with 75% for a 4:3 aspect ratio, if needed */
+  padding-bottom: 56.25%;
+}
+
+#video-element {
+  /* forces the contents to fill the container */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+/* end video ads */

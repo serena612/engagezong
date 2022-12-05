@@ -4,7 +4,16 @@ var state='all'
 var game = '0';
 var t=0;
 
-
+// URLs:
+var get_tournaments_url = '/api/tournaments/';
+var get_list_tournaments = '/api/tournaments/get_tournaments';
+var get_html5games_url = '/api/html5_games/';
+var get_prizes_url = '/api/tournaments-prizes/';
+var get_winners_url = '/api/winners/';
+var post_contact_engage_url = "/api/contact/engage/";
+var post_contact_support_url = "/api/contact/support/";
+var sections_log = '/api/users/sections_log/sections_log/';
+//End URLS
 
 function hoo(){
     if(t>=1){
@@ -1056,6 +1065,11 @@ function fillTournaments(){
 
 }
 
+function showVideoAd(){
+    if($('#userSub').val() == "free")
+       $('#page-content').show(); 
+}
+
 var html5games_ajax = null;
 // get html5 games
 function getHtml5games(type, btn) {
@@ -1088,6 +1102,7 @@ function getHtml5games(type, btn) {
             box.html("");
 
             value.results.forEach((item) => {
+                // ${is_authenticated ?  'onclick="showVideoAd()"' : ''}
                 var html = `
                     <li>
                         <a class="html5-game ${item.is_locked ? 'is-locked' : ''}" 

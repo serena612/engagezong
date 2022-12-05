@@ -7,10 +7,10 @@ $(function () {
     }
 
 })
-if(window.location.href=='https://cms.engage.devapp.co/' || window.location.href=='https://cms.engage.devapp.co')
-{
-    window.location.href='https://cms.engage.devapp.co/admin/'
-}
+// if(window.location.href=='https://cms.engage.devapp.co/' || window.location.href=='https://cms.engage.devapp.co')
+// {
+//     window.location.href='https://cms.engage.devapp.co/admin/'
+// }
 $(document).on('show.bs.modal', '#login-modal', function (e) {
     var message = '';
 
@@ -803,7 +803,13 @@ $(function () {
         if ($(this).hasClass("is-locked")){
             if($(this).attr('data-target')!="#login-modal"){
                 $("#games-subscription-notifications #games-notifications-title").text("Upgrade Subscription");
+                if($("#userSub").val() == "free")
+                {
+                    $("#games-subscription-notifications #games-notifications-body").text('This game is premium. Please upgrade from free package to N50 package to play it. To upgrade, simply deactivate from the free package by sending "DEAC SUB3" to “8561” then send "SUB2" to “8561”');
+                }
+                else{
                 $("#games-subscription-notifications #games-notifications-body").text("Please upgrade your package to play this game.");
+                }
 
                 $("#games-subscription-notifications").modal({
                     show: true,
