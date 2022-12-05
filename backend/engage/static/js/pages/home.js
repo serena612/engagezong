@@ -251,6 +251,51 @@ var tInt = setInterval(function(){
 
 },50);
  
+
+//Tournaments:
+//////////////////////////////////////////
+$(window).on('load resize', function() {
+  if($("#tournaments").length > 0){
+//if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent); //navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
+  var height = $(window).height();
+  var width = $(window).width();
+
+  var ua = navigator.userAgent.toLowerCase();
+  var isAndroid = ua.indexOf("android") > -1;
+  
+  if ((width > height && (isMobile || isAndroid)) || (isMobile || isAndroid)) {
+      //run landscape script
+      $("#tournament_dv").addClass("tobeMob");
+      $("#tournament_dv").find(".mobileversion").show();
+      $("#tournament_dv").find(".desktopversion").hide();
+
+      $("#tournament_dv").find(".mobileversion").attr("style", "display:block!important");
+      $("#tournament_dv").find(".desktopversion").attr("style", "display:none!important");
+  } else {
+      //run portrait script
+      $("#tournament_dv").removeClass("tobeMob");
+
+      $("#tournament_dv").find(".desktopversion").show();
+      $("#tournament_dv").find(".mobileversion").hide();
+
+      $("#tournament_dv").find(".desktopversion").attr("style", "display:block!important");
+      $("#tournament_dv").find(".mobileversion").attr("style", "display:none!important");
+  }
+
+  if(width > height)
+    $("body").addClass("land");
+  else
+    $("body").removeClass("land");
+  //  alert("desktopversion: "+ $("#tournament_dv").find(".desktopversion").attr("style"));
+  //  alert("mobileversion: "+ $("#tournament_dv").find(".mobileversion").attr("style"));
+ // alert("body: "+ $('body').attr('class'));
+
+}
+});
+
+
+//////////////////////////////////////////
  
 // function showSocialLinks(){
 //   $('.sharethis-inline-share-buttons').show();

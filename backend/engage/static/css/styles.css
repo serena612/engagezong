@@ -6643,6 +6643,29 @@ a:hover, #contact-form button:hover, #support-form button:hover, .login-form but
 {
   display: none;
 }
+body:not(.desktop) #tournament_dv .mobileversion, body:not(.desktop) #tournament_dv.tobeMob .mobileversion, body:not(.desktop) #tournament_dv.tobeMob .mobileversion
+{
+  display: block!important;
+}
+body:not(.desktop) #tournament_dv .desktopversion, body:not(.desktop) #tournament_dv.tobeMob .desktopversion, body:not(.desktop) #tournament_dv.tobeMob .desktopversion
+{
+  display: none!important;
+}
+
+body:not(.desktop).land .tournaments-list1#tournaments-list .package{
+  width: 100%!important;
+  overflow-x: auto!important;
+}
+body.land #tournament_dv.tobeMob .tournaments-list1#tournaments-list .newsbv-item
+{
+  width: 316px!important;
+  display: inline-block;
+  vertical-align: top;
+}
+/* body.land .mobileversion .wcontainer, body:not(.desktop).land .mobileversion .wcontainer {
+  overflow-x: auto!important;
+} */
+
 /* begin video ads */
 #page-content {
   
@@ -6656,7 +6679,7 @@ a:hover, #contact-form button:hover, #support-form button:hover, .login-form but
   left: 0px;
   width: 100vw;
   height: 100vh;
-  display: none;
+  /* display: none; */
   z-index: 9999999;
 }
 

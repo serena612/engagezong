@@ -64,7 +64,7 @@ admin.site.index_title = 'Engage'
 
 
 handler404 = 'engage.core.views.view_404'
-
+handler403 = 'engage.core.views.view_403'
 schema_view = views.get_schema_view(
     openapi.Info(
         title="Engage API",
@@ -97,7 +97,7 @@ def protected_games(request, path, *args, **kwargs):
         
         if game.is_free_game:
             pass
-        elif user.subscription == SubscriptionPlan.FREE:
+        elif user.subscription == SubscriptionPlan.FREE or user.is_billed == False:
             today_user_game_played = UserGamePlayed.objects.filter(
                 user=user,
                 last_played_at__date=now.date(),
@@ -120,25 +120,25 @@ def protected_games(request, path, *args, **kwargs):
             ).first()
         
             
-            # if today_user_game_played:
+            if today_user_game_played:
             
-            #     return HttpResponseForbidden(
-            #         'You are only allowed to play one premium or exclusive game per day.',
-            #         status=410
-            #     )
+                return HttpResponseForbidden(
+                    'You are only allowed to play one premium or exclusive game per day.',
+                    status=410
+                )
 
         obj, created = UserGamePlayed.objects.select_related('game').get_or_create(
             user=user,
             game=game,
         )
 
-        # if user.subscription == SubscriptionPlan.FREE:
-        #     if not created and \
-        #             now - obj.last_played_at >= timedelta(seconds=15) and \
-        #             obj.game.game_type == HTML5GameType.EXCLUSIVE:
-        #         return HttpResponseForbidden(
-        #             'You are only allowed to play this game 1 time'
-        #         )
+        if user.subscription == SubscriptionPlan.FREE or not user.is_billed:
+            if not created and \
+                    now - obj.last_played_at >= timedelta(seconds=15) and \
+                    obj.game.game_type == HTML5GameType.EXCLUSIVE:
+                return HttpResponseForbidden(
+                    'You are only allowed to play this game 1 time'
+                )
 
         if not created:
             obj.last_played_at = now
@@ -173,8 +173,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^games/(.*)$', protected_games),
     url(r'^sitemap\.xml$',TemplateView.as_view(template_name='sitemap.xml',content_type='text/xml')),
-    path("robots.txt",TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path("ads.txt",TemplateView.as_view(template_name="ads.txt", content_type="text/plain")),
+    path("robots.txt",TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path("google2f20d53d86be3675.html",TemplateView.as_view(template_name="google2f20d53d86be3675.html",content_type='text/html'))
 ]
 
