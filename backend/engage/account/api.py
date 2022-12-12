@@ -273,7 +273,7 @@ def subscribe_api(phone_number, idbundle, idservice, referrer=None, idchannel=2,
     data = {'msisdn': phone_number, 
             'idChannel': idchannel,
             'idBundle':idbundle,
-            'idService':idservice,
+            'idService':idservice.upper(),
             'transactionId':uniqueid,
             }
     if referrer:
