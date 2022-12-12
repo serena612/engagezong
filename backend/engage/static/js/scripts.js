@@ -803,15 +803,15 @@ $(function () {
         if ($(this).hasClass("is-locked")){
             if($(this).attr('data-target')!="#login-modal"){
                 
-                if($("#userIsBilled").val() == "False" )
+                if($("#userSub").val() == "free" ){
+                    $("#games-subscription-notifications #games-notifications-title").text("Upgrade Subscription");
+                    $("#games-subscription-notifications #games-notifications-body").text("Please upgrade your package to play this game.");
+                }else if($("#userIsBilled").val() == "False" )
                 { 
                     $("#games-subscription-notifications #games-notifications-title").text("Recharge Line!");
                     $("#games-subscription-notifications #games-notifications-body").text('You don\'t have enough balance to play this game. Please recharge your line and try again.');
                 }
-                else if($("#userSub").val() == "free" ){
-                    $("#games-subscription-notifications #games-notifications-title").text("Upgrade Subscription");
-                    $("#games-subscription-notifications #games-notifications-body").text("Please upgrade your package to play this game.");
-                }
+                
 
                 $("#games-subscription-notifications").modal({
                     show: true,
