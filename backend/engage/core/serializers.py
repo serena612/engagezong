@@ -40,14 +40,14 @@ class HTML5GameSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         if not user.is_authenticated:
             return True
-
+        
         if obj.game_type == HTML5GameType.FREE:
             return False
         elif obj.game_type == HTML5GameType.EXCLUSIVE:
-            return user.subscription == SubscriptionPlan.FREE and \
+            return (user.subscription == SubscriptionPlan.FREE or user.is_billed == False) and \
                    UserGamePlayed.objects.filter(user=user, game=obj).exists()
         else:
-            return user.subscription == SubscriptionPlan.FREE
+            return (user.subscription == SubscriptionPlan.FREE or user.is_billed == False)
 
 
 class AvatarSerializer(serializers.ModelSerializer):
@@ -57,7 +57,7 @@ class AvatarSerializer(serializers.ModelSerializer):
 
 
 class ContactEngageSerializer(serializers.Serializer):
-    name = serializers.CharField(min_length=3)
+    name = serializers.CharField()  # min_length=3
     phone_number = serializers.CharField()
     country = serializers.CharField()
     email = serializers.EmailField()
@@ -67,7 +67,7 @@ class ContactEngageSerializer(serializers.Serializer):
 
 
 class ContactSupportSerializer(serializers.Serializer):
-    username = serializers.CharField(min_length=3)
+    username = serializers.CharField()  # min_length=3
     phone_number = serializers.CharField()
     country = serializers.CharField()
     email = serializers.EmailField()

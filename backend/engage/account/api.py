@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.core.paginator import Paginator
 from ipaddress import ip_address
-from engage.settings.base import API_SERVER_URL, USER_EXCEPTION_LIST, VAULT_SERVER_URL, ENABLE_VAULT, INTEGRATION_DISABLED, TRUSTED_IP
+from engage.settings.base import API_SERVER_URL, USER_EXCEPTION_LIST, VAULT_SERVER_URL, ENABLE_VAULT, INTEGRATION_DISABLED, TRUSTED_IP, DISABLE_PIN
 import requests
 from rest_framework import mixins, viewsets, status, exceptions
 from rest_framework.generics import get_object_or_404
@@ -28,6 +28,7 @@ from .constants import (
     FriendStatus,
     SectionLog,
     SubscriptionPlan,
+    SubscriptionPackages,
     Transaction,
     CoinTransaction
 )
@@ -276,12 +277,16 @@ def subscribe_api(phone_number, idbundle, idservice, referrer=None, idchannel=2,
             'transactionId':uniqueid,
             }
     if referrer:
-        data['inviteeId'] = referrer
+        print("Referrer by:", referrer)
+        data['inviteeId'] = str(referrer)
     if vault:
         return vault.send(command=command, data=data)       
     url = API_SERVER_URL+command
     try: 
+        print(data)
         api_call = requests.post(url, headers={}, json=data, timeout=3)
+        print(api_call)
+        print(api_call.content)
     except requests.exceptions.RequestException as e:  # This is the correct syntax
         # raise SystemExit(e)
         print(e)
@@ -291,12 +296,13 @@ def subscribe_api(phone_number, idbundle, idservice, referrer=None, idchannel=2,
         res = api_call.json()['statusCode']
         return res['message'], res['code']
     else:
+        print(api_call.content, api_call.status_code)
         return api_call.content, api_call.status_code
 
 
 def grant_referral_gift(user, referrer):
     print("User", user, "being referred by", referrer, "instead of", user.referrer)
-    refgift = 500
+    refgift = 50
     if not user.referrer:
         user.referrer = referrer
         user.save()
@@ -328,20 +334,27 @@ def grant_referral_gift(user, referrer):
 
 def do_register(self, request, username, subscription):
     is_active = False
+    is_billed = False
     if 'refid' in request.session:
+        print('referral id found in cookie', request.session['refid'])
         ref = User.objects.filter(id=request.session['refid']).first()
-        referrer = ref.uid
+        if ref:
+            referrer = ref.uid
+        else:
+            referrer = None
     else:
         referrer=None
-    if subscription == 'free':
+    if subscription == SubscriptionPlan.FREE:
         idbundle = 1
-        idservice = 'FREE'
-    elif subscription == 'paid1':
+        idservice = SubscriptionPackages.FREE
+    elif subscription == SubscriptionPlan.PAID1:
         idbundle = 2
-        idservice = 'P30'
-    elif subscription == 'paid2':
+        idservice = SubscriptionPackages.PAID1
+        is_billed = True
+    elif subscription == SubscriptionPlan.PAID2:
         idbundle = 3
-        idservice = 'P50'
+        idservice = SubscriptionPackages.PAID2
+        is_billed = True
     else:
         return Response({'error': 'Unknown Subscription'}, status=577)
 
@@ -350,11 +363,13 @@ def do_register(self, request, username, subscription):
     response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
     if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
         if response2['idbundle'] == 1:
-            subscription = 'free'
+            subscription = SubscriptionPlan.FREE
         elif response2['idbundle'] == 2:
-            subscription = 'paid1'
+            subscription = SubscriptionPlan.PAID1
+            is_billed = True
         elif response2['idbundle'] == 3:
-            subscription = 'paid2'
+            subscription = SubscriptionPlan.PAID2
+            is_billed = True
     if code2==56 or code2==80 or code2==76 or code2==77 or code2==79 or code2==75 or INTEGRATION_DISABLED or username.startswith('234102'):  # 56 profile does not exist - 76 pending sub - 79 pending unsub - 77 sub - 75 under process
         if code2==56 or code2==80:  # profile does not exist so we send subscription request
             print("subscription request", subscription)
@@ -381,7 +396,7 @@ def do_register(self, request, username, subscription):
                         'timezone': '',
                         'country': request.region.code,
                         'region_id': request.region.id,
-                        'is_billed' : False,
+                        'is_billed' : is_billed,
                         'password': 'pbkdf2_sha256$260000$aMwTW2Wr3K2J2WmodFFd5W$pZUAfNohO77wQbo4oRgMYybD8Vph9HdUSoeWOHkwT9w='
                     },
                 )
@@ -395,7 +410,8 @@ def do_register(self, request, username, subscription):
             if is_active:
                 if 'refid' in request.session:
                     referr = User.objects.filter(id=request.session['refid']).first()
-                    grant_referral_gift(user, referr)
+                    if referr:
+                        grant_referral_gift(user, referr)
 
                 @notify_when(events=[NotificationTemplate.LOGIN],
                             is_route=False, is_one_time=False)
@@ -529,7 +545,7 @@ class AuthViewSet(viewsets.GenericViewSet):
             return Response({}, status=status.HTTP_200_OK)
         response, code = send_pincode(username, vault=self.client)
         print(response, code)
-        if code==70 or INTEGRATION_DISABLED or username.startswith('234102'):
+        if code==70 or INTEGRATION_DISABLED or username.startswith('234102') or DISABLE_PIN:
             return Response({}, status=status.HTTP_200_OK)
         else:
             if code < 100:
@@ -556,7 +572,7 @@ class AuthViewSet(viewsets.GenericViewSet):
         otp = request.POST.get('code')
         if usermob:
             response, code = verify_pincode(usermob, otp, vault=self.client)  # what if he is registered on api but not here and loaddata check if pendingsub
-        if (usermob and code==0) or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED or usermob.startswith('234102'):
+        if (usermob and code==0) or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED or usermob.startswith('234102') or DISABLE_PIN:
             response2, code2 = load_data_api(usermob, "1", self.client)  # 1 for wifi
             
             if code2==56 or code2==75 or code2==76 or code2==77 or code2==79 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED or usermob.startswith('234102'):  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub
@@ -594,11 +610,14 @@ class AuthViewSet(viewsets.GenericViewSet):
                             # if the user has already sent a subscription via other means but does not have a profile registered on the website
                             if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
                                 if response2['idbundle'] == 1:
-                                    subscription = 'free'
+                                    subscription = SubscriptionPlan.FREE
+                                    is_billed = False
                                 elif response2['idbundle'] == 2:
-                                    subscription = 'paid1'
+                                    subscription = SubscriptionPlan.PAID1
+                                    is_billed = True
                                 elif response2['idbundle'] == 3:
-                                    subscription = 'paid2'
+                                    subscription = SubscriptionPlan.PAID2
+                                    is_billed = True
                                 if not user:  # attempt to create a profile
                                     if code2==77:
                                         is_active=True
@@ -622,7 +641,7 @@ class AuthViewSet(viewsets.GenericViewSet):
                                                 'timezone': '',
                                                 'country': request.region.code,
                                                 'region_id': request.region.id,
-                                                'is_billed' : False,
+                                                'is_billed' : is_billed,
                                                 'password': 'pbkdf2_sha256$260000$aMwTW2Wr3K2J2WmodFFd5W$pZUAfNohO77wQbo4oRgMYybD8Vph9HdUSoeWOHkwT9w='
                                             },
                                         )
@@ -704,7 +723,7 @@ class AuthViewSet(viewsets.GenericViewSet):
         request.session['subscription'] = subscription
         otp = request.POST.get('code')
         response, code = verify_pincode(username, otp, vault=self.client)
-        if code==0 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED or username.startswith('234102'):
+        if code==0 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED or username.startswith('234102') or DISABLE_PIN:
             return do_register(self, request, username, subscription)
         else:
             if code<100:
@@ -775,6 +794,8 @@ class UserViewSet(mixins.ListModelMixin,
             return serializers.UpdateSubscriptionSerializer
         elif self.action == 'remove_user_subscription':
             return serializers.RemoveSubscriptionSerializer
+        elif self.action == 'disable_user_subscription':
+            return serializers.DisableSubscriptionSerializer
         return serializers.UserSerializer
 
     @action(['POST'], detail=False, permission_classes=[permissions.IsAuthenticated])
@@ -810,7 +831,7 @@ class UserViewSet(mixins.ListModelMixin,
                 default='User subscription has been successfully updated!'
            ),
            'subscription': Schema(
-                type=TYPE_STRING, enum=['free', 'paid1', 'paid2'],
+                type=TYPE_STRING, enum=[SubscriptionPlan.FREE, SubscriptionPlan.PAID1, SubscriptionPlan.PAID2],
                 read_only=True,
                 default='free'
            ),
@@ -864,17 +885,20 @@ class UserViewSet(mixins.ListModelMixin,
         serializer.is_valid(raise_exception=True)
         msisdn = serializer.validated_data['msisdn']
         resp = {}
+        is_billed = False
         try:
             refid = serializer.validated_data['refid']
         except:
             refid = None
         new_substatus = serializer.validated_data['new_substatus']
-        if new_substatus.lower() == 'p30':
-            subscription = 'paid1'
-        elif new_substatus.lower() == 'p50':
-            subscription = 'paid2'
+        if new_substatus.lower() == SubscriptionPackages.PAID1:
+            subscription = SubscriptionPlan.PAID1
+            is_billed = True
+        elif new_substatus.lower() == SubscriptionPackages.PAID2:
+            subscription = SubscriptionPlan.PAID2
+            is_billed = True
         else:
-            subscription = 'free'
+            subscription = SubscriptionPlan.FREE
         
         print(request.META.get('HTTP_X_FORWARDED_FOR'))
         ip = ip_address(request.META.get('HTTP_X_FORWARDED_FOR').split(",")[0])
@@ -911,7 +935,7 @@ class UserViewSet(mixins.ListModelMixin,
                             'timezone': '',
                             'country': request.region.code,
                             'region_id': request.region.id,
-                            'is_billed' : False,
+                            'is_billed' : is_billed,
                             'password': 'pbkdf2_sha256$260000$aMwTW2Wr3K2J2WmodFFd5W$pZUAfNohO77wQbo4oRgMYybD8Vph9HdUSoeWOHkwT9w='
                         },
                     )
@@ -935,7 +959,7 @@ class UserViewSet(mixins.ListModelMixin,
                     return Response({'error': 'Error in creating new user profile!'}, status=474)
                 
             else:
-                num = userexist.update(subscription=subscription)
+                num = userexist.update(subscription=subscription, is_billed=is_billed)
                 if num >0:
                     resp['message'] = 'User subscription has been successfully updated!'
                     resp['subscription'] = new_substatus
@@ -1015,6 +1039,74 @@ class UserViewSet(mixins.ListModelMixin,
                 return Response(resp, status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'Error in cancelling user subscription!'}, status=475)
+
+
+    @swagger_auto_schema(responses={
+        200: Schema(type=TYPE_OBJECT,
+        properties={
+           'message': Schema(
+                type=TYPE_STRING, enum=['User subscription has been successfully disabled!'],
+                read_only=True,
+                default='User subscription has been successfully disabled!'
+           ),
+           'username': Schema(
+                type=TYPE_STRING,
+                read_only=True,
+                default='player1'
+           ),
+        }), 
+        403: Schema(type=TYPE_OBJECT,
+        properties={
+           'error': Schema(
+              type=TYPE_STRING, enum=['Request not Allowed!'], read_only=True, default='Request not Allowed!'
+           )
+        }), 
+        400: Schema(type=TYPE_OBJECT,
+        properties={
+           'msisdn': Schema(
+              type=TYPE_STRING, read_only=True, default='No User exists with the number 25465849449949'
+           )
+        }), 
+        474: Schema(type=TYPE_OBJECT,
+        properties={
+           'error': Schema(
+              type=TYPE_STRING,
+              enum=['User\'s subscription is already disabled!'],
+              read_only=True, default='User\'s subscription is already disabled!'
+           )
+        }), 
+        475: Schema(type=TYPE_OBJECT,
+        properties={
+           'error': Schema(
+              type=TYPE_STRING,
+              enum=['Error in disabling user subscription!'],
+              read_only=True, default='Error in disabling user subscription!'
+           )
+        })})
+    @action(['POST'], detail=False)  # , permission_classes=[permissions.IsAuthenticated]
+    def disable_user_subscription(self, request): 
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        msisdn = serializer.validated_data['msisdn']
+        resp = {}
+        # print(request.META.get('HTTP_X_FORWARDED_FOR'))
+        ip = ip_address(request.META.get('HTTP_X_FORWARDED_FOR').split(",")[0])
+        print(ip, str(ip)!=TRUSTED_IP)
+        if str(ip) != TRUSTED_IP: # not ip.is_private:
+            raise exceptions.PermissionDenied('Request not Allowed!')
+        userexist = User.objects.filter(mobile=msisdn)
+        if not userexist:
+            raise exceptions.ValidationError({'msisdn': 'No User exists with the number '+ msisdn})
+        elif not userexist.first().is_billed:
+            return Response({'error': 'User\'s subscription is already disabled!'}, status=474)
+        else:
+            num = userexist.update(is_billed=False)
+            if num >0:
+                resp['message'] = 'User subscription has been successfully disabled!'
+                resp['username'] = userexist.first().username
+                return Response(resp, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Error in disabling user subscription!'}, status=475)
   
 
     @action(['GET'], detail=True)

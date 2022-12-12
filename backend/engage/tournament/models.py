@@ -16,6 +16,10 @@ from .constants import (
 from engage.core.constants import (
      GameMode
 )
+from engage.account.constants import (
+     SubscriptionPackages,
+     SubscriptionPlan
+)
 from django.db.models import Count, F, Q, Prefetch
 from .managers import TournamentQuerySet
 from django import forms
@@ -27,11 +31,12 @@ import requests
 from engage.settings.base import PRIZE_SERVER_URL
 
 
-def request_data_prize(phone_number, dataplan, vault=None):  # default channel id is web
+def request_data_prize(phone_number, dataplan, subscription, vault=None):  # default channel id is web
     print("Requesting for", phone_number, "dataplan:", dataplan)
     command = '/api/Features/request_data_prize'
     data = {'msisdn': phone_number, 
-            'dataplan': dataplan
+            'dataplan': dataplan,
+            'package': subscription
             }
     if vault:
         return vault.send(command=command, data=data)       
@@ -50,11 +55,12 @@ def request_data_prize(phone_number, dataplan, vault=None):  # default channel i
         return api_call.content, api_call.status_code
 
 
-def request_cash_prize(phone_number, amount, vault=None):  # default channel id is web
+def request_cash_prize(phone_number, amount, subscription, vault=None):  # default channel id is web
     print("Requesting cash for", phone_number, "amount:", amount)
     command = '/api/Features/request_cash_prize'
     data = {'msisdn': phone_number, 
-            'amount': str(amount)
+            'amount': str(amount),
+            'package': subscription
             }
     if vault:
         return vault.send(command=command, data=data)       
@@ -116,10 +122,18 @@ def confirm_request_data(phone_number, idbundle, vault=None):  # default channel
     else:
         return api_call.content, api_call.status_code
 
-def get_prize(phone_number, dataplan, prize_type):
+def get_prize(phone_number, dataplan, prize_type, subscription):
     print("Attempting to grant", prize_type, dataplan, "to", phone_number)
+    if subscription == SubscriptionPlan.FREE:
+        subs = SubscriptionPackages.FREE
+    elif subscription == SubscriptionPlan.PAID1:
+        subs = SubscriptionPackages.PAID1
+    elif subscription == SubscriptionPlan.PAID2:
+        subs = SubscriptionPackages.PAID2
+    subs = subs.upper()
+    print("subs", subs)
     if prize_type == 'data':
-        reply, code = request_data_prize(phone_number, dataplan.data_plan)
+        reply, code = request_data_prize(phone_number, dataplan.data_plan, subs)
         print(reply, code)
         if code==0:
             pending, code2 = check_pending_requests_data(phone_number)
@@ -130,7 +144,7 @@ def get_prize(phone_number, dataplan, prize_type):
                 if code3==0: # success
                     return True
     elif prize_type == 'cash':
-        reply, code = request_cash_prize(phone_number, dataplan)
+        reply, code = request_cash_prize(phone_number, dataplan, subs)
         print(reply, code)
         if code==0:
             # pending, code2 = check_pending_requests_data(phone_number)
@@ -453,7 +467,8 @@ class TournamentParticipant(TimeStampedModel):
 
     prize = RichTextField(blank=True, null=True)
     is_waiting_list = models.BooleanField(default=False)
-
+    # is_informed = models.BooleanField(default=False)
+    matches_informed = models.ManyToManyField('tournament.TournamentMatch', blank=True)
     tracker = FieldTracker()
 
     def __str__(self):

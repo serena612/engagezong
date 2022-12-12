@@ -10,8 +10,13 @@ class ParticipantExists(APIException):
 
 class FreeUserCannotJoinTournament(APIException):
     status_code = status.HTTP_406_NOT_ACCEPTABLE
-    default_detail = 'User is not allowed to join any tournament'
+    default_detail = 'Free User is not allowed to join any tournament'
     default_code = 'free_user'
+
+class UnbilledUserCannotJoinTournament(APIException):
+    status_code = status.HTTP_406_NOT_ACCEPTABLE
+    default_detail = 'Unbilled User is not allowed to join any tournament'
+    default_code = 'unbilled_user'
 
 class TournamentCloseException(APIException):
     status_code = status.HTTP_406_NOT_ACCEPTABLE
@@ -26,4 +31,9 @@ class TournamentFirstException(APIException):
 class TournamentStartException(APIException):
     status_code = status.HTTP_406_NOT_ACCEPTABLE
     default_detail = "Tournament has already started!"
+    default_code = 'validation_error' 
+
+class UserInformException(APIException):
+    status_code = status.HTTP_406_NOT_ACCEPTABLE
+    default_detail = "There are no valid users to be informed!"
     default_code = 'validation_error' 

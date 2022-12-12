@@ -18,6 +18,9 @@ from engage.tournament.models import (
 )
 from engage.account.models import User
 from datetime import datetime, timedelta
+from engage.account.constants import SubscriptionPackages, SubscriptionPlan
+
+
 def get_prize_list(vault=None):
     headers = {'Content-type':'application/json', 
                 'accept': 'text/plain'} # post data
@@ -44,12 +47,12 @@ def send_sms(user, message, vault=None):
     headers = {'Content-type':'application/json', 
                 'accept': 'text/plain'} # post data
     command = '/api/User/SendSms'
-    if user.subscription=='free':
-        subs = 'FREE'
-    elif user.subscription=='paid1':
-        subs = 'P30'
+    if user.subscription==SubscriptionPlan.FREE:
+        subs = SubscriptionPackages.FREE
+    elif user.subscription==SubscriptionPlan.PAID1:
+        subs = SubscriptionPackages.PAID1
     else:
-        subs = 'P50'
+        subs = SubscriptionPackages.PAID2
     data = {
             'msisdn': user.mobile,
             'message': message.replace('<br/>', ''),

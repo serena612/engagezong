@@ -178,9 +178,9 @@ class Mission(TimeStampedModel):
         return self.name
 
     def total_points(self, user):
-        if user.subscription == SubscriptionPlan.PAID1:
+        if user.subscription == SubscriptionPlan.PAID1 and user.is_billed:
             return self.paid1_user_points
-        if user.subscription == SubscriptionPlan.PAID2:
+        if user.subscription == SubscriptionPlan.PAID2 and user.is_billed:
             return self.paid2_user_points
         else:
             return self.free_user_points if self.free_user_points else 0

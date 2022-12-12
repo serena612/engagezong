@@ -18,7 +18,7 @@ from engage.account.exceptions import (
     MinimumProfileLevelException
 )
 from .constants import TournamentState
-from .exceptions import ParticipantExists, FreeUserCannotJoinTournament,TournamentCloseException,TournamentFirstException,TournamentStartException
+from .exceptions import ParticipantExists, FreeUserCannotJoinTournament,TournamentCloseException,TournamentFirstException,TournamentStartException,UserInformException,UnbilledUserCannotJoinTournament
 from .models import (
     Tournament,
     TournamentParticipant,
@@ -33,7 +33,6 @@ from .serializers import (
 )
 from ..core.models import Sticker
 from ..operator.constants import SubscriptionType
-
 
 
 class TournamentFilter(django_filters.FilterSet):
@@ -217,76 +216,6 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         tournament.closed_on = timezone.now()
         tournament.save()
         tournament.send_notification_close()
-        # tournament_prizes = TournamentPrize.objects.filter(
-        # tournament__id=tournament.id
-        #  )
-        # tournament_winners= tournament_prizes.values_list('winner', flat=True)
-        # failed_participants_ids = TournamentParticipant.objects.filter(
-        #     tournament__id=tournament.id,
-        # ).exclude(participant__id__in=tournament_winners).values_list('participant', flat=True)
-        # failed_participants = User.objects.filter(id__in=failed_participants_ids)
-
-        # # print(failed_participants)
-        # for prize in tournament_prizes :
-        #     # USER_FIRST_TOURNAMENT
-
-        #     if prize.position == 1 :
-        #         @notify_when(events=[NotificationTemplate.USER_FIRST_TOURNAMENT], is_route=False, is_one_time=False)
-        #         def notify(user, user_notifications):
-        #             """ extra logic if needed """
-        #             for notificationi in user_notifications:
-        #                 notificationi.link=self.name+";"+prize.title+";"+str(prize.image)
-        #                 notificationi.save()
-        #         notify(prize.winner)
-
-        # # USER_SECOND_THIRD_TOURNAMENT >> Users who are second, third or positions that win a prize.
-        #     elif  prize.position >= 2 :
-
-        #         @notify_when(events=[NotificationTemplate.USER_SECOND_THIRD_TOURNAMENT], is_route=False, is_one_time=False)
-        #         def notify(user, user_notifications):
-        #             """ extra logic if needed """
-        #             for notificationi in user_notifications:
-        #                 notificationi.link=self.name+";"+prize.title+";"+str(prize.image)
-        #                 notificationi.save()
-        #         notify(prize.winner)
- 
-        # print("failed participants", failed_participants)
-        # if failed_participants :
-        #     for participant in  failed_participants :
-        #         print("processing sticker for", participant)
-        #         sticker = Sticker.objects.filter(  # .select_for_update()
-        #                     ~Q(id__in=participant.stickers.all())
-        #                 ).order_by('?').first()
-        #         print("sticker", sticker)
-        #         print("tourn giff", tournament.give_sticker)
-        #         if tournament.give_sticker:
-        #             if sticker :
-                        
-        #                 participant.stickers.add(sticker)
-        #                 #participant.refresh_from_db()
-        #                 participant.save()
-        #                 print("participantid", participant.id)
-        #                 print("stickerid", sticker.id)
-        #                 print("sticker added !")
-        #                 print("stickers after save", participant.stickers.all())
-        #         print("coins per participant", tournament.coins_per_participant)
-        #         print("weird condition", participant.stickers.all())
-        #         if tournament.coins_per_participant > 0 :
-        #             if participant.stickers.all() :
-        #                 participant.old_coins = participant.coins
-        #                 print("adding", tournament.coins_per_participant, "coins to", participant.coins)
-        #                 participant.coins = participant.coins + tournament.coins_per_participant
-        #                 participant.seen_coins = False
-        #                 participant.save()            
-            
-        #         @notify_when(events=[NotificationTemplate.USER_OUTSIDE_THE_WINNING_POSITIONS], is_route=False, is_one_time=False)
-        #         def notify(user, user_notifications):
-        #             """ extra logic if needed """
-        #             for notificationi in user_notifications:
-        #                 notificationi.link=("1" if tournament.give_sticker else "0")+";"+(str(tournament.coins_per_participant) if tournament.coins_per_participant else "0")+";"+(str(sticker.image) if tournament.give_sticker and sticker and sticker.image  else "-")
-        #                 notificationi.save()
-        #                 # print(notificationi.link)
-        #         notify(participant)
         return redirect(request.META["HTTP_REFERER"])
 
 
@@ -301,8 +230,11 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         if not linked_account:
             raise GameAccountUnavailable()
 
-        if not tournament.allow_free_users and user.subscription == SubscriptionType.FREE:
-            raise FreeUserCannotJoinTournament()
+        if not tournament.allow_free_users:
+            if user.subscription == SubscriptionType.FREE: 
+                raise FreeUserCannotJoinTournament()
+            elif user.is_billed == False:
+                raise UnbilledUserCannotJoinTournament()
 
         if tournament.minimum_profile_level and \
                 tournament.minimum_profile_level > user.level and tournament.free_open_date > now:
@@ -452,6 +384,71 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
             
         
         })  
+    
+    @action(methods=['POST'], detail=False, permission_classes=(permissions.IsAdminUser,))
+    @transaction.atomic()
+    def inform_participants(self, request):
+        tourid = request.data.get('tourid')
+        matchid = int(request.data.get('formid'))
+        if not tourid:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            tournament = Tournament.objects.get(
+                id=tourid,
+                regions__in=[request.region]
+            )
+
+        except Tournament.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        matches = TournamentMatch.objects.filter(tournament=tournament).order_by('id').all()
+        match = matches[matchid]
+        participids = request.data.get('participants').split(',')
+        print(participids)
+        if not participids :
+            raise UserInformException()
+        # only select uninformed participants
+        tourparts = TournamentParticipant.objects.filter(tournament=tournament, participant__in=participids).exclude(matches_informed=match)  # is_informed=False
+        partic = tourparts.values_list('participant', flat=True)
+        participants = User.objects.filter(id__in=partic)  # participids
+        
+        count = participants.count()
+        print(participants, count)
+        if count>0:
+            sched = "Match Schedule for "+tournament.name
+            
+            # for match in matches:
+            sched+="<br/>Round "+str(match.round_number)+" - Match "+match.match_name
+            sched+="<br/>Start: "+str(match.start_date)
+
+            stri_repl = {}
+            stri_repl['MATCH_SCHEDULE'] = sched
+            
+            @notify_when(events=[NotificationTemplate.MATCH_SCHEDULE], is_route=False,
+                    is_one_time=False, str_repl=stri_repl)
+            def notify(user, user_notifications):
+                """ extra logic if needed """
+
+            for user in participants:
+                notify(user=user)
+            print("tourparts", tourparts)
+            print(tourparts.values_list('matches_informed', flat=True))
+            # tourparts.matches_informed.add(*match)  # add match to informed
+            StudentClass = TournamentParticipant.matches_informed.through
+            items = [
+                StudentClass(tournamentmatch_id=match.pk, tournamentparticipant_id=student.pk)
+                for student in tourparts
+            ]
+
+            StudentClass.objects.bulk_create(items)
+            if count==1:
+                return Response("1 participant has been informed", status=status.HTTP_200_OK)
+            else:
+                return Response(str(count)+" participants have been informed", status=status.HTTP_200_OK)
+        else:
+            return Response("All participants have already been informed", status=status.HTTP_200_OK)
+        
+        
         
 
 def gettour(user,tournament_list,region):
@@ -542,6 +539,7 @@ class TournamentWinnerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
        
         game = request.query_params['game']
         tournament = request.query_params['tournament']
+
         if game and game!= '':
             queryset = TournamentPrize.objects.filter(
                 winner__isnull=False,

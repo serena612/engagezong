@@ -4,72 +4,75 @@
     position: relative;
     padding-top: 19px;
 }
+.chk_participants{color:#ba2121;}
+	
+	
 .errors .chk_winners{color:#ba2121;    position: absolute;
     top: -6px;
     left: 10px;}
 	
-	.errorlist.nonfield{padding-left:24px;}
-	
-	.module_0  .form-row.inline{width:46%;display:inline-block;vertical-align:top;}
-    .add-related,.select2-buttons{display:none!important;}
-    .select2-container--jet {
-        min-width: 260px!important;
-    }
+.errorlist.nonfield{padding-left:24px;}
 
-    #tournament_form  fieldset fieldset {
-        border: 1px solid #d1d1d1;
-        max-width: 1013px;
-        margin-top:20px;
-        margin-bottom: 20px;
-    }
-    #tournament_form  .fieldset {
-        border: 1px solid #d1d1d1;
-        max-width: 1013px;
-        margin:10px 0px 20px;
-    }
-    #tournament_form label{
-        font-size: 12px;
-    }
-    #tournament_form  .fieldset > span{   
-         background: #fff;color: #6f7e95;font-weight: bold;font-size: 0.78571rem;
-         text-transform: uppercase;
-        position: relative;
-        padding: 2px 10px;
-        margin-left: 10px;
-        top: -10px;}
-   .field-label_next_time,.field-time_compared_to_gmt,.field-give_sticker,.field-coins_per_participant,.field-max_participants,.field-rounds_number{
-        width: 46%;
-        display: inline-block;
-        vertical-align: top; max-width: 468px;
-    }
-    #tournament_form input{
-        padding: 0 10px;    
-    }
+.module_0  .form-row.inline{width:46%;display:inline-block;vertical-align:top;}
+.add-related,.select2-buttons{display:none!important;}
+.select2-container--jet {
+    min-width: 260px!important;
+}
 
-    .field-time_compared_to_gmt label{
-        width: 140px;
-        padding-right: 28px;}
-
-    #tournament_form .data{
-        color: #ba2121;
-        font-size: 11px;
-        margin-left: 170px;
-        display: none;
-    }    
-
-    #tournament_form .field-open_date .data,#tournament_form .field-free_open_date .data,#tournament_form .field-close_date .data,
-    #tournament_form .field-start_date .data,#tournament_form .field-end_date .data{
-        display:block;
-    }
-    .retry{
-        font-size: 0.85714rem;
-        font-weight: lighter;
-        background-color: #47bac1;
-        color: #fff;
+#tournament_form  fieldset fieldset {
+    border: 1px solid #d1d1d1;
+    max-width: 1013px;
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+#tournament_form  .fieldset {
+    border: 1px solid #d1d1d1;
+    max-width: 1013px;
+    margin:10px 0px 20px;
+}
+#tournament_form label{
+    font-size: 12px;
+}
+#tournament_form  .fieldset > span{   
+        background: #fff;color: #6f7e95;font-weight: bold;font-size: 0.78571rem;
         text-transform: uppercase;
-        margin: 10px auto;
-    }
+    position: relative;
+    padding: 2px 10px;
+    margin-left: 10px;
+    top: -10px;}
+.field-label_next_time,.field-time_compared_to_gmt,.field-give_sticker,.field-coins_per_participant,.field-max_participants,.field-rounds_number{
+    width: 46%;
+    display: inline-block;
+    vertical-align: top; max-width: 468px;
+}
+#tournament_form input{
+    padding: 0 10px;    
+}
 
-    .submit-row{
-        overflow: visible!important;
-    }
+.field-time_compared_to_gmt label{
+    width: 140px;
+    padding-right: 28px;}
+
+#tournament_form .data{
+    color: #ba2121;
+    font-size: 11px;
+    margin-left: 170px;
+    display: none;
+}    
+
+#tournament_form .field-open_date .data,#tournament_form .field-free_open_date .data,#tournament_form .field-close_date .data,
+#tournament_form .field-start_date .data,#tournament_form .field-end_date .data{
+    display:block;
+}
+.retry{
+    font-size: 0.85714rem;
+    font-weight: lighter;
+    background-color: #47bac1;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 10px auto;
+}
+
+.submit-row{
+    overflow: visible!important;
+}

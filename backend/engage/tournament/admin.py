@@ -27,7 +27,7 @@ class TournamentPrizeInlineForm(forms.ModelForm):
                     prize = self.cleaned_data.get('cash_amount')
                 else:
                     prize = self.cleaned_data.get('actual_data_package')
-                if not get_prize(winner.mobile, prize, prize_type):
+                if not get_prize(winner.mobile, prize, prize_type, winner.subscription):
                     raise ValidationError('Failed to give prize to selected winner. Please try saving again.')
 
 
@@ -89,7 +89,7 @@ class TournamentPrizeInline(CompactInline):
 class TournamentParticipantInline(CompactInline):
     model = models.TournamentParticipant
     # readonly_fields = ('points', 'rank')
-    exclude = ('notify_before_game', 'prize','points', 'rank')
+    exclude = ('notify_before_game', 'prize','points', 'rank', 'matches_informed')
     min_num = 0
     extra = 0
     tournament = None
@@ -193,11 +193,13 @@ class TournamentMatchInlineForm(forms.ModelForm):
             raise ValidationError({
                 'image': _('An image is required when winners are specified')
             })
-            
-            
-            
-
-            
+        if 'start_date' in self.changed_data:
+            # we set informed flag to zero if any field is updated
+            # tourparts = models.TournamentParticipant.objects.filter(tournament=self.instance.tournament, matches_informed=self.instance)
+            StudentClass = models.TournamentParticipant.matches_informed.through
+            StudentClass.objects.filter(tournamentmatch=self.instance).delete()
+            # tourparts.matches_informed.remove(self.instance)
+                        
             
     # class Meta:
     #     model = models.TournamentMatch

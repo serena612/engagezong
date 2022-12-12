@@ -43,8 +43,9 @@ def tournament_view(request, slug):
                 id=slug,
                 regions__in=[request.region]
             )
-        except Tournament.DoesNotExist:
+        except:
             #if slug has been changed get by id
+            
             return redirect('/')
 
     participant = None
@@ -52,7 +53,7 @@ def tournament_view(request, slug):
         participant = tournament.get_participant(user)
 
     can_join = True
-    if user.is_authenticated and user.subscription == SubscriptionPlan.PAID1:
+    if user.is_authenticated and user.subscription == SubscriptionPlan.PAID1 and user.is_billed == True:
         can_join = not TournamentParticipant.objects.filter(
             tournament__regions__in=[request.region],
             participant=user,

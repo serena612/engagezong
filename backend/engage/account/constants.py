@@ -44,6 +44,11 @@ class SubscriptionPlan(LabelChoices):
     PAID1 = 'paid1', 'Paid 1'
     PAID2 = 'paid2', 'Paid 2'
 
+class SubscriptionPackages(LabelChoices):
+    FREE = 'free', 'Free'
+    PAID1 = 'p30', 'P30'
+    PAID2 = 'p50', 'P50'
+
 
 class SectionLog(LabelChoices):
     TOURNAMENT = 'tournaments', 'tournaments'

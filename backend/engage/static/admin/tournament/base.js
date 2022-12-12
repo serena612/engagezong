@@ -473,6 +473,50 @@ $('#id_time_compared_to_gmt').attr('placeholder','i.e +2 or -5');
 
     });
 })(jet.jQuery);
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+function postInform(data, formidd) {
+    console.log("posting "+data);
+    //console.log("xtoken "+xtoken)
+    const apiurl = window.location.origin+'/api/tournaments/inform_participants/';
+    const touridd = window.location.pathname.split('/')[4];
+    const xtoken = getCookie('csrftoken');
+    console.log("id "+touridd+" match id "+ formidd);
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: apiurl,
+            headers: {
+                "X-CSRFToken": xtoken,
+            },
+            type: "post",
+            data: {
+                participants: data,
+                tourid: touridd,
+                formid: formidd
+                //csrfmiddlewaretoken: data.csrfmiddlewaretoken
+            },
+            error: function (value) {
+                reject(value);
+            },
+            success: function (value) {
+                resolve(value);
+            },
+        });
+    });
+}
 
 function download(filename, text) {
     var element = document.createElement('a');
@@ -505,6 +549,71 @@ function exportme(fieldid) {
     }else{
         download('participants.txt', result);
     }
+}
+function informme(fieldid) {
+    const select = document.getElementById(fieldid);
+    //var result = ""; // [];
+    const options = select && select.options;
+    var opt;
+    const topost = new Array();
+    const formid = fieldid.split("-")[1];
+    // var dicts = filldict();  // this is to get participants of all matches
+    // var dictoo = dicts[2];
+    // console.log(dictoo);
+    // var result = Object.values(dictoo).flat();
+    // var topost = [...new Set(result)];
+    // console.log(topost);
+    // console.log(topost.toString());
+    for (var i=0, iLen=options.length; i<iLen; i++) {  // these are for selected match only
+        opt = options[i];
+
+        if (opt.selected) {
+            topost.push(opt.value); //.push(opt.value || opt.text); 
+            //result+="\n";
+        }
+    }
+    const widget = select.closest('.related-widget-wrapper');
+    const field = widget.closest('.field-participants');
+    const butt = $(field).find('input[type="button"][value="Inform Participants"]');
+    butt.addClass('input_freeze');
+    if($(field).find('.chk_participants').length>0){
+        $(field).find('.chk_participants').html('');
+    }
+    postInform(topost.toString(), formid).then(res => {
+        //form.trigger("reset");
+        console.log("Success");
+        console.log(res);
+        //console.log(field);
+        $(field).removeClass('errors');
+        butt.removeClass('input_freeze');
+        if($(field).find('.chk_participants').length>0){
+            $(field).find('.chk_participants').html(res);
+        }else{
+            $(widget).prepend("<p class='chk_participants'>"+res+"</p>");
+        }
+        // if(!$(this).find('.chk_winners').length>0){
+        //     $('.field-participants').eq(ind).addClass('errors')
+        //     if(!$('.field-participants').eq(ind).find('.select2-container').parents('.related-widget-wrapper').find('.chk_winners').length>0){
+        //         $('.field-participants').eq(ind).find('.select2-container').parents('.related-widget-wrapper').prepend("<p class='chk_winners'>participants can't be selected without starting the tournament!</p>" );
+        //     }
+        //         $('.field-participants').eq(ind).find('button').addClass('input_freeze');
+        // }
+        //$(".sendcodemsg").html('A pin code has been sent to you. Please enter the pin code to proceed.').show();       
+
+    }).catch(e => {
+        console.log("Failed");
+        console.log(e);
+        butt.removeClass('input_freeze');
+        $(field).addClass('errors');
+        if($(field).find('.chk_participants').length>0){
+            $(field).find('.chk_participants').html(e);
+        }else{
+            $(widget).prepend("<p class='chk_winners'>"+e+"</p>");
+        }
+        //response_msg.html('Something went wrong. Please try again later.').show();  //  Error code: '+e.status
+        
+    });
+    
 }
 function fillme(fieldid) {
     var myArray = fieldid.split("-");
@@ -561,6 +670,24 @@ function getSelectValues(select) {
     }
     return result;
 }
+function getSelectValuesActual(select) {
+    var result = [];
+    if (select == null){
+        return result;
+    }
+    var options = select && select.options;
+    var opt;
+
+    for (var i=0, iLen=options.length; i<iLen; i++) {
+    opt = options[i];
+
+    if (opt.selected) {
+        //result.push(opt.value || opt.text);
+        result.push(opt.value);
+    }
+    }
+    return result;
+}
 function range(size, startAt = 0) {
     return [...Array(size).keys()].map(i => i + startAt);
 }
@@ -580,22 +707,25 @@ function filldict(){
     var k = 0;
     var dict = new DefaultDict(Number);
     var dicto = new DefaultDict(Number);
+    var dictoo = new DefaultDict(Number);
     //window.alert("starting...");
     while(gogo){
         var sousou = document.getElementById("id_tournamentmatch_set-"+k+"-round_number");
         var koukou = document.getElementById("id_tournamentmatch_set-"+k+"-participants");
         var selectiones = getSelectValues(koukou);
+        var selectionval = getSelectValuesActual(koukou);
         k++;
         if(sousou != null && sousou.selectedIndex!=0){
             //window.alert("found "+"id_tournamentmatch_set-"+k+"-round_number");
             dict[sousou.selectedIndex]+=1;
             dicto[sousou.selectedIndex]+=selectiones.length;
+            dictoo[sousou.selectedIndex]=selectionval;
             //window.alert(dict[sousou.selectedIndex]);
         }else{
             gogo = false;
         }
     }
-    return [dict, dicto];
+    return [dict, dicto, dictoo];
 }
 
 // $(document).ready(function() {

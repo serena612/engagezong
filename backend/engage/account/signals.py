@@ -11,7 +11,7 @@ from engage.services import Notifications as NotificationsService
 from engage.core.constants import WinAction, NotificationTemplate
 from engage.core.models import BattlePassMission, Sticker
 from engage.services import notify_when, FCM
-from .constants import FriendStatus, CoinTransaction, Transaction
+from .constants import FriendStatus, CoinTransaction, Transaction, SubscriptionPlan
 from .models import (
     User,
     Profile,
@@ -22,6 +22,7 @@ from .models import (
     SendCoinsHistory,
     UserFavoriteFriend, UserTransactionHistory
 )
+
 
 
 @receiver(post_save, sender=User)
@@ -41,6 +42,7 @@ def new_user_notification(sender, instance, created, **kwargs):
         if not instance.is_sent:
             instance.is_sent = True
             instance.save()
+
             # send single fcm notification
             FCM.single(
                 user=instance.user,
@@ -54,6 +56,7 @@ def new_user_notification(sender, instance, created, **kwargs):
                 type=instance.type
             )
 
+# listen for notifications
 @receiver(m2m_changed, sender=Notifications.package.through)
 def new_user_notification_package(sender, **kwargs):
     instance = kwargs.pop('instance', None)
@@ -63,28 +66,14 @@ def new_user_notification_package(sender, **kwargs):
  
     for i in package_ids :
         if i == 1 :
-            package_list.append('free')
+            package_list.append(SubscriptionPlan.FREE)
         elif i == 2 :
-            package_list.append('paid1')  
+            package_list.append(SubscriptionPlan.PAID1)  
         elif i == 3 :
-            package_list.append('paid2')       
+            package_list.append(SubscriptionPlan.PAID2)       
     if instance.is_active  and instance.template == NotificationTemplate.INSTANT.value:
         users = User.objects.filter(subscription__in=package_list)
         NotificationsService.newbulk(instance,users)
-        # for user in users :
-        #     @notify_when(
-        #         events=[NotificationTemplate.INSTANT],
-        #         is_route=False,
-        #         is_one_time=False,
-        #         extra={
-        #             "created": now
-        #         }
-        #     )
-        #     def notify(user, user_notifications):
-        #         """ extra logic if needed """
-        #     notify(user)
-        
-
 
 
 @receiver(post_save, sender=FriendList)
@@ -246,4 +235,3 @@ def user_send_coins(sender, instance, created, **kwargs):
     instance.user.save()
     instance.receiver.seen_coins = False
     instance.receiver.save()
-

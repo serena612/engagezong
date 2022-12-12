@@ -130,6 +130,13 @@ class RemoveSubscriptionSerializer(serializers.Serializer):
         msisdn = attrs.get('msisdn')
         return attrs
 
+class DisableSubscriptionSerializer(serializers.Serializer):
+    msisdn = serializers.CharField()
+    
+    def validate(self, attrs):
+        msisdn = attrs.get('msisdn')
+        return attrs
+
 
 class UserGamePlayedSerializer(serializers.ModelSerializer):
     game = HTML5GameSerializer()

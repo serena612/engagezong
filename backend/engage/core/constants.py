@@ -130,6 +130,7 @@ class NotificationTemplate(LabelChoices):
 
     BEFORE_MATCH_INFORMATIVE = 'before_match_informative', 'Before Match Informative'
     WIN_MATCH_INFORMATIVE = 'win_match_informative', 'Win Match Informative'
+    MATCH_SCHEDULE = 'match_schedule', 'Tournament Match Schedule'
 
     ACTIVE_5_DAYS = 'active_5_days', '5 Active Days After Joining'
     ACTIVE_10_DAYS = 'active_10_days', '10 Active Days After Joining'
