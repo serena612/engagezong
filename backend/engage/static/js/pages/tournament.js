@@ -181,8 +181,17 @@ $(function () {
                     },
                     error: function (response) {
                         $("#user-game-modal").modal("hide");
-                        
-                        showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
+                        if(response.responseJSON.code === 'unbilled_user'){
+                            showInfoModal('Recharge Line!', '<p>You don\'t have enough balance to join this tournament. Please recharge your line and try again.</p>');
+                        } else if(response.responseJSON.code === 'free_user'){
+                            showInfoModal('Error!', '<p>This tournament does not accept free users. Please <a href="/register">subscribe to Engage</a> in order to join.</p>');
+                        } else if(response.responseJSON.code === 'minimum_profile_level'){
+                            showInfoModal('Error!', '<p>You do not meet the minimum level requirement! Please try joining at a later time.</p>');
+                        } else if(response.responseJSON.code === 'participant_exists'){
+                            showInfoModal('Error!', '<p>You have already joined this tournament!</p>');
+                        } else {
+                            showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>');
+                        }
                         setBtnLoading(btn, false);
                     }
                 })
@@ -289,7 +298,17 @@ $("#pay-btn").click(function (e) {
                                 error: function (response) {
                                     $("#user-game-new-modal").modal("hide");
                                     
-                                    showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
+                                    if(response.responseJSON.code === 'unbilled_user'){
+                                        showInfoModal('Error!', '<p>Your subscription has expired! Please renew it to join.</p>');
+                                    } else if(response.responseJSON.code === 'free_user'){
+                                        showInfoModal('Error!', '<p>This tournament does not accept free users. Please <a href="/register">subscribe to Engage</a> in order to join.</p>');
+                                    } else if(response.responseJSON.code === 'minimum_profile_level'){
+                                        showInfoModal('Error!', '<p>You do not meet the minimum level requirement! Please try joining at a later time.</p>');
+                                    } else if(response.responseJSON.code === 'participant_exists'){
+                                        showInfoModal('Error!', '<p>You have already joined this tournament!</p>');
+                                    } else {
+                                        showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>');
+                                    }
                                     setBtnLoading(btn, false);
                                 }
                             })

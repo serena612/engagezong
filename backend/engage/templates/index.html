@@ -258,9 +258,9 @@
         <div class="page-container">
             <div id="tournaments" class="row max-page-width">
                     <div class="title-wrapper c2 with-tabs tabs-container">
-                        <a class="tab-link tour-btn"
+                        <a class="tab-link tour-btn" onclick="$('.tournaments-list, .tournaments-list1').show()"
                            data-id="#latest" href="/#home-tournaments">{% translate 'Tournaments' %}</a>
-                        <a class="tab-link games-btn"  href="/#home-games"  data-id="#html5">{% translate 'Play Games' %}</a>
+                        <a class="tab-link games-btn"  href="/#home-games" onclick="$('.tournaments-list, .tournaments-list1').hide()"  data-id="#html5">{% translate 'Play Games' %}</a>
                     </div>
                     <ul class="nav nav-tabs firstTab">
                         <li class="">

@@ -802,13 +802,15 @@ $(function () {
         
         if ($(this).hasClass("is-locked")){
             if($(this).attr('data-target')!="#login-modal"){
-                $("#games-subscription-notifications #games-notifications-title").text("Upgrade Subscription");
-                if($("#userSub").val() == "free")
-                {
-                    $("#games-subscription-notifications #games-notifications-body").text('This game is premium. Please upgrade from free package to N50 package to play it. To upgrade, simply deactivate from the free package by sending "DEAC SUB3" to “8561” then send "SUB2" to “8561”');
+                
+                if($("#userSub").val() == "free" || $("#userIsBilled").val() == "False" )
+                { 
+                    $("#games-subscription-notifications #games-notifications-title").text("Recharge Line!");
+                    $("#games-subscription-notifications #games-notifications-body").text('You don\'t have enough balance to play this game. Please recharge your line and try again.');
                 }
                 else{
-                $("#games-subscription-notifications #games-notifications-body").text("Please upgrade your package to play this game.");
+                    $("#games-subscription-notifications #games-notifications-title").text("Upgrade Subscription");
+                    $("#games-subscription-notifications #games-notifications-body").text("Please upgrade your package to play this game.");
                 }
 
                 $("#games-subscription-notifications").modal({
@@ -967,6 +969,7 @@ $(function () {
                 $('#game-fullscreen-modal').find('iframe').css('border',0);
                 $('#game-fullscreen-modal').modal('show');
                 $('#game-fullscreen-modal').addClass('show');
+                 
                 $(window).resize(function(){
                     $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
                     $('#game-fullscreen-modal').find('iframe').css('width',$(window).width());
