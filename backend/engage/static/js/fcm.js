@@ -13,7 +13,11 @@ $(function () {
   
   var firebaseApp =firebase.initializeApp(firebaseConfig);
   var messaging = firebase.messaging(firebaseApp);
-
+  const analytics = getAnalytics();
+  logEvent(analytics, 'screen_view', {
+    firebase_screen: screenName, 
+    firebase_screen_class: screenClass
+  });
   var current_early_notifications_page = 1;
   var early_notifications_has_next = false;
   var loading = false;
@@ -719,6 +723,30 @@ $(function () {
                   </li>
               `);            
               }else{
+                console.log("here ");
+
+                if(i.notification.url && i.notification.url.indexOf('#home-tournaments') != -1)
+                {
+                  console.log("here 1");
+              $("#notification-list").append(`
+              <li class="new-notification">
+                  <a
+                    id="${i.notification.id}"
+                    data-id="${i.id}"
+                    url="${i.notification.url}"
+                    action="${i.notification.action}"
+                    class="notification" onclick="$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 2000);"
+                  >
+                      <span class="title">${i.title}</span>
+                      <span class="desc">${i.text}</span>
+                      <span class="date">${moment(i.created).format(
+                        "MMMM DD YYYY, h:mm:ss a"
+                      )}</span>
+                  </a>
+              </li>
+          `);
+                      }
+                      else{
               $("#notification-list").append(`
               <li class="new-notification">
                   <a
@@ -736,6 +764,9 @@ $(function () {
                   </a>
               </li>
           `);
+
+                      }
+
                 
               }
 

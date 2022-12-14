@@ -101,6 +101,28 @@ class HTML5GameOption(LabelChoices):
     SHTO_PONG = 'shot_pong','Shot Pong'
     SNAKE_AND_CIRCLE = 'snake_and_circle','Snake and Circle'
 
+    EIGHT_BALL_PRO = '8_ball_pro' , '8 Ball Pro'
+    ARCADE_DARTS = 'arcade_darts' , 'Arcade Darts'
+    BATTLESHIP_MINESWEEPER = 'battleship_minesweeper' , 'Battleship Minesweeper'
+    CROSSBAR_CHALLENGE = 'crossbar_challenge' , 'Crossbar Challenge'
+    CYCLE_SPRINT = 'cycle_sprint' , 'Cycle Sprint'
+    GALACTIC_SHOOTER = 'galactic_shooter' , 'Galactic Shooter'
+    GEAR_MADNESS = 'gear_madness' , 'Gear Madness'
+    GUMMY_BLOCKS = 'gummy_blocks' , 'Gummy Blocks'
+    LINK_THE_DOTS = 'link_the_dots' , 'Link The Dots'
+    PARKING_BLOCK = 'parking_block' , 'Parking Block'
+    PENALTY_KICKS = 'penalty_kicks' , 'Penalty Kicks'
+    RINGS_CHALLENGE = 'rings_challenge' , 'Rings Challenge'
+    ROCKING_WHEELS = 'rocking_wheels' , 'Rocking Wheels'
+    SCORPION_SOLITAIRE = 'scorpion_solitaire' , 'Scorpion Solitaire'
+    SQUICKY = 'squicky' , 'Squicky'
+    STREET_BASKETBALL = 'street_basketball' , 'Street Basketball'
+    TETRIS_CUBE = 'tetris_cube' , 'Tetris Cube'
+    THE_RUNNING_CHAMPION = 'the_running_champion' , 'The Running Champion'
+    ULTIMATE_BOXING = 'ultimate_boxing' , 'Ultimate Boxing'
+    WHACK_EM_ALL = 'whack_em_all' , 'Whack Em All'
+    XMAS_CATCHER = 'xmas_catcher' , 'Xmas Catcher'
+
 
 class NotificationAction(LabelChoices):
     IMAGE = 'image', 'Image'

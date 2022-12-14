@@ -412,7 +412,7 @@ if (timeleft < 0) {
                     <div class="modal-body">
                         <div class="row" style="margin: auto">
                             {% if user.subscription == 'free' %}
-                            <p>{% translate 'Please upgrade from free package to N50 package to be able to join tournaments. To upgrade, simply deactivate from the free package by sending "DEAC SUB3" to ì8561î then send "SUB2" to ì8561î.' %}</p>  
+                            <p>{% translate 'Please upgrade from free package to N50 package to be able to join tournaments. To upgrade, simply deactivate from the free package by sending "DEAC SUB3" to ‚Äú8561‚Äù then send "SUB2" to ‚Äú8561‚Äù.' %}</p>  
                             {% else %}
                             <p>{% translate 'Subscribe now to be able to join any upcoming tournament.' %}</p>
                             {% endif %}
@@ -470,14 +470,16 @@ if (timeleft < 0) {
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     {% if game_account %}
+                                        <label for="gacc1">{% translate 'Game account is your in-game ID. You need to create it in the game itself to be eligible to participate in the tournament.' %}</label>
                                         <input type="text" class="input1"
-                                               name="account"
+                                               name="account" id="gacc1"
                                                placeholder="{% translate 'Enter your game account' %}" required
                                                value="{{ game_account.account }}"
                                         />
                                     {% else %}
+                                        <label for="gacc1">{% translate 'Game account is your in-game ID. You need to create it in the game itself to be eligible to participate in the tournament.' %}</label>
                                         <input type="text" class="input1"
-                                               name="account"
+                                               name="account" id="gacc1"
                                                placeholder="{% translate 'Enter your game account' %}" required
                                         />
                                     {% endif %}
@@ -525,14 +527,16 @@ if (timeleft < 0) {
                             </div>
                             <div class="col-md-12 mb-3">
                                 {% if game_account %}
+                                    <label for="gacc2">{% translate 'Game account is your in-game ID. You need to create it in the game itself to be eligible to participate in the tournament.' %}</label>
                                     <input type="text" class="input1"
-                                            name="account"
+                                            name="account" id="gacc2"
                                             placeholder="{% translate 'Enter your game account' %}"
                                             value="{{ game_account.account }}"
                                     />
                                 {% else %}
+                                <label for="gacc2">{% translate 'Game account is your in-game ID. You need to create it in the game itself to be eligible to participate in the tournament.' %}</label>
                                     <input type="text" class="input1"
-                                            name="account"
+                                            name="account" id="gacc2"
                                             placeholder="{% translate 'Enter your game account' %}"
                                     />
                                 {% endif %}
