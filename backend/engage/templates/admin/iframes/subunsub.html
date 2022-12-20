@@ -1,6 +1,19 @@
 {% extends "admin/index.html" %}
 {% load i18n static %}
 {% block content %}
+<style type="text/css">
+    #content.colMS {
+    width: calc(100vw - 300px)!important;
+    max-width: calc(100vw - 300px)!important;
+    margin-right: 0px!important;
+    height: calc(100vh - 62px);
+}
+	#content.colMS iframe{
+	    width:100%!important;
+		height:100%!important;
+		margin-right: 0px!important;
+	}
+</style>
 <iframe src="/dashboard/app/dashboards#/view/2a1ae170-7bc2-11ed-9647-df3973163513?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-7d%2Fd,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,syncColors:!f,useMargins:!t),panels:!((embeddableConfig:(enhancements:()),gridData:(h:19,i:d6c170e0-1c38-485a-b5e2-8114a031f19c,w:48,x:0,y:0),id:ed207350-7bb4-11ed-9647-df3973163513,panelIndex:d6c170e0-1c38-485a-b5e2-8114a031f19c,type:visualization,version:'7.17.8'),(embeddableConfig:(enhancements:()),gridData:(h:17,i:a2a9890d-5876-4874-babb-d0434a8c52a7,w:48,x:0,y:19),id:'79c43600-7bc1-11ed-9647-df3973163513',panelIndex:a2a9890d-5876-4874-babb-d0434a8c52a7,type:visualization,version:'7.17.8'),(embeddableConfig:(enhancements:()),gridData:(h:20,i:'92efb21b-78e7-4027-9786-c9481f0c5770',w:48,x:0,y:36),id:'0855ca80-7bc4-11ed-9647-df3973163513',panelIndex:'92efb21b-78e7-4027-9786-c9481f0c5770',type:search,version:'7.17.8')),query:(language:kuery,query:''),tags:!(),timeRestore:!f,title:SubUnsub,viewMode:view)&show-time-filter=true" height="600" width="800"></iframe>
 {% endblock %}
 {% block sidebar %}
