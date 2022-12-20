@@ -396,7 +396,7 @@ $(function () {
                   i.friend_uid == undefined  && i.notification.template=='user_register_for_tournament'
                 ) {
                   $("#notification-list").append(`
-                  <li class="earlier-notification">
+                  <li class="earlier-notification 1">
                       <p id="${i.notification.id}" data-id="${i.id}" url="${
                     i.link
                   }" action="${i.notification.action}" class="notification">
@@ -414,7 +414,7 @@ $(function () {
                   i.friend_uid == undefined  && (i.notification.template=='before_match_informative' || i.notification.template=='win_match_informative')
                 ) {
                   $("#notification-list").append(`
-                  <li class="earlier-notification">
+                  <li class="earlier-notification 2">
                       <p id="${i.notification.id}" data-id="${i.id}" url="${
                     i.link
                   }" action="${i.notification.action}" class="notification">
@@ -432,7 +432,7 @@ $(function () {
                   i.friend_uid == undefined  
                 ) {
                   $("#notification-list").append(`
-                  <li class="earlier-notification">
+                  <li class="earlier-notification 3">
                       <p id="${i.notification.id}" url="${
                     i.notification.url
                   }" action="${i.notification.action}" class="notification">
@@ -456,7 +456,7 @@ $(function () {
                     : "";
 
                   $("#notification-list").append(`
-                  <li class="earlier-notification">
+                  <li class="earlier-notification 4">
                       <p id="${i.notification.id}" action="${
                     i.notification.action
                   }" class="notification">
@@ -603,7 +603,7 @@ $(function () {
                     $("#notifications-popup").append(`
                   <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
                     <div class="modal-dialog" role="document">
-      
+      Reject
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
@@ -735,7 +735,28 @@ $(function () {
                     data-id="${i.id}"
                     url="${i.notification.url}"
                     action="${i.notification.action}"
-                    class="notification" onclick="$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 2000);"
+                    class="notification" onclick="$('.tab-link.tour-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);"
+                  >
+                      <span class="title">${i.title}</span>
+                      <span class="desc">${i.text}</span>
+                      <span class="date">${moment(i.created).format(
+                        "MMMM DD YYYY, h:mm:ss a"
+                      )}</span>
+                  </a>
+              </li>
+          `);
+                      }
+                      else if(i.notification.url && i.notification.url.indexOf('#home-games') != -1)
+                      {
+                         
+                    $("#notification-list").append(`
+                    <li class="new-notification">
+                        <a
+                          id="${i.notification.id}"
+                          data-id="${i.id}"
+                          url="${i.notification.url}"
+                          action="${i.notification.action}"
+                          class="notification" onclick="$('.games-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);"
                   >
                       <span class="title">${i.title}</span>
                       <span class="desc">${i.text}</span>
@@ -972,7 +993,7 @@ $(function () {
                 i.friend_uid == undefined && i.notification.template=='user_register_for_tournament'
               ) {
                 $("#notification-list").append(`
-                <li class="earlier-notification">
+                <li class="earlier-notification 5">
                     <a id="${i.notification.id}"  url="${
                   i.link
                 }"  data-id="${i.id}" action="${i.notification.action}" class="notification">
@@ -990,7 +1011,7 @@ $(function () {
                 i.friend_uid == undefined && (i.notification.template=='before_match_informative' || i.notification.template=='win_match_informative')
               ) {
                 $("#notification-list").append(`
-                <li class="earlier-notification">
+                <li class="earlier-notification 6">
                     <a id="${i.notification.id}"  url="${
                   i.link
                 }"  data-id="${i.id}" action="${i.notification.action}" class="notification">
@@ -1010,10 +1031,28 @@ $(function () {
                     if(i.title == "Complete profile and get rewarded")
                     {
                       $("#notification-list").append(`
-                <li class="earlier-notification">
+                <li class="earlier-notification 7">
                     <a id="${i.notification.id}"  url="${
                   i.notification.url
                 }"  data-id="${i.id}" action="${i.notification.action}" class="notification" href="#settings-modal" onclick="openEditProfileModal(event)">
+                        <span class="title">${i.title}</span>
+                        <span class="desc">${i.text}</span>
+                        <span class="date">${moment(i.created).format(
+                          "MMMM DD YYYY, h:mm:ss a"
+                        )}</span>
+                    </a>
+                </li>
+            `);                     
+                    }
+                    else{
+
+                      if(i.notification.url && i.notification.url.indexOf('#home-tournaments') != -1)
+                      { 
+                $("#notification-list").append(`
+                <li class="earlier-notification 8">
+                    <a id="${i.notification.id}"  url="${
+                  i.notification.url
+                }"  data-id="${i.id}" action="${i.notification.action}" class="notification" onclick="$('.tab-link.tour-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);">
                         <span class="title">${i.title}</span>
                         <span class="desc">${i.text}</span>
                         <span class="date">${moment(i.created).format(
@@ -1037,6 +1076,10 @@ $(function () {
                     </a>
                 </li>
             `);
+
+                        }
+
+
                     }
               } else {
                 var friend_request = i.friend_uid
@@ -1049,7 +1092,7 @@ $(function () {
                   : "";
 
                 $("#notification-list").append(`
-                <li class="earlier-notification">
+                <li class="earlier-notification 9">
                     <p id="${i.notification.id}" action="${
                   i.notification.action
                 }" class="notification">

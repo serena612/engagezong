@@ -11,6 +11,8 @@ from engage.core.constants import NotificationTemplate
 from engage.operator.models import OperatorAd
 from engage.services import notify_when
 from engage.settings.base import SHOWADS
+from engage.account.constants import SubscriptionPlan
+
 
 @notify_when(events=[
     NotificationTemplate.HOME,
@@ -63,7 +65,6 @@ def about_view(request):
     return render(request, 'about.html', {})
 
 
-## TODO: to handle header enrichment here
 def register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
        return redirect('/')
@@ -98,6 +99,7 @@ def test_register_view(request):
     else:
         return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':'DummyNumberHere'})
     
+    
 def waiting_view(request):
     # print('user_id' in request.session)
     if not 'user_id' in request.session:
@@ -119,11 +121,11 @@ def clear_session_view(request):
             subscribed = request.session.pop('subscribed', None)
             print("subscribed =", subscribed)
             if subscribed==1:
-                subscription = 'free'
+                subscription = SubscriptionPlan.FREE
             elif subscribed==2:
-                subscription = 'paid1'
+                subscription = SubscriptionPlan.PAID1
             elif subscribed==3:
-                subscription = 'paid2'
+                subscription = SubscriptionPlan.PAID2
             print('successfully subscribed!')
             user = User.objects.get(pk=userid)
             user.is_active=True
@@ -137,7 +139,9 @@ def clear_session_view(request):
             request.session.flush()
     return redirect('/register')
 
+
 def new_register_view(request):
+    
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
         return redirect('/')
     elif 'headeren' not in request.session and request.is_secure() and 'msisdn' not in request.session:
@@ -193,6 +197,7 @@ def firebase_sw_view(request):
     return HttpResponse("""
         importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js');
         importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-messaging-compat.js');
+        importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-analytics-compat.js');
 
         firebase.initializeApp({
             apiKey: "AIzaSyA0HHeMbJieI4Qp5tyxn765mk0IWllTCco",

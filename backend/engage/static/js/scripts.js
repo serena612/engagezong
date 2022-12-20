@@ -542,12 +542,19 @@ $(document).on("click", ".top-nav .search-btn, .top-nav .search-box .close-btn",
     is_search_toggling = true;
     $("body").toggleClass("search-opened");
     if ($("body").hasClass("search-opened")) {
+         //meeee
+         $('.user_profile_pic.top_profile_pic').addClass('opened');
+         $('nav .midlle a.logonew').addClass('opened');
         $(".top-nav .search-box").fadeIn(200, function () {
             is_search_toggling = false;
         });
     } else {
+            //meeee
+        $('.user_profile_pic.top_profile_pic').removeClass('opened');
+        $('nav .midlle a.logonew').removeClass('opened');
         $(".top-nav .search-box").fadeOut(200, function () {
             is_search_toggling = false;
+            
         });
     }
     resetNavSearch();
@@ -969,7 +976,7 @@ $(function () {
                 $('#game-fullscreen-modal').find('iframe').css('border',0);
                 $('#game-fullscreen-modal').modal('show');
                 $('#game-fullscreen-modal').addClass('show');
-                 
+                $('#game-fullscreen-modal').show();
                 $(window).resize(function(){
                     $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
                     $('#game-fullscreen-modal').find('iframe').css('width',$(window).width());

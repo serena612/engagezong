@@ -87,7 +87,7 @@ class OperatorAd(TimeStampedModel):
     ad_file = models.FileField(upload_to='ads/',verbose_name="Dektop Ad file")
     ad_file_mobile = models.FileField(upload_to='ads/',verbose_name="Mobile Ad file")
     ad_type = models.CharField(max_length=32, choices=AdType.choices)
-
+    ad_link = models.URLField(blank=True, null=True)
     start_date = models.DateTimeField(blank=True, null=True)
     end_date = models.DateTimeField(blank=True, null=True)
 

@@ -59,7 +59,7 @@
         appearance: none;
        }
        @media (max-width:767px){
-           .sec-1{background-image:url('{{ operator.operatorwebsite.second_section_image.url }}')!important;     margin-top: 61px!important;}
+           .sec-1{background-image:url('{{ operator.operatorwebsite.second_section_image.url }}')!important;     margin-top: 52px!important;}
            .sec-4 img{content: url('{{ ad.ad_file_mobile.url }}');}
            #mobileImg{display: block!important;}
            #deskImg { display: none!important; } 
@@ -93,11 +93,12 @@
     #st-1 .st-btn{
         display: inline-block!important;
     }
+    
     </style>
 {% endblock %}
 
 {% block top_section %}
-    <section class="sec-1" onclick="window.location.href='{{ operator.operatorwebsite.first_section_url }}'"
+    <section class="sec-1 homsec" onclick="window.location.href='{{ operator.operatorwebsite.first_section_url }}'"
              style="background-image: url('{{ operator.operatorwebsite.first_section_image.url }}'); height:auto!important; padding:0px; cursor: pointer;margin-top:10px;">
              <img src="{{ operator.operatorwebsite.first_section_image.url }}" id="deskImg" title="Engage"/>
              <img src="{{ operator.operatorwebsite.second_section_image.url  }}" id="mobileImg" title="Engage" />
@@ -533,7 +534,7 @@
         <div>
             
                 {% if ad.ad_type == 'image' %}
-                    <img src="{{ ad.ad_file.url }}" alt="{{ ad.ad_file.name }}">
+                    <img src="{{ ad.ad_file.url }}" alt="{{ ad.ad_file.name }}" style="cursor:pointer;" onclick="window.location.href='{{ ad.ad_link }}'">
                 {% elif ad.ad_type == 'video' %}
                     <video controls="controls">
                         <source src="{{ ad.ad_file.url }}" type="video/mp4"/>
@@ -545,44 +546,6 @@
         </div>
     </section>
 
-    <!-- <section class="sec-5">
-        <div class="layer"></div>
-        <div class="rx_isotope_ui max-page-width">
-            <ul class="isotopeMenu">
-                <li class="active"><a href="*">{% translate 'ALL' %}</a><span></span></li>
-                <li><a href=".show">{% translate 'SHOWS' %}</a><span></span></li>
-                <li><a href=".affiliate">{% translate 'MTN CSR' %}</a><span></span></li>
-                <li><a href=".event">{% translate 'EVENTS' %}</a></li>
-            </ul>
-            <div class="grid-gal">
-                <div class="grid-sizer"></div>
-                {% for event in events %}
-                    <div class="grid-item {{ event.event_type }}">
-                        <img class="isotopeThumb"
-                             src="{{ event.image.url }}"
-                             alt="{{ event.title }}"/>
-                    </div>
-                {% endfor %}
-                {% if show_ads %}
-                <div class="grid-item" id="banner3">
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1363749472822465"
-                    crossorigin="anonymous"></script>
-                <!-- banner 3 - index -->
-                <ins class="adsbygoogle"
-                    style="display:block"
-                    data-ad-client="ca-pub-1363749472822465"
-                    data-adtest="on"
-                    data-ad-slot="3605975699"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section> -->
     <form class="frmregister3 d-none" method="post" name="frmregister3" id="frmregister3"> 
         {% csrf_token %}
      

@@ -129,7 +129,7 @@ function load_friends(pg) {
             data.results.map((i) => {
                 $("#friends-list").append(`
                     <li data-id="${i && i.friend ? i.friend.uid : ''}">
-                        <a href="" class="remove-btn"><i class="fas fa-times"></i></a>
+                        <a href="" class="remove-btn rem1"><i class="fas fa-times"></i></a>
                         <a href="" class="star-btn ${i && i.friend && i.friend.is_favorite  ? 'is-fav' : ''}">
                             <img class="star-false" src="/static/img/star.png" alt="">
                             <img class="star-true" src="/static/img/star-fill.png" alt="">
@@ -155,6 +155,7 @@ function load_friends(pg) {
                             <div class="btns">
                                 <a href="/profile/${i && i.friend ? i.friend.uid : ''}" class="btn2 flat">Check Profile</a>
                                 <a href='' class="btn2 flat send-coins-btn">Send Coins</a>
+                                <a href='' class="btn2 flat remove-btn rem2">Unfriend</a>
                             </div>
                         </div>
                     </li>
@@ -162,7 +163,7 @@ function load_friends(pg) {
             })
         }
         else{
-            $("#friends-list").append('No data found.').css('padding-left','31px');
+            $("#friends-list").append('You currently have no friends. <a data-toggle="modal" data-target="#share-modal" style="cursor:pointer; margin:0px 6px; text-decoration:underline;"> Click here </a> to start adding friends').css('padding-left','31px');
         }
  
         loading = false;

@@ -9,6 +9,16 @@
         var buy_coins_url = "{% url 'orders-buy-coins' %}";
     </script>
     <script src="{% static 'js/pages/prizes.js' %}?v=6"></script>
+
+    <style>
+        @media (max-width:768px)
+        {
+            .img-header img
+            {
+                margin-top: 47px;
+            }
+        }
+    </style>
 {% endblock %}
 
 {% block top_section %}
