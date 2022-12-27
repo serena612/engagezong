@@ -36,9 +36,7 @@
 
         <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-messaging-compat.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
-                integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA=="
-                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="{% static 'libs/jquery.cookie.min.js' %}"></script>
         <script type="text/javascript" language="javascript" src="{% static 'js/libphonenumber-js.min.js' %}"></script>
         <script>
             var serverTime = Math.floor(Date.parse("{% now 'c' %}") / 1000);
