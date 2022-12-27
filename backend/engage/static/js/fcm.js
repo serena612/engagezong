@@ -13,11 +13,11 @@ $(function () {
   
   var firebaseApp =firebase.initializeApp(firebaseConfig);
   var messaging = firebase.messaging(firebaseApp);
-  const analytics = getAnalytics();
-  logEvent(analytics, 'screen_view', {
-    firebase_screen: screenName, 
-    firebase_screen_class: screenClass
-  });
+  // const analytics = getAnalytics();
+  // logEvent(analytics, 'screen_view', {
+  //   firebase_screen: screenName, 
+  //   firebase_screen_class: screenClass
+  // });
   var current_early_notifications_page = 1;
   var early_notifications_has_next = false;
   var loading = false;
