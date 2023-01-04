@@ -200,13 +200,13 @@ def firebase_sw_view(request):
         importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-analytics-compat.js');
 
         firebase.initializeApp({
-            apiKey: "AIzaSyA0HHeMbJieI4Qp5tyxn765mk0IWllTCco",
-            authDomain: "engageplaywin-ced7f.firebaseapp.com",
-            projectId: "engageplaywin-ced7f",
-            storageBucket: "engageplaywin-ced7f.appspot.com",
-            messagingSenderId: "615474016768",
-            appId: "1:615474016768:web:7cfa190a078416cc3a9ee5",
-            measurementId: "G-4FTX1VRLYN"
+            apiKey: "AIzaSyClFi6oYdwKrbbTYBSNRdbYmLXJ4uR-vHI",
+            authDomain: "engageplaywin-4b74b.firebaseapp.com",
+            projectId: "engageplaywin-4b74b",
+            storageBucket: "engageplaywin-4b74b.appspot.com",
+            messagingSenderId: "729860295401",
+            appId: "1:729860295401:web:b732dc0c7618190cf53e78",
+            measurementId: "G-C0XVDBF16H"
         });
 
         const messaging = firebase.messaging();

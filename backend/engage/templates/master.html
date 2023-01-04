@@ -10,6 +10,14 @@
 <html lang="en">
 
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C0XVDBF16H"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-C0XVDBF16H');
+    </script>
     <link rel="icon" href="{% static 'img/favicon.png' %}">
     {% block meta %}
         <meta charset="UTF-8">
@@ -228,6 +236,8 @@
 </head>
 
 <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=G-C0XVDBF16H"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <nav class="hih">
     <div class="top-nav">
         <div class="row">
@@ -1381,7 +1391,7 @@
                   </div>
                   <button id="playButton">Play</button>
                   <div class="close_video_ad" onclick="closeVideoAd()">x</div>
-                  
+                  <div class="pink_info">Please resume and watch full video to collect your reward</div>
                   <script type="text/javascript">
                   $("#game-fullscreen-modal").on('show.bs.modal', function(){
                         console.log("game on show.bs.modal attempt autoplay");
@@ -1827,6 +1837,92 @@
     
  
 {% endif %}
+
+<div id="congrats-modal1" class="modal fade hp_tourn">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="close-box">
+                <a data-dismiss="modal" href=""><i class="fas fa-times"></i></a>
+            </div> -->
+            <div class="modal-header">
+                <h3>CONGRATULATIONS</h3>
+            </div>
+            <div class="modal-body">
+                   <div class="modal_contenu">
+                        <div class="purple">You have Earned 50 coins by clicking on the video.</div>
+                        <div class="pink">Watch and click to earn more!</div>
+                        <div class="tourn_btn">WATCH</div>
+                   </div>
+            </div>
+             <div class="pic_modal"><img src="{% static 'img/50-coins.png' %}" /></div>   
+        </div>
+    </div>
+</div>
+
+<div id="congrats-modal2" class="modal fade hp_tourn">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="close-box">
+                <a data-dismiss="modal" href=""><i class="fas fa-times"></i></a>
+            </div> -->
+            <div class="modal-header">
+                <h3>CONGRATULATIONS</h3>
+            </div>
+            <div class="modal-body">
+                   <div class="modal_contenu">
+                        <div class="purple">You have earned 5 coins for watching!</div>
+                        <div class="pink">Earn 50 coins by clicking on the video.</div>
+                        <div class="tourn_btn">WATCH</div>
+                   </div>
+            </div>
+             <div class="pic_modal"><img src="{% static 'img/5-coins.png' %}" /></div>   
+        </div>
+    </div>
+</div>
+
+
+<div id="congrats-modal3" class="modal fade hp_tourn">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="close-box">
+                <a data-dismiss="modal" href=""><i class="fas fa-times"></i></a>
+            </div> -->
+            <div class="modal-header">
+                <h3>LIMIT REACHED</h3>
+            </div>
+            <div class="modal-body">
+                   <div class="modal_contenu">
+                        <!-- <div class="purple">You have Earned 50 coins by clicking on the video.</div> -->
+                        <div class="purple" style="margin-bottom: 36px;">You have reached your maximum limit of
+                            videos for today, <span class="pink" style="margin-bottom: 0px;">earn more coins later.</span></div>
+                        <div class="tourn_btn">CLOSE</div>
+                   </div>
+            </div>
+             <div class="pic_modal"><img src="{% static 'img/limit-reached.png' %}" /></div>   
+        </div>
+    </div>
+</div>
+
+<div id="congrats-modal4" class="modal fade hp_tourn">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="close-box">
+                <a data-dismiss="modal" href=""><i class="fas fa-times"></i></a>
+            </div> -->
+            <div class="modal-header">
+                <h3>VIDEO NOT READY YET</h3>
+            </div>
+            <div class="modal-body">
+                   <div class="modal_contenu">
+                        <div class="purple">The next video is not yet ready, </div>
+                        <div class="pink" style="margin-bottom: 38px;">please try again later</div>
+                        <div class="tourn_btn">CLOSE</div>
+                   </div>
+            </div>
+             <div class="pic_modal"><img src="{% static 'img/video-not-ready-yet.png' %}" /></div>   
+        </div>
+    </div>
+</div>
 
 {% block javascript %}
 {% if user.is_authenticated %}
