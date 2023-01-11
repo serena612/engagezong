@@ -21,6 +21,8 @@ class CoinTransaction(LabelChoices):
     PAY = 'pay','Pay Fee'
     RETRIEVE = 'retrieve','Retrieve'
     REFER = 'refer', 'Refer'
+    AD_CLICK = 'ad_click', 'Ad Click'
+    AD_VIEW = 'ad_view', 'Ad View'
 
 class Transaction(LabelChoices):
     ADD = 'add', 'Add'
@@ -32,6 +34,8 @@ class Transaction(LabelChoices):
     NOTIFICATION_CLAIM = 'notification','Notification Claim',
     RETRIEVE = 'retrieve','Retrieve'
     REFER = 'refer', 'Refer'
+    AD_CLICK = 'ad_click', 'Ad Click'
+    AD_VIEW = 'ad_view', 'Ad View'
 
 
 class NotificationType(LabelChoices):

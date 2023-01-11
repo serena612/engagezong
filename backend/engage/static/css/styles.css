@@ -6970,6 +6970,211 @@ or (width:390px) or (width:411px)
     left: -61px!important;
 }
 }
+
+
+/*new tournaments popup*/
+.modal.hp_tourn .modal-dialog {
+  width: 600px;
+  max-width: 96vw;
+  top: 20vh;
+}
+.modal.hp_tourn .modal-body {
+  font-size: 16px;
+  min-height: 189px;
+  padding-top: 30px;
+}
+.modal_contenu{
+  padding-left: 178px;
+}
+.purple, .pink {
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+.purple{
+  color:#2C1B6D; 
+}
+.pink {
+  color: #FB186D;
+  margin-bottom: 26px;
+}
+.tourn_btn{
+  width:126px;
+  height:45px;
+  text-align: center;
+  color:#FFF;
+  text-transform: uppercase;
+  background-color: #2B1B6D;
+  cursor: pointer;
+  padding-top: 10px;
+}
+.tourn_btn:hover{
+  opacity: 0.7;
+}
+.modal.hp_tourn .modal-header {
+  padding: 19px 0;
+}
+.pic_modal
+{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+#congrats-modal2 .pic_modal
+{
+  left: 50px;
+  bottom: 10px;
+}
+#congrats-modal2 .modal_contenu {
+  padding-left: 189px;
+}
+.modal.hp_tourn#congrats-modal3 .modal-body{
+  min-height: 170px;
+  padding-top: 20px;
+} 
+#congrats-modal4 .pic_modal {
+  left: 40px;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 192px;
+}
+.modal.hp_tourn#congrats-modal4 .modal-body{
+     padding-top: 16px;
+     min-height: 172px;
+}
+@media ((width:414px) or (width:411px)) and (orientation:portrait){
+  #congrats-modal2 .modal_contenu {
+    padding-left: 155px!important;
+  }
+  #congrats-modal4 .pic_modal {
+    left: 26px!important;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 152px!important;
+}
+  }
+@media (width:412px) and (orientation:portrait){
+#congrats-modal2 .modal_contenu {
+  padding-left: 160px;
+}
+}
+@media (width:393px) and (orientation:portrait){
+  #congrats-modal2 .modal_contenu {
+    padding-left: 146px;
+}
+#congrats-modal2 .pic_modal {
+  left: 34px;
+}
+  }
+  @media (width:393px) and (orientation:portrait){
+#congrats-modal4 .pic_modal {
+  left: 23px!important;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 156px!important;
+}
+    }
+
+  @media (width:390px) and (orientation:portrait){
+    #congrats-modal2 .modal_contenu {
+      padding-left: 140px;
+  }
+  #congrats-modal2 .pic_modal {
+    left: 36px;
+}
+#congrats-modal4 .pic_modal {
+  left: 23px!important;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 156px!important;
+}
+    }
+
+  @media (width:375px) and (orientation:portrait){
+  #congrats-modal2 .modal_contenu {
+    padding-left: 148px;
+}
+#congrats-modal2 .pic_modal {
+  left: 37px;
+  bottom: 10px;
+}
+#congrats-modal4 .pic_modal {
+  left: 29px!important;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 163px!important;
+}
+  }
+
+@media ((width:384px) or (width:353px)) and (orientation:portrait){
+  #congrats-modal2 .modal_contenu {
+    padding-left: 155px!important;
+}
+#congrats-modal2 .pic_modal {
+  left: 34px!important;
+}
+#congrats-modal4 .pic_modal {
+  left: 30px!important;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 163px!important;
+}
+ } 
+@media ((width:360px) or (width:353px)) and (orientation:portrait){
+ .modal_contenu {
+    padding-left: 167px!important;
+ }
+} 
+@media (width:360px) and (orientation:portrait){
+  #congrats-modal2 .modal_contenu {
+     padding-left: 140px!important;
+  }
+  #congrats-modal2 .pic_modal {
+    left: 27px;
+}
+#congrats-modal4 .pic_modal {
+  left: 19px;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 151px;
+}
+ } 
+@media (width:320px) and (orientation:portrait)
+{
+  .tourn_btn {
+    width: 100px;
+  }
+  .pic_modal img{
+     width:85%;
+  }
+  .modal_contenu {
+    padding-left: 138px!important;
+  }
+  .modal.hp_tourn .modal-body{
+    padding-top: 14px;
+  }
+  #congrats-modal2 .pic_modal {
+    left: 30px;
+  }
+  #congrats-modal2 .modal_contenu{
+    padding-left: 123px!important;
+  }
+}
+@media ((width:240px) or (width:280px)) and (orientation:portrait)
+{
+  .modal_contenu {
+    padding-left: 17px;
+ }
+ .pic_modal
+ {
+  display: none;
+ }
+ #congrats-modal2 .modal_contenu, #congrats-modal4 .modal_contenu {
+  padding-left: 0px!important;
+}
+ 
+}
+/*end new tournaments popup*/
+
 /*Video full screen landscape*/
 #game-fullscreen-modal, #game-fullscreen-modal .modal-content
 {
@@ -7022,5 +7227,18 @@ or (width:390px) or (width:411px)
   left: 0;
   width: 100%;
   height: 100%;
+}
+.pink_info
+{
+  color:#FFF;
+  font-size: 11px;
+  background-color: #A3156B;
+  padding: 2px 15px;
+  border-radius: 10px;
+  position: absolute;
+  top:10px;
+  right:15px;
+  z-index: 99999999999;
+  display: none;
 }
 /* end video ads */

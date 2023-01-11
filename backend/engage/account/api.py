@@ -58,9 +58,11 @@ from .constants import (
     SubscriptionPlan	
 )
 from engage.operator.models import RedeemPackage
-
+from .exceptions import AdLimitReached, AdAlreadyClicked, SelfAd
 from engage.core.models import HTML5Game
 UserModel = get_user_model()
+OWN_CREATIVES = ['6178477617', '6180000871', '6180646283', '6180545204']
+
 
 class EncryptedMessageSender:
     def __init__(self, server=API_SERVER_URL, vault_url=VAULT_SERVER_URL,
@@ -356,6 +358,7 @@ def do_register(self, request, username, subscription):
         idservice = SubscriptionPackages.PAID2
         is_billed = True
     else:
+        print("unknown subscription", subscription)
         return Response({'error': 'Unknown Subscription'}, status=577)
 
     
@@ -813,7 +816,7 @@ class UserViewSet(mixins.ListModelMixin,
             }
         )
         if not created and user_bp.is_vip:
-            raise exceptions.ValidationError("User has already unlocked vip")
+            raise exceptions.ValidationError({"error":"User has already unlocked vip"})
         else:
             user_bp.is_vip = True
             user_bp.vip_date = timezone.now()
@@ -1355,7 +1358,7 @@ class UserViewSet(mixins.ListModelMixin,
                 (Q(user=instance) & Q(friend=request.user))
             )
         except FriendList.DoesNotExist:
-            raise exceptions.ValidationError('User is not on your friends list')
+            raise exceptions.ValidationError({'error':'User is not on your friends list'})
 
         if request.user == friend.user:
             other = friend.friend
@@ -1451,6 +1454,60 @@ class UserViewSet(mixins.ListModelMixin,
             is_favorite = True
 
         return Response({'is_favorite': is_favorite}, status=status.HTTP_200_OK)
+    
+    @action(['POST'], detail=False, permission_classes=[permissions.IsAuthenticated])
+    def get_ad_reward(self, request):
+        user = request.user
+        ad_type = request.data.get('reward_type')
+        ad_id = request.data.get('adid')
+        now_date = timezone.now().date()
+        if 'ad_date' in request.session:
+            print("request.session['ad_date']", request.session['ad_date'], "now_date", now_date, "inequality", now_date!=request.session['ad_date'])
+            if now_date!=datetime.strptime(request.session['ad_date'], "%d/%m/%Y").date():
+                request.session.pop('ad_date', None)
+                if 'ad_id' in request.session:
+                    request.session.pop('ad_id', None)
+                request.session.modified = True
+        if ad_id in OWN_CREATIVES:
+            raise SelfAd()
+        if 'ad_id' in request.session and ad_type=="click":
+            if ad_id == request.session['ad_id']:
+                raise AdAlreadyClicked()
+        else:
+            request.session['ad_id'] = ad_id
+            request.session['ad_date'] = now_date.strftime('%d/%m/%Y')
+            request.session.modified = True
+            print("request.session['ad_date']", request.session['ad_date'])
+
+        print("User", user, "ad type", ad_type, "ad id", ad_id)
+        if ad_type=="click":
+            transaction = UserTransactionHistory.objects.create(
+                user=user,
+                amount=50, # amount of coins to grant
+                action=CoinTransaction.AD_CLICK,
+                info=Transaction.AD_CLICK
+            )
+            print("Transaction succeeded", transaction.actual_amount)
+            if transaction.actual_amount == 0:  # handle here if want to add limit to referrals
+                raise AdLimitReached()
+            else:
+                return Response({'coins': 50})
+            
+        elif ad_type=="view":
+            transaction = UserTransactionHistory.objects.create(
+                user=user,
+                amount=5, # amount of coins to grant
+                action=CoinTransaction.AD_VIEW,
+                info=Transaction.AD_VIEW
+            )
+            print("Transaction succeeded", transaction.actual_amount)
+            if transaction.actual_amount == 0:  # handle here if want to add limit to referrals
+                raise AdLimitReached()
+            else:
+                return Response({'coins': 5})
+        else:
+            raise exceptions.ValidationError({'error':'Invalid arguments'})
+            
 
 
 class FriendViewSet(mixins.ListModelMixin,
@@ -1497,7 +1554,7 @@ class FriendViewSet(mixins.ListModelMixin,
                 region=request.region
             ).first()
         except UserModel.DoesNotExist:
-            raise exceptions.ValidationError('User not found')
+            raise exceptions.ValidationError({'error':'User not found'})
 
         get_friend = FriendList.objects.filter(
             user=friend,
@@ -1528,7 +1585,7 @@ class FriendViewSet(mixins.ListModelMixin,
                 region=request.region
             ).first()
         except UserModel.DoesNotExist:
-            raise exceptions.ValidationError('User not found')
+            raise exceptions.ValidationError({'error':'User not found'})
 
         get_friend = FriendList.objects.filter(
             user=friend,
@@ -1645,6 +1702,94 @@ class FCMViewSet(mixins.ListModelMixin, viewsets.GenericViewSet, PaginationMixin
         notification.save()
 
         return Response({'status': 'success'}, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['post'])
+    def read_all_notifications(self, request):
+        # notification_id = request.POST.get('id', None)
+        total_claimed = 0
+        try:
+            notification1 = UserNotification.objects.filter(
+                user=request.user,
+                last_read__isnull=True
+            )
+        except UserNotification.DoesNotExist:
+            return Response({'status': 'fail'}, status=status.HTTP_304_NOT_MODIFIED)
+        #check if there are coins to claim
+        # gifts = notification1.filter(is_gift=True)
+        for notification_id in notification1:
+            try:
+                notification = Notifications.objects.get(id=notification_id.notification.id,
+                                                        is_gift=True)
+            except Notifications.DoesNotExist:
+                notification = False
+                # return Response({'status': 'fail'},
+                #                 status=status.HTTP_304_NOT_MODIFIED)
+
+            if notification and notification.video:
+                now = datetime.now(tz=timezone.utc)
+
+                today_battlepass = BattlePassMission.objects.filter(
+                    date__year=now.year,
+                    date__month=now.month,
+                    date__day=now.day,
+                    mission__action__in=[WinAction.WATCH_VIDEO, WinAction.WATCH_2_VIDEOS]
+                ).first()
+
+                if today_battlepass:
+                    if today_battlepass.mission.action == WinAction.WATCH_VIDEO:
+                        obj, created = UserBattlePassMission.objects.select_related(
+                            'user',
+                            'bp_mission',
+                            'bp_mission__mission'
+                        ).get_or_create(
+                            bp_mission=today_battlepass,
+                            user=request.user,
+                            is_completed=True
+                        )
+                    else:
+                        obj, created = UserBattlePassMission.objects.select_related(
+                            'user',
+                            'bp_mission',
+                            'bp_mission__mission'
+                        ).get_or_create(
+                            bp_mission=today_battlepass,
+                            user=request.user,
+                        )
+
+                        obj.count += 1
+
+                        if not created:
+                            obj.is_completed = True
+
+                        obj.save()
+
+            # try:
+            #     user_notification = UserNotification.objects.get(
+            #         user=request.user,
+            #         notification=notification_id,
+            #         is_claimed=False
+            #     )
+            # except UserNotification.DoesNotExist:
+            #     return Response({'status': 'fail'},
+            #                     status=status.HTTP_304_NOT_MODIFIED)
+            user_notification = notification_id
+            if user_notification.notification.is_gift:
+                user_notification.is_claimed = True
+                user_notification.save()
+
+                UserTransactionHistory.objects.create(
+                    user=request.user,
+                    amount=user_notification.notification.gifted_coins,
+                    info = Transaction.NOTIFICATION_CLAIM+' '+ user_notification.notification.title
+                )
+                total_claimed += user_notification.notification.gifted_coins
+            # return Response({'status': 'success','coins':request.user.coins}, status=status.HTTP_200_OK)
+                
+        notification1.update(last_read = timezone.now())
+        # notification1.save()
+        return Response({'status': 'success','coins':request.user.coins, 'total_claimed':total_claimed}, status=status.HTTP_200_OK)
+        # return Response({'status': 'success'}, status=status.HTTP_200_OK)
+
 
     @action(detail=False, methods=['post'])
     def claim_gift(self, request):

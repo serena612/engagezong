@@ -1730,7 +1730,7 @@ function getLastPlayedGames(uid, box, size) {
                var loading = box.find("div");
                 // loading.html("<span class='no-data'>No Data Found</span>");
                 loading.html("");
-                var html = `<a class="game" href="/#home-games" style='width:100%;padding-top:4px!important;display:block;'>
+                var html = `<a class="game no_game" href="/#home-games" style='width:100%;padding-top:4px!important;display:block;'>
                                 <div class="img" style='width: 173px;height:115px;'>
                                     <img src="/static/img/start-playing-and-winning.png">
                                 </div>

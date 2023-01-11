@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from celery import shared_task
 from django.utils import timezone
-
+from ..celery import block_multiple_celery_task_execution
 from .models import User, Profile, UserActivity
 from engage.services import notify_when
 from engage.core.constants import NotificationTemplate
@@ -14,8 +14,11 @@ from ..core.models import Notifications
     
     RUN_EVERY >> 12 hours
 """
-@shared_task
-def how_to_use_notification():
+@shared_task(bind=True)
+def how_to_use_notification(self):
+    prefix = "how_to_use_notification"
+    if block_multiple_celery_task_execution(self, prefix):
+        return
     now = timezone.now()
 
     users = User.objects.filter(
@@ -43,8 +46,11 @@ def how_to_use_notification():
 
     RUN_EVERY >> 24 hours
 """
-@shared_task
-def active_days_notification():
+@shared_task(bind=True)
+def active_days_notification(self):
+    prefix = "active_days_notification"
+    if block_multiple_celery_task_execution(self, prefix):
+        return
     active_templates = [
         {"name": NotificationTemplate.ACTIVE_5_DAYS, "active_days": 5},
         {"name": NotificationTemplate.ACTIVE_10_DAYS, "active_days": 10},
@@ -78,12 +84,15 @@ def active_days_notification():
 
     RUN_EVERY >> AFTER START OF DAY >> LET'S SAY (EVERY DAY ON 12:05 AM)
 """
-@shared_task
-def happy_birthday_notification():
+@shared_task(bind=True)
+def happy_birthday_notification(self):
+    prefix = "happy_birthday_notification"
+    if block_multiple_celery_task_execution(self, prefix):
+        return
     now = timezone.now()
 
     users_profile = Profile.objects.select_related('user').filter(
-        birthdate=now.date()
+        birthdate__month=now.month, birthdate__day=now.day
     ).all()
 
     # send happy birthday notification
@@ -100,8 +109,11 @@ def happy_birthday_notification():
 
     RUN_EVERY >> first day of month
 """
-@shared_task
-def once_a_month_notification():
+@shared_task(bind=True)
+def once_a_month_notification(self):
+    prefix = "once_a_month_notification"
+    if block_multiple_celery_task_execution(self, prefix):
+        return
     users = User.objects.all()
 
     @notify_when(events=[NotificationTemplate.ONCE_A_MONTH], is_route=False,
@@ -113,8 +125,11 @@ def once_a_month_notification():
         notify(user=user)
 
 
-@shared_task
-def daily_event_check_notification():
+@shared_task(bind=True)
+def daily_event_check_notification(self):
+    prefix = "daily_event_check_notification"
+    if block_multiple_celery_task_execution(self, prefix):
+        return
     now = timezone.now()
 
     notifications = Notifications.objects.filter(
@@ -123,13 +138,11 @@ def daily_event_check_notification():
         event_date__day=now.day,
         is_active=True,
     )
-
     users = User.objects.exclude(
         notifications__notification__in=notifications,
         notifications__created__day=now.day,
         notifications__created__month=now.month
     ).distinct().all()
-
     @notify_when(events=[NotificationTemplate.EVENT], is_route=False,
                  is_one_time=False, extra={'event_date': now})
     def notify(user, user_notifications):
@@ -139,8 +152,11 @@ def daily_event_check_notification():
         notify(user)
 
 
-@shared_task
-def every_14_days_notifications():
+@shared_task(bind=True)
+def every_14_days_notifications(self):
+    prefix = "every_14_days_notifications"
+    if block_multiple_celery_task_execution(self, prefix):
+        return
     now = timezone.now()
 
     pre_14_days = now - timedelta(days=14)
@@ -160,12 +176,14 @@ def every_14_days_notifications():
         notify(user)
 
 
-@shared_task
-def check_users_level():
+
+@shared_task(bind=True)
+def check_users_level(self):
+    prefix = "check_users_level"
+    if block_multiple_celery_task_execution(self, prefix):
+        return
     users = User.objects.all()
     for user in users:
         if user.is_billed == True:
             user.level+=1
             user.save()      
-
-

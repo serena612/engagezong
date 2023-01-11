@@ -246,14 +246,41 @@ function onAdEvent(adEvent) {
     case google.ima.AdEvent.Type.LOADED:
       // This is the first event sent for an ad - it is possible to
       // determine whether the ad is a video ad or an overlay.
+      console.log("Ad uni Id: "+ad.getUniversalAdIdValue()); 
+      // console.log("Ad creative Id: "+ad.getCreativeAdId());
+      console.log("Ad ID: "+ad.getAdId());
+      $("#mainContainer,.close_video_ad").show();
       if (!ad.isLinear()) {
         videoContent.play();
       }
       break;
     case google.ima.AdEvent.Type.ALL_ADS_COMPLETED:
-      // This is the first event sent for an ad - it is possible to
-      // determine whether the ad is a video ad or an overlay.
+      // This is triggered when all ads have done playing
+      // Hide ad
       $("#mainContainer,#playButton,.close_video_ad").hide();
+      break;
+    case google.ima.AdEvent.Type.CLICK:
+      // This is triggered when the visit site button is clicked
+      // Hide ad we can use ad.getUniversalAdIdValue() for unique ad value (make sure button is not clicked several times)
+      postReward("click", ad.getAdId()).then(res => {
+        //form.trigger("reset");
+        console.log("Click event reward success");
+        console.log(res);
+      }).catch(e => {
+        console.log("Click event reward failed");
+        console.log(e);
+      });
+      break;
+    case google.ima.AdEvent.Type.COMPLETE:
+      // This is triggered when one ad is completed
+      postReward("view", ad.getAdId()).then(res => {
+        //form.trigger("reset");
+        console.log("View event reward success");
+        console.log(res);
+      }).catch(e => {
+        console.log("View event reward failed");
+        console.log(e);
+      });
       break;
   }
 }
@@ -308,4 +335,44 @@ function closeVideoAd(){
   }
   
    $("#mainContainer,#playButton,.close_video_ad").hide();
+}
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+function postReward(reward_type, adidd) {
+  const apiurl = window.location.origin+'/api/users/get_ad_reward/';
+  const xtoken = getCookie('csrftoken');
+  console.log("reward_type"+reward_type+"ad id "+ adidd);
+  return new Promise((resolve, reject) => {
+      $.ajax({
+          url: apiurl,
+          headers: {
+              "X-CSRFToken": xtoken,
+          },
+          type: "post",
+          data: {
+              reward_type: reward_type,
+              adid: adidd,
+          },
+          error: function (value) {
+              reject(value);
+          },
+          success: function (value) {
+              resolve(value);
+          },
+      });
+  });
 }

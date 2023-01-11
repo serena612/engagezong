@@ -19,7 +19,7 @@ from engage.tournament.models import (
 from engage.account.models import User
 from datetime import datetime, timedelta
 from engage.account.constants import SubscriptionPackages, SubscriptionPlan
-
+from ..celery import block_multiple_celery_task_execution
 
 def get_prize_list(vault=None):
     headers = {'Content-type':'application/json', 
@@ -75,8 +75,11 @@ def send_sms(user, message, vault=None):
     else:
         return api_call.content, api_call.status_code
 
-@shared_task
-def check_active_matches_winners():
+@shared_task(bind=True)
+def check_active_matches_winners(self):
+    prefix = "check_active_matches_winners"
+    if block_multiple_celery_task_execution(self, prefix):
+        return
     now = datetime.now(tz=timezone.utc)
     matches = TournamentMatch.objects.filter(
         start_date__gt=now,
@@ -88,8 +91,11 @@ def check_active_matches_winners():
 
 
 @transaction.atomic
-@shared_task
-def fill_prize_list():
+@shared_task(bind=True)
+def fill_prize_list(self):
+    prefix = "fill_prize_list"
+    if block_multiple_celery_task_execution(self, prefix):
+        return
     prize_list, code = get_prize_list()
     if code==0:
         packages = [package['DATA_PLAN'] for package in prize_list]
@@ -119,8 +125,11 @@ def fill_prize_list():
     else:
         print("An error has occured", code)
 
-@shared_task
-def fetch_match_details(match_id):
+@shared_task(bind=True)
+def fetch_match_details(self, match_id):
+    prefix = "fetch_match_details"
+    if block_multiple_celery_task_execution(self, prefix):
+        return
     match = TournamentMatch.objects.get(
         id=match_id
     )
