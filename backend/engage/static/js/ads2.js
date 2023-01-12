@@ -27,6 +27,16 @@ let autoplayRequiresMuted;
 function initDesktopAutoplayExample() {
   videoContent = document.getElementById('contentElement');
   playButton = document.getElementById('playButton');
+  // destroy adsLoader
+  adsInitialized = false;
+  try {
+    adsManager.destroy();
+    console.log("Destroyed adsManager");
+    try{
+    adsLoader.contentComplete();
+    adsLoader.destroy()
+    console.log("Destroyed adsLoader");}catch (error) {}}
+    catch (error) {}
   playButton.addEventListener('click', () => {
     // Initialize the container. Must be done through a user action where
     // autoplay is not allowed.
@@ -38,6 +48,10 @@ function initDesktopAutoplayExample() {
   setUpIMA();
   // Check if autoplay is supported.
   checkAutoplaySupport();
+
+  // Hide the address bar!
+  window.scrollTo(0, 1);
+
 }
 
 /**
@@ -266,9 +280,12 @@ function onAdEvent(adEvent) {
         //form.trigger("reset");
         console.log("Click event reward success");
         console.log(res);
+        $('#congrats-modal1').modal('show');
       }).catch(e => {
         console.log("Click event reward failed");
-        console.log(e);
+        console.log(e.responseJSON.code);
+        if (e.responseJSON.code == 'ad_limit_reached') {
+          $('#congrats-modal3').modal('show');}
       });
       break;
     case google.ima.AdEvent.Type.COMPLETE:
@@ -277,9 +294,12 @@ function onAdEvent(adEvent) {
         //form.trigger("reset");
         console.log("View event reward success");
         console.log(res);
+        $('#congrats-modal2').modal('show');
       }).catch(e => {
         console.log("View event reward failed");
-        console.log(e);
+        console.log(e.responseJSON.code);
+        if ( e.responseJSON.code == 'ad_limit_reached' ) {
+          $('#congrats-modal3').modal('show');}
       });
       break;
   }
@@ -335,6 +355,7 @@ function closeVideoAd(){
   }
   
    $("#mainContainer,#playButton,.close_video_ad").hide();
+   $(window).scrollTop($('.sec-3').offset().top);
 }
 
 function getCookie(name) {
@@ -352,6 +373,7 @@ function getCookie(name) {
   }
   return cookieValue;
 }
+
 function postReward(reward_type, adidd) {
   const apiurl = window.location.origin+'/api/users/get_ad_reward/';
   const xtoken = getCookie('csrftoken');

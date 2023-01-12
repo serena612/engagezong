@@ -15,9 +15,9 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-C0XVDBF16H');
     </script>
+
     <link rel="icon" href="{% static 'img/favicon.png' %}">
     {% block meta %}
         <meta charset="UTF-8">
@@ -233,11 +233,27 @@
         <script type="application/javascript"
                 src="{% static 'js/api.js' %}?v=6"></script>
     {% endblock %}
+
+    <style type="text/css">
+        @media screen and (orientation:portrait)
+        {
+            .rotate_dev{
+                display: block;
+            }
+        }
+        @media screen and (orientation:landscape)
+        {
+            .rotate_dev{
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=G-C0XVDBF16H"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
 <nav class="hih">
     <div class="top-nav">
         <div class="row">
@@ -1282,12 +1298,7 @@
             </div>
             <div class="col-md-12 text-center">
                 <div class="info-box"></div>
-                <!-- <button id="upgrade-btn" data-dismiss="modal" class="btn2 big c2">
-                    {% translate 'Upgrade' %}
-                </button>
-                <button data-dismiss="modal" class="btn2 big">
-                    {% translate 'Cancel' %}
-                </button> -->
+               
                 <p></p>
             </div>
         </div>
@@ -1369,7 +1380,7 @@
 <div class="modal fade" id="game-fullscreen-modal" tabindex="-1" role="dialog" style="width:100%;height:100%;">
     <div class="modal-dialog modal-md" role="document" style="max-width:100%!important;"> 
         <div class="modal-content" style="background:#000;"> 
-            <div class="close-box" onclick="$('#game-fullscreen-modal').find('iframe').remove();$('#game-fullscreen-modal').hide();$('.modal-backdrop').remove();$('body').removeClass('modal-open');$('#playButton').show();" style="background:#1C1E4E;">
+            <div class="close-box" onclick="$('#game-fullscreen-modal').find('iframe').remove();$('#game-fullscreen-modal').hide();$('.modal-backdrop').remove();$('body').removeClass('modal-open');$('#playButton').show();$('#adContainer').html('');$(window).scrollTop($('.sec-3').offset().top);" style="background:#1C1E4E;">
                 <img src="{% static 'img/bgclose.png' %}"
                                          height="40" alt="" style="position:absolute;top:0;left:0;">
                 <a data-dismiss="modal" style="" >
@@ -1379,6 +1390,11 @@
                 <div class="info-box">
 
                 </div>
+
+                <div class="rotate_dev">
+                    <div class="rotate_device">Please rotate your device.</div>
+                </div>
+
                 {% if user.subscription == "free" or not user.is_billed %}
                 
                   <div id="mainContainer">
@@ -1386,19 +1402,21 @@
                       <video id="contentElement">
                         <source src="{% static 'js/blank.mp4' %}"></source>
                             </video>
-            </div>   
+                     </div>   
                     <div id="adContainer"></div>
                   </div>
                   <button id="playButton">Play</button>
                   <div class="close_video_ad" onclick="closeVideoAd()">x</div>
                   <div class="pink_info">Please resume and watch full video to collect your reward</div>
+                
                   <script type="text/javascript">
-                  $("#game-fullscreen-modal").on('show.bs.modal', function(){
-                        console.log("game on show.bs.modal attempt autoplay");
+                  $("#game-fullscreen-modal").on('show.bs.modal', function(){                        
+                        console.log("game on show.bs.modal attempt autoplay");                    
                         initDesktopAutoplayExample();
                     });
-                
+                    
                    </script>
+
                     {% endif %}
                     
             </div>
@@ -1418,7 +1436,7 @@
                 <div style="width:710px;height:300px;position:relative;">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1363749472822465"
                     crossorigin="anonymous"></script>
-    <!-- engage add -->
+    
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:300px"
          data-ad-client="ca-pub-1363749472822465"
@@ -1678,60 +1696,62 @@
                                 <div class="input2 mb-3"  {% if user.profile.birthdate %} style="background-color: #ddd;" {% endif %}>
                                     <label for="">{% translate 'Date Of Birth' %}</label>
                                     <div class="right">
-
-                                        <select value="{{ user.profile.birthdate|date:'m' }}" {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
-                                                name="data_month" required
-                                                class="text-center">
-                                            <option value="01"
-                                                    {% if user.profile.birthdate|date:'m' == '01' %}selected{% endif %}>
-                                                Jan
-                                            </option>
-                                            <option value="02"
-                                                    {% if user.profile.birthdate|date:'m' == '02' %}selected{% endif %}>
-                                                Feb
-                                            </option>
-                                            <option value="03"
-                                                    {% if user.profile.birthdate|date:'m' == '03' %}selected{% endif %}>
-                                                Mar
-                                            </option>
-                                            <option value="04"
-                                                    {% if user.profile.birthdate|date:'m' == '04' %}selected{% endif %}>
-                                                Apr
-                                            </option>
-                                            <option value="05"
-                                                    {% if user.profile.birthdate|date:'m' == '05' %}selected{% endif %}>
-                                                May
-                                            </option>
-                                            <option value="06"
-                                                    {% if user.profile.birthdate|date:'m' == '06' %}selected{% endif %}>
-                                                Jun
-                                            </option>
-                                            <option value="07"
-                                                    {% if user.profile.birthdate|date:'m' == '07' %}selected{% endif %}>
-                                                Jul
-                                            </option>
-                                            <option value="08"
-                                                    {% if user.profile.birthdate|date:'m' == '08' %}selected{% endif %}>
-                                                Aug
-                                            </option>
-                                            <option value="09"
-                                                    {% if user.profile.birthdate|date:'m' == '09' %}selected{% endif %}>
-                                                Sep
-                                            </option>
-                                            <option value="10"
-                                                    {% if user.profile.birthdate|date:'m' == '10' %}selected{% endif %}>
-                                                Oct
-                                            </option>
-                                            <option value="11"
-                                                    {% if user.profile.birthdate|date:'m' == '11' %}selected{% endif %}>
-                                                Nov
-                                            </option>
-                                            <option value="12"
-                                                    {% if user.profile.birthdate|date:'m' == '12' %}selected{% endif %}>
-                                                Dec
-                                            </option>
-                                        </select>
-
+                                        <div style="float:left;position:relative;margin-right: 22px;">                       
+                                            <select value="{{ user.profile.birthdate|date:'m' }}" {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
+                                                    name="data_month" required
+                                                    class="text-center">
+                                                <option value="01"
+                                                        {% if user.profile.birthdate|date:'m' == '01' %}selected{% endif %}>
+                                                    Jan
+                                                </option>
+                                                <option value="02"
+                                                        {% if user.profile.birthdate|date:'m' == '02' %}selected{% endif %}>
+                                                    Feb
+                                                </option>
+                                                <option value="03"
+                                                        {% if user.profile.birthdate|date:'m' == '03' %}selected{% endif %}>
+                                                    Mar
+                                                </option>
+                                                <option value="04"
+                                                        {% if user.profile.birthdate|date:'m' == '04' %}selected{% endif %}>
+                                                    Apr
+                                                </option>
+                                                <option value="05"
+                                                        {% if user.profile.birthdate|date:'m' == '05' %}selected{% endif %}>
+                                                    May
+                                                </option>
+                                                <option value="06"
+                                                        {% if user.profile.birthdate|date:'m' == '06' %}selected{% endif %}>
+                                                    Jun
+                                                </option>
+                                                <option value="07"
+                                                        {% if user.profile.birthdate|date:'m' == '07' %}selected{% endif %}>
+                                                    Jul
+                                                </option>
+                                                <option value="08"
+                                                        {% if user.profile.birthdate|date:'m' == '08' %}selected{% endif %}>
+                                                    Aug
+                                                </option>
+                                                <option value="09"
+                                                        {% if user.profile.birthdate|date:'m' == '09' %}selected{% endif %}>
+                                                    Sep
+                                                </option>
+                                                <option value="10"
+                                                        {% if user.profile.birthdate|date:'m' == '10' %}selected{% endif %}>
+                                                    Oct
+                                                </option>
+                                                <option value="11"
+                                                        {% if user.profile.birthdate|date:'m' == '11' %}selected{% endif %}>
+                                                    Nov
+                                                </option>
+                                                <option value="12"
+                                                        {% if user.profile.birthdate|date:'m' == '12' %}selected{% endif %}>
+                                                    Dec
+                                                </option>
+                                            </select>
+                                            <i class="fa fa-chevron-down" aria-hidden="true" style="right:-17px;"></i>
+                                       </div>    
+                                       <div style="float:left;position:relative;margin-right: 22px;"> 
                                         <select name="data_day" required {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
                                                 class="text-center">
                                             {% for day in days %}
@@ -1739,7 +1759,9 @@
                                                         {% if user.profile.birthdate|date:'d' == day %}selected{% endif %}>{{ day }}</option>
                                             {% endfor %}
                                         </select>
-
+                                        <i class="fa fa-chevron-down" aria-hidden="true" style="right:-17px;"></i>
+                                    </div>
+                                    <div style="float:left;position:relative;"> 
                                         <select name="data_year" required {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
                                                 class="text-center"
                                                 id="">
@@ -1748,12 +1770,15 @@
                                                         {% if user.profile.birthdate|date:'Y' == year %}selected{% endif %}>{{ year }}</option>
                                             {% endfor %}
                                         </select>
+                                        <i class="fa fa-chevron-down" aria-hidden="true" style="right:-15px;"></i>
+                                    </div>
+                                        <div style="clear: both;"></div>
                                     </div>
                                 </div>
 
                                 <div class="input2 mb-3">
                                     <label for="">{% translate 'Nationality' %}</label>
-                                    <div class="right">
+                                    <div class="right" style="position:relative">
                                         <select
                                                 name="country"
                                                 required>
@@ -1770,12 +1795,13 @@
                                                 {% endif %}           
                                             {% endfor %}
                                         </select>
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     </div>
                                 </div>
 
                                 <div class="input2 mb-3">
                                     <label for="">{% translate 'Gender' %}</label>
-                                    <div class="right">
+                                    <div class="right" style="position:relative">
                                         <select name="gender" id="" required>
                                             <option value="male"
                                                     {% if user.profile.gender == 'male' %}selected{% endif %}>
@@ -1786,18 +1812,20 @@
                                                 {% translate 'Female' %}
                                             </option>
                                         </select>
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     </div>
                                 </div>
 
                                 <div class="input2 mb-3">
                                     <label for="">{% translate 'State' %} <br/></label>
-                                    <div class="right">
+                                    <div class="right" style="position:relative">
                                         <select name="residency" id="" required>
                                             {% for state in states %}
                                                 <option value="{{ state }}"
                                                         {% if user.profile.residency == state %}selected{% endif %}>{{ state }}</option>
                                             {% endfor %}
                                         </select>
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     </div>
                                 </div>
 
@@ -1851,7 +1879,8 @@
                    <div class="modal_contenu">
                         <div class="purple">You have Earned 50 coins by clicking on the video.</div>
                         <div class="pink">Watch and click to earn more!</div>
-                        <div class="tourn_btn">WATCH</div>
+                        <!-- <div class="tourn_btn">WATCH</div> -->
+                        <div class="tourn_btn" onclick="$('#congrats-modal1').modal('hide');initDesktopAutoplayExample();">WATCH</div>
                    </div>
             </div>
              <div class="pic_modal"><img src="{% static 'img/50-coins.png' %}" /></div>   
@@ -1872,7 +1901,8 @@
                    <div class="modal_contenu">
                         <div class="purple">You have earned 5 coins for watching!</div>
                         <div class="pink">Earn 50 coins by clicking on the video.</div>
-                        <div class="tourn_btn">WATCH</div>
+                        <!-- <div class="tourn_btn">WATCH</div> -->
+                        <div class="tourn_btn" onclick="$('#congrats-modal2').modal('hide');initDesktopAutoplayExample();">WATCH</div>
                    </div>
             </div>
              <div class="pic_modal"><img src="{% static 'img/5-coins.png' %}" /></div>   
@@ -1895,7 +1925,8 @@
                         <!-- <div class="purple">You have Earned 50 coins by clicking on the video.</div> -->
                         <div class="purple" style="margin-bottom: 36px;">You have reached your maximum limit of
                             videos for today, <span class="pink" style="margin-bottom: 0px;">earn more coins later.</span></div>
-                        <div class="tourn_btn">CLOSE</div>
+                        <!-- <div class="tourn_btn">CLOSE</div> -->
+                        <div class="tourn_btn" onclick="$('#congrats-modal3').modal('hide');">CLOSE</div>
                    </div>
             </div>
              <div class="pic_modal"><img src="{% static 'img/limit-reached.png' %}" /></div>   
@@ -1916,7 +1947,8 @@
                    <div class="modal_contenu">
                         <div class="purple">The next video is not yet ready, </div>
                         <div class="pink" style="margin-bottom: 38px;">please try again later</div>
-                        <div class="tourn_btn">CLOSE</div>
+                        <!-- <div class="tourn_btn">CLOSE</div> -->
+                        <div class="tourn_btn" onclick="$('#congrats-modal4').modal('hide');">CLOSE</div>
                    </div>
             </div>
              <div class="pic_modal"><img src="{% static 'img/video-not-ready-yet.png' %}" /></div>   
@@ -1929,7 +1961,9 @@
             
             <script type="application/javascript"
                 src="{% static 'js/fcm.js' %}"></script>
- {% endif %}        
+ {% endif %} 
+
+
 {% endblock %}
 
 {% comment %}
@@ -1948,6 +1982,13 @@ function closeSideMenu()
     document.getElementById('sidebar').classList.remove('active');
 }
 
+
+screen.orientation.addEventListener("change", function(e) {
+    // Do something on change
+    
+});
+
+
 </script>
 
 {% endcomment %}
@@ -1955,27 +1996,6 @@ function closeSideMenu()
 <input type="hidden" id="userSub" value="{{user.subscription}}" />
 <input type="hidden" id="userIsBilled" value="{{user.is_billed}}" />
 
-
-    <!-- {% if user.subscription == 'free' %} -->
-<!-- Begin Video Ads -->
-<!-- <div id="video_Ad">
-    <div id="page-content">
-        <div id="video-container">
-            <video id="video-element">
-            <source src="https://storage.googleapis.com/interactive-media-ads/media/android.mp4">
-            <source src="https://storage.googleapis.com/interactive-media-ads/media/android.webm">
-            </video>
-        </div>
-       
-        <div style="cursor: pointer; position:absolute; top:20px; right:20px;" onclick="closeVideoAd()">
-            <i class="fas fa-times" style="color:#fff; font-size: 24px;"></i></div>   
-    </div>
-    <script src="{% static 'js/ads.js' %}"></script> 
-    </div> -->
-    <!-- End Video Ads -->
-    <!-- {% endif %} -->
-    
 </body>
 </html>
 
- <!-- <button id="play-button" style="position: absolute; top: 45vh; left: 47vw; color: #fff; font-size: 30px; z-index: 9999999999999; background-color: #000; padding: 8px 20px; border-radius: 13px;">Play</button> -->
