@@ -534,7 +534,13 @@
         <div>
             
                 {% if ad.ad_type == 'image' %}
+                    <!-- <img src="{{ ad.ad_file.url }}" alt="{{ ad.ad_file.name }}" style="cursor:pointer;" onclick="window.location.href='{{ ad.ad_link }}'"> -->
+                    {% if 'socialLnk' in ad.ad_link %}
+                    <img src="{{ ad.ad_file.url }}" alt="{{ ad.ad_file.name }}" style="cursor:pointer;" onclick="$('#share-modal').modal('show')">
+                    {% else %}
                     <img src="{{ ad.ad_file.url }}" alt="{{ ad.ad_file.name }}" style="cursor:pointer;" onclick="window.location.href='{{ ad.ad_link }}'">
+                    {% endif %}
+
                 {% elif ad.ad_type == 'video' %}
                     <video controls="controls">
                         <source src="{{ ad.ad_file.url }}" type="video/mp4"/>
