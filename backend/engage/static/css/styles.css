@@ -7242,3 +7242,50 @@ or (width:390px) or (width:411px)
   display: none;
 }
 /* end video ads */
+
+/*!!!*/
+.avatar-select.open .avatar-drop{
+  z-index:999!important;
+}
+.profile-contain > .left .stickers-box .imgs-box .game {
+  max-width: 100%;
+  margin: 0px auto!important;
+  display: block;
+  width: 216px!important;
+  padding-top: 0px!important;
+}
+.profile-contain > .left .last-played-games-box .imgs-box a.game.no_game {
+  max-width: 100%;
+  width: 200px!important;
+  margin: 0px auto!important;
+}
+
+/*ddl arrow mainly on iphone*/
+#edit-profile-form select{
+  -webkit-appearance: none!important;
+        -moz-appearance: none!important;
+        appearance: none!important;
+}
+#edit-profile-form i {
+  position: absolute;
+  top: 18px;
+  left: auto;
+  right: 16px;
+  color: #472b93;
+  font-size: 13px;
+}
+/*end ddl arrow mainly on iphone*/
+
+/*Video Ad*/
+#adContainer > div {
+  height: 100%!important;
+  width: 100%!important;
+}
+#adContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 100000;
+  height: 100vh;
+}
