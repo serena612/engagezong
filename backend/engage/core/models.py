@@ -135,6 +135,7 @@ class HTML5Game(TimeStampedModel):
     class Meta:
         verbose_name = 'HTML5 Game'
         verbose_name_plural = 'HTML5 Games'
+        ordering = ('-created', )
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.game)

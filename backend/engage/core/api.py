@@ -39,7 +39,7 @@ class HTML5GameViewSet(mixins.ListModelMixin,
                         When(game_type=HTML5GameType.EXCLUSIVE, then=Value(2)),
                         When(game_type=HTML5GameType.PREMIUM, then=Value(3)),
                     )
-                ).order_by('relevancy')
+                ).order_by('-created', 'relevancy')
             else:
                 return queryset
         else:
