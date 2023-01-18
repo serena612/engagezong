@@ -7,7 +7,7 @@ from engage.account.models import UserActivity
 from engage.core.constants import NotificationTemplate
 from engage.operator.models import Region
 from engage.services import _with, notify_when
-
+from django.utils.translation import activate
 
 class LastSeenMiddleware(object):
     def __init__(self, get_response):
@@ -61,7 +61,7 @@ class LastSeenMiddleware(object):
         # TODO: to be cached
        
         request.region = Region.objects.get(id=1)
-
+        activate('ar')
         # if user is authenticated update the last_seen field & set this user as an active user on this day
         if request.user.is_authenticated:
             self.update_last_seen(request.user)
