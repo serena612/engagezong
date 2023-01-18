@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-18 12:25+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: tournament/admin.py:194
+msgid "An image is required when winners are specified"
+msgstr ""
+
+#: tournament/admin.py:230
+msgid "Participant(s): , "
+msgstr ""
+
+#: tournament/models.py:331
+msgid "Close Date must be greater than Open Date"
+msgstr ""
+
+#: tournament/models.py:336
+msgid "Start Date can't be in the past"
+msgstr ""
+
+#: tournament/models.py:340
+msgid "End Date can't be in the past"
+msgstr ""
+
+#: tournament/models.py:344
+msgid "End Date must be greater than Start Date"
+msgstr ""
+
+#: tournament/models.py:351
+msgid "Close Date must be at least 6 hours earlier than Start Date"
+msgstr ""
+
+#: tournament/models.py:355
+msgid "Public open date cannot be smaller than VIP open date"
+msgstr ""
+
+#: tournament/models.py:359
+msgid "Close date cannot be smaller than public open date"
+msgstr ""
+
+#: tournament/models.py:561
+msgid ""
+"This round number selection is above the rounds numbers set in the "
+"tournament settings"
+msgstr ""
+
+#: tournament/models.py:565
+msgid ""
+"Match date must be between tournament start date and tournament end date"
+msgstr ""

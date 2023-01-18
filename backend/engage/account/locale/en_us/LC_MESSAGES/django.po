@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-18 12:25+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: account/admin.py:76 account/admin.py:99 account/admin.py:156
+msgid "Personal info"
+msgstr ""
+
+#: account/admin.py:77 account/admin.py:100 account/admin.py:157
+msgid "Permissions"
+msgstr ""
+
+#: account/models.py:59
+#, python-format
+msgid "%(subdata)s is not a valid MTN phone number!"
+msgstr ""
+
+#: account/urls.py:27
+msgid "Password changed successfully."
+msgstr ""
+
+#: account/urls.py:41
+msgid ""
+"You entered your old password incorrectly multiple times! Please log in "
+"again to continue."
+msgstr ""
+
+#: account/validator.py:20
+#, python-format
+msgid "Password must contain at least %(min_length)d digit."
+msgstr ""
+
+#: account/validator.py:22
+#, python-format
+msgid "Password must contain at least %(min_length)d lower-case character."
+msgstr ""
+
+#: account/validator.py:24
+#, python-format
+msgid "Password must contain at least %(min_length)d special character."
+msgstr ""
+
+#: account/validator.py:26
+#, python-format
+msgid "Password must contain at least %(min_length)d upper-case character."
+msgstr ""
+
+#: account/validator.py:29
+msgid "Password cannot contain consecutive numbers."
+msgstr ""
+
+#: account/validator.py:32
+msgid ""
+"Password has been previously exposed in data breaches. Please choose another."
+msgstr ""
+
+#: account/validator.py:35
+msgid ""
+"Your password must contain at lest one upper-case character, one lower-case "
+"character, one digit and one special character."
+msgstr ""
+
+#: account/views.py:205
+msgid "You have been locked out for "
+msgstr ""

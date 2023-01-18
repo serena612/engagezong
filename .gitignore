@@ -1,5 +1,11 @@
 *
 
+!*.po
+!*.mo
+
+!**/*.po
+!**/*.mo
+
 !*.py
 !*.html
 !**/*.html
@@ -71,7 +77,7 @@ coverage.xml
 .pytest_cache/
 
 # Translations
-*.mo
+# *.mo
 *.pot
 
 # Django stuff:

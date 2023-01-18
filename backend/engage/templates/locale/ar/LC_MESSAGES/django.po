@@ -1,0 +1,820 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-18 12:25+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: templates/FAQ.html:8
+msgid "FAQ"
+msgstr "التعليمات"
+
+#: templates/about.html:9 templates/master.html:1623
+msgid "ENGAGE AND MORE"
+msgstr "المشاركة والمزيد"
+
+#: templates/admin/base.html:275
+msgid "OK"
+msgstr "نعم"
+
+#: templates/admin/base.html:288 templates/profile.html:537
+msgid "Settings"
+msgstr "إعدادات"
+
+#: templates/admin/base.html:302 templates/admin/base.html:311
+#: templates/admin/iframes/cash.html:24 templates/admin/iframes/cash.html:33
+#: templates/admin/iframes/datasync.html:25
+#: templates/admin/iframes/datasync.html:34
+#: templates/admin/iframes/prize.html:25 templates/admin/iframes/prize.html:34
+#: templates/admin/iframes/subunsub.html:23
+#: templates/admin/iframes/subunsub.html:32
+msgid "Engage"
+msgstr "Engage"
+
+#: templates/admin/captcha_login.html:33
+msgid "Please correct the error below."
+msgstr "الرجاء تصحيح الخطأ أدناه."
+
+#: templates/admin/captcha_login.html:33
+msgid "Please correct the errors below."
+msgstr "الرجاء تصحيح الخطأ أدناه."
+
+#: templates/admin/captcha_login.html:49
+#, python-format
+msgid ""
+"You are authenticated as %(username)s, but are not authorized to access this "
+"page. Would you like to login to a different account?"
+msgstr ""
+
+#: templates/admin/captcha_login.html:87
+msgid ""
+" You have been locked out for '+aux[1]+ ' minute(s).<br>Please <a href=\"./"
+"\">try again</a> later."
+msgstr ""
+
+#: templates/admin/captcha_login.html:117
+msgid "OTP Device:"
+msgstr ""
+
+#: templates/admin/captcha_login.html:122
+msgid "OTP Token:"
+msgstr ""
+
+#: templates/admin/captcha_login.html:131
+msgid "Forgotten your password or username?"
+msgstr ""
+
+#: templates/admin/captcha_login.html:135
+msgid "Log in"
+msgstr ""
+
+#: templates/admin/custom_index.html:7
+msgid "Recent actions"
+msgstr ""
+
+#: templates/admin/custom_index.html:8
+msgid "All users"
+msgstr ""
+
+#: templates/admin/custom_index.html:16
+msgid "None available"
+msgstr ""
+
+#: templates/admin/custom_index.html:30
+msgid "Unknown content"
+msgstr ""
+
+#: templates/disclaimer.html:9 templates/profile.html:571
+msgid "Disclaimer"
+msgstr ""
+
+#: templates/index.html:196
+msgid "PLAY, WIN AND EARN COINS"
+msgstr ""
+
+#: templates/index.html:197
+msgid "PLAY ANY OF THE FEATURED GAMES"
+msgstr ""
+
+#: templates/index.html:265 templates/profile.html:107
+msgid "Tournaments"
+msgstr "البطولات"
+
+#: templates/index.html:266
+msgid "Play Games"
+msgstr "العاب"
+
+#: templates/index.html:272
+msgid "ALL"
+msgstr "الكل"
+
+#: templates/index.html:276
+msgid "Upcoming"
+msgstr "القادم"
+
+#: templates/index.html:283
+msgid "Previous"
+msgstr "سابق"
+
+#: templates/index.html:286
+msgid "All Games Tournaments"
+msgstr "جميع بطولات الألعاب"
+
+#: templates/index.html:301
+msgid "PREMIUM"
+msgstr ""
+
+#: templates/index.html:305
+msgid "FREE"
+msgstr ""
+
+#: templates/index.html:490 templates/master.html:418 templates/master.html:451
+msgid "WINNERS"
+msgstr "الفائزين"
+
+#: templates/index.html:492
+msgid "Games Tournaments"
+msgstr ""
+
+#: templates/index.html:514
+msgid "Last Updated:"
+msgstr ""
+
+#: templates/index.html:553
+msgid "Ad Image/Video Here"
+msgstr ""
+
+#: templates/index.html:562 templates/register.html:6678
+#: templates/register1.html:4318 templates/register2.html:4302
+#: templates/register3.html:4349 templates/tournament.html:161
+msgid "Join Now"
+msgstr "نضم الان"
+
+#: templates/index.html:573 templates/profile.html:550
+#: templates/profile.html:775
+msgid "Share Engage"
+msgstr "شارك Engage"
+
+#: templates/index.html:590 templates/profile.html:792
+msgid "COPY"
+msgstr "نسخ"
+
+#: templates/master.html:310
+msgid "LOGIN / SIGNUP"
+msgstr "الدخول التسجيل فى الموقع"
+
+#: templates/master.html:317
+msgid "My Profile"
+msgstr "ملفي"
+
+#: templates/master.html:335
+msgid "Notifications"
+msgstr "إشعارات"
+
+#: templates/master.html:390 templates/master.html:439
+msgid "TOURNAMENTS"
+msgstr "البطولات"
+
+#: templates/master.html:392 templates/master.html:399
+#: templates/master.html:406 templates/master.html:413
+#: templates/master.html:420
+msgid "new"
+msgstr ""
+
+#: templates/master.html:397 templates/master.html:442
+msgid "GAMES"
+msgstr "ألعاب"
+
+#: templates/master.html:404 templates/master.html:445
+msgid "PRIZES"
+msgstr "الجوائز"
+
+#: templates/master.html:411 templates/master.html:448
+msgid "REDEEM"
+msgstr "يسترد"
+
+#: templates/master.html:495 templates/master.html:1487
+#: templates/profile.html:557
+msgid "FAQs"
+msgstr "أسئلة وأجوبة"
+
+#: templates/master.html:501 templates/profile.html:566 templates/terms.html:9
+msgid "Terms & Conditions"
+msgstr "البنود و الظروف"
+
+#: templates/master.html:507 templates/profile.html:555
+msgid "About"
+msgstr "عن"
+
+#: templates/master.html:511
+msgid "Contact Engage"
+msgstr "اتصل بـ Engage"
+
+#: templates/master.html:515
+msgid "Support"
+msgstr "الدعم"
+
+#: templates/master.html:569
+msgid "LOGIN"
+msgstr "تسجيل الدخول"
+
+#: templates/master.html:583 templates/master.html:619
+#: templates/master.html:630 templates/master.html:1218
+msgid "Next"
+msgstr ""
+
+#: templates/master.html:589
+msgid "Don’t have an account?"
+msgstr ""
+
+#: templates/master.html:591
+msgid "Register!"
+msgstr ""
+
+#: templates/master.html:614 templates/master.html:625
+#: templates/register2.html:4304 templates/register3.html:4351
+msgid "Change Number"
+msgstr ""
+
+#: templates/master.html:655
+msgid "Please wait for confirmation"
+msgstr ""
+
+#: templates/master.html:712
+msgid "CONTACT ENGAGE"
+msgstr ""
+
+#: templates/master.html:1080 templates/master.html:1180
+#: templates/profile.html:755
+msgid "SEND"
+msgstr ""
+
+#: templates/master.html:1110
+msgid "CONTACT SUPPORT"
+msgstr ""
+
+#: templates/master.html:1140
+msgid "I Need Support With"
+msgstr ""
+
+#: templates/master.html:1143
+msgid "Unable to subscribe to Engage"
+msgstr ""
+
+#: templates/master.html:1146
+msgid "Problem with account access"
+msgstr ""
+
+#: templates/master.html:1149
+msgid "Locked or suspended account issue"
+msgstr ""
+
+#: templates/master.html:1151
+msgid "Queries about tournaments"
+msgstr ""
+
+#: templates/master.html:1154
+msgid "Games not working for me"
+msgstr ""
+
+#: templates/master.html:1157
+msgid "Help using Engage"
+msgstr ""
+
+#: templates/master.html:1160
+msgid "Help with paid features"
+msgstr ""
+
+#: templates/master.html:1163
+msgid "Question about Prizes"
+msgstr ""
+
+#: templates/master.html:1166
+msgid "Redeem Coins queries"
+msgstr ""
+
+#: templates/master.html:1169
+msgid "Other problem or issue"
+msgstr ""
+
+#: templates/master.html:1224
+msgid "You already have an account?"
+msgstr ""
+
+#: templates/master.html:1226
+msgid "Login!"
+msgstr ""
+
+#: templates/master.html:1270
+msgid "RECOVER PASSWORD"
+msgstr ""
+
+#: templates/master.html:1281
+msgid "Enter your registered email to receive the password reset"
+msgstr ""
+
+#: templates/master.html:1284
+msgid "RESET PASSWORD"
+msgstr ""
+
+#: templates/master.html:1337
+msgid "Purchase"
+msgstr ""
+
+#: templates/master.html:1340 templates/prizes.html:248
+#: templates/prizes.html:277 templates/profile.html:657
+#: templates/profile.html:823 templates/tournament.html:444
+msgid "Cancel"
+msgstr ""
+
+#: templates/master.html:1543
+msgid "PRIVACY POLICY"
+msgstr ""
+
+#: templates/master.html:1571
+msgid "DISCLAIMER"
+msgstr ""
+
+#: templates/master.html:1600
+msgid "TERMS & CONDITIONS"
+msgstr ""
+
+#: templates/master.html:1677
+msgid "MTN Number"
+msgstr ""
+
+#: templates/master.html:1684
+msgid "Name"
+msgstr ""
+
+#: templates/master.html:1692
+msgid "Email"
+msgstr ""
+
+#: templates/master.html:1701
+msgid "Date Of Birth"
+msgstr ""
+
+#: templates/master.html:1784
+msgid "Nationality"
+msgstr ""
+
+#: templates/master.html:1791
+msgid "Country"
+msgstr ""
+
+#: templates/master.html:1807
+msgid "Gender"
+msgstr ""
+
+#: templates/master.html:1812
+msgid "Male"
+msgstr ""
+
+#: templates/master.html:1816
+msgid "Female"
+msgstr ""
+
+#: templates/master.html:1824
+msgid "State"
+msgstr ""
+
+#: templates/privacy.html:9 templates/profile.html:568
+msgid "Privacy Policy"
+msgstr ""
+
+#: templates/prizes.html:40
+msgid "Tournaments Prizes"
+msgstr ""
+
+#: templates/prizes.html:42 templates/profile.html:125
+#: templates/profile.html:673
+msgid "Redeem Coins"
+msgstr ""
+
+#: templates/prizes.html:47 templates/prizes.html:98
+#, python-format
+msgid ""
+"<span>Your Engage Coins balance is <span class=\"user-coins\">%(coins)s</"
+"span></span>"
+msgstr ""
+
+#: templates/prizes.html:58
+msgid "ALL PRIZES"
+msgstr ""
+
+#: templates/prizes.html:62
+msgid "CASH"
+msgstr ""
+
+#: templates/prizes.html:66
+msgid "TICKETS"
+msgstr ""
+
+#: templates/prizes.html:70
+msgid "DATA PACKAGES"
+msgstr ""
+
+#: templates/prizes.html:132
+#, python-format
+msgid "Engage Coins required: %(coins)s"
+msgstr ""
+
+#: templates/prizes.html:235
+msgid "Redeem Gift"
+msgstr ""
+
+#: templates/prizes.html:241
+msgid "You need (NbrCoins) coins to Redeem. Confirm to proceed?"
+msgstr ""
+
+#: templates/prizes.html:245 templates/prizes.html:274
+#: templates/profile.html:654 templates/profile.html:820
+#: templates/register.html:6711 templates/register1.html:4339
+#: templates/register2.html:4323 templates/register3.html:4370
+msgid "Confirm"
+msgstr ""
+
+#: templates/prizes.html:264
+msgid "Buy Coins"
+msgstr ""
+
+#: templates/profile.html:84 templates/profile.html:118
+msgid "Engage coins"
+msgstr ""
+
+#: templates/profile.html:98
+msgid "Profile"
+msgstr ""
+
+#: templates/profile.html:102
+msgid "Friends"
+msgstr ""
+
+#: templates/profile.html:143
+msgid "Last Played Games"
+msgstr ""
+
+#: templates/profile.html:146 templates/profile.html:181
+#: templates/profile.html:215 templates/profile.html:269
+#: templates/profile.html:308 templates/profile.html:588
+msgid "View All"
+msgstr ""
+
+#: templates/profile.html:178
+msgid "Joined tournaments"
+msgstr ""
+
+#: templates/profile.html:212
+msgid "Trophies"
+msgstr ""
+
+#: templates/profile.html:242
+msgid "FRIENDS"
+msgstr ""
+
+#: templates/profile.html:252
+msgid "Search users and friends"
+msgstr ""
+
+#: templates/profile.html:268
+msgid "Upcoming tournaments"
+msgstr ""
+
+#: templates/profile.html:306
+msgid "Played tournaments"
+msgstr ""
+
+#: templates/profile.html:350 templates/profile.html:644
+msgid "Unlock VIP"
+msgstr ""
+
+#: templates/profile.html:357
+msgid "Activity Points"
+msgstr ""
+
+#: templates/profile.html:400
+msgid "Buy This Stage and get the following:"
+msgstr ""
+
+#: templates/profile.html:403
+msgid "Free Movie"
+msgstr ""
+
+#: templates/profile.html:408
+msgid "Coins"
+msgstr ""
+
+#: templates/profile.html:415
+msgid "GB"
+msgstr ""
+
+#: templates/profile.html:421
+msgid "SKIP"
+msgstr ""
+
+#: templates/profile.html:422
+msgid "PURCHASE"
+msgstr ""
+
+#: templates/profile.html:462 templates/profile.html:473
+msgid "Points"
+msgstr ""
+
+#: templates/profile.html:477
+msgid "Done"
+msgstr ""
+
+#: templates/profile.html:543
+msgid "Edit Profile"
+msgstr ""
+
+#: templates/profile.html:544
+msgid "Upgrade Membership"
+msgstr ""
+
+#: templates/profile.html:560
+msgid "Contact Support"
+msgstr ""
+
+#: templates/profile.html:576
+msgid "Logout"
+msgstr ""
+
+#: templates/profile.html:626
+msgid "You don\\"
+msgstr ""
+
+#: templates/profile.html:649
+msgid "Are you sure you want to unlock VIP access to the battlepass?"
+msgstr ""
+
+#: templates/profile.html:675
+msgid "Select a Package"
+msgstr ""
+
+#: templates/profile.html:695
+msgid "Bonus"
+msgstr ""
+
+#: templates/profile.html:719
+msgid "BUY NOW"
+msgstr ""
+
+#: templates/profile.html:740
+msgid "Send Coins"
+msgstr ""
+
+#: templates/profile.html:745
+msgid "Enter Amount"
+msgstr ""
+
+#: templates/profile.html:811
+msgid "Alert"
+msgstr ""
+
+#: templates/profile.html:816
+msgid "Are you sure you want to remove this friend?"
+msgstr ""
+
+#: templates/register.html:6656
+msgid "NEXT"
+msgstr ""
+
+#: templates/register.html:6660
+msgid "Select your subscription Preference"
+msgstr ""
+
+#: templates/register.html:6671 templates/register1.html:4310
+#: templates/register2.html:4294 templates/register3.html:4341
+msgid "N50 Daily"
+msgstr ""
+
+#: templates/register.html:6674 templates/register1.html:4313
+#: templates/register2.html:4297 templates/register3.html:4344
+msgid "Free"
+msgstr ""
+
+#: templates/register.html:6692 templates/register1.html:4331
+#: templates/register2.html:4316 templates/register3.html:4363
+msgid "A pincode was sent to the provided phone number."
+msgstr ""
+
+#: templates/register.html:6693 templates/register1.html:4332
+#: templates/register2.html:4317 templates/register3.html:4364
+msgid "Please enter it to proceed."
+msgstr ""
+
+#: templates/register.html:6705 templates/register.html:6717
+#: templates/register1.html:4345 templates/register2.html:4329
+#: templates/register3.html:4376
+msgid "Didn't receive pincode? "
+msgstr ""
+
+#: templates/register.html:6705 templates/register.html:6717
+#: templates/register1.html:4345 templates/register2.html:4329
+#: templates/register3.html:4376
+msgid "Send again"
+msgstr ""
+
+#: templates/register.html:6745
+msgid "I ACCEPT"
+msgstr ""
+
+#: templates/register.html:6746
+msgid "GO BACK"
+msgstr ""
+
+#: templates/register1.html:4307 templates/register2.html:4291
+#: templates/register3.html:4338
+msgid "N30 Daily"
+msgstr ""
+
+#: templates/registration/password_change_done.html:4
+msgid "Documentation"
+msgstr ""
+
+#: templates/registration/password_change_done.html:4
+msgid "Change password"
+msgstr ""
+
+#: templates/registration/password_change_done.html:7
+msgid "Log out"
+msgstr ""
+
+#: templates/registration/password_change_done.html:12
+msgid "Home"
+msgstr ""
+
+#: templates/registration/password_change_done.html:13
+msgid "Password change"
+msgstr ""
+
+#: templates/registration/password_change_done.html:18
+msgid "Your password was changed."
+msgstr ""
+
+#: templates/registration/password_change_done.html:19
+msgid "Change it again"
+msgstr ""
+
+#: templates/tournament.html:43 templates/tournament.html:88
+msgid "Tournament Started"
+msgstr ""
+
+#: templates/tournament.html:81
+msgid "Tournament Starts in"
+msgstr ""
+
+#: templates/tournament.html:102
+msgid "Summary"
+msgstr ""
+
+#: templates/tournament.html:106 templates/tournament.html:111
+msgid "Participants"
+msgstr ""
+
+#: templates/tournament.html:123
+msgid "Practice"
+msgstr ""
+
+#: templates/tournament.html:128
+msgid "Waiting List"
+msgstr ""
+
+#: templates/tournament.html:132 templates/tournament.html:143
+#: templates/tournament.html:150 templates/tournament.html:166
+msgid "Expired"
+msgstr ""
+
+#: templates/tournament.html:135
+msgid "joined"
+msgstr ""
+
+#: templates/tournament.html:146 templates/tournament.html:157
+#: templates/tournament.html:173
+msgid "Closed"
+msgstr ""
+
+#: templates/tournament.html:153
+msgid "In progress"
+msgstr ""
+
+#: templates/tournament.html:170
+msgid "IN PROGRESS"
+msgstr ""
+
+#: templates/tournament.html:178
+msgid "JOIN NOW"
+msgstr ""
+
+#: templates/tournament.html:208
+msgid "Tournament Details"
+msgstr ""
+
+#: templates/tournament.html:215
+msgid "Game"
+msgstr ""
+
+#: templates/tournament.html:223
+msgid "Platform"
+msgstr ""
+
+#: templates/tournament.html:232
+msgid "Time"
+msgstr ""
+
+#: templates/tournament.html:268
+msgid "Tournament Prizes"
+msgstr ""
+
+#: templates/tournament.html:277
+msgid "Place"
+msgstr ""
+
+#: templates/tournament.html:291
+msgid "Tournament Rules"
+msgstr ""
+
+#: templates/tournament.html:381 templates/tournament.html:402
+msgid "Cannot join!"
+msgstr ""
+
+#: templates/tournament.html:386
+msgid ""
+"You cannot join this tournament since it has already started. Register to "
+"other tournaments now and win multiple prizes"
+msgstr ""
+
+#: templates/tournament.html:392
+msgid "Good Luck!"
+msgstr ""
+
+#: templates/tournament.html:397
+msgid "This tournament is ongoing, enjoy the game. Good Luck!!"
+msgstr ""
+
+#: templates/tournament.html:407
+msgid ""
+"You cannot join this tournament since it's closed. Register to other "
+"tournaments now and win multiple prizes"
+msgstr ""
+
+#: templates/tournament.html:412
+msgid "Subscribers Only!"
+msgstr ""
+
+#: templates/tournament.html:418
+msgid ""
+"Please upgrade from free package to N50 package to be able to join "
+"tournaments. To upgrade, simply deactivate from the free package by sending "
+"\"DEAC SUB3\" to “8561” then send \"SUB2\" to “8561”."
+msgstr ""
+
+#: templates/tournament.html:420
+msgid "Subscribe now to be able to join any upcoming tournament."
+msgstr ""
+
+#: templates/tournament.html:426
+msgid "Upgrade Subscription"
+msgstr ""
+
+#: templates/tournament.html:433
+msgid ""
+"You are allowed to join one tournament per day. Please upgrade your package "
+"to join multiple tournaments per day"
+msgstr ""
+
+#: templates/tournament.html:437
+msgid "Upgrade"
+msgstr ""
+
+#: templates/tournament.html:478 templates/tournament.html:485
+#: templates/tournament.html:535 templates/tournament.html:542
+msgid ""
+"Game account is your in-game ID. You need to create it in the game itself to "
+"be eligible to participate in the tournament."
+msgstr ""
+
+#: templates/tournament.html:481 templates/tournament.html:488
+#: templates/tournament.html:538 templates/tournament.html:545
+msgid "Enter your game account"
+msgstr ""
+
+#: templates/tournament.html:495 templates/tournament.html:552
+msgid "Submit"
+msgstr ""

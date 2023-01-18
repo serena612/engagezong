@@ -16,7 +16,7 @@ from celery.schedules import crontab
 from dotenv import load_dotenv
 
 from engage.celery import app
-
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,11 +36,28 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.19.224.1', 'dev.engageplaywin.com', '192.168.153.143','cms.engage.devapp.co']
 
+# Translation
+LANGUAGES = [
+    ('ar', _('Arabic')),
+    ('en-us', _('English')),
+]
+LANGUAGE_CODE = 'ar'
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, 'tournament', 'locale'),
+    os.path.join(BASE_DIR, 'admin', 'locale'),
+    os.path.join(BASE_DIR, 'core', 'locale'),
+    os.path.join(BASE_DIR, 'operator', 'locale'),
+    os.path.join(BASE_DIR, 'templates', 'locale'),
+)
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    
     'jet',
+    # 'engage.admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,6 +85,8 @@ INSTALLED_APPS = [
     'engage.core',
     'django_password_validators',
     'django_password_validators.password_history',
+    # 'django_otp',
+    # 'django_otp.plugins.otp_totp',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -82,10 +101,13 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.locale.LocaleMiddleware',
+
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'django_otp.middleware.OTPMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'engage.account.middlewares.LastSeenMiddleware',
@@ -202,7 +224,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -284,7 +306,7 @@ app.conf.beat_schedule = {
     # },
     'happy_birthday_notification': {
         'task': 'engage.account.schedulers.happy_birthday_notification',
-        'schedule': crontab(hour=0, minute=10)
+        'schedule': crontab(hour=0, minute=10) # crontab(minute='*/1'), # 
     },
     'once_a_month_notification': {
         'task': 'engage.account.schedulers.once_a_month_notification',
@@ -376,6 +398,12 @@ JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
         {'name': 'operator.region'},
         {'name': 'operator.operator'},
         {'name': 'operator.operatorad'}
+    ]},
+    {'label': 'Statistics', 'items': [
+        {'name': 'account.user','label': 'Prize','url': '/admin/prize/','permissions': ['account.user']} ,
+        {'name': 'account.user','label': 'Cash','url': '/admin/cashdash/','permissions': ['account.user']},
+        {'name': 'account.user','label': 'Datasync','url': '/admin/datasync/','permissions': ['account.user']},
+        {'name': 'account.user','label': '(Un)Subscribe','url': '/admin/subunsub/','permissions': ['account.user']},
     ]},
 ]
 
