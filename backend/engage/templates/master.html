@@ -238,7 +238,7 @@
         @media screen and (orientation:portrait)
         {
             .rotate_dev{
-                display: block;
+                display: block;               
             }
         }
         @media screen and (orientation:landscape)
@@ -247,6 +247,53 @@
                 display: none;
             }
         }
+
+         /*iPhone X*/
+         @media only screen 
+    and (device-width : 375px) 
+    and (device-height : 812px) 
+    and (-webkit-device-pixel-ratio : 3) { 
+        #mainContainer, #adContainer{
+          
+           z-index:999999999999999999999!important;
+           position:fixed!important;
+           top:42px;
+           left:0px;
+           width:100vw;
+            height: 100vh;
+        }
+    }
+    
+    /*iPhone 8*/
+    @media only screen 
+    and (device-width : 375px) 
+    and (device-height : 667px) 
+    and (-webkit-device-pixel-ratio : 2) { 
+     #mainContainer, #adContainer{
+             z-index:999999999999999999999!important;
+           position:fixed!important;
+           top:42px;
+           left:0px;
+           width:100vw;
+            height: 100vh;
+        }
+    }
+    
+    /*iPhone 8 Plus*/
+    @media only screen 
+    and (device-width : 414px) 
+    and (device-height : 736px) 
+    and (-webkit-device-pixel-ratio : 3) { 
+     #mainContainer, #adContainer{
+            z-index:999999999999999999999!important;
+           position:fixed!important;
+           top:42px;
+           left:0px;
+           width:100vw;
+            height: 100vh;
+        }
+    }
+    
     </style>
 </head>
 
@@ -1399,7 +1446,7 @@
                 
                   <div id="mainContainer">
                     <div id="content">
-                      <video id="contentElement">
+                      <video id="contentElement" playsinline>
                         <source src="{% static 'js/blank.mp4' %}"></source>
                             </video>
                      </div>   
