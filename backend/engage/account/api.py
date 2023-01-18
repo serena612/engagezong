@@ -1505,6 +1505,19 @@ class UserViewSet(mixins.ListModelMixin,
                 raise AdLimitReached()
             else:
                 return Response({'coins': 5})
+
+        #handle engage ads, call google api to reward engage videos
+        elif ad_type=="engage":
+            transaction = UserTransactionHistory.objects.create(
+                user=user,
+                amount=0, # amount of coins to grant
+                action=CoinTransaction.ENGAGE_VIEW,
+                info=Transaction.ENGAGE_VIEW
+            )
+            print("Transaction succeeded", transaction.actual_amount)
+           
+            return Response({'coins': 0})
+
         else:
             raise exceptions.ValidationError({'error':'Invalid arguments'})
             

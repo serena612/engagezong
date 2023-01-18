@@ -263,10 +263,18 @@ function onAdEvent(adEvent) {
       console.log("Ad uni Id: "+ad.getUniversalAdIdValue()); 
       // console.log("Ad creative Id: "+ad.getCreativeAdId());
       console.log("Ad ID: "+ad.getAdId());
+      if (is_ad_engage == true && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
+        $("#mainContainer,#playButton,.close_video_ad").hide();}
+      else if(is_ad_google == true && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
+        $("#mainContainer,#playButton,.close_video_ad").hide();
+      }
+      else{
+
+      
       $("#mainContainer,.close_video_ad").show();
       if (!ad.isLinear()) {
         videoContent.play();
-      }
+      }}
       break;
     case google.ima.AdEvent.Type.ALL_ADS_COMPLETED:
       // This is triggered when all ads have done playing
@@ -290,6 +298,20 @@ function onAdEvent(adEvent) {
       break;
     case google.ima.AdEvent.Type.COMPLETE:
       // This is triggered when one ad is completed
+      if (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))
+      {
+        postReward("engage", ad.getAdId()).then(res => {
+          //form.trigger("reset");
+          console.log("View event reward success");
+          console.log(res);
+          
+        }).catch(e => {
+          console.log("View event reward failed");
+          console.log(e.responseJSON.code);
+        });
+      }
+      else
+      {
       postReward("view", ad.getAdId()).then(res => {
         //form.trigger("reset");
         console.log("View event reward success");
@@ -301,6 +323,7 @@ function onAdEvent(adEvent) {
         if ( e.responseJSON.code == 'ad_limit_reached' ) {
           $('#congrats-modal3').modal('show');}
       });
+    }
       break;
   }
 }
@@ -373,6 +396,8 @@ function getCookie(name) {
   }
   return cookieValue;
 }
+
+OWN_CREATIVES = ['6178477617', '6180000871', '6180646283', '6180545204']
 
 function postReward(reward_type, adidd) {
   const apiurl = window.location.origin+'/api/users/get_ad_reward/';

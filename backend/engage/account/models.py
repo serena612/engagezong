@@ -269,6 +269,14 @@ class UserTransactionHistory(TimeStampedModel):
             action=CoinTransaction.AD_VIEW,
             created__date=now.date()
         ).count()
+
+    def engage_viewed(self):
+        now = timezone.now()
+        return UserTransactionHistory.objects.filter(
+            user=self.user,
+            action=CoinTransaction.ENGAGE_VIEW,
+            created__date=now.date()
+        ).count()
    
     @transaction.atomic()
     def save(self, *args, **kwargs):
@@ -310,7 +318,7 @@ class UserTransactionHistory(TimeStampedModel):
         elif self.action == CoinTransaction.AD_CLICK:
             # check if already claimed today
             print("ads clicked today", self.ads_clicked())
-            if self.ads_clicked()<3:
+            if self.ads_clicked()+self.ads_viewed()<3:
                 self.actual_amount = self.amount
                 self.user.coins += self.amount
             else:
@@ -319,11 +327,19 @@ class UserTransactionHistory(TimeStampedModel):
         elif self.action == CoinTransaction.AD_VIEW:
             # check if already claimed today
             print("ads viewed today", self.ads_viewed())
-            if self.ads_viewed()<3:
+            if self.ads_clicked()+self.ads_viewed()<3:
                 self.actual_amount = self.amount
                 self.user.coins += self.amount
             else:
                 self.actual_amount = 0
+        
+        elif self.action == CoinTransaction.ENGAGE_VIEW:
+            # check if already claimed today
+            print("engage ads viewed today", self.engage_viewed())
+           
+            self.actual_amount = self.amount
+            self.user.coins += self.amount
+
         else:
             self.actual_amount = self.amount
             self.user.coins += self.amount

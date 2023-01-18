@@ -12,6 +12,7 @@ from engage.operator.models import OperatorAd
 from engage.services import notify_when
 from engage.settings.base import SHOWADS
 from engage.account.constants import SubscriptionPlan
+from engage.account.models import UserTransactionHistory
 
 
 @notify_when(events=[
@@ -47,7 +48,18 @@ def home_view(request):
         user_uid = request.user.uid
     else:
         user_uid = ""
-    
+
+    transaction = UserTransactionHistory.objects.filter(user=request.user).first()
+    print("transaction", transaction, "viewed", transaction.engage_viewed())
+    if transaction.engage_viewed() < 3:
+        is_ad_engage = False
+    else:
+        is_ad_engage = True
+    if transaction.ads_clicked()+transaction.ads_viewed() < 3:
+        is_ad_google = False
+    else:
+        is_ad_google = True
+      
     return render(request, 'index.html', {'featured_games': featured_games,
                                           'games': games,
                                           'ad': ad,
@@ -55,7 +67,9 @@ def home_view(request):
                                           'previous_tournaments':previous_tournaments,
                                           'user_id': user_id,
                                           'show_ads': SHOWADS,
-                                          'user_uid': user_uid})
+                                          'user_uid': user_uid,
+                                          'is_ad_google': is_ad_google,
+                                          'is_ad_engage':is_ad_engage})
 
 
     

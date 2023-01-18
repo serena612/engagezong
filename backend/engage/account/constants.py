@@ -23,6 +23,7 @@ class CoinTransaction(LabelChoices):
     REFER = 'refer', 'Refer'
     AD_CLICK = 'ad_click', 'Ad Click'
     AD_VIEW = 'ad_view', 'Ad View'
+    ENGAGE_VIEW = 'engage_view', 'Engage View'
 
 class Transaction(LabelChoices):
     ADD = 'add', 'Add'
@@ -36,6 +37,7 @@ class Transaction(LabelChoices):
     REFER = 'refer', 'Refer'
     AD_CLICK = 'ad_click', 'Ad Click'
     AD_VIEW = 'ad_view', 'Ad View'
+    ENGAGE_VIEW = 'engage_view', 'Engage View'
 
 
 class NotificationType(LabelChoices):
