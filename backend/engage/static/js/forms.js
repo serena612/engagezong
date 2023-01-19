@@ -531,7 +531,7 @@ $(document).on("submit", ".register-otp-form", function (e) {
     }
     
     
-    data.data.subscription = $('.frmregister').find('select[name="subscription"]').val();
+    data.data.subscription = $('#user_sub_mod').val();//$('.frmregister').find('select[name="subscription"]').val();
     
     // if($('input[name="code"]').val()!="123456"){
     //     response_msg.html('Please enter a valid pincode!').show();
