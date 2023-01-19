@@ -48,7 +48,11 @@ def home_view(request):
         user_uid = request.user.uid
     else:
         user_uid = ""
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 9ef075f32e741ca72e93e9dfe2767d70ef680ec8
     if request.user.is_authenticated :
         transaction = UserTransactionHistory.objects.filter(user=request.user).first()
         print("transaction", transaction, "viewed", transaction.engage_viewed())
