@@ -16,6 +16,7 @@ let adsManager;
 let adsLoader;
 let adDisplayContainer;
 let playButton;
+let pauseButton;
 let videoContent;
 let adsInitialized;
 let autoplayAllowed;
@@ -242,9 +243,11 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
   
   if (autoplayAllowed) {
     playButton.style.display = 'none';
+    pauseButton.style.display = 'bock';
     playAds();
   } else {
     playButton.style.display = 'block';
+    pauseButton.style.display = 'none';
   }
 }
 
@@ -265,9 +268,9 @@ function onAdEvent(adEvent) {
       // console.log("Ad creative Id: "+ad.getCreativeAdId());
       console.log("Ad ID: "+ad.getAdId());
       if (is_ad_engage == true && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
-        $("#mainContainer,#playButton,.close_video_ad").hide();}
+        $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();}
       else if(is_ad_google == true && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
-        $("#mainContainer,#playButton,.close_video_ad").hide();
+        $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();
       }
       else{
 
@@ -280,7 +283,7 @@ function onAdEvent(adEvent) {
     case google.ima.AdEvent.Type.ALL_ADS_COMPLETED:
       // This is triggered when all ads have done playing
       // Hide ad
-      $("#mainContainer,#playButton,.close_video_ad").hide();
+      $("#mainContainer,#playButton, #pauseButton, .close_video_ad").hide();
       break;
     case google.ima.AdEvent.Type.CLICK:
       // This is triggered when the visit site button is clicked
@@ -336,8 +339,8 @@ function onAdEvent(adEvent) {
         intervalTimer = setInterval(
             function() {
               var remainingTime = adsManager.getRemainingTime();
-              countdownUi.innerHTML =
-                'Remaining Time: ' + parseInt(remainingTime);
+              //countdownUi.innerHTML =
+               $('#timerAd').html('Remaining Time: ' + parseInt(remainingTime));
             },
             300); // every 300ms
       }
@@ -362,7 +365,7 @@ function onAdError(adErrorEvent) {
     // error handling
   
   }
-  $("#mainContainer,#playButton,.close_video_ad").hide();
+  $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();
   // Fall back to playing content.
   //videoContent.play();
 }
@@ -394,7 +397,7 @@ function closeVideoAd(){
   
   }
   
-   $("#mainContainer,#playButton,.close_video_ad").hide();
+   $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();
    $(window).scrollTop($('.sec-3').offset().top);
 }
 

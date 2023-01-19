@@ -7289,3 +7289,12 @@ or (width:390px) or (width:411px)
   z-index: 100000;
   height: 100vh;
 }
+
+#timerAd
+{
+position:fixed;
+bottom:10px;
+left:5px;
+z-index:99999999999999999999999999;
+color:#FFF;
+}
