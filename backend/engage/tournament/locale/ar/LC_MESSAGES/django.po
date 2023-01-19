@@ -21,47 +21,48 @@ msgstr ""
 
 #: tournament/admin.py:194
 msgid "An image is required when winners are specified"
-msgstr ""
+msgstr "مطلوب صورة عند تحديد الفائزين"
 
 #: tournament/admin.py:230
 msgid "Participant(s): , "
-msgstr ""
+msgstr "مشارك: ،"
 
 #: tournament/models.py:331
 msgid "Close Date must be greater than Open Date"
-msgstr ""
+msgstr "يجب أن يكون تاريخ الإغلاق أكبر من تاريخ الفتح"
 
 #: tournament/models.py:336
 msgid "Start Date can't be in the past"
-msgstr ""
+msgstr "لا يمكن أن يكون تاريخ البدء في الماضي"
 
 #: tournament/models.py:340
 msgid "End Date can't be in the past"
-msgstr ""
+msgstr "لا يجوز أن يكون تاريخ الانتهاء في الماضي"
 
 #: tournament/models.py:344
 msgid "End Date must be greater than Start Date"
-msgstr ""
+msgstr "يجب أن يكون تاريخ الانتهاء أكبر من تاريخ البدء"
 
 #: tournament/models.py:351
 msgid "Close Date must be at least 6 hours earlier than Start Date"
-msgstr ""
+msgstr "يجب أن يكون تاريخ الإغلاق قبل 6 ساعات على الأقل من تاريخ البدء"
 
 #: tournament/models.py:355
 msgid "Public open date cannot be smaller than VIP open date"
-msgstr ""
+msgstr "لا يمكن أن يكون تاريخ الفتح العام أصغر من تاريخ فتح VIP"
 
 #: tournament/models.py:359
 msgid "Close date cannot be smaller than public open date"
-msgstr ""
+msgstr "لا يمكن أن يكون تاريخ الإغلاق أصغر من تاريخ الفتح العام"
 
 #: tournament/models.py:561
 msgid ""
 "This round number selection is above the rounds numbers set in the "
 "tournament settings"
-msgstr ""
+msgstr "يكون اختيار الرقم المستدير هذا أعلى من أرقام الدورات المحددة في"
+"إعدادات البطولة"
 
 #: tournament/models.py:565
 msgid ""
 "Match date must be between tournament start date and tournament end date"
-msgstr ""
+msgstr "يجب أن يكون تاريخ المباراة بين تاريخ بدء البطولة وتاريخ انتهاء البطولة"

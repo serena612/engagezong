@@ -21,62 +21,65 @@ msgstr ""
 
 #: account/admin.py:76 account/admin.py:99 account/admin.py:156
 msgid "Personal info"
-msgstr ""
+msgstr "معلومات شخصية"
 
 #: account/admin.py:77 account/admin.py:100 account/admin.py:157
 msgid "Permissions"
-msgstr ""
+msgstr "أذونات"
 
 #: account/models.py:59
 #, python-format
 msgid "%(subdata)s is not a valid MTN phone number!"
-msgstr ""
+msgstr "ليس رقم هاتف MTN صالحًا!%(subdata)s"
 
 #: account/urls.py:27
 msgid "Password changed successfully."
-msgstr ""
+msgstr "تم تغيير الرقم السري بنجاح."
 
 #: account/urls.py:41
 msgid ""
 "You entered your old password incorrectly multiple times! Please log in "
 "again to continue."
-msgstr ""
+msgstr "لقد أدخلت كلمة مرورك القديمة بشكل غير صحيح عدة مرات! الرجاء تسجيل الدخول"
+"مرة أخرى للمتابعة."
 
 #: account/validator.py:20
 #, python-format
 msgid "Password must contain at least %(min_length)d digit."
-msgstr ""
+msgstr "يجب أن تحتوي كلمة المرور على٪ (min_length) d رقم على الأقل."
 
 #: account/validator.py:22
 #, python-format
 msgid "Password must contain at least %(min_length)d lower-case character."
-msgstr ""
+msgstr "يجب أن تحتوي كلمة المرور على٪ (min_length) حرف صغير على الأقل."
 
 #: account/validator.py:24
 #, python-format
 msgid "Password must contain at least %(min_length)d special character."
-msgstr ""
+msgstr "يجب أن تحتوي كلمة المرور على٪ (min_length) d حرفًا خاصًا على الأقل."
 
 #: account/validator.py:26
 #, python-format
 msgid "Password must contain at least %(min_length)d upper-case character."
-msgstr ""
+msgstr "يجب أن تحتوي كلمة المرور على٪ (min_length) d حرفًا كبيرًا على الأقل."
 
 #: account/validator.py:29
 msgid "Password cannot contain consecutive numbers."
-msgstr ""
+msgstr "لا يمكن أن تحتوي كلمة المرور على أرقام متتالية."
 
 #: account/validator.py:32
 msgid ""
 "Password has been previously exposed in data breaches. Please choose another."
 msgstr ""
+"تم الكشف عن كلمة المرور سابقًا في خروقات البيانات. الرجاء اختيار آخر."
 
 #: account/validator.py:35
 msgid ""
 "Your password must contain at lest one upper-case character, one lower-case "
 "character, one digit and one special character."
-msgstr ""
+msgstr "يجب أن تحتوي كلمة مرورك على حرف واحد كبير على الأقل ، وحرف صغير واحد "
+"حرف ورقم واحد وحرف خاص واحد."
 
 #: account/views.py:205
 msgid "You have been locked out for "
-msgstr ""
+msgstr "لقد تم حظر دخولك بسبب "

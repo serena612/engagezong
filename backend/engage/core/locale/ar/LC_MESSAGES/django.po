@@ -21,12 +21,12 @@ msgstr ""
 
 #: core/models.py:300 core/models.py:312 core/models.py:317
 msgid "This field is required."
-msgstr ""
+msgstr "هذه الخانة مطلوبه."
 
 #: core/models.py:306
 msgid "Claim Instantly must be selected if coins are set for a TEXT action"
-msgstr ""
+msgstr "يجب تحديد المطالبة فورًا إذا تم تعيين العملات لإجراء TEXT"
 
 #: core/models.py:322
 msgid "Event Date is required"
-msgstr ""
+msgstr "تاريخ الحدث مطلوب"

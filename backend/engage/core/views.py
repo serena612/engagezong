@@ -49,17 +49,23 @@ def home_view(request):
     else:
         user_uid = ""
 
-    transaction = UserTransactionHistory.objects.filter(user=request.user).first()
-    print("transaction", transaction, "viewed", transaction.engage_viewed())
-    if transaction.engage_viewed() < 3:
-        is_ad_engage = False
+    if request.user.is_authenticated :
+        transaction = UserTransactionHistory.objects.filter(user=request.user).first()
+        print("transaction", transaction, "viewed", transaction.engage_viewed())
+    
+        if transaction.engage_viewed() < 3:
+            is_ad_engage = False
+        else:
+            is_ad_engage = True
+        if transaction.ads_clicked()+transaction.ads_viewed() < 3:
+            is_ad_google = False
+        else:
+            is_ad_google = True
+    
     else:
         is_ad_engage = True
-    if transaction.ads_clicked()+transaction.ads_viewed() < 3:
-        is_ad_google = False
-    else:
         is_ad_google = True
-      
+        
     return render(request, 'index.html', {'featured_games': featured_games,
                                           'games': games,
                                           'ad': ad,
