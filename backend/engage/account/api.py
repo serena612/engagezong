@@ -1468,7 +1468,7 @@ class UserViewSet(mixins.ListModelMixin,
                 if 'ad_id' in request.session:
                     request.session.pop('ad_id', None)
                 request.session.modified = True
-        if ad_id in OWN_CREATIVES:
+        if ad_id in OWN_CREATIVES and ad_type != 'engage':
             raise SelfAd()
         if 'ad_id' in request.session and ad_type=="click":
             if ad_id == request.session['ad_id']:
@@ -1507,7 +1507,7 @@ class UserViewSet(mixins.ListModelMixin,
                 return Response({'coins': 5})
 
         #handle engage ads, call google api to reward engage videos
-        elif ad_type=="engage":
+        elif ad_id in OWN_CREATIVES and ad_type=="engage":
             transaction = UserTransactionHistory.objects.create(
                 user=user,
                 amount=0, # amount of coins to grant
