@@ -7302,7 +7302,7 @@ color:#FFF;
 #playButton, #pauseButton {
   color: #FFF; 
   position: fixed;
-  top: 43vh;
+  top: 50vh;
   left: 47vw;
   z-index: 2147483647;
   padding: 10px;

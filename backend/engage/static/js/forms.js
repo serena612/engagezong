@@ -464,7 +464,13 @@ $(document).on("submit", ".frmregister", function (e) {
     }
 
     setBtnLoading(btn, true);
+
+    data.data.subscription = $('#user_sub_mod').val();
     
+    console.log("---aaa----");
+    console.log(data.data);
+    console.log("--aaa-----");
+
     postRegister(data.data).then(res => {
         //form.trigger("reset");
         setBtnLoading(btn, false);
@@ -476,15 +482,15 @@ $(document).on("submit", ".frmregister", function (e) {
 
     }).catch(e => {
         if(e.status==306)
-        response_msg.html('The mobile number you have provided already exists!').show();
+        $(".sendcodemsg").html('The mobile number you have provided already exists!').show();
         else if(e.status==472) //406 ?
-        response_msg.html('The number you have provided is invalid!').show();
+        $(".sendcodemsg").html('The number you have provided is invalid!').show();
         else if(e.status==458)
-        response_msg.html('The max allowed sent pin codes have been reached! Please try again tomorrow.').show();
+        $(".sendcodemsg").html('The max allowed sent pin codes have been reached! Please try again tomorrow.').show();
         else if(e.status==555)
-        response_msg.html('No connection available, please try again later.').show();
+        $(".sendcodemsg").html('No connection available, please try again later.').show();
         else
-        response_msg.html('Something went wrong. Please try again later.').show();  //  Error code: '+e.status
+        $(".sendcodemsg").html('Something went wrong. Please try again later.').show();  //  Error code: '+e.status
         setBtnLoading(btn, false);
     });
 
