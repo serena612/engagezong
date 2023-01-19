@@ -20,6 +20,7 @@ let videoContent;
 let adsInitialized;
 let autoplayAllowed;
 let autoplayRequiresMuted;
+var intervalTimer;
 
 /**
  * Initializes IMA setup.
@@ -324,6 +325,22 @@ function onAdEvent(adEvent) {
           $('#congrats-modal3').modal('show');}
       });
     }
+    if (ad.isLinear()) {
+      clearInterval(intervalTimer);
+    }
+      break;
+    case google.ima.AdEvent.Type.STARTED:
+      if (ad.isLinear()) {
+        // For a linear ad, a timer can be started to poll for
+        // the remaining time.
+        intervalTimer = setInterval(
+            function() {
+              var remainingTime = adsManager.getRemainingTime();
+              countdownUi.innerHTML =
+                'Remaining Time: ' + parseInt(remainingTime);
+            },
+            300); // every 300ms
+      }
       break;
   }
 }
