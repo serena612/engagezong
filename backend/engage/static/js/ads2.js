@@ -22,7 +22,7 @@ let adsInitialized;
 let autoplayAllowed;
 let autoplayRequiresMuted;
 var intervalTimer;
-
+var started=false;
 /**
  * Initializes IMA setup.
  */
@@ -38,15 +38,31 @@ function initDesktopAutoplayExample() {
     try{
     adsLoader.contentComplete();
     adsLoader.destroy()
-    console.log("Destroyed adsLoader");}catch (error) {}}
+    console.log("Destroyed adsLoader");
+    started = false;
+    }catch (error) {}}
     catch (error) {}
   playButton.addEventListener('click', () => {
     // Initialize the container. Must be done through a user action where
     // autoplay is not allowed.
+    if(!started){
+      started = true;
     adDisplayContainer.initialize();
     adsInitialized = true;
     videoContent.load();
     playAds();
+  }else{
+      adsManager.resume();
+      playButton.style.display = 'none';
+      pauseButton.style.display = 'block';
+    }
+  });
+  pauseButton.addEventListener('click', () => {
+    // Initialize the container. Must be done through a user action where
+    // autoplay is not allowed.
+    adsManager.pause();
+    playButton.style.display = 'block';
+    pauseButton.style.display = 'none';
   });
   setUpIMA();
   // Check if autoplay is supported.
@@ -245,6 +261,7 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
   if (autoplayAllowed) {
     playButton.style.display = 'none';
     pauseButton.style.display = 'block';
+    started = true;
     playAds();
   } else {
     playButton.style.display = 'block';
