@@ -29,6 +29,7 @@ var intervalTimer;
 function initDesktopAutoplayExample() {
   videoContent = document.getElementById('contentElement');
   playButton = document.getElementById('playButton');
+  pauseButton = document.getElementById('pauseButton');
   // destroy adsLoader
   adsInitialized = false;
   try {
@@ -243,7 +244,7 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
   
   if (autoplayAllowed) {
     playButton.style.display = 'none';
-    pauseButton.style.display = 'bock';
+    pauseButton.style.display = 'block';
     playAds();
   } else {
     playButton.style.display = 'block';
