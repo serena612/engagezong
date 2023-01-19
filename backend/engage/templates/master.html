@@ -244,7 +244,7 @@
         @media screen and (orientation:landscape)
         {
             .rotate_dev{
-                display: none;
+                display: none!important;
             }
         }
 
@@ -253,7 +253,7 @@
     and (device-width : 375px) 
     and (device-height : 812px) 
     and (-webkit-device-pixel-ratio : 3) { 
-        #mainContainer, #adContainer{
+        #mainContainer, #adContainer, #game-fullscreen-modal #adContainer iframe{
           
            z-index:999999999999999999999!important;
            position:fixed!important;
@@ -269,7 +269,7 @@
     and (device-width : 375px) 
     and (device-height : 667px) 
     and (-webkit-device-pixel-ratio : 2) { 
-     #mainContainer, #adContainer{
+     #mainContainer, #adContainer, #game-fullscreen-modal #adContainer iframe{
              z-index:999999999999999999999!important;
            position:fixed!important;
            top:42px;
@@ -284,7 +284,7 @@
     and (device-width : 414px) 
     and (device-height : 736px) 
     and (-webkit-device-pixel-ratio : 3) { 
-     #mainContainer, #adContainer{
+     #mainContainer, #adContainer, #game-fullscreen-modal #adContainer iframe{
             z-index:999999999999999999999!important;
            position:fixed!important;
            top:42px;
@@ -293,6 +293,40 @@
             height: 100vh;
         }
     }
+	
+	
+	/*iPhone X*/
+        @media only screen 
+    and (device-width : 812px) 
+    and (device-height : 375px) 
+    and (-webkit-device-pixel-ratio : 3) and (orientation:landscape) { 
+    .rotate_dev{
+                display: none!important;
+            }
+    }
+	
+	/*iPhone 8*/
+    @media only screen 
+    and (device-width : 667px) 
+    and (device-height : 375px) 
+    and (-webkit-device-pixel-ratio : 2) and (orientation:landscape) {
+    .rotate_dev{
+                display: none!important;
+            }
+     }
+	 
+	  /*iPhone 8 Plus*/
+    @media only screen 
+    and (device-width : 736px) 
+    and (device-height : 414px) 
+    and (-webkit-device-pixel-ratio : 3) and (orientation:landscape) { 
+    .rotate_dev{
+                display: none!important;
+            }
+    }
+	
+    
+	
     
     </style>
 </head>
