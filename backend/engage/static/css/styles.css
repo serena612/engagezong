@@ -7304,7 +7304,7 @@ color:#FFF;
   position: fixed;
   top: 50vh;
   left: 47vw;
-  z-index: 2147483647;
+  z-index: 2147483647; 
   padding: 10px;
   border: none;
   border-radius: 3px;
