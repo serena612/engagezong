@@ -72,7 +72,7 @@
                             <a href="#settings"
                                data-id="#choice-5"
                                class="badge badge-pill settings-btn is-with-side-friends"
-                               style="background: #A6076E;" >Settings</a>
+                               style="background: #A6076E;" >{% translate 'Settings' %}</a>
                         </div>
                     </div>
                     <div class="det-right det-mobile"
@@ -190,10 +190,10 @@
                              data-min-size="12">
                             <div class="card-wrapper">
                                 <div class="title-wrapper type-2 bg-2">
-                                    <h3 class="box-title">Stickers</h3>
+                                    <h3 class="box-title">{% translate 'Stickers' %}</h3>
 
                                     <a href="" data-target="stickers"
-                                       class="link expand-link">View All</a>
+                                       class="link expand-link">{% translate 'View All' %}</a>
                                 </div>
                                 <div class="body-wrapper">
                                     <div class="imgs-box" data-scroll-max="3"
@@ -357,7 +357,7 @@
                             <div class="timeline d-flex align-items-center">
                                 <img src="{% static 'img/timer.png' %}" alt="">
                                 <span><span class="timer full-timer"
-                                            data-date="{{ battle_pass.ends_at|date:'b d, Y 23:59:00' }}">Loading...</span></span>
+                                            data-date="{{ battle_pass.ends_at|date:'b d, Y 23:59:00' }}">{% translate 'Loading...' %}</span></span>
                             </div>
                         </div>
                     </div>
@@ -476,7 +476,7 @@
                                             <img src="{% static 'img/timer.png' %}"
                                                  height="25" alt="">
                                                 <span class="timer"
-                                                      data-date="{{ mission.active_till }}">Loading...</span>
+                                                      data-date="{{ mission.active_till }}">{% translate 'Loading...' %}</span>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -623,7 +623,7 @@
                         {% translate 'You don\'t have friends yet on Engage. Invite your friends anytime and engage with them.' %}                       
                     </li>
                     <button data-toggle="modal" class="btn3" style="margin-left: 30px; width: calc(100% - 60px); text-align: center; display: block; padding: 4px 20px; margin-top: 20px;"
-                    data-target="#share-modal">Add friends</button>
+                    data-target="#share-modal">{% translate 'Add friends' %}</button>
                 {% endif %}    
             </ul>
         </section>

@@ -357,7 +357,7 @@
                               style="display: none;">
                             <select name="option" id="nav-search-select">
                                 <option value="users">Users</option>
-                                <option value="tournaments">Tournaments</option>
+                                <option value="tournaments">{% translate 'Tournaments' %}</option>
                                 <option value="games">Games</option>  
                             </select>
                             <input name="search" type="text"
@@ -538,7 +538,7 @@
                     <img src="{{ user.avatar.image.url }}" alt="" border="0"  >
                  </div>
                  <div class="username_prof">
-                        <div style="color:#FFF; font-size: inherit;">MY PROFILE</div>
+                        <div style="color:#FFF; font-size: inherit;">{% translate 'MY PROFILE' %}</div>
                         <div style="color: #EF0C75; font-size: 14px;">{{ user.nickname|default_if_none:"" }} </div>
                  </div>
         </a>
@@ -747,16 +747,16 @@
                                 <div class="tit"></div>
                                 <!-- <div class="desc sucdesc">Subscription Success !</div> -->
                             </div>
-                            <div class="desc">Loading...</div>
+                            <div class="desc">{% translate 'Loading...' %}</div>
 
                             <button id="subscribeRetry" class="btn btn-primary" onclick="document.location.reload(true);">
                                 <span class="" data-target="#sub" id="subSubscribe" role="status" aria-hidden="true">OK</span>
                             </button>
                             <button id="subscribeClose" class="btn btn-primary d-none" data-dismiss="modal">
-                                <span class="" data-target="#sub" id="subSubscribeClose" role="status" aria-hidden="true">Close</span>
+                                <span class="" data-target="#sub" id="subSubscribeClose" role="status" aria-hidden="true">{% translate 'Close' %}</span>
                             </button>
                         </div>                       
-                        <div class="please_wait" style="padding-top:20px;padding-bottom:30px;">Please wait while we process your request...</div>
+                        <div class="please_wait" style="padding-top:20px;padding-bottom:30px;">{% translate 'Please wait while we process your request...' %}</div>
                         
                     </div>
                 </div>
@@ -1321,7 +1321,7 @@
                                        name="code"
                                        placeholder="Enter 6 Digits Code">
                                 <div class="text-right">
-                                    <button type="submit" class="btn3">Next
+                                    <button type="submit" class="btn3">{% translate 'Next' %}
                                     </button>
                                 </div>
 
@@ -1489,7 +1489,7 @@
                   <button id="playButton">Play</button>
                   <button id="pauseButton">Pause</button>
                   <div class="close_video_ad" onclick="closeVideoAd()">x</div>
-                  <div class="pink_info">Please resume and watch full video to collect your reward</div>
+                  <div class="pink_info">{% translate 'Please resume and watch full video to collect your reward' %}</div>
                   <div id="timerAd"></div>
                 
                   <script type="text/javascript">
@@ -1624,11 +1624,11 @@
             <div class='page-box'>
             <div class="text-container">
                 <div class="content">
-                     <p>To be transparent with your users about what personal information you collect and what you do with it, you are required to publish a Privacy Policy agreement on your website or give in-app access to it.</p>
+                     <p>{% translate 'To be transparent with your users about what personal information you collect and what you do with it, you are required to publish a Privacy Policy agreement on your website or give in-app access to it.' %}</p>
 
-                    <p> Websites usually post a link to the complete Privacy Policy agreement from the footer of the website, whereas apps generally add the Privacy Policy to an "About" or "Legal" menu.</p>
+                    <p> {% translate 'Websites usually post a link to the complete Privacy Policy agreement from the footer of the website, whereas apps generally add the Privacy Policy to an "About" or "Legal" menu.' %}</p>
 
-                    <p> Another popular location for ecommerce store apps and websites is the checkout page, or account registration page if you don't have an ecommerce component but allow users to create accounts.</p>
+                    <p> {% translate 'Another popular location for ecommerce store apps and websites is the checkout page, or account registration page if you don't have an ecommerce component but allow users to create accounts.' %}</p>
 
                 </div>
             </div>
@@ -1652,13 +1652,13 @@
             <div class='page-box'>
             <div class="text-container">
                 <div class="content">
-                    <p>All the information on this website is published in good faith and for general information purpose only.</p>
+                    <p>{% translate 'All the information on this website is published in good faith and for general information purpose only.' %}</p>
 
-                    <p>MTN Engage does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (MTN Engage), is strictly at your own risk. MTN Engage will not be liable for any losses and/or damages in connection with the use of our website.</p>
+                    <p>{% translate 'MTN Engage does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (MTN Engage), is strictly at your own risk. MTN Engage will not be liable for any losses and/or damages in connection with the use of our website.' %}</p>
     
-                    <p>From our website, you can visit other websites by following hyperlinks to such external sites. While we strive to provide only quality links to useful and ethical websites, we have no control over the content and nature of these sites. These links to other websites do not imply a recommendation for all the content found on these sites. Site owners and content may change without notice and may occur before we have the opportunity to remove a link which may have gone 'bad'.</p>
+                    <p>{% translate 'From our website, you can visit other websites by following hyperlinks to such external sites. While we strive to provide only quality links to useful and ethical websites, we have no control over the content and nature of these sites. These links to other websites do not imply a recommendation for all the content found on these sites. Site owners and content may change without notice and may occur before we have the opportunity to remove a link which may have gone 'bad'.' %}</p>
     
-                    <p>Please be also aware that when you leave our website, other sites may have different privacy policies and terms which are beyond our control. Please be sure to check the Privacy Policies of these sites as well as their "Terms of Service" before engaging in any business or uploading any information.</p>
+                    <p>{% translate 'Please be also aware that when you leave our website, other sites may have different privacy policies and terms which are beyond our control. Please be sure to check the Privacy Policies of these sites as well as their "Terms of Service" before engaging in any business or uploading any information.' %}</p>
     
                     </div></div>
             </div></div>
@@ -1956,14 +1956,14 @@
                 <a data-dismiss="modal" href=""><i class="fas fa-times"></i></a>
             </div> -->
             <div class="modal-header">
-                <h3>CONGRATULATIONS</h3>
+                <h3>{% translate 'CONGRATULATIONS' %}</h3>
             </div>
             <div class="modal-body">
                    <div class="modal_contenu">
-                        <div class="purple">You have Earned 50 coins by clicking on the video.</div>
-                        <div class="pink">Watch and click to earn more!</div>
+                        <div class="purple">{% translate 'You have Earned 50 coins by clicking on the video.' %}</div>
+                        <div class="pink">{% translate 'Watch and click to earn more!' %}</div>
                         <!-- <div class="tourn_btn">WATCH</div> -->
-                        <div class="tourn_btn" onclick="$('#congrats-modal1').modal('hide');initDesktopAutoplayExample();">WATCH</div>
+                        <div class="tourn_btn" onclick="$('#congrats-modal1').modal('hide');initDesktopAutoplayExample();">{% translate 'WATCH' %}</div>
                    </div>
             </div>
              <div class="pic_modal"><img src="{% static 'img/50-coins.png' %}" /></div>   
@@ -1978,12 +1978,12 @@
                 <a data-dismiss="modal" href=""><i class="fas fa-times"></i></a>
             </div> -->
             <div class="modal-header">
-                <h3>CONGRATULATIONS</h3>
+                <h3>{% translate 'CONGRATULATIONS' %}</h3>
             </div>
             <div class="modal-body">
                    <div class="modal_contenu">
-                        <div class="purple">You have earned 5 coins for watching!</div>
-                        <div class="pink">Earn 50 coins by clicking on the video.</div>
+                        <div class="purple">{% translate 'You have earned 5 coins for watching!' %}</div>
+                        <div class="pink">{% translate 'Earn 50 coins by clicking on the video.' %}</div>
                         <!-- <div class="tourn_btn">WATCH</div> -->
                         <div class="tourn_btn" onclick="$('#congrats-modal2').modal('hide');initDesktopAutoplayExample();">WATCH</div>
                    </div>
@@ -2001,15 +2001,15 @@
                 <a data-dismiss="modal" href=""><i class="fas fa-times"></i></a>
             </div> -->
             <div class="modal-header">
-                <h3>LIMIT REACHED</h3>
+                <h3>{% translate 'LIMIT REACHED' %}</h3>
             </div>
             <div class="modal-body">
                    <div class="modal_contenu">
                         <!-- <div class="purple">You have Earned 50 coins by clicking on the video.</div> -->
-                        <div class="purple" style="margin-bottom: 36px;">You have reached your maximum limit of
-                            videos for today, <span class="pink" style="margin-bottom: 0px;">earn more coins later.</span></div>
+                        <div class="purple" style="margin-bottom: 36px;">{% translate 'You have reached your maximum limit of
+                            videos for today,' %}' <span class="pink" style="margin-bottom: 0px;">{% translate 'earn more coins later.' %}</span></div>
                         <!-- <div class="tourn_btn">CLOSE</div> -->
-                        <div class="tourn_btn" onclick="$('#congrats-modal3').modal('hide');">CLOSE</div>
+                        <div class="tourn_btn" onclick="$('#congrats-modal3').modal('hide');">{% translate 'CLOSE' %}</div>
                    </div>
             </div>
              <div class="pic_modal"><img src="{% static 'img/limit-reached.png' %}" /></div>   
@@ -2024,14 +2024,14 @@
                 <a data-dismiss="modal" href=""><i class="fas fa-times"></i></a>
             </div> -->
             <div class="modal-header">
-                <h3>VIDEO NOT READY YET</h3>
+                <h3>{% translate 'VIDEO NOT READY YET' %}</h3>
             </div>
             <div class="modal-body">
                    <div class="modal_contenu">
-                        <div class="purple">The next video is not yet ready, </div>
-                        <div class="pink" style="margin-bottom: 38px;">please try again later</div>
+                        <div class="purple">{% translate 'The next video is not yet ready,' %}' </div>
+                        <div class="pink" style="margin-bottom: 38px;">{% translate 'please try again later' %}</div>
                         <!-- <div class="tourn_btn">CLOSE</div> -->
-                        <div class="tourn_btn" onclick="$('#congrats-modal4').modal('hide');">CLOSE</div>
+                        <div class="tourn_btn" onclick="$('#congrats-modal4').modal('hide');">{% translate 'CLOSE' %}</div>
                    </div>
             </div>
              <div class="pic_modal"><img src="{% static 'img/video-not-ready-yet.png' %}" /></div>   

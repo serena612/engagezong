@@ -44,7 +44,7 @@
                         {% if user.is_authenticated %}
                             <div class="my-coins-box">
                                 <img src="{% static 'img/coin-0.png' %}" alt="">
-                                {% blocktranslate with coins=user.coins|intcomma %}<span>Your Engage Coins balance is <span class="user-coins">{{ coins }}</span></span>{% endblocktranslate %}
+                                {% blocktranslate with coins=user.coins|intcomma %}<span>{% translate 'Your Engage Coins balance is' %} <span class="user-coins">{{ coins }}</span></span>{% endblocktranslate %}
                             </div>
                         {% endif %}
                     </div>
@@ -80,8 +80,8 @@
                              style="display: none;">
                             {% comment %} <ul class="nav nav-tabs">
                                 <li class="">
-                                    <a class="button-small active">REDEEM
-                                        COINS</a>
+                                    <a class="button-small active">{% translate 'REDEEM
+                                        COINS' %}</a>
                                 </li>
                                 <li class="">
                                     <a class="button-small buy-btn">{% translate 'BUY ENGAGE COINS' %}</a>
@@ -94,15 +94,15 @@
                                             <div class="my-coins-box-mobile">
                                                 <img src="{% static 'img/coin-0.png' %}"
                                                      alt="">
-                                                {% blocktranslate with coins=user.coins|intcomma %}<span>Your Engage Coins balance is <span class="user-coins">{{ coins }}</span></span>{% endblocktranslate %}
+                                                {% blocktranslate with coins=user.coins|intcomma %}<span>{% translate 'Your Engage Coins balance is' %} <span class="user-coins">{{ coins }}</span></span>{% endblocktranslate %}
                                             </div>
                                         {% endif %}
-                                        <h4 class="sub-title">Every time you win
+                                        <h4 class="sub-title">{% translate 'Every time you win
                                             coins, your balance increases. You
                                             can Redeem your coins
-                                            for the below gifts.
-                                            <br>We will constantly update and
-                                            add new gifts.</h4>
+                                            for the below gifts.' %}
+                                            <br>{% translate 'We will constantly update and
+                                            add new gifts.' %}</h4>
                                         <div class="modal-body">
                                             <div class="redeem-packages">
                                                 {% for redeem_package in redeem_packages %}
