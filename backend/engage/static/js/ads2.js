@@ -23,6 +23,8 @@ let autoplayAllowed;
 let autoplayRequiresMuted;
 var intervalTimer;
 var started=false;
+var isLinear=false;
+ 
 /**
  * Initializes IMA setup.
  */
@@ -259,13 +261,29 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
   adsManager.addEventListener(google.ima.AdEvent.Type.VIDEO_CLICKED, onAdEvent);
   
   if (autoplayAllowed) {
-    playButton.style.display = 'none';
-    pauseButton.style.display = 'block';
+    if(isLinear)
+    {
+      playButton.style.display = 'none';
+      pauseButton.style.display = 'block';
+    }
+    else{
+      playButton.style.display = 'none';
+      pauseButton.style.display = 'none';
+    }
     started = true;
     playAds();
   } else {
-    playButton.style.display = 'block';
-    pauseButton.style.display = 'none';
+
+    if(isLinear)
+    {
+      playButton.style.display = 'block';
+      pauseButton.style.display = 'none';
+    }
+    else{
+      playButton.style.display = 'none';
+      pauseButton.style.display = 'none';
+    }
+
   }
 }
 
@@ -277,6 +295,11 @@ function onAdEvent(adEvent) {
   // Retrieve the ad from the event. Some events (for example,
   // ALL_ADS_COMPLETED) don't have ad object associated.
   const ad = adEvent.getAd();
+  if(ad.isLinear())
+     isLinear = true;
+  else
+     isLinear = false;
+  
   console.log("Ad event detected "+adEvent.type);
   switch (adEvent.type) {
     case google.ima.AdEvent.Type.LOADED:
