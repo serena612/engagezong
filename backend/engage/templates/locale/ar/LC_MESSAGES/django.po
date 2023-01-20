@@ -65,8 +65,8 @@ msgstr "لقد تمت مصادقتك باعتبارك٪ (اسم المستخدم
 msgid ""
 " You have been locked out for '+aux[1]+ ' minute(s).<br>Please <a href=\"./"
 "\">try again</a> later."
-msgstr "لقد تم منعك من الدخول لمدة '+ aux [1] +' دقيقة. <br> من فضلك <a href = \ "./"
-"\ "> حاول مرة أخرى </a> لاحقًا."
+msgstr ""
+
 
 #: templates/admin/captcha_login.html:117
 msgid "OTP Device:"
@@ -413,8 +413,8 @@ msgstr "استبدال العملات المعدنية"
 msgid ""
 "<span>Your Engage Coins balance is <span class=\"user-coins\">%(coins)s</"
 "span></span>"
-msgstr "<span> رصيد Engage Coins الخاص بك هو <span class = \ "user-coins \">٪ (عملات معدنية) s </"
-"span></span>"
+msgstr ""
+
 
 #: templates/prizes.html:58
 msgid "ALL PRIZES"
@@ -788,9 +788,9 @@ msgid ""
 "Please upgrade from free package to N50 package to be able to join "
 "tournaments. To upgrade, simply deactivate from the free package by sending "
 "\"DEAC SUB3\" to “8561” then send \"SUB2\" to “8561”."
-msgstr "يرجى الترقية من الحزمة المجانية إلى حزمة N50 لتتمكن من الانضمام"
-"البطولات. للترقية ، ما عليك سوى إلغاء التنشيط من الحزمة المجانية عن طريق الإرسال"
-"\ "DEAC SUB3 \" إلى "8561" ثم أرسل \ "SUB2 \" إلى "8561"."
+msgstr ""
+
+
 
 #: templates/tournament.html:420
 msgid "Subscribe now to be able to join any upcoming tournament."
