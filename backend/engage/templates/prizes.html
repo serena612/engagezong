@@ -94,7 +94,7 @@
                                             <div class="my-coins-box-mobile">
                                                 <img src="{% static 'img/coin-0.png' %}"
                                                      alt="">
-                                                {% blocktranslate with coins=user.coins|intcomma %}<span>{% translate 'Your Engage Coins balance is' %} <span class="user-coins">{{ coins }}</span></span>{% endblocktranslate %}
+                                                {% blocktranslate with coins=user.coins|intcomma %}<span>Your Engage Coins balance is <span class="user-coins">{{ coins }}</span></span>{% endblocktranslate %}
                                             </div>
                                         {% endif %}
                                         <h4 class="sub-title">{% translate 'Every time you win
