@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-18 12:25+0000\n"
+"POT-Creation-Date: 2023-01-20 14:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,8 +59,9 @@ msgstr "لا يمكن أن يكون تاريخ الإغلاق أصغر من تا
 msgid ""
 "This round number selection is above the rounds numbers set in the "
 "tournament settings"
-msgstr "يكون اختيار الرقم المستدير هذا أعلى من أرقام الدورات المحددة في"
-"إعدادات البطولة"
+msgstr ""
+"يكون اختيار الرقم المستدير هذا أعلى من أرقام الدورات المحددة فيإعدادات "
+"البطولة"
 
 #: tournament/models.py:565
 msgid ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-18 12:25+0000\n"
+"POT-Creation-Date: 2023-01-20 14:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
-#: templates/about.html:9 templates/master.html:1623
+#: templates/about.html:9 templates/master.html:1706
 msgid "ENGAGE AND MORE"
 msgstr ""
 
@@ -29,7 +29,8 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: templates/admin/base.html:288 templates/profile.html:537
+#: templates/admin/base.html:288 templates/profile.html:75
+#: templates/profile.html:537
 msgid "Settings"
 msgstr ""
 
@@ -100,295 +101,422 @@ msgstr ""
 msgid "Disclaimer"
 msgstr ""
 
-#: templates/index.html:196
+#: templates/disclaimer.html:13 templates/master.html:1659
+msgid ""
+"All the information on this website is published in good faith and for "
+"general information purpose only."
+msgstr ""
+
+#: templates/disclaimer.html:15 templates/master.html:1661
+msgid ""
+"MTN Engage does not make any warranties about the completeness, reliability "
+"and accuracy of this information. Any action you take upon the information "
+"you find on this website (MTN Engage), is strictly at your own risk. MTN "
+"Engage will not be liable for any losses and/or damages in connection with "
+"the use of our website."
+msgstr ""
+
+#: templates/disclaimer.html:17 templates/master.html:1663
+msgid ""
+"From our website, you can visit other websites by following hyperlinks to "
+"such external sites. While we strive to provide only quality links to useful "
+"and ethical websites, we have no control over the content and nature of "
+"these sites. These links to other websites do not imply a recommendation for "
+"all the content found on these sites. Site owners and content may change "
+"without notice and may occur before we have the opportunity to remove a link "
+"which may have gone "
+msgstr ""
+
+#: templates/disclaimer.html:19 templates/master.html:1665
+msgid ""
+"Please be also aware that when you leave our website, other sites may have "
+"different privacy policies and terms which are beyond our control. Please be "
+"sure to check the Privacy Policies of these sites as well as their \"Terms "
+"of Service\" before engaging in any business or uploading any information."
+msgstr ""
+
+#: templates/index.html:198
 msgid "PLAY, WIN AND EARN COINS"
 msgstr ""
 
-#: templates/index.html:197
+#: templates/index.html:199
 msgid "PLAY ANY OF THE FEATURED GAMES"
 msgstr ""
 
-#: templates/index.html:265 templates/profile.html:107
+#: templates/index.html:267 templates/master.html:361
+#: templates/profile.html:107 templates/public-profile.html:85
 msgid "Tournaments"
 msgstr ""
 
-#: templates/index.html:266
+#: templates/index.html:268
 msgid "Play Games"
 msgstr ""
 
-#: templates/index.html:272
+#: templates/index.html:274
 msgid "ALL"
 msgstr ""
 
-#: templates/index.html:276
+#: templates/index.html:278
 msgid "Upcoming"
 msgstr ""
 
-#: templates/index.html:283
+#: templates/index.html:285
 msgid "Previous"
 msgstr ""
 
-#: templates/index.html:286
+#: templates/index.html:288
 msgid "All Games Tournaments"
 msgstr ""
 
-#: templates/index.html:301
+#: templates/index.html:303
 msgid "PREMIUM"
 msgstr ""
 
-#: templates/index.html:305
+#: templates/index.html:307
 msgid "FREE"
 msgstr ""
 
-#: templates/index.html:490 templates/master.html:418 templates/master.html:451
+#: templates/index.html:492 templates/master.html:499 templates/master.html:532
 msgid "WINNERS"
 msgstr ""
 
-#: templates/index.html:492
+#: templates/index.html:494
 msgid "Games Tournaments"
 msgstr ""
 
-#: templates/index.html:514
+#: templates/index.html:516
 msgid "Last Updated:"
 msgstr ""
 
-#: templates/index.html:553
+#: templates/index.html:555
 msgid "Ad Image/Video Here"
 msgstr ""
 
-#: templates/index.html:562 templates/register.html:6678
+#: templates/index.html:564 templates/register.html:6678
 #: templates/register1.html:4318 templates/register2.html:4302
 #: templates/register3.html:4349 templates/tournament.html:161
 msgid "Join Now"
 msgstr ""
 
-#: templates/index.html:573 templates/profile.html:550
+#: templates/index.html:575 templates/profile.html:550
 #: templates/profile.html:775
 msgid "Share Engage"
 msgstr ""
 
-#: templates/index.html:590 templates/profile.html:792
+#: templates/index.html:592 templates/profile.html:792
 msgid "COPY"
 msgstr ""
 
-#: templates/master.html:310
+#: templates/master.html:391
 msgid "LOGIN / SIGNUP"
 msgstr ""
 
-#: templates/master.html:317
+#: templates/master.html:398
 msgid "My Profile"
 msgstr ""
 
-#: templates/master.html:335
+#: templates/master.html:416
 msgid "Notifications"
 msgstr ""
 
-#: templates/master.html:390 templates/master.html:439
+#: templates/master.html:471 templates/master.html:520
 msgid "TOURNAMENTS"
 msgstr ""
 
-#: templates/master.html:392 templates/master.html:399
-#: templates/master.html:406 templates/master.html:413
-#: templates/master.html:420
+#: templates/master.html:473 templates/master.html:480
+#: templates/master.html:487 templates/master.html:494
+#: templates/master.html:501
 msgid "new"
 msgstr ""
 
-#: templates/master.html:397 templates/master.html:442
+#: templates/master.html:478 templates/master.html:523
 msgid "GAMES"
 msgstr ""
 
-#: templates/master.html:404 templates/master.html:445
+#: templates/master.html:485 templates/master.html:526
 msgid "PRIZES"
 msgstr ""
 
-#: templates/master.html:411 templates/master.html:448
+#: templates/master.html:492 templates/master.html:529
 msgid "REDEEM"
 msgstr ""
 
-#: templates/master.html:495 templates/master.html:1487
+#: templates/master.html:542
+msgid "MY PROFILE"
+msgstr ""
+
+#: templates/master.html:576 templates/master.html:1570
 #: templates/profile.html:557
 msgid "FAQs"
 msgstr ""
 
-#: templates/master.html:501 templates/profile.html:566 templates/terms.html:9
+#: templates/master.html:582 templates/profile.html:566 templates/terms.html:9
 msgid "Terms & Conditions"
 msgstr ""
 
-#: templates/master.html:507 templates/profile.html:555
+#: templates/master.html:588 templates/profile.html:555
 msgid "About"
 msgstr ""
 
-#: templates/master.html:511
+#: templates/master.html:592
 msgid "Contact Engage"
 msgstr ""
 
-#: templates/master.html:515
+#: templates/master.html:596
 msgid "Support"
 msgstr ""
 
-#: templates/master.html:569
+#: templates/master.html:650
 msgid "LOGIN"
 msgstr ""
 
-#: templates/master.html:583 templates/master.html:619
-#: templates/master.html:630 templates/master.html:1218
+#: templates/master.html:664 templates/master.html:700
+#: templates/master.html:711 templates/master.html:1299
+#: templates/master.html:1328
 msgid "Next"
 msgstr ""
 
-#: templates/master.html:589
+#: templates/master.html:670
 msgid "Don’t have an account?"
 msgstr ""
 
-#: templates/master.html:591
+#: templates/master.html:672
 msgid "Register!"
 msgstr ""
 
-#: templates/master.html:614 templates/master.html:625
+#: templates/master.html:695 templates/master.html:706
 #: templates/register2.html:4304 templates/register3.html:4351
+#: templates/wait.html:46
 msgid "Change Number"
 msgstr ""
 
-#: templates/master.html:655
+#: templates/master.html:736
 msgid "Please wait for confirmation"
 msgstr ""
 
-#: templates/master.html:712
+#: templates/master.html:754 templates/profile.html:363
+#: templates/profile.html:482
+msgid "Loading..."
+msgstr ""
+
+#: templates/master.html:760
+msgid "Close"
+msgstr ""
+
+#: templates/master.html:763
+msgid "Please wait while we process your request..."
+msgstr ""
+
+#: templates/master.html:793
 msgid "CONTACT ENGAGE"
 msgstr ""
 
-#: templates/master.html:1080 templates/master.html:1180
+#: templates/master.html:1161 templates/master.html:1261
 #: templates/profile.html:755
 msgid "SEND"
 msgstr ""
 
-#: templates/master.html:1110
+#: templates/master.html:1191
 msgid "CONTACT SUPPORT"
 msgstr ""
 
-#: templates/master.html:1140
+#: templates/master.html:1221
 msgid "I Need Support With"
 msgstr ""
 
-#: templates/master.html:1143
+#: templates/master.html:1224
 msgid "Unable to subscribe to Engage"
 msgstr ""
 
-#: templates/master.html:1146
+#: templates/master.html:1227
 msgid "Problem with account access"
 msgstr ""
 
-#: templates/master.html:1149
+#: templates/master.html:1230
 msgid "Locked or suspended account issue"
 msgstr ""
 
-#: templates/master.html:1151
+#: templates/master.html:1232
 msgid "Queries about tournaments"
 msgstr ""
 
-#: templates/master.html:1154
+#: templates/master.html:1235
 msgid "Games not working for me"
 msgstr ""
 
-#: templates/master.html:1157
+#: templates/master.html:1238
 msgid "Help using Engage"
 msgstr ""
 
-#: templates/master.html:1160
+#: templates/master.html:1241
 msgid "Help with paid features"
 msgstr ""
 
-#: templates/master.html:1163
+#: templates/master.html:1244
 msgid "Question about Prizes"
 msgstr ""
 
-#: templates/master.html:1166
+#: templates/master.html:1247
 msgid "Redeem Coins queries"
 msgstr ""
 
-#: templates/master.html:1169
+#: templates/master.html:1250
 msgid "Other problem or issue"
 msgstr ""
 
-#: templates/master.html:1224
+#: templates/master.html:1305
 msgid "You already have an account?"
 msgstr ""
 
-#: templates/master.html:1226
+#: templates/master.html:1307
 msgid "Login!"
 msgstr ""
 
-#: templates/master.html:1270
+#: templates/master.html:1351
 msgid "RECOVER PASSWORD"
 msgstr ""
 
-#: templates/master.html:1281
+#: templates/master.html:1362
 msgid "Enter your registered email to receive the password reset"
 msgstr ""
 
-#: templates/master.html:1284
+#: templates/master.html:1365
 msgid "RESET PASSWORD"
 msgstr ""
 
-#: templates/master.html:1337
+#: templates/master.html:1418
 msgid "Purchase"
 msgstr ""
 
-#: templates/master.html:1340 templates/prizes.html:248
+#: templates/master.html:1421 templates/prizes.html:248
 #: templates/prizes.html:277 templates/profile.html:657
-#: templates/profile.html:823 templates/tournament.html:444
+#: templates/profile.html:823 templates/public-profile.html:455
+#: templates/public-profile.html:480 templates/tournament.html:444
 msgid "Cancel"
 msgstr ""
 
-#: templates/master.html:1543
+#: templates/master.html:1496
+msgid "Please resume and watch full video to collect your reward"
+msgstr ""
+
+#: templates/master.html:1626
 msgid "PRIVACY POLICY"
 msgstr ""
 
-#: templates/master.html:1571
+#: templates/master.html:1631
+msgid ""
+"To be transparent with your users about what personal information you "
+"collect and what you do with it, you are required to publish a Privacy "
+"Policy agreement on your website or give in-app access to it."
+msgstr ""
+
+#: templates/master.html:1633
+msgid ""
+"Websites usually post a link to the complete Privacy Policy agreement from "
+"the footer of the website, whereas apps generally add the Privacy Policy to "
+"an \"About\" or \"Legal\" menu."
+msgstr ""
+
+#: templates/master.html:1635
+msgid ""
+"Another popular location for ecommerce store apps and websites is the "
+"checkout page, or account registration page if you don"
+msgstr ""
+
+#: templates/master.html:1654
 msgid "DISCLAIMER"
 msgstr ""
 
-#: templates/master.html:1600
+#: templates/master.html:1683
 msgid "TERMS & CONDITIONS"
 msgstr ""
 
-#: templates/master.html:1677
+#: templates/master.html:1760
 msgid "MTN Number"
 msgstr ""
 
-#: templates/master.html:1684
+#: templates/master.html:1767
 msgid "Name"
 msgstr ""
 
-#: templates/master.html:1692
+#: templates/master.html:1775
 msgid "Email"
 msgstr ""
 
-#: templates/master.html:1701
+#: templates/master.html:1784
 msgid "Date Of Birth"
 msgstr ""
 
-#: templates/master.html:1784
+#: templates/master.html:1867
 msgid "Nationality"
 msgstr ""
 
-#: templates/master.html:1791
+#: templates/master.html:1874
 msgid "Country"
 msgstr ""
 
-#: templates/master.html:1807
+#: templates/master.html:1890
 msgid "Gender"
 msgstr ""
 
-#: templates/master.html:1812
+#: templates/master.html:1895
 msgid "Male"
 msgstr ""
 
-#: templates/master.html:1816
+#: templates/master.html:1899
 msgid "Female"
 msgstr ""
 
-#: templates/master.html:1824
+#: templates/master.html:1907
 msgid "State"
+msgstr ""
+
+#: templates/master.html:1963 templates/master.html:1985
+msgid "CONGRATULATIONS"
+msgstr ""
+
+#: templates/master.html:1967
+msgid "You have Earned 50 coins by clicking on the video."
+msgstr ""
+
+#: templates/master.html:1968
+msgid "Watch and click to earn more!"
+msgstr ""
+
+#: templates/master.html:1970
+msgid "WATCH"
+msgstr ""
+
+#: templates/master.html:1989
+msgid "You have earned 5 coins for watching!"
+msgstr ""
+
+#: templates/master.html:1990
+msgid "Earn 50 coins by clicking on the video."
+msgstr ""
+
+#: templates/master.html:2008
+msgid "LIMIT REACHED"
+msgstr ""
+
+#: templates/master.html:2014
+msgid "earn more coins later."
+msgstr ""
+
+#: templates/master.html:2016 templates/master.html:2038
+msgid "CLOSE"
+msgstr ""
+
+#: templates/master.html:2031
+msgid "VIDEO NOT READY YET"
+msgstr ""
+
+#: templates/master.html:2035
+msgid "The next video is not yet ready,"
+msgstr ""
+
+#: templates/master.html:2036
+msgid "please try again later"
 msgstr ""
 
 #: templates/privacy.html:9 templates/profile.html:568
@@ -442,6 +570,7 @@ msgstr ""
 
 #: templates/prizes.html:245 templates/prizes.html:274
 #: templates/profile.html:654 templates/profile.html:820
+#: templates/public-profile.html:454 templates/public-profile.html:477
 #: templates/register.html:6711 templates/register1.html:4339
 #: templates/register2.html:4323 templates/register3.html:4370
 msgid "Confirm"
@@ -455,11 +584,11 @@ msgstr ""
 msgid "Engage coins"
 msgstr ""
 
-#: templates/profile.html:98
+#: templates/profile.html:98 templates/public-profile.html:81
 msgid "Profile"
 msgstr ""
 
-#: templates/profile.html:102
+#: templates/profile.html:102 templates/public-profile.html:82
 msgid "Friends"
 msgstr ""
 
@@ -468,8 +597,10 @@ msgid "Last Played Games"
 msgstr ""
 
 #: templates/profile.html:146 templates/profile.html:181
-#: templates/profile.html:215 templates/profile.html:269
-#: templates/profile.html:308 templates/profile.html:588
+#: templates/profile.html:198 templates/profile.html:215
+#: templates/profile.html:269 templates/profile.html:308
+#: templates/profile.html:588 templates/public-profile.html:186
+#: templates/public-profile.html:303 templates/public-profile.html:384
 msgid "View All"
 msgstr ""
 
@@ -477,11 +608,15 @@ msgstr ""
 msgid "Joined tournaments"
 msgstr ""
 
+#: templates/profile.html:195 templates/public-profile.html:184
+msgid "Stickers"
+msgstr ""
+
 #: templates/profile.html:212
 msgid "Trophies"
 msgstr ""
 
-#: templates/profile.html:242
+#: templates/profile.html:242 templates/public-profile.html:231
 msgid "FRIENDS"
 msgstr ""
 
@@ -557,6 +692,10 @@ msgstr ""
 msgid "You don\\"
 msgstr ""
 
+#: templates/profile.html:629
+msgid "Add friends"
+msgstr ""
+
 #: templates/profile.html:649
 msgid "Are you sure you want to unlock VIP access to the battlepass?"
 msgstr ""
@@ -587,6 +726,26 @@ msgstr ""
 
 #: templates/profile.html:816
 msgid "Are you sure you want to remove this friend?"
+msgstr ""
+
+#: templates/public-profile.html:58
+msgid "Remove Friend"
+msgstr ""
+
+#: templates/public-profile.html:64
+msgid "Friend Request Sent"
+msgstr ""
+
+#: templates/public-profile.html:73
+msgid "Add Friend"
+msgstr ""
+
+#: templates/public-profile.html:422
+msgid "Register"
+msgstr ""
+
+#: templates/public-profile.html:451
+msgid "Are you sure you want to send this user a friend request?"
 msgstr ""
 
 #: templates/register.html:6656
@@ -801,6 +960,16 @@ msgstr ""
 msgid "Upgrade"
 msgstr ""
 
+#: templates/tournament.html:451
+msgid "Your profile level is {{ user.level }}!"
+msgstr ""
+
+#: templates/tournament.html:456
+msgid ""
+"The minimum profile level required to join this tournament is {{ tournament."
+"minimum_profile_level }}"
+msgstr ""
+
 #: templates/tournament.html:478 templates/tournament.html:485
 #: templates/tournament.html:535 templates/tournament.html:542
 msgid ""
@@ -815,4 +984,8 @@ msgstr ""
 
 #: templates/tournament.html:495 templates/tournament.html:552
 msgid "Submit"
+msgstr ""
+
+#: templates/wait.html:40
+msgid "Subscription status is being updated please wait..."
 msgstr ""

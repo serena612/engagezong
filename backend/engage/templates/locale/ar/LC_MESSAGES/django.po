@@ -2,13 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-18 12:25+0000\n"
+"POT-Creation-Date: 2023-01-20 14:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +22,7 @@ msgstr ""
 msgid "FAQ"
 msgstr "التعليمات"
 
-#: templates/about.html:9 templates/master.html:1623
+#: templates/about.html:9 templates/master.html:1706
 msgid "ENGAGE AND MORE"
 msgstr "المشاركة والمزيد"
 
@@ -31,7 +30,8 @@ msgstr "المشاركة والمزيد"
 msgid "OK"
 msgstr "نعم"
 
-#: templates/admin/base.html:288 templates/profile.html:537
+#: templates/admin/base.html:288 templates/profile.html:75
+#: templates/profile.html:537
 msgid "Settings"
 msgstr "إعدادات"
 
@@ -58,15 +58,15 @@ msgstr "الرجاء تصحيح الخطأ أدناه."
 msgid ""
 "You are authenticated as %(username)s, but are not authorized to access this "
 "page. Would you like to login to a different account?"
-msgstr "لقد تمت مصادقتك باعتبارك٪ (اسم المستخدم) s ، لكن غير مصرح لك بالوصول إلى هذا"
-"صفحة. هل ترغب في تسجيل الدخول إلى حساب مختلف؟"
+msgstr ""
+"لقد تمت مصادقتك باعتبارك٪ (اسم المستخدم) s ، لكن غير مصرح لك بالوصول إلى "
+"هذاصفحة. هل ترغب في تسجيل الدخول إلى حساب مختلف؟"
 
 #: templates/admin/captcha_login.html:87
 msgid ""
 " You have been locked out for '+aux[1]+ ' minute(s).<br>Please <a href=\"./"
 "\">try again</a> later."
 msgstr ""
-
 
 #: templates/admin/captcha_login.html:117
 msgid "OTP Device:"
@@ -104,296 +104,425 @@ msgstr "محتوى غير معروف"
 msgid "Disclaimer"
 msgstr "عدم اعطاء رأي"
 
-#: templates/index.html:196
+#: templates/disclaimer.html:13 templates/master.html:1659
+msgid ""
+"All the information on this website is published in good faith and for "
+"general information purpose only."
+msgstr ""
+
+#: templates/disclaimer.html:15 templates/master.html:1661
+msgid ""
+"MTN Engage does not make any warranties about the completeness, reliability "
+"and accuracy of this information. Any action you take upon the information "
+"you find on this website (MTN Engage), is strictly at your own risk. MTN "
+"Engage will not be liable for any losses and/or damages in connection with "
+"the use of our website."
+msgstr ""
+
+#: templates/disclaimer.html:17 templates/master.html:1663
+msgid ""
+"From our website, you can visit other websites by following hyperlinks to "
+"such external sites. While we strive to provide only quality links to useful "
+"and ethical websites, we have no control over the content and nature of "
+"these sites. These links to other websites do not imply a recommendation for "
+"all the content found on these sites. Site owners and content may change "
+"without notice and may occur before we have the opportunity to remove a link "
+"which may have gone "
+msgstr ""
+
+#: templates/disclaimer.html:19 templates/master.html:1665
+msgid ""
+"Please be also aware that when you leave our website, other sites may have "
+"different privacy policies and terms which are beyond our control. Please be "
+"sure to check the Privacy Policies of these sites as well as their \"Terms "
+"of Service\" before engaging in any business or uploading any information."
+msgstr ""
+
+#: templates/index.html:198
 msgid "PLAY, WIN AND EARN COINS"
 msgstr "العب واربح واكسب العملات المعدنية"
 
-#: templates/index.html:197
+#: templates/index.html:199
 msgid "PLAY ANY OF THE FEATURED GAMES"
 msgstr "العب أيًا من الألعاب المميزة"
 
-#: templates/index.html:265 templates/profile.html:107
+#: templates/index.html:267 templates/master.html:361
+#: templates/profile.html:107 templates/public-profile.html:85
 msgid "Tournaments"
 msgstr "البطولات"
 
-#: templates/index.html:266
+#: templates/index.html:268
 msgid "Play Games"
 msgstr "العاب"
 
-#: templates/index.html:272
+#: templates/index.html:274
 msgid "ALL"
 msgstr "الكل"
 
-#: templates/index.html:276
+#: templates/index.html:278
 msgid "Upcoming"
 msgstr "القادم"
 
-#: templates/index.html:283
+#: templates/index.html:285
 msgid "Previous"
 msgstr "سابق"
 
-#: templates/index.html:286
+#: templates/index.html:288
 msgid "All Games Tournaments"
 msgstr "جميع بطولات الألعاب"
 
-#: templates/index.html:301
+#: templates/index.html:303
 msgid "PREMIUM"
 msgstr "الممتازة"
 
-#: templates/index.html:305
+#: templates/index.html:307
 msgid "FREE"
 msgstr "مجانا"
 
-#: templates/index.html:490 templates/master.html:418 templates/master.html:451
+#: templates/index.html:492 templates/master.html:499 templates/master.html:532
 msgid "WINNERS"
 msgstr "الفائزين"
 
-#: templates/index.html:492
+#: templates/index.html:494
 msgid "Games Tournaments"
 msgstr "بطولات الألعاب"
 
-#: templates/index.html:514
+#: templates/index.html:516
 msgid "Last Updated:"
 msgstr "التحديث الاخير:"
 
-#: templates/index.html:553
+#: templates/index.html:555
 msgid "Ad Image/Video Here"
 msgstr "صورة الإعلان / الفيديو هنا"
 
-#: templates/index.html:562 templates/register.html:6678
+#: templates/index.html:564 templates/register.html:6678
 #: templates/register1.html:4318 templates/register2.html:4302
 #: templates/register3.html:4349 templates/tournament.html:161
 msgid "Join Now"
 msgstr "نضم الان"
 
-#: templates/index.html:573 templates/profile.html:550
+#: templates/index.html:575 templates/profile.html:550
 #: templates/profile.html:775
 msgid "Share Engage"
 msgstr "شارك Engage"
 
-#: templates/index.html:590 templates/profile.html:792
+#: templates/index.html:592 templates/profile.html:792
 msgid "COPY"
 msgstr "نسخ"
 
-#: templates/master.html:310
+#: templates/master.html:391
 msgid "LOGIN / SIGNUP"
 msgstr "الدخول التسجيل فى الموقع"
 
-#: templates/master.html:317
+#: templates/master.html:398
 msgid "My Profile"
 msgstr "ملفي"
 
-#: templates/master.html:335
+#: templates/master.html:416
 msgid "Notifications"
 msgstr "إشعارات"
 
-#: templates/master.html:390 templates/master.html:439
+#: templates/master.html:471 templates/master.html:520
 msgid "TOURNAMENTS"
 msgstr "البطولات"
 
-#: templates/master.html:392 templates/master.html:399
-#: templates/master.html:406 templates/master.html:413
-#: templates/master.html:420
+#: templates/master.html:473 templates/master.html:480
+#: templates/master.html:487 templates/master.html:494
+#: templates/master.html:501
 msgid "new"
 msgstr "الجديد"
 
-#: templates/master.html:397 templates/master.html:442
+#: templates/master.html:478 templates/master.html:523
 msgid "GAMES"
 msgstr "ألعاب"
 
-#: templates/master.html:404 templates/master.html:445
+#: templates/master.html:485 templates/master.html:526
 msgid "PRIZES"
 msgstr "الجوائز"
 
-#: templates/master.html:411 templates/master.html:448
+#: templates/master.html:492 templates/master.html:529
 msgid "REDEEM"
 msgstr "يسترد"
 
-#: templates/master.html:495 templates/master.html:1487
+#: templates/master.html:542
+msgid "MY PROFILE"
+msgstr ""
+
+#: templates/master.html:576 templates/master.html:1570
 #: templates/profile.html:557
 msgid "FAQs"
 msgstr "أسئلة وأجوبة"
 
-#: templates/master.html:501 templates/profile.html:566 templates/terms.html:9
+#: templates/master.html:582 templates/profile.html:566 templates/terms.html:9
 msgid "Terms & Conditions"
 msgstr "البنود و الظروف"
 
-#: templates/master.html:507 templates/profile.html:555
+#: templates/master.html:588 templates/profile.html:555
 msgid "About"
 msgstr "عن"
 
-#: templates/master.html:511
+#: templates/master.html:592
 msgid "Contact Engage"
 msgstr "اتصل بـ Engage"
 
-#: templates/master.html:515
+#: templates/master.html:596
 msgid "Support"
 msgstr "الدعم"
 
-#: templates/master.html:569
+#: templates/master.html:650
 msgid "LOGIN"
 msgstr "تسجيل الدخول"
 
-#: templates/master.html:583 templates/master.html:619
-#: templates/master.html:630 templates/master.html:1218
+#: templates/master.html:664 templates/master.html:700
+#: templates/master.html:711 templates/master.html:1299
+#: templates/master.html:1328
 msgid "Next"
 msgstr "التالي"
 
-#: templates/master.html:589
+#: templates/master.html:670
 msgid "Don’t have an account?"
 msgstr "ليس لديك حساب؟"
 
-#: templates/master.html:591
+#: templates/master.html:672
 msgid "Register!"
 msgstr "يسجل!"
 
-#: templates/master.html:614 templates/master.html:625
+#: templates/master.html:695 templates/master.html:706
 #: templates/register2.html:4304 templates/register3.html:4351
+#: templates/wait.html:46
 msgid "Change Number"
 msgstr "تغيير رقم"
 
-#: templates/master.html:655
+#: templates/master.html:736
 msgid "Please wait for confirmation"
 msgstr "يرجى انتظار التأكيد"
 
-#: templates/master.html:712
+#: templates/master.html:754 templates/profile.html:363
+#: templates/profile.html:482
+msgid "Loading..."
+msgstr ""
+
+#: templates/master.html:760
+#, fuzzy
+#| msgid "Closed"
+msgid "Close"
+msgstr "مغلق"
+
+#: templates/master.html:763
+msgid "Please wait while we process your request..."
+msgstr ""
+
+#: templates/master.html:793
 msgid "CONTACT ENGAGE"
 msgstr "تواصل معنا"
 
-#: templates/master.html:1080 templates/master.html:1180
+#: templates/master.html:1161 templates/master.html:1261
 #: templates/profile.html:755
 msgid "SEND"
 msgstr "إرسال"
 
-#: templates/master.html:1110
+#: templates/master.html:1191
 msgid "CONTACT SUPPORT"
 msgstr "اتصل بالدعم"
 
-#: templates/master.html:1140
+#: templates/master.html:1221
 msgid "I Need Support With"
 msgstr "أحتاج إلى دعم"
 
-#: templates/master.html:1143
+#: templates/master.html:1224
 msgid "Unable to subscribe to Engage"
 msgstr "تعذر الاشتراك في Engage"
 
-#: templates/master.html:1146
+#: templates/master.html:1227
 msgid "Problem with account access"
 msgstr "مشكلة في الوصول إلى الحساب"
 
-#: templates/master.html:1149
+#: templates/master.html:1230
 msgid "Locked or suspended account issue"
 msgstr "قضية حساب مغلق أو معلق"
 
-#: templates/master.html:1151
+#: templates/master.html:1232
 msgid "Queries about tournaments"
 msgstr "استفسارات حول البطولات"
 
-#: templates/master.html:1154
+#: templates/master.html:1235
 msgid "Games not working for me"
 msgstr "الألعاب لا تعمل من أجلي"
 
-#: templates/master.html:1157
+#: templates/master.html:1238
 msgid "Help using Engage"
 msgstr "ساعد في استخدام Engage"
 
-#: templates/master.html:1160
+#: templates/master.html:1241
 msgid "Help with paid features"
 msgstr "مساعدة في الميزات المدفوعة"
 
-#: templates/master.html:1163
+#: templates/master.html:1244
 msgid "Question about Prizes"
 msgstr "سؤال عن الجوائز"
 
-#: templates/master.html:1166
+#: templates/master.html:1247
 msgid "Redeem Coins queries"
 msgstr "استعلامات استبدال العملات المعدنية"
 
-#: templates/master.html:1169
+#: templates/master.html:1250
 msgid "Other problem or issue"
 msgstr "مشكلة أو قضية أخرى"
 
-#: templates/master.html:1224
+#: templates/master.html:1305
 msgid "You already have an account?"
 msgstr "لديك حساب بالفعل؟"
 
-#: templates/master.html:1226
+#: templates/master.html:1307
 msgid "Login!"
 msgstr "تسجيل الدخول!"
 
-#: templates/master.html:1270
+#: templates/master.html:1351
 msgid "RECOVER PASSWORD"
 msgstr "إستعادة كلمة المرور"
 
-#: templates/master.html:1281
+#: templates/master.html:1362
 msgid "Enter your registered email to receive the password reset"
 msgstr "أدخل بريدك الإلكتروني المسجل لتلقي إعادة تعيين كلمة المرور"
 
-#: templates/master.html:1284
+#: templates/master.html:1365
 msgid "RESET PASSWORD"
 msgstr "إعادة تعيين كلمة المرور"
 
-#: templates/master.html:1337
+#: templates/master.html:1418
 msgid "Purchase"
 msgstr "شراء"
 
-#: templates/master.html:1340 templates/prizes.html:248
+#: templates/master.html:1421 templates/prizes.html:248
 #: templates/prizes.html:277 templates/profile.html:657
-#: templates/profile.html:823 templates/tournament.html:444
+#: templates/profile.html:823 templates/public-profile.html:455
+#: templates/public-profile.html:480 templates/tournament.html:444
 msgid "Cancel"
 msgstr "يلغي"
 
-#: templates/master.html:1543
+#: templates/master.html:1496
+msgid "Please resume and watch full video to collect your reward"
+msgstr ""
+
+#: templates/master.html:1626
 msgid "PRIVACY POLICY"
 msgstr "سياسة الخصوصية"
 
-#: templates/master.html:1571
+#: templates/master.html:1631
+msgid ""
+"To be transparent with your users about what personal information you "
+"collect and what you do with it, you are required to publish a Privacy "
+"Policy agreement on your website or give in-app access to it."
+msgstr ""
+
+#: templates/master.html:1633
+msgid ""
+"Websites usually post a link to the complete Privacy Policy agreement from "
+"the footer of the website, whereas apps generally add the Privacy Policy to "
+"an \"About\" or \"Legal\" menu."
+msgstr ""
+
+#: templates/master.html:1635
+msgid ""
+"Another popular location for ecommerce store apps and websites is the "
+"checkout page, or account registration page if you don"
+msgstr ""
+
+#: templates/master.html:1654
 msgid "DISCLAIMER"
 msgstr "تنصل"
 
-#: templates/master.html:1600
+#: templates/master.html:1683
 msgid "TERMS & CONDITIONS"
 msgstr "البنود و الظروف"
 
-#: templates/master.html:1677
+#: templates/master.html:1760
 msgid "MTN Number"
 msgstr "رقم MTN"
 
-#: templates/master.html:1684
+#: templates/master.html:1767
 msgid "Name"
 msgstr "اسم"
 
-#: templates/master.html:1692
+#: templates/master.html:1775
 msgid "Email"
 msgstr "بريد إلكتروني"
 
-#: templates/master.html:1701
+#: templates/master.html:1784
 msgid "Date Of Birth"
 msgstr "تاريخ الولادة"
 
-#: templates/master.html:1784
+#: templates/master.html:1867
 msgid "Nationality"
 msgstr "جنسية"
 
-#: templates/master.html:1791
+#: templates/master.html:1874
 msgid "Country"
 msgstr "دولة"
 
-#: templates/master.html:1807
+#: templates/master.html:1890
 msgid "Gender"
 msgstr "جنس تذكير أو تأنيث"
 
-#: templates/master.html:1812
+#: templates/master.html:1895
 msgid "Male"
 msgstr "ذكر"
 
-#: templates/master.html:1816
+#: templates/master.html:1899
 msgid "Female"
 msgstr "أنثى"
 
-#: templates/master.html:1824
+#: templates/master.html:1907
 msgid "State"
 msgstr "ولاية"
+
+#: templates/master.html:1963 templates/master.html:1985
+msgid "CONGRATULATIONS"
+msgstr ""
+
+#: templates/master.html:1967
+msgid "You have Earned 50 coins by clicking on the video."
+msgstr ""
+
+#: templates/master.html:1968
+msgid "Watch and click to earn more!"
+msgstr ""
+
+#: templates/master.html:1970
+msgid "WATCH"
+msgstr ""
+
+#: templates/master.html:1989
+msgid "You have earned 5 coins for watching!"
+msgstr ""
+
+#: templates/master.html:1990
+msgid "Earn 50 coins by clicking on the video."
+msgstr ""
+
+#: templates/master.html:2008
+msgid "LIMIT REACHED"
+msgstr ""
+
+#: templates/master.html:2014
+msgid "earn more coins later."
+msgstr ""
+
+#: templates/master.html:2016 templates/master.html:2038
+msgid "CLOSE"
+msgstr ""
+
+#: templates/master.html:2031
+msgid "VIDEO NOT READY YET"
+msgstr ""
+
+#: templates/master.html:2035
+msgid "The next video is not yet ready,"
+msgstr ""
+
+#: templates/master.html:2036
+msgid "please try again later"
+msgstr ""
 
 #: templates/privacy.html:9 templates/profile.html:568
 msgid "Privacy Policy"
@@ -414,7 +543,6 @@ msgid ""
 "<span>Your Engage Coins balance is <span class=\"user-coins\">%(coins)s</"
 "span></span>"
 msgstr ""
-
 
 #: templates/prizes.html:58
 msgid "ALL PRIZES"
@@ -447,6 +575,7 @@ msgstr "تحتاج إلى عملات (NbrCoins) للاسترداد. هل تري�
 
 #: templates/prizes.html:245 templates/prizes.html:274
 #: templates/profile.html:654 templates/profile.html:820
+#: templates/public-profile.html:454 templates/public-profile.html:477
 #: templates/register.html:6711 templates/register1.html:4339
 #: templates/register2.html:4323 templates/register3.html:4370
 msgid "Confirm"
@@ -460,11 +589,11 @@ msgstr "شراء عملات معدنية"
 msgid "Engage coins"
 msgstr "إشراك العملات المعدنية"
 
-#: templates/profile.html:98
+#: templates/profile.html:98 templates/public-profile.html:81
 msgid "Profile"
 msgstr "حساب تعريفي"
 
-#: templates/profile.html:102
+#: templates/profile.html:102 templates/public-profile.html:82
 msgid "Friends"
 msgstr "اصحاب"
 
@@ -473,8 +602,10 @@ msgid "Last Played Games"
 msgstr "آخر الألعاب التي تم لعبها"
 
 #: templates/profile.html:146 templates/profile.html:181
-#: templates/profile.html:215 templates/profile.html:269
-#: templates/profile.html:308 templates/profile.html:588
+#: templates/profile.html:198 templates/profile.html:215
+#: templates/profile.html:269 templates/profile.html:308
+#: templates/profile.html:588 templates/public-profile.html:186
+#: templates/public-profile.html:303 templates/public-profile.html:384
 msgid "View All"
 msgstr "مشاهدة الكل"
 
@@ -482,11 +613,15 @@ msgstr "مشاهدة الكل"
 msgid "Joined tournaments"
 msgstr "انضم إلى البطولات"
 
+#: templates/profile.html:195 templates/public-profile.html:184
+msgid "Stickers"
+msgstr ""
+
 #: templates/profile.html:212
 msgid "Trophies"
 msgstr "الجوائز"
 
-#: templates/profile.html:242
+#: templates/profile.html:242 templates/public-profile.html:231
 msgid "FRIENDS"
 msgstr "اصحاب"
 
@@ -562,6 +697,12 @@ msgstr "تسجيل خروج"
 msgid "You don\\"
 msgstr "أنت لا \\"
 
+#: templates/profile.html:629
+#, fuzzy
+#| msgid "Friends"
+msgid "Add friends"
+msgstr "اصحاب"
+
 #: templates/profile.html:649
 msgid "Are you sure you want to unlock VIP access to the battlepass?"
 msgstr "هل أنت متأكد أنك تريد فتح وصول VIP إلى ممر المعركة؟"
@@ -592,6 +733,34 @@ msgstr "انذار"
 
 #: templates/profile.html:816
 msgid "Are you sure you want to remove this friend?"
+msgstr "هل أنت متأكد أنك تريد إزالة هذا الصديق؟"
+
+#: templates/public-profile.html:58
+#, fuzzy
+#| msgid "Friends"
+msgid "Remove Friend"
+msgstr "اصحاب"
+
+#: templates/public-profile.html:64
+msgid "Friend Request Sent"
+msgstr ""
+
+#: templates/public-profile.html:73
+#, fuzzy
+#| msgid "Friends"
+msgid "Add Friend"
+msgstr "اصحاب"
+
+#: templates/public-profile.html:422
+#, fuzzy
+#| msgid "Register!"
+msgid "Register"
+msgstr "يسجل!"
+
+#: templates/public-profile.html:451
+#, fuzzy
+#| msgid "Are you sure you want to remove this friend?"
+msgid "Are you sure you want to send this user a friend request?"
 msgstr "هل أنت متأكد أنك تريد إزالة هذا الصديق؟"
 
 #: templates/register.html:6656
@@ -761,8 +930,9 @@ msgstr "لا يمكن الانضمام!"
 msgid ""
 "You cannot join this tournament since it has already started. Register to "
 "other tournaments now and win multiple prizes"
-msgstr "لا يمكنك الانضمام إلى هذه البطولة لأنها بدأت بالفعل. سجل في"
-"البطولات الأخرى الآن والفوز بجوائز متعددة"
+msgstr ""
+"لا يمكنك الانضمام إلى هذه البطولة لأنها بدأت بالفعل. سجل فيالبطولات الأخرى "
+"الآن والفوز بجوائز متعددة"
 
 #: templates/tournament.html:392
 msgid "Good Luck!"
@@ -776,8 +946,9 @@ msgstr "هذه البطولة مستمرة ، استمتع باللعبة. حظ 
 msgid ""
 "You cannot join this tournament since it's closed. Register to other "
 "tournaments now and win multiple prizes"
-msgstr "لا يمكنك الانضمام إلى هذه البطولة لأنها مغلقة. سجل في الآخرين"
-"البطولات الآن والفوز بجوائز متعددة"
+msgstr ""
+"لا يمكنك الانضمام إلى هذه البطولة لأنها مغلقة. سجل في الآخرينالبطولات الآن "
+"والفوز بجوائز متعددة"
 
 #: templates/tournament.html:412
 msgid "Subscribers Only!"
@@ -789,8 +960,6 @@ msgid ""
 "tournaments. To upgrade, simply deactivate from the free package by sending "
 "\"DEAC SUB3\" to “8561” then send \"SUB2\" to “8561”."
 msgstr ""
-
-
 
 #: templates/tournament.html:420
 msgid "Subscribe now to be able to join any upcoming tournament."
@@ -804,20 +973,32 @@ msgstr "ترقية الاشتراك"
 msgid ""
 "You are allowed to join one tournament per day. Please upgrade your package "
 "to join multiple tournaments per day"
-msgstr "يُسمح لك بالانضمام إلى دورة واحدة يوميًا. الرجاء ترقية الحزمة الخاصة بك"
-"للانضمام إلى بطولات متعددة يوميًا"
+msgstr ""
+"يُسمح لك بالانضمام إلى دورة واحدة يوميًا. الرجاء ترقية الحزمة الخاصة "
+"بكللانضمام إلى بطولات متعددة يوميًا"
 
 #: templates/tournament.html:437
 msgid "Upgrade"
 msgstr "تطوير"
+
+#: templates/tournament.html:451
+msgid "Your profile level is {{ user.level }}!"
+msgstr ""
+
+#: templates/tournament.html:456
+msgid ""
+"The minimum profile level required to join this tournament is {{ tournament."
+"minimum_profile_level }}"
+msgstr ""
 
 #: templates/tournament.html:478 templates/tournament.html:485
 #: templates/tournament.html:535 templates/tournament.html:542
 msgid ""
 "Game account is your in-game ID. You need to create it in the game itself to "
 "be eligible to participate in the tournament."
-msgstr "حساب اللعبة هو معرفك داخل اللعبة. تحتاج إلى إنشائه في اللعبة نفسها"
-"أن تكون مؤهلاً للمشاركة في البطولة."
+msgstr ""
+"حساب اللعبة هو معرفك داخل اللعبة. تحتاج إلى إنشائه في اللعبة نفسهاأن تكون "
+"مؤهلاً للمشاركة في البطولة."
 
 #: templates/tournament.html:481 templates/tournament.html:488
 #: templates/tournament.html:538 templates/tournament.html:545
@@ -827,3 +1008,7 @@ msgstr "أدخل حساب اللعبة الخاص بك"
 #: templates/tournament.html:495 templates/tournament.html:552
 msgid "Submit"
 msgstr "إرسال"
+
+#: templates/wait.html:40
+msgid "Subscription status is being updated please wait..."
+msgstr ""

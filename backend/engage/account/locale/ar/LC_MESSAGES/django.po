@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-18 12:25+0000\n"
+"POT-Creation-Date: 2023-01-20 14:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,8 +40,9 @@ msgstr "تم تغيير الرقم السري بنجاح."
 msgid ""
 "You entered your old password incorrectly multiple times! Please log in "
 "again to continue."
-msgstr "لقد أدخلت كلمة مرورك القديمة بشكل غير صحيح عدة مرات! الرجاء تسجيل الدخول"
-"مرة أخرى للمتابعة."
+msgstr ""
+"لقد أدخلت كلمة مرورك القديمة بشكل غير صحيح عدة مرات! الرجاء تسجيل الدخولمرة "
+"أخرى للمتابعة."
 
 #: account/validator.py:20
 #, python-format
@@ -70,15 +71,15 @@ msgstr "لا يمكن أن تحتوي كلمة المرور على أرقام م
 #: account/validator.py:32
 msgid ""
 "Password has been previously exposed in data breaches. Please choose another."
-msgstr ""
-"تم الكشف عن كلمة المرور سابقًا في خروقات البيانات. الرجاء اختيار آخر."
+msgstr "تم الكشف عن كلمة المرور سابقًا في خروقات البيانات. الرجاء اختيار آخر."
 
 #: account/validator.py:35
 msgid ""
 "Your password must contain at lest one upper-case character, one lower-case "
 "character, one digit and one special character."
-msgstr "يجب أن تحتوي كلمة مرورك على حرف واحد كبير على الأقل ، وحرف صغير واحد "
-"حرف ورقم واحد وحرف خاص واحد."
+msgstr ""
+"يجب أن تحتوي كلمة مرورك على حرف واحد كبير على الأقل ، وحرف صغير واحد حرف "
+"ورقم واحد وحرف خاص واحد."
 
 #: account/views.py:205
 msgid "You have been locked out for "
