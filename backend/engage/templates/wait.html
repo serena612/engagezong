@@ -37,13 +37,13 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
 <div class="waitText">
     <span class="is_updated">
-Subscription status is being updated please wait...
+        {% translate 'Subscription status is being updated please wait...' %}
 </span>
 <br>
 <br>
 User: <span class="user_id">{{user.username}} </span> 
 <br/>
-Phone Number: <span class="user_mobile">{{user.mobile}}</span> <br> <a href="/clear">Change Number</a>
+Phone Number: <span class="user_mobile">{{user.mobile}}</span> <br> <a href="/clear">{% translate 'Change Number' %}</a>
 <br/>
 
 <!-- <p class="user_mobile">{{user.mobile}} <a href="/clear">Change Number</a> </p> -->

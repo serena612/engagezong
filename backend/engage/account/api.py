@@ -1507,7 +1507,7 @@ class UserViewSet(mixins.ListModelMixin,
                 return Response({'coins': 5})
 
         #handle engage ads, call google api to reward engage videos
-        elif ad_id in OWN_CREATIVES and ad_type=="engage":
+        elif ad_type != 'engage' and ad_type=="engage":
             transaction = UserTransactionHistory.objects.create(
                 user=user,
                 amount=0, # amount of coins to grant

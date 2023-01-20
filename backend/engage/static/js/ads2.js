@@ -313,14 +313,17 @@ function onAdEvent(adEvent) {
       console.log("Ad uni Id: "+ad.getUniversalAdIdValue()); 
       // console.log("Ad creative Id: "+ad.getCreativeAdId());
       console.log("Ad ID: "+ad.getAdId());
-      if (is_ad_engage == true && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
+      console.log("is_ad_engage: "+is_ad_engage);
+
+      if (is_ad_engage == 1 && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
+        console.log("Hide engage ad");
         $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();}
-      else if(is_ad_google == true && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
+      else if(is_ad_google == 1 && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
         $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();
       }
       else{
 
-      
+      console.log("Show ad video ");
       $("#mainContainer,.close_video_ad").show();
       if (!ad.isLinear()) {
         videoContent.play();
@@ -380,7 +383,7 @@ function onAdEvent(adEvent) {
     }
       break;
     case google.ima.AdEvent.Type.STARTED:
-      if (ad.isLinear()) {
+      if (ad.isLinear() && is_ad_engage == 0) {
         // For a linear ad, a timer can be started to poll for
         // the remaining time.
         intervalTimer = setInterval(
