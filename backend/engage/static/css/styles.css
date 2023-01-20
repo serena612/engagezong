@@ -7300,18 +7300,17 @@ color:#FFF;
 }
 
 #playButton, #pauseButton {
-  color: #FFF; 
+  color: #FFF;
   position: fixed;
-  top: 50vh;
+  top: 48vh;
   left: 47vw;
-  z-index: 2147483647; 
-  padding: 10px;
+  z-index: 2147483647;
+  padding-top: 3px;
   border: none;
-  border-radius: 3px;
-  background-color: #1C1E4E;
-  width: 100px;
+  background-color: #2B1B6D;
+  width: 126px;
+  height: 70px;
   cursor: pointer;
   display: none;
   text-transform: uppercase;
-    font-weight: 800;
 }

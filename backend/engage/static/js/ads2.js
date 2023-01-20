@@ -73,6 +73,11 @@ function initDesktopAutoplayExample() {
   // Hide the address bar!
   window.scrollTo(0, 1);
 
+  if($('#adContainer').html() == "")
+  {
+    playButton.style.display = 'none';
+    pauseButton.style.display = 'none';
+  }
 }
 
 /**
@@ -325,6 +330,7 @@ function onAdEvent(adEvent) {
       // This is triggered when all ads have done playing
       // Hide ad
       $("#mainContainer,#playButton, #pauseButton, .close_video_ad").hide();
+      $("#playButton, #pauseButton").css("display","none");
       break;
     case google.ima.AdEvent.Type.CLICK:
       // This is triggered when the visit site button is clicked
