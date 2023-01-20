@@ -16,17 +16,20 @@ let adsManager;
 let adsLoader;
 let adDisplayContainer;
 let playButton;
+let pauseButton;
 let videoContent;
 let adsInitialized;
 let autoplayAllowed;
 let autoplayRequiresMuted;
-
+var intervalTimer;
+var started=false;
 /**
  * Initializes IMA setup.
  */
 function initDesktopAutoplayExample() {
   videoContent = document.getElementById('contentElement');
   playButton = document.getElementById('playButton');
+  pauseButton = document.getElementById('pauseButton');
   // destroy adsLoader
   adsInitialized = false;
   try {
@@ -35,15 +38,31 @@ function initDesktopAutoplayExample() {
     try{
     adsLoader.contentComplete();
     adsLoader.destroy()
-    console.log("Destroyed adsLoader");}catch (error) {}}
+    console.log("Destroyed adsLoader");
+    started = false;
+    }catch (error) {}}
     catch (error) {}
   playButton.addEventListener('click', () => {
     // Initialize the container. Must be done through a user action where
     // autoplay is not allowed.
+    if(!started){
+      started = true;
     adDisplayContainer.initialize();
     adsInitialized = true;
     videoContent.load();
     playAds();
+  }else{
+      adsManager.resume();
+      playButton.style.display = 'none';
+      pauseButton.style.display = 'block';
+    }
+  });
+  pauseButton.addEventListener('click', () => {
+    // Initialize the container. Must be done through a user action where
+    // autoplay is not allowed.
+    adsManager.pause();
+    playButton.style.display = 'block';
+    pauseButton.style.display = 'none';
   });
   setUpIMA();
   // Check if autoplay is supported.
@@ -241,9 +260,12 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
   
   if (autoplayAllowed) {
     playButton.style.display = 'none';
+    pauseButton.style.display = 'block';
+    started = true;
     playAds();
   } else {
     playButton.style.display = 'block';
+    pauseButton.style.display = 'none';
   }
 }
 
@@ -263,14 +285,17 @@ function onAdEvent(adEvent) {
       console.log("Ad uni Id: "+ad.getUniversalAdIdValue()); 
       // console.log("Ad creative Id: "+ad.getCreativeAdId());
       console.log("Ad ID: "+ad.getAdId());
-      if (is_ad_engage == true && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
-        $("#mainContainer,#playButton,.close_video_ad").hide();}
-      else if(is_ad_google == true && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
-        $("#mainContainer,#playButton,.close_video_ad").hide();
+      console.log("is_ad_engage: "+is_ad_engage);
+
+      if (is_ad_engage == 1 && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
+        console.log("Hide engage ad");
+        $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();}
+      else if(is_ad_google == 1 && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
+        $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();
       }
       else{
 
-      
+      console.log("Show ad video ");
       $("#mainContainer,.close_video_ad").show();
       if (!ad.isLinear()) {
         videoContent.play();
@@ -279,7 +304,7 @@ function onAdEvent(adEvent) {
     case google.ima.AdEvent.Type.ALL_ADS_COMPLETED:
       // This is triggered when all ads have done playing
       // Hide ad
-      $("#mainContainer,#playButton,.close_video_ad").hide();
+      $("#mainContainer,#playButton, #pauseButton, .close_video_ad").hide();
       break;
     case google.ima.AdEvent.Type.CLICK:
       // This is triggered when the visit site button is clicked
@@ -324,6 +349,22 @@ function onAdEvent(adEvent) {
           $('#congrats-modal3').modal('show');}
       });
     }
+    if (ad.isLinear()) {
+      clearInterval(intervalTimer);
+    }
+      break;
+    case google.ima.AdEvent.Type.STARTED:
+      if (ad.isLinear() && is_ad_engage == 0) {
+        // For a linear ad, a timer can be started to poll for
+        // the remaining time.
+        intervalTimer = setInterval(
+            function() {
+              var remainingTime = adsManager.getRemainingTime();
+              //countdownUi.innerHTML =
+               $('#timerAd').html('Remaining Time: ' + parseInt(remainingTime));
+            },
+            300); // every 300ms
+      }
       break;
   }
 }
@@ -345,7 +386,7 @@ function onAdError(adErrorEvent) {
     // error handling
   
   }
-  $("#mainContainer,#playButton,.close_video_ad").hide();
+  $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();
   // Fall back to playing content.
   //videoContent.play();
 }
@@ -377,7 +418,7 @@ function closeVideoAd(){
   
   }
   
-   $("#mainContainer,#playButton,.close_video_ad").hide();
+   $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();
    $(window).scrollTop($('.sec-3').offset().top);
 }
 

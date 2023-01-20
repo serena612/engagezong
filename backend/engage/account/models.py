@@ -283,7 +283,7 @@ class UserTransactionHistory(TimeStampedModel):
         if self.id:
             super().save(*args, **kwargs)
             return
-       
+
         self.user.old_coins = self.user.coins
         self.user.seen_coins = False
         if self.action == CoinTransaction.ADD:
