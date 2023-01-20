@@ -58,9 +58,8 @@ msgstr "الرجاء تصحيح الخطأ أدناه."
 msgid ""
 "You are authenticated as %(username)s, but are not authorized to access this "
 "page. Would you like to login to a different account?"
-msgstr ""
-"لقد تمت مصادقتك باعتبارك٪ (اسم المستخدم) s ، لكن غير مصرح لك بالوصول إلى "
-"هذاصفحة. هل ترغب في تسجيل الدخول إلى حساب مختلف؟"
+msgstr "لقد تمت مصادقتك  "
+
 
 #: templates/admin/captcha_login.html:87
 msgid ""
@@ -563,7 +562,7 @@ msgstr "حزم البيانات"
 #: templates/prizes.html:132
 #, python-format
 msgid "Engage Coins required: %(coins)s"
-msgstr "العملات المعدنية المطلوبة:٪ (عملات) s"
+msgstr "العملات المعدنية المطلوبة"
 
 #: templates/prizes.html:235
 msgid "Redeem Gift"

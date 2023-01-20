@@ -47,22 +47,22 @@ msgstr ""
 #: account/validator.py:20
 #, python-format
 msgid "Password must contain at least %(min_length)d digit."
-msgstr "يجب أن تحتوي كلمة المرور على٪ (min_length) d رقم على الأقل."
+msgstr "يجب أن تحتوي كلمة المرور على"
 
 #: account/validator.py:22
 #, python-format
 msgid "Password must contain at least %(min_length)d lower-case character."
-msgstr "يجب أن تحتوي كلمة المرور على٪ (min_length) حرف صغير على الأقل."
+msgstr "يجب أن تحتوي كلمة المرور على"
 
 #: account/validator.py:24
 #, python-format
 msgid "Password must contain at least %(min_length)d special character."
-msgstr "يجب أن تحتوي كلمة المرور على٪ (min_length) d حرفًا خاصًا على الأقل."
+msgstr "يجب أن تحتوي كلمة المرور على"
 
 #: account/validator.py:26
 #, python-format
 msgid "Password must contain at least %(min_length)d upper-case character."
-msgstr "يجب أن تحتوي كلمة المرور على٪ (min_length) d حرفًا كبيرًا على الأقل."
+msgstr "يجب أن تحتوي كلمة المرور على"
 
 #: account/validator.py:29
 msgid "Password cannot contain consecutive numbers."
