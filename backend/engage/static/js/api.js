@@ -228,7 +228,7 @@ function fillTopUpcomingTournaments(data){
                     <div class='middle-text'>
                         <div class='image1'>
                             <i class='fas fa-male'></i>
-                            <span>${item.current_participants}/${item.max_participants}</span>
+                            <span>${item.max_participants}</span>
                         </div>
                         <div class='image2'>
                             <i class="fas fa-users"></i>
@@ -241,7 +241,7 @@ function fillTopUpcomingTournaments(data){
                 html+=`<p class="post-meta">
                    <i class="fas fa-clock"></i>
                    <i class="fas fa-users"></i>
-                   <span>${item.current_participants}/${item.max_participants}</span>
+                   <span>${item.max_participants}</span>
                    </p>`;
                  
                 
@@ -371,7 +371,7 @@ function load (pg) {
                                     <div class='middle-text'>
                                         <div class='image1'>
                                             <i class='fas fa-male'></i>
-                                            <span>${item.current_participants}/${item.max_participants}</span>
+                                            <span>${item.max_participants}</span>
                                         </div>
                                         <div class='image2'>
                                             <i class="fas fa-users"></i>
@@ -396,7 +396,7 @@ function load (pg) {
                                 html+=`<p class="post-meta">
                                 <i class="fas fa-clock"></i>
                                 <i class="fas fa-users"></i>
-                                <span>${item.current_participants}/${item.max_participants}</span>
+                                <span>${item.max_participants}</span>
                                 </p>`;
                                 if(state=='previous'){
                                     html+=`<div class="winners">
@@ -495,7 +495,7 @@ function load (pg) {
                                     <div class='middle-text'>
                                         <div class='image1'>
                                             <i class='fas fa-male'></i>
-                                            <span>${item.current_participants}/${item.max_participants}</span>
+                                            <span>${item.max_participants}</span>
                                         </div>
                                         <div class='image2'>
                                             <i class="fas fa-users"></i>
@@ -520,7 +520,7 @@ function load (pg) {
                                 html+=`<p class="post-meta">
                                 <i class="fas fa-clock"></i>
                                 <i class="fas fa-users"></i>
-                                <span>${item.current_participants}/${item.max_participants}</span>
+                                <span>${item.max_participants}</span>
                                 </p>`;
                                 if(state=='previous'){
                                     html+=`<div class="winners">
@@ -719,7 +719,7 @@ function get_tournament(game,str) {
                                     <div class='middle-text'>
                                         <div class='image1'>
                                             <i class='fas fa-male'></i>
-                                            <span>${item.current_participants}/${item.max_participants}</span>
+                                            <span>${item.max_participants}</span>
                                         </div>
                                         <div class='image2'>
                                             <i class="fas fa-users"></i>
@@ -744,7 +744,7 @@ function get_tournament(game,str) {
                                 html+=`<p class="post-meta">
                                 <i class="fas fa-clock"></i>
                                 <i class="fas fa-users"></i>
-                                <span>${item.current_participants}/${item.max_participants}</span>
+                                <span>${item.max_participants}</span>
                                 </p>`;
                                 if(state=='previous'){
                                     html+=`<div class="winners">
@@ -845,7 +845,7 @@ function get_tournament(game,str) {
                                     <div class='middle-text'>
                                         <div class='image1'>
                                             <i class='fas fa-male'></i>
-                                            <span>${item.current_participants}/${item.max_participants}</span>
+                                            <span>${item.max_participants}</span>
                                         </div>
                                         <div class='image2'>
                                             <i class="fas fa-users"></i>
@@ -870,7 +870,7 @@ function get_tournament(game,str) {
                                 html+=`<p class="post-meta">
                                 <i class="fas fa-clock"></i>
                                 <i class="fas fa-users"></i>
-                                <span>${item.current_participants}/${item.max_participants}</span>
+                                <span>${item.max_participants}</span>
                                 </p>`;
                                 if(state=='previous'){
                                     html+=`<div class="winners">
@@ -1552,9 +1552,7 @@ $(function () {
                                                             : "Starts in: " + item.start_date
                                                         }</span>
                                                         <i class="fas fa-users"></i>
-                                                        <span>${
-                                                          item.current_participants
-                                                        }/${item.max_participants}</span>
+                                                        <span>${item.max_participants}</span>
                                                     </p>
                                                 </div>
                                             </a>
