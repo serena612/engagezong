@@ -65,7 +65,7 @@ msgstr "لقد تمت مصادقتك  "
 msgid ""
 " You have been locked out for '+aux[1]+ ' minute(s).<br>Please <a href=\"./"
 "\">try again</a> later."
-msgstr ""
+msgstr "لقد تم حظر دخولك"
 
 #: templates/admin/captcha_login.html:117
 msgid "OTP Device:"
@@ -108,6 +108,8 @@ msgid ""
 "All the information on this website is published in good faith and for "
 "general information purpose only."
 msgstr ""
+"يتم نشر جميع المعلومات الواردة في هذا الموقع بحسن نية ولأجل"
+"لغرض المعلومات العامة فقط."
 
 #: templates/disclaimer.html:15 templates/master.html:1661
 msgid ""
@@ -116,7 +118,7 @@ msgid ""
 "you find on this website (MTN Engage), is strictly at your own risk. MTN "
 "Engage will not be liable for any losses and/or damages in connection with "
 "the use of our website."
-msgstr ""
+msgstr "لا تقدم MTN Engage أي ضمانات بشأن الاكتمال"
 
 #: templates/disclaimer.html:17 templates/master.html:1663
 msgid ""
@@ -127,7 +129,7 @@ msgid ""
 "all the content found on these sites. Site owners and content may change "
 "without notice and may occur before we have the opportunity to remove a link "
 "which may have gone "
-msgstr ""
+msgstr "من موقعنا على شبكة الإنترنت ، يمكنك زيارة مواقع الويب الأخرى باتباع الارتباطات التشعبية"
 
 #: templates/disclaimer.html:19 templates/master.html:1665
 msgid ""
@@ -135,7 +137,7 @@ msgid ""
 "different privacy policies and terms which are beyond our control. Please be "
 "sure to check the Privacy Policies of these sites as well as their \"Terms "
 "of Service\" before engaging in any business or uploading any information."
-msgstr ""
+msgstr "يرجى العلم أيضًا أنه عند مغادرة موقعنا"
 
 #: templates/index.html:198
 msgid "PLAY, WIN AND EARN COINS"
@@ -245,7 +247,7 @@ msgstr "يسترد"
 
 #: templates/master.html:542
 msgid "MY PROFILE"
-msgstr ""
+msgstr "ملفي"
 
 #: templates/master.html:576 templates/master.html:1570
 #: templates/profile.html:557
@@ -299,7 +301,7 @@ msgstr "يرجى انتظار التأكيد"
 #: templates/master.html:754 templates/profile.html:363
 #: templates/profile.html:482
 msgid "Loading..."
-msgstr ""
+msgstr "جار التحميل..."
 
 #: templates/master.html:760
 #, fuzzy
@@ -309,7 +311,7 @@ msgstr "مغلق"
 
 #: templates/master.html:763
 msgid "Please wait while we process your request..."
-msgstr ""
+msgstr "يرجى الانتظار بينما نعالج طلبك..."
 
 #: templates/master.html:793
 msgid "CONTACT ENGAGE"
@@ -401,7 +403,7 @@ msgstr "يلغي"
 
 #: templates/master.html:1496
 msgid "Please resume and watch full video to collect your reward"
-msgstr ""
+msgstr "يرجى استئناف ومشاهدة الفيديو الكامل لتحصيل مكافأتك"
 
 #: templates/master.html:1626
 msgid "PRIVACY POLICY"
@@ -412,20 +414,20 @@ msgid ""
 "To be transparent with your users about what personal information you "
 "collect and what you do with it, you are required to publish a Privacy "
 "Policy agreement on your website or give in-app access to it."
-msgstr ""
+msgstr "أن تكون شفافًا مع المستخدمين بشأن ماهية المعلومات الشخصية"
 
 #: templates/master.html:1633
 msgid ""
 "Websites usually post a link to the complete Privacy Policy agreement from "
 "the footer of the website, whereas apps generally add the Privacy Policy to "
 "an \"About\" or \"Legal\" menu."
-msgstr ""
+msgstr "عادةً ما تنشر مواقع الويب رابطًا لاتفاقية سياسة الخصوصية الكاملة"
 
 #: templates/master.html:1635
 msgid ""
 "Another popular location for ecommerce store apps and websites is the "
 "checkout page, or account registration page if you don"
-msgstr ""
+msgstr "موقع شائع آخر لتطبيقات ومواقع متاجر التجارة الإلكترونية"
 
 #: templates/master.html:1654
 msgid "DISCLAIMER"
@@ -477,51 +479,51 @@ msgstr "ولاية"
 
 #: templates/master.html:1963 templates/master.html:1985
 msgid "CONGRATULATIONS"
-msgstr ""
+msgstr "تهانينا"
 
 #: templates/master.html:1967
 msgid "You have Earned 50 coins by clicking on the video."
-msgstr ""
+msgstr "لقد ربحت 50 قطعة نقدية من خلال النقر على الفيديو."
 
 #: templates/master.html:1968
 msgid "Watch and click to earn more!"
-msgstr ""
+msgstr "شاهد وانقر لتكسب المزيد!"
 
 #: templates/master.html:1970
 msgid "WATCH"
-msgstr ""
+msgstr "يشاهد"
 
 #: templates/master.html:1989
 msgid "You have earned 5 coins for watching!"
-msgstr ""
+msgstr "لقد ربحت 5 عملات معدنية مقابل المشاهدة!"
 
 #: templates/master.html:1990
 msgid "Earn 50 coins by clicking on the video."
-msgstr ""
+msgstr "اربح 50 قطعة نقدية بالضغط على الفيديو."
 
 #: templates/master.html:2008
 msgid "LIMIT REACHED"
-msgstr ""
+msgstr "بلغ الحد"
 
 #: templates/master.html:2014
 msgid "earn more coins later."
-msgstr ""
+msgstr "كسب المزيد من العملات لاحقًا."
 
 #: templates/master.html:2016 templates/master.html:2038
 msgid "CLOSE"
-msgstr ""
+msgstr "أغلق"
 
 #: templates/master.html:2031
 msgid "VIDEO NOT READY YET"
-msgstr ""
+msgstr "الفيديو ليس جاهزًا بعد"
 
 #: templates/master.html:2035
 msgid "The next video is not yet ready,"
-msgstr ""
+msgstr "الفيديو التالي ليس جاهزًا بعد ،"
 
 #: templates/master.html:2036
 msgid "please try again later"
-msgstr ""
+msgstr "الرجاء معاودة المحاولة في وقت لاحق"
 
 #: templates/privacy.html:9 templates/profile.html:568
 msgid "Privacy Policy"
@@ -541,7 +543,7 @@ msgstr "استبدال العملات المعدنية"
 msgid ""
 "<span>Your Engage Coins balance is <span class=\"user-coins\">%(coins)s</"
 "span></span>"
-msgstr ""
+msgstr "رصيد Engage Coins الخاص بك"
 
 #: templates/prizes.html:58
 msgid "ALL PRIZES"
@@ -614,7 +616,7 @@ msgstr "انضم إلى البطولات"
 
 #: templates/profile.html:195 templates/public-profile.html:184
 msgid "Stickers"
-msgstr ""
+msgstr "ملصقات"
 
 #: templates/profile.html:212
 msgid "Trophies"
@@ -742,7 +744,7 @@ msgstr "اصحاب"
 
 #: templates/public-profile.html:64
 msgid "Friend Request Sent"
-msgstr ""
+msgstr "تم ارسال طلب صداقة"
 
 #: templates/public-profile.html:73
 #, fuzzy
@@ -982,13 +984,13 @@ msgstr "تطوير"
 
 #: templates/tournament.html:451
 msgid "Your profile level is {{ user.level }}!"
-msgstr ""
+msgstr "مستوى ملفك الشخصي"
 
 #: templates/tournament.html:456
 msgid ""
 "The minimum profile level required to join this tournament is {{ tournament."
 "minimum_profile_level }}"
-msgstr ""
+msgstr "الحد الأدنى من مستوى الملف الشخصي المطلوب للانضمام إلى هذه البطولة"
 
 #: templates/tournament.html:478 templates/tournament.html:485
 #: templates/tournament.html:535 templates/tournament.html:542
@@ -1010,4 +1012,4 @@ msgstr "إرسال"
 
 #: templates/wait.html:40
 msgid "Subscription status is being updated please wait..."
-msgstr ""
+msgstr "يتم تحديث حالة الاشتراك الرجاء الانتظار ..."
