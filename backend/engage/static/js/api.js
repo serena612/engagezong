@@ -1330,14 +1330,14 @@ function getWinners(game, tournament) {
             if(value.length == 0){
                 var loading = box.find(".loading-tr");
                 loading.html("<span class='no-data'>No Data Found</span>");
-                var html =` <h2 class='home-winners-results-title winners-title'>`+$('.hiddenTournament_select').find('option[value='+selected_tournament+']').attr('gname')+` <font color='#F6236F'>&nbsp;&nbsp;&nbsp;  0 winners</font></h2> <div class='container'><div class='scroll_wrapper'>`;
+                var html =` <h2 class='home-winners-results-title winners-title'>`+$('.hiddenTournament_select').find('option[value='+selected_tournament+']').attr('gname')+` <font color='#F6236F'>&nbsp;&nbsp;&nbsp;  0 `+winner_transl+`</font></h2> <div class='container'><div class='scroll_wrapper'>`;
                 box.append(html);
                 $('.sec-3-1 .scroll_wrapper,.sec-3-1 .col-8,.sec-3-1 .container').css('height','auto');
                 return;
             }
             
             var counter = 1;
-            var html =` <h2 class='home-winners-results-title winners-title'>`+$('.hiddenTournament_select').find('option[value='+selected_tournament+']').attr('gname')+" <font color='#F6236F'>&nbsp;&nbsp;&nbsp;  "+ value.length+` winners </font></h2> <div class='container'><div class='scroll_wrapper'>`;
+            var html =` <h2 class='home-winners-results-title winners-title'>`+$('.hiddenTournament_select').find('option[value='+selected_tournament+']').attr('gname')+" <font color='#F6236F'>&nbsp;&nbsp;&nbsp;  "+ value.length+` `+winner_transl+` </font></h2> <div class='container'><div class='scroll_wrapper'>`;
             value.forEach((item) => {
                 if(counter==1 || counter == 5 || counter == 9 || counter == 13){
                     html +=`<div class='package'>`;

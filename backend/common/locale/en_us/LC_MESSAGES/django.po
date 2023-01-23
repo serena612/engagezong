@@ -17,15 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: engage/core/models.py:300 engage/core/models.py:312
-#: engage/core/models.py:317
-msgid "This field is required."
+#: common/fields.py:55
+msgid "This is not an base64 string"
 msgstr ""
 
-#: engage/core/models.py:306
-msgid "Claim Instantly must be selected if coins are set for a TEXT action"
+#: common/fields.py:77
+msgid "Please upload a valid file."
 msgstr ""
 
-#: engage/core/models.py:322
-msgid "Event Date is required"
+#: common/fields.py:78
+msgid "The type of the file couldn't be determined."
+msgstr ""
+
+#: common/fields.py:95
+msgid "Please upload a valid image."
+msgstr ""
+
+#: common/fields.py:96
+msgid "The type of the image couldn't be determined."
+msgstr ""
+
+#: common/models.py:9
+msgid "Tenant"
+msgstr ""
+
+#: common/models.py:20
+msgid "Created Date"
+msgstr ""
+
+#: common/models.py:21
+msgid "Modified Date"
 msgstr ""

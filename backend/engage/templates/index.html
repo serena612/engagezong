@@ -15,6 +15,7 @@
     <script>
         var is_ad_google = '{{ is_ad_google }}';
         var is_ad_engage = '{{ is_ad_engage }}';
+        var winner_transl = {% blocktrans %}"winners" {% endblocktrans %};
         $('nav').removeClass('hih')
     </script>
     <style>
@@ -276,7 +277,7 @@
                                class="button-small active upcoming">{% translate 'Upcoming' %}</a>
                         </li>
                         <li class="">
-                            <a onclick="hiya();return getTournaments('ongoing', this)" class="button-small ongoing">Ongoing</a>
+                            <a onclick="hiya();return getTournaments('ongoing', this)" class="button-small ongoing">{% translate 'Ongoing' %}</a>
                         </li>
                         <li style="margin-right: 48px;" class="">
                             <a onclick="hiya();return getTournaments('past', this)"

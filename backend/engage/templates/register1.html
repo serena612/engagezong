@@ -49,7 +49,7 @@
         <script>
             var serverTime = Math.floor(Date.parse("{% now 'c' %}") / 1000);
             var xtoken = $.cookie("csrftoken");
-
+            var winner_transl = '{% translate "winners" %}';
             var is_complete_profile = false;
             var is_authenticated = false;
             var refid = '{{ refid }}';
