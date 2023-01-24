@@ -85,9 +85,22 @@ INSTALLED_APPS = [
     'engage.core',
     'django_password_validators',
     'django_password_validators.password_history',
+    'parler',
     # 'django_otp',
     # 'django_otp.plugins.otp_totp',
 ]
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en-us',}, # English
+        {'code': 'ar',}, # Arabic
+    ),
+    'default': {
+        'fallbacks': ['en-us'],
+        'hide_untranslated': False,
+    }
+}
+
 
 AUTHENTICATION_BACKENDS = [
     # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.

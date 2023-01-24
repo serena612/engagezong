@@ -5,8 +5,9 @@ from django.core.validators import FileExtensionValidator
 from solo.models import SingletonModel
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from parler.models import TranslatedFields
 
-from common.models import TimeStampedModel
+from common.models import TranslatableTimeStampedModel, TimeStampedModel
 from .constants import (
     WinAction,
     SupportedGame,
@@ -245,14 +246,18 @@ class Package(models.Model):
 
 
 
-class Notifications(TimeStampedModel):
+class Notifications(TranslatableTimeStampedModel):
+    translations = TranslatedFields(
+         title2 = models.TextField(null=True),
+         text2 = models.TextField(blank=True, null=True), 
+     )
     template = models.CharField(choices=NotificationTemplate.choices,
                                 null=True, max_length=40)
     action = models.CharField(choices=NotificationAction.choices,
                               default=NotificationAction.TEXT, max_length=20)
-
     title = models.TextField(null=True)
     text = models.TextField(blank=True, null=True)
+    
 
     url = models.URLField(blank=True, null=True)
     image = models.ImageField(upload_to='templates/', blank=True, null=True)

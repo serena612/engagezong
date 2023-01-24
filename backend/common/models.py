@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.db.models import Max, F
 from django.utils.translation import ugettext_lazy as _
+from parler.models import TranslatableModel
 
 
 class TenantModel(models.Model):
@@ -12,7 +13,18 @@ class TenantModel(models.Model):
         abstract = True
 
 
-class TimeStampedModel(models.Model):
+class TimeStampedModel(models.Model):  # 
+    """
+    An abstract base class model that provides self-
+    updating ``created`` and ``modified`` fields.
+    """
+    created = models.DateTimeField(_('Created Date'), auto_now_add=True)
+    modified = models.DateTimeField(_('Modified Date'), auto_now=True)
+
+    class Meta:
+        abstract = True
+
+class TranslatableTimeStampedModel(TranslatableModel):  # models.Model
     """
     An abstract base class model that provides self-
     updating ``created`` and ``modified`` fields.
