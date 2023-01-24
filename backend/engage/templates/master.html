@@ -1985,7 +1985,7 @@
                         <div class="purple">{% translate 'You have earned 5 coins for watching!' %}</div>
                         <div class="pink">{% translate 'Earn 50 coins by clicking on the video.' %}</div>
                         <!-- <div class="tourn_btn">WATCH</div> -->
-                        <div class="tourn_btn" onclick="$('#congrats-modal2').modal('hide');initDesktopAutoplayExample();">WATCH</div>
+                        <div class="tourn_btn" onclick="$('#congrats-modal2').modal('hide');$('#playButton, #pauseButton, #timerAd').css('display','none');$('#adContainer').html(''); initDesktopAutoplayExample();">WATCH</div>
                    </div>
             </div>
              <div class="pic_modal"><img src="{% static 'img/5-coins.png' %}" /></div>   
