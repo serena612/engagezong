@@ -25,6 +25,7 @@ let autoplayRequiresMuted;
 var intervalTimer;
 var started=false;
 var isLinear=false;
+let globalAd;
  
 /**
  * Initializes IMA setup.
@@ -82,29 +83,30 @@ function initDesktopAutoplayExample() {
 
   // Hide the address bar!
   window.scrollTo(0, 1);
+  
+  isLinear = (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((globalAd))));
 
   if($('#adContainer').html() == "" || !isLinear)
   {
     playButton.style.display = 'none';
     pauseButton.style.display = 'none';
     timerAd.style.display = 'none';
-
-    console.log("$('#adContainer').html(): ");
+     
     console.log("!isLinear: "+!isLinear);
   }
   else{
     
      if(autoplayAllowed)
      {
-      console.log("isLinear: "+isLinear);
-      console.log("autoplayAllowed: "+autoplayAllowed);
+     // console.log("isLinear: "+isLinear);
+     // console.log("autoplayAllowed: "+autoplayAllowed);
         playButton.style.display = 'none';
         pauseButton.style.display = 'block';
         timerAd.style.display = 'block';
      }
      else{
-      console.log("isLinear: "+isLinear);
-      console.log("!autoplayAllowed: "+!autoplayAllowed);
+      //console.log("isLinear: "+isLinear);
+      //console.log("!autoplayAllowed: "+!autoplayAllowed);
 
       playButton.style.display = 'block';
       pauseButton.style.display = 'none';
@@ -296,8 +298,9 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
   adsManager.addEventListener(google.ima.AdEvent.Type.STARTED, onAdEvent);
   adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, onAdEvent);
   adsManager.addEventListener(google.ima.AdEvent.Type.CLICK, onAdEvent);
-  adsManager.addEventListener(google.ima.AdEvent.Type.VIDEO_CLICKED, onAdEvent);
+  adsManager.addEventListener(google.ima.AdEvent.Type.VIDEO_CLICKED, onAdEvent); 
   
+
   if (autoplayAllowed) {
     if(isLinear)
     {
@@ -351,6 +354,8 @@ function onAdEvent(adEvent) {
       // console.log("Ad creative Id: "+ad.getCreativeAdId());
       console.log("Ad ID: "+ad.getAdId());
       console.log("is_ad_engage: "+is_ad_engage);
+
+      globalAd = ad;
 
       if (is_ad_engage == 1 && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
         console.log("Hide engage ad");
