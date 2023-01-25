@@ -8,6 +8,10 @@ from engage.services import Notifications as NotificationsService
 from . import models
 from .constants import NotificationTemplate
 from engage.services import notify_when, FCM
+
+from parler.admin import TranslatableAdmin
+
+
 class AvatarInline(admin.TabularInline):
     model = models.Avatar
     min_num = 0
@@ -69,7 +73,7 @@ class BattlePassAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Notifications)
-class NotificationAdmin(admin.ModelAdmin):
+class NotificationAdmin(TranslatableAdmin): # admin.ModelAdmin
     list_display = ('template', 'action', 'title', 'is_active', 'created', 'modified')
     list_filter = ('is_active',)
     exclude = ('is_claimed', 'is_gift')
