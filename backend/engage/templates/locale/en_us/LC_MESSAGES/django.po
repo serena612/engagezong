@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 09:51+0000\n"
+"POT-Creation-Date: 2023-01-25 15:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,80 +141,114 @@ msgstr ""
 msgid "\"winners\" "
 msgstr ""
 
-#: engage/templates/index.html:199
+#: engage/templates/index.html:19
+msgid ""
+"\"Please login or register to Engage to be able to play leisure games, earn "
+"coins, and win multiple prizes\" "
+msgstr ""
+
+#: engage/templates/index.html:20
+msgid ""
+"\"Please login or register to Engage to be able to play featured games and "
+"win multiple prizes\" "
+msgstr ""
+
+#: engage/templates/index.html:21
+msgid ""
+"\"Please login or register to Engage to be able to join tournaments and "
+"compete with others to earn many cash and other prizes\" "
+msgstr ""
+
+#: engage/templates/index.html:22
+msgid ""
+"\"Please login or register to Engage to buy coins, increase your balance, "
+"and win multiple cash and other prizes\" "
+msgstr ""
+
+#: engage/templates/index.html:23
+msgid ""
+"\"Please login or register to Engage to redeem gifts and win multiple cash "
+"and other prizes\" "
+msgstr ""
+
+#: engage/templates/index.html:24
+msgid "\"JOIN NOW\" "
+msgstr ""
+
+#: engage/templates/index.html:205
 msgid "PLAY, WIN AND EARN COINS"
 msgstr ""
 
-#: engage/templates/index.html:200
+#: engage/templates/index.html:206
 msgid "PLAY ANY OF THE FEATURED GAMES"
 msgstr ""
 
-#: engage/templates/index.html:268 engage/templates/master.html:361
+#: engage/templates/index.html:274 engage/templates/master.html:361
 #: engage/templates/profile.html:107 engage/templates/public-profile.html:85
 msgid "Tournaments"
 msgstr ""
 
-#: engage/templates/index.html:269
+#: engage/templates/index.html:275
 msgid "Play Games"
 msgstr ""
 
-#: engage/templates/index.html:275
+#: engage/templates/index.html:281
 msgid "ALL"
 msgstr ""
 
-#: engage/templates/index.html:279
+#: engage/templates/index.html:285
 msgid "Upcoming"
 msgstr ""
 
-#: engage/templates/index.html:282
+#: engage/templates/index.html:288
 msgid "Ongoing"
 msgstr ""
 
-#: engage/templates/index.html:286
+#: engage/templates/index.html:292
 msgid "Previous"
 msgstr ""
 
-#: engage/templates/index.html:289
+#: engage/templates/index.html:295
 msgid "All Games Tournaments"
 msgstr ""
 
-#: engage/templates/index.html:304
+#: engage/templates/index.html:310
 msgid "PREMIUM"
 msgstr ""
 
-#: engage/templates/index.html:308
+#: engage/templates/index.html:314
 msgid "FREE"
 msgstr ""
 
-#: engage/templates/index.html:493 engage/templates/master.html:499
+#: engage/templates/index.html:499 engage/templates/master.html:499
 #: engage/templates/master.html:532
 msgid "WINNERS"
 msgstr ""
 
-#: engage/templates/index.html:495
+#: engage/templates/index.html:501
 msgid "Games Tournaments"
 msgstr ""
 
-#: engage/templates/index.html:517
+#: engage/templates/index.html:523
 msgid "Last Updated:"
 msgstr ""
 
-#: engage/templates/index.html:556
+#: engage/templates/index.html:562
 msgid "Ad Image/Video Here"
 msgstr ""
 
-#: engage/templates/index.html:565 engage/templates/register.html:6678
-#: engage/templates/register1.html:4318 engage/templates/register2.html:4302
-#: engage/templates/register3.html:4349 engage/templates/tournament.html:161
+#: engage/templates/index.html:571 engage/templates/register.html:6684
+#: engage/templates/register1.html:4324 engage/templates/register2.html:4308
+#: engage/templates/register3.html:4355 engage/templates/tournament.html:161
 msgid "Join Now"
 msgstr ""
 
-#: engage/templates/index.html:576 engage/templates/profile.html:550
+#: engage/templates/index.html:582 engage/templates/profile.html:550
 #: engage/templates/profile.html:775
 msgid "Share Engage"
 msgstr ""
 
-#: engage/templates/index.html:593 engage/templates/profile.html:792
+#: engage/templates/index.html:599 engage/templates/profile.html:792
 msgid "COPY"
 msgstr ""
 
@@ -282,6 +316,12 @@ msgstr ""
 msgid "LOGIN"
 msgstr ""
 
+#: engage/templates/master.html:660 engage/templates/master.html:1296
+#: engage/templates/register.html:6660 engage/templates/register1.html:4308
+#: engage/templates/register2.html:4292 engage/templates/register3.html:4339
+msgid "Enter MTN Number"
+msgstr ""
+
 #: engage/templates/master.html:664 engage/templates/master.html:700
 #: engage/templates/master.html:711 engage/templates/master.html:1299
 #: engage/templates/master.html:1328
@@ -297,7 +337,7 @@ msgid "Register!"
 msgstr ""
 
 #: engage/templates/master.html:695 engage/templates/master.html:706
-#: engage/templates/register2.html:4304 engage/templates/register3.html:4351
+#: engage/templates/register2.html:4310 engage/templates/register3.html:4357
 #: engage/templates/wait.html:46
 msgid "Change Number"
 msgstr ""
@@ -595,9 +635,9 @@ msgstr ""
 #: engage/templates/prizes.html:245 engage/templates/prizes.html:274
 #: engage/templates/profile.html:654 engage/templates/profile.html:820
 #: engage/templates/public-profile.html:454
-#: engage/templates/public-profile.html:477 engage/templates/register.html:6711
-#: engage/templates/register1.html:4339 engage/templates/register2.html:4323
-#: engage/templates/register3.html:4370
+#: engage/templates/public-profile.html:477 engage/templates/register.html:6717
+#: engage/templates/register1.html:4345 engage/templates/register2.html:4329
+#: engage/templates/register3.html:4376
 msgid "Confirm"
 msgstr ""
 
@@ -779,56 +819,97 @@ msgstr ""
 msgid "winners"
 msgstr ""
 
-#: engage/templates/register.html:6656
+#: engage/templates/register.html:53 engage/templates/register1.html:53
+#: engage/templates/register2.html:53 engage/templates/register3.html:53
+msgid ""
+"Please login or register to Engage to be able to play leisure games, earn "
+"coins, and win multiple prizes"
+msgstr ""
+
+#: engage/templates/register.html:54 engage/templates/register1.html:54
+#: engage/templates/register2.html:54 engage/templates/register3.html:54
+msgid ""
+"Please login or register to Engage to be able to play featured games and win "
+"multiple prizes"
+msgstr ""
+
+#: engage/templates/register.html:55 engage/templates/register1.html:55
+#: engage/templates/register2.html:55 engage/templates/register3.html:55
+msgid ""
+"Please login or register to Engage to be able to join tournaments and "
+"compete with others to earn many cash and other prizes"
+msgstr ""
+
+#: engage/templates/register.html:56 engage/templates/register1.html:56
+#: engage/templates/register2.html:56 engage/templates/register3.html:56
+msgid ""
+"Please login or register to Engage to buy coins, increase your balance, and "
+"win multiple cash and other prizes"
+msgstr ""
+
+#: engage/templates/register.html:57 engage/templates/register1.html:57
+#: engage/templates/register2.html:57 engage/templates/register3.html:57
+msgid ""
+"Please login or register to Engage to redeem gifts and win multiple cash and "
+"other prizes"
+msgstr ""
+
+#: engage/templates/register.html:58 engage/templates/register1.html:58
+#: engage/templates/register2.html:58 engage/templates/register3.html:58
+#: engage/templates/tournament.html:178
+msgid "JOIN NOW"
+msgstr ""
+
+#: engage/templates/register.html:6662
 msgid "NEXT"
 msgstr ""
 
-#: engage/templates/register.html:6660
+#: engage/templates/register.html:6666
 msgid "Select your subscription Preference"
 msgstr ""
 
-#: engage/templates/register.html:6671 engage/templates/register1.html:4310
-#: engage/templates/register2.html:4294 engage/templates/register3.html:4341
+#: engage/templates/register.html:6677 engage/templates/register1.html:4316
+#: engage/templates/register2.html:4300 engage/templates/register3.html:4347
 msgid "N50 Daily"
 msgstr ""
 
-#: engage/templates/register.html:6674 engage/templates/register1.html:4313
-#: engage/templates/register2.html:4297 engage/templates/register3.html:4344
+#: engage/templates/register.html:6680 engage/templates/register1.html:4319
+#: engage/templates/register2.html:4303 engage/templates/register3.html:4350
 msgid "Free"
 msgstr ""
 
-#: engage/templates/register.html:6692 engage/templates/register1.html:4331
-#: engage/templates/register2.html:4316 engage/templates/register3.html:4363
+#: engage/templates/register.html:6698 engage/templates/register1.html:4337
+#: engage/templates/register2.html:4322 engage/templates/register3.html:4369
 msgid "A pincode was sent to the provided phone number."
 msgstr ""
 
-#: engage/templates/register.html:6693 engage/templates/register1.html:4332
-#: engage/templates/register2.html:4317 engage/templates/register3.html:4364
+#: engage/templates/register.html:6699 engage/templates/register1.html:4338
+#: engage/templates/register2.html:4323 engage/templates/register3.html:4370
 msgid "Please enter it to proceed."
 msgstr ""
 
-#: engage/templates/register.html:6705 engage/templates/register.html:6717
-#: engage/templates/register1.html:4345 engage/templates/register2.html:4329
-#: engage/templates/register3.html:4376
+#: engage/templates/register.html:6711 engage/templates/register.html:6723
+#: engage/templates/register1.html:4351 engage/templates/register2.html:4335
+#: engage/templates/register3.html:4382
 msgid "Didn't receive pincode? "
 msgstr ""
 
-#: engage/templates/register.html:6705 engage/templates/register.html:6717
-#: engage/templates/register1.html:4345 engage/templates/register2.html:4329
-#: engage/templates/register3.html:4376
+#: engage/templates/register.html:6711 engage/templates/register.html:6723
+#: engage/templates/register1.html:4351 engage/templates/register2.html:4335
+#: engage/templates/register3.html:4382
 msgid "Send again"
 msgstr ""
 
-#: engage/templates/register.html:6745
+#: engage/templates/register.html:6751
 msgid "I ACCEPT"
 msgstr ""
 
-#: engage/templates/register.html:6746
+#: engage/templates/register.html:6752
 msgid "GO BACK"
 msgstr ""
 
-#: engage/templates/register1.html:4307 engage/templates/register2.html:4291
-#: engage/templates/register3.html:4338
+#: engage/templates/register1.html:4313 engage/templates/register2.html:4297
+#: engage/templates/register3.html:4344
 msgid "N30 Daily"
 msgstr ""
 
@@ -904,10 +985,6 @@ msgstr ""
 
 #: engage/templates/tournament.html:170
 msgid "IN PROGRESS"
-msgstr ""
-
-#: engage/templates/tournament.html:178
-msgid "JOIN NOW"
 msgstr ""
 
 #: engage/templates/tournament.html:208

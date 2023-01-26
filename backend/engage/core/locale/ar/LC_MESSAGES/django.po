@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 09:51+0000\n"
+"POT-Creation-Date: 2023-01-25 15:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: engage/core/models.py:300 engage/core/models.py:312
-#: engage/core/models.py:317
+#: engage/core/models.py:302 engage/core/models.py:314
+#: engage/core/models.py:319
 msgid "This field is required."
 msgstr "هذه الخانة مطلوبه."
 
-#: engage/core/models.py:306
+#: engage/core/models.py:308
 msgid "Claim Instantly must be selected if coins are set for a TEXT action"
 msgstr "يجب تحديد المطالبة فورًا إذا تم تعيين العملات لإجراء TEXT"
 
-#: engage/core/models.py:322
+#: engage/core/models.py:324
 msgid "Event Date is required"
 msgstr "تاريخ الحدث مطلوب"

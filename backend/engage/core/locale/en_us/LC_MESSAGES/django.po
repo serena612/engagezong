@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 09:51+0000\n"
+"POT-Creation-Date: 2023-01-25 15:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: engage/core/models.py:300 engage/core/models.py:312
-#: engage/core/models.py:317
+#: engage/core/models.py:302 engage/core/models.py:314
+#: engage/core/models.py:319
 msgid "This field is required."
 msgstr ""
 
-#: engage/core/models.py:306
+#: engage/core/models.py:308
 msgid "Claim Instantly must be selected if coins are set for a TEXT action"
 msgstr ""
 
-#: engage/core/models.py:322
+#: engage/core/models.py:324
 msgid "Event Date is required"
 msgstr ""

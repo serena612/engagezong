@@ -50,6 +50,12 @@
             var serverTime = Math.floor(Date.parse("{% now 'c' %}") / 1000);
             var xtoken = $.cookie("csrftoken");
             var winner_transl = '{% translate "winners" %}';
+            var leisureGames_transl =  "{% translate 'Please login or register to Engage to be able to play leisure games, earn coins, and win multiple prizes' %}";
+            var featuredGames_transl =  "{% translate 'Please login or register to Engage to be able to play featured games and win multiple prizes' %}";
+            var joinNow_transl =  "{% translate 'Please login or register to Engage to be able to join tournaments and compete with others to earn many cash and other prizes' %}";
+            var getBtn_transl =  "{% translate 'Please login or register to Engage to buy coins, increase your balance, and win multiple cash and other prizes' %}";
+            var redeemGifts_transl =  "{% translate 'Please login or register to Engage to redeem gifts and win multiple cash and other prizes' %}";
+            var join_now = "{% translate 'JOIN NOW' %}";
             var is_complete_profile = false;
             var is_authenticated = false;
             var refid = '{{ refid }}';
@@ -4298,7 +4304,7 @@ margin-top: 0px!important;
                 
                     <input type="text" step="1" class="input1" 
                         name="phone_number"
-                        placeholder="Enter MTN Number" required/>
+                        placeholder="{% translate 'Enter MTN Number' %}" required/>
                 
                 
                     <select name="subscription" class="input1 mb-3">

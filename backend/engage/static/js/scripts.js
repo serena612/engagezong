@@ -16,17 +16,22 @@ $(document).on('show.bs.modal', '#login-modal', function (e) {
 
     var relatedTarget = $(e.relatedTarget);
     if (relatedTarget.hasClass('html5-game')) {
-        message = 'Please login or register to Engage to be able to play leisure games, earn coins, and win multiple prizes'
+        //message = 'Please login or register to Engage to be able to play leisure games, earn coins, and win multiple prizes'
+        message = leisureGames_transl
     } else if (relatedTarget.hasClass('featured-game')) {
-        message = 'Please login or register to Engage to be able to play featured games and win multiple prizes'
+        //message = 'Please login or register to Engage to be able to play featured games and win multiple prizes'
+        message =featuredGames_transl 
     } else if (relatedTarget.hasClass('join-now')) {
-        message = 'Please login or register to Engage to be able to join tournaments and compete with others to earn many cash and other prizes'
+       // message = 'Please login or register to Engage to be able to join tournaments and compete with others to earn many cash and other prizes'
+       message = joinNow_transl
     }
     else if (relatedTarget.hasClass('get-btn')) {
-        message = 'Please login or register to Engage to buy coins, increase your balance, and win multiple cash and other prizes'
+        //message = 'Please login or register to Engage to buy coins, increase your balance, and win multiple cash and other prizes'
+        message = getBtn_transl
     }
     else if (relatedTarget.hasClass('pack_a')) {
-        message = 'Please login or register to Engage to redeem gifts and win multiple cash and other prizes'
+       // message = 'Please login or register to Engage to redeem gifts and win multiple cash and other prizes'
+       message = redeemGifts_transl
     }
     $(e.currentTarget).find('p.message').html(message);
     

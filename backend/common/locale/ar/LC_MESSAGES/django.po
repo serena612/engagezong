@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 09:51+0000\n"
+"POT-Creation-Date: 2023-01-25 15:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,23 +21,23 @@ msgstr ""
 
 #: common/fields.py:55
 msgid "This is not an base64 string"
-msgstr ""
+msgstr "هذه ليست سلسلة"
 
 #: common/fields.py:77
 msgid "Please upload a valid file."
-msgstr ""
+msgstr "الرجاء تحميل ملف صالح."
 
 #: common/fields.py:78
 msgid "The type of the file couldn't be determined."
-msgstr ""
+msgstr "لا يمكن تحديد نوع الملف."
 
 #: common/fields.py:95
 msgid "Please upload a valid image."
-msgstr ""
+msgstr "الرجاء تحميل صورة صالحة."
 
 #: common/fields.py:96
 msgid "The type of the image couldn't be determined."
-msgstr ""
+msgstr "لا يمكن تحديد نوع الصورة"
 
 #: common/models.py:9
 msgid "Tenant"
@@ -45,8 +45,8 @@ msgstr ""
 
 #: common/models.py:20
 msgid "Created Date"
-msgstr ""
+msgstr "تاريخ الإنشاء"
 
 #: common/models.py:21
 msgid "Modified Date"
-msgstr ""
+msgstr "تاريخ معدل"

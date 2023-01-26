@@ -1170,7 +1170,7 @@ function getPrizes(category, prize_type, box, btn) {
                     <li class="prize-box" data-id="${item.id}">
                         <div class="main-img">
                             <img src="${item.image}" alt="">
-                            <a href="/tournaments/${item.tournament.id}">Join Now</a>
+                            <a href="/tournaments/${item.tournament.id}">`+join_now+`</a>
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <div class="shape">${item.participants_count}/${item.tournament.max_participants}</div>
                         </div>
