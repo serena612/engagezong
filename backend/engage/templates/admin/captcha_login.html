@@ -3,18 +3,6 @@
 
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}">
 {{ form.media }}
-<style type="text/css">
-  input#id_otp_token,
-  select#id_otp_device
-  {
-      clear: both;
-      padding: 6px;
-      width: 100%;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-              box-sizing: border-box;
-  }
-</style>
 {% endblock %}
 
 {% block bodyclass %}{{ block.super }} login{% endblock %}
@@ -110,16 +98,6 @@
     {{ form.password.errors }}
     {{ form.password.label_tag }} {{ form.password }}
     <input type="hidden" name="next" value="{{ next }}">
-  </div>
-  {% if form.get_user %}
-  <div class="form-row">
-    {{ form.otp_device.errors }}
-    <label for="id_otp_device">{% trans 'OTP Device:' %}</label> {{ form.otp_device }}
-  </div>
-  {% endif %}
-  <div class="form-row">
-    {{ form.otp_token.errors }}
-    <label for="id_otp_token" class="required">{% trans 'OTP Token:' %}</label> {{ form.otp_token }}
   </div>
   <div class="form-row">
     {{ form.captcha.errors }}

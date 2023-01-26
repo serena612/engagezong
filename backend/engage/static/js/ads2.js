@@ -17,6 +17,7 @@ let adsLoader;
 let adDisplayContainer;
 let playButton;
 let pauseButton;
+let timerAd;
 let videoContent;
 let adsInitialized;
 let autoplayAllowed;
@@ -24,6 +25,7 @@ let autoplayRequiresMuted;
 var intervalTimer;
 var started=false;
 var isLinear=false;
+let globalAd;
  
 /**
  * Initializes IMA setup.
@@ -32,6 +34,13 @@ function initDesktopAutoplayExample() {
   videoContent = document.getElementById('contentElement');
   playButton = document.getElementById('playButton');
   pauseButton = document.getElementById('pauseButton');
+  timerAd = document.getElementById('timerAd');
+
+
+  playButton.style.display = 'none';
+  pauseButton.style.display = 'none';
+  timerAd.style.display = 'none';
+
   // destroy adsLoader
   adsInitialized = false;
   try {
@@ -57,6 +66,7 @@ function initDesktopAutoplayExample() {
       adsManager.resume();
       playButton.style.display = 'none';
       pauseButton.style.display = 'block';
+      timerAd.style.display = 'block';
     }
   });
   pauseButton.addEventListener('click', () => {
@@ -65,6 +75,7 @@ function initDesktopAutoplayExample() {
     adsManager.pause();
     playButton.style.display = 'block';
     pauseButton.style.display = 'none';
+    timerAd.style.display = 'block';
   });
   setUpIMA();
   // Check if autoplay is supported.
@@ -72,11 +83,35 @@ function initDesktopAutoplayExample() {
 
   // Hide the address bar!
   window.scrollTo(0, 1);
+  
+  isLinear = (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((globalAd))));
 
-  if($('#adContainer').html() == "")
+  if($('#adContainer').html() == "" || !isLinear)
   {
     playButton.style.display = 'none';
     pauseButton.style.display = 'none';
+    timerAd.style.display = 'none';
+     
+    console.log("!isLinear: "+!isLinear);
+  }
+  else{
+    
+     if(autoplayAllowed)
+     {
+     // console.log("isLinear: "+isLinear);
+     // console.log("autoplayAllowed: "+autoplayAllowed);
+        playButton.style.display = 'none';
+        pauseButton.style.display = 'block';
+        timerAd.style.display = 'block';
+     }
+     else{
+      //console.log("isLinear: "+isLinear);
+      //console.log("!autoplayAllowed: "+!autoplayAllowed);
+
+      playButton.style.display = 'block';
+      pauseButton.style.display = 'none';
+      timerAd.style.display = 'block';
+     }
   }
 }
 
@@ -263,17 +298,20 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
   adsManager.addEventListener(google.ima.AdEvent.Type.STARTED, onAdEvent);
   adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, onAdEvent);
   adsManager.addEventListener(google.ima.AdEvent.Type.CLICK, onAdEvent);
-  adsManager.addEventListener(google.ima.AdEvent.Type.VIDEO_CLICKED, onAdEvent);
+  adsManager.addEventListener(google.ima.AdEvent.Type.VIDEO_CLICKED, onAdEvent); 
   
+
   if (autoplayAllowed) {
     if(isLinear)
     {
       playButton.style.display = 'none';
       pauseButton.style.display = 'block';
+      timerAd.style.display = 'block';
     }
     else{
       playButton.style.display = 'none';
       pauseButton.style.display = 'none';
+      timerAd.style.display = 'none';
     }
     started = true;
     playAds();
@@ -283,10 +321,12 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
     {
       playButton.style.display = 'block';
       pauseButton.style.display = 'none';
+      timerAd.style.display = 'block';
     }
     else{
       playButton.style.display = 'none';
       pauseButton.style.display = 'none';
+      timerAd.style.display = 'none';
     }
 
   }
@@ -315,11 +355,13 @@ function onAdEvent(adEvent) {
       console.log("Ad ID: "+ad.getAdId());
       console.log("is_ad_engage: "+is_ad_engage);
 
+      globalAd = ad;
+
       if (is_ad_engage == 1 && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
         console.log("Hide engage ad");
-        $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();}
+        $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();}
       else if(is_ad_google == 1 && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
-        $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();
+        $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
       }
       else{
 
@@ -332,8 +374,8 @@ function onAdEvent(adEvent) {
     case google.ima.AdEvent.Type.ALL_ADS_COMPLETED:
       // This is triggered when all ads have done playing
       // Hide ad
-      $("#mainContainer,#playButton, #pauseButton, .close_video_ad").hide();
-      $("#playButton, #pauseButton").css("display","none");
+      $("#mainContainer,#playButton, #pauseButton,#timerAd, .close_video_ad").hide();
+      $("#playButton, #pauseButton, #timerAd").css("display","none");
       break;
     case google.ima.AdEvent.Type.CLICK:
       // This is triggered when the visit site button is clicked
@@ -415,7 +457,7 @@ function onAdError(adErrorEvent) {
     // error handling
   
   }
-  $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();
+  $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
   // Fall back to playing content.
   //videoContent.play();
 }
@@ -447,7 +489,7 @@ function closeVideoAd(){
   
   }
   
-   $("#mainContainer,#playButton,#pauseButton,.close_video_ad").hide();
+   $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
    $(window).scrollTop($('.sec-3').offset().top);
 }
 
