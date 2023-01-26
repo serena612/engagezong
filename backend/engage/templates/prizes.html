@@ -97,12 +97,8 @@
                                                 {% blocktranslate with coins=user.coins|intcomma %}<span>Your Engage Coins balance is <span class="user-coins">{{ coins }}</span></span>{% endblocktranslate %}
                                             </div>
                                         {% endif %}
-                                        <h4 class="sub-title">{% translate 'Every time you win
-                                            coins, your balance increases. You
-                                            can Redeem your coins
-                                            for the below gifts.' %}
-                                            <br>{% translate 'We will constantly update and
-                                            add new gifts.' %}</h4>
+                                        <h4 class="sub-title">{% translate 'Every time you win coins, your balance increases. You can Redeem your coins for the below gifts.' %}
+                                            <br>{% translate 'We will constantly update and add new gifts.' %}</h4>
                                         <div class="modal-body">
                                             <div class="redeem-packages">
                                                 {% for redeem_package in redeem_packages %}
