@@ -78,6 +78,13 @@
             var tournament_join = "{% url 'tournament-join' '$1' %}";
             var sections_log = '/api/users/sections_log/sections_log/';
 
+            var upcomingstate = "{% translate 'Upcoming' %}";
+            var ongoingstate = "{% translate 'Ongoing' %}";
+            var previousstate = "{% translate 'Previous' %}"; 
+            
+            
+            var strNext = "{% translate 'Next' %}";
+            var strPrevious = "{% translate 'Previous' %}";
             
             function openModal(index,param0,param1,param2){
                 
@@ -440,6 +447,27 @@
 
                             </div>
                         {% endif %}
+                        
+                        <!--<select id="ddlLaguage" style="display: block!important;" onchange="changeLanguage()">
+                            <option value="en">English</option>
+                            <option value="ar">العربية</option>
+                        </select>-->  
+                          <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}">
+                            <select name="language">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+                                {% for language in languages %}
+                                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                        {{ language.name_local }} ({{ language.code }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <input type="submit" value="Go">
+                        </form>
+                        
+                         
                     </div>
                 </div>
             {% endblock %}
@@ -1779,7 +1807,7 @@
                                 <div class="input2 mb-3"  {% if user.profile.birthdate %} style="background-color: #ddd;" {% endif %}>
                                     <label for="">{% translate 'Date Of Birth' %}</label>
                                     <div class="right">
-                                        <div style="float:left;position:relative;margin-right: 22px;">                       
+                                        <div style="float:left;position:relative;margin-right: 22px;" id="bthdate1">                       
                                             <select value="{{ user.profile.birthdate|date:'m' }}" {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
                                                     name="data_month" required
                                                     class="text-center">
@@ -2075,10 +2103,87 @@ screen.orientation.addEventListener("change", function(e) {
 </script>
 
 {% endcomment %}
+{% get_current_language as CURRENT_LANGUAGE %}
+{% get_available_languages as AVAILABLE_LANGUAGES %}
+{% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+console.log(CURRENT_LANGUAGE)
 
 <input type="hidden" id="userSub" value="{{user.subscription}}" />
 <input type="hidden" id="userIsBilled" value="{{user.is_billed}}" />
 
+<script type="text/javascript">
+      function setCookie(cname, cvalue, exdays) {
+                const d = new Date();
+                d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                let expires = "expires="+ d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for(let i = 0; i <ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            function changeLanguage()
+            { 
+                if($('#ddlLaguage').val() == "ar")
+                {
+                    $('#cssfile').attr('href','{% static "css/styles.rtl.css" %}');
+                    $('body').addClass('ar');  
+                    setCookie('language','ar',3);                   
+                }
+                else{
+                    $('#cssfile').attr('href','{% static "css/styles.css" %}');
+                    $('body').removeClass('ar');
+                    setCookie('language','en',3); 
+                }
+            }
+
+            $('body').css('visibility','hidden');
+
+            window.addEventListener('load', function () {
+
+                try{
+                    var lang = getCookie('language');                    
+
+                    if(lang == "ar")
+                    {
+                        $('#cssfile').attr('href','{% static "css/styles.rtl.css" %}');
+                        $('body').addClass('ar');  
+                        setCookie('language','ar',3); 
+                        $('#ddlLaguage').val('ar');
+                    }
+                    else{
+                        $('#cssfile').attr('href','{% static "css/styles.css" %}');
+                        $('body').removeClass('ar');
+                        setCookie('language','en',3); 
+                        $('#ddlLaguage').val('en'); 
+                    }
+
+                    $('body').css('visibility','visible');
+                }
+                catch(e){
+                    $('#cssfile').attr('href','{% static "css/styles.css" %}');
+                        $('body').removeClass('ar');
+                        setCookie('language','en',3); 
+                        $('#ddlLaguage').val('en');
+
+                        $('body').css('visibility','visible');
+                }
+                
+            });
+</script>
 </body>
 </html>
 

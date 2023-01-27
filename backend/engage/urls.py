@@ -175,7 +175,8 @@ urlpatterns = [
     url(r'^sitemap\.xml$',TemplateView.as_view(template_name='sitemap.xml',content_type='text/xml')),
     path("ads.txt",TemplateView.as_view(template_name="ads.txt", content_type="text/plain")),
     path("robots.txt",TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
-    path("google2f20d53d86be3675.html",TemplateView.as_view(template_name="google2f20d53d86be3675.html",content_type='text/html'))
+    path("google2f20d53d86be3675.html",TemplateView.as_view(template_name="google2f20d53d86be3675.html",content_type='text/html')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
