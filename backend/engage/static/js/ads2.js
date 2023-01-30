@@ -331,6 +331,8 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
 
   }
 }
+let engage_counter = 0;
+let google_counter = 0;
 
 /**
  * Handles actions taken in response to ad events.
@@ -345,6 +347,8 @@ function onAdEvent(adEvent) {
   else
      isLinear = false;
   
+  //let engage_counter = 0;
+  //let google_counter = 0;
   console.log("Ad event detected "+adEvent.type);
   switch (adEvent.type) {
     case google.ima.AdEvent.Type.LOADED:
@@ -356,11 +360,11 @@ function onAdEvent(adEvent) {
       console.log("is_ad_engage: "+is_ad_engage);
 
       globalAd = ad;
-
-      if (is_ad_engage == 1 && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
+      
+      if ((engage_counter == 3 || is_ad_engage == 1) && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
         console.log("Hide engage ad");
         $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();}
-      else if(is_ad_google == 1 && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
+      else if((google_counter == 3 || is_ad_google == 1) && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
         $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
       }
       else{
@@ -380,11 +384,15 @@ function onAdEvent(adEvent) {
     case google.ima.AdEvent.Type.CLICK:
       // This is triggered when the visit site button is clicked
       // Hide ad we can use ad.getUniversalAdIdValue() for unique ad value (make sure button is not clicked several times)
+      google_counter++;
       postReward("click", ad.getAdId()).then(res => {
         //form.trigger("reset");
         console.log("Click event reward success");
         console.log(res);
-        $('#congrats-modal1').modal('show');
+        if(is_ad_google == 0 || google_counter < 3){
+          $('#congrats-modal1').modal('show');
+        }
+        
       }).catch(e => {
         console.log("Click event reward failed");
         console.log(e.responseJSON.code);
@@ -396,6 +404,8 @@ function onAdEvent(adEvent) {
       // This is triggered when one ad is completed
       if (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))
       {
+        engage_counter++;
+        console.log("engage_counter "+ engage_counter);
         postReward("engage", ad.getAdId()).then(res => {
           //form.trigger("reset");
           console.log("View event reward success");
@@ -408,18 +418,20 @@ function onAdEvent(adEvent) {
       }
       else
       {
-      postReward("view", ad.getAdId()).then(res => {
-        //form.trigger("reset");
-        console.log("View event reward success");
-        console.log(res);
-        $('#congrats-modal2').modal('show');
-      }).catch(e => {
-        console.log("View event reward failed");
-        console.log(e.responseJSON.code);
-        if ( e.responseJSON.code == 'ad_limit_reached' ) {
-          $('#congrats-modal3').modal('show');}
-      });
-    }
+        google_counter++;
+        console.log("google_counter "+ google_counter);
+        postReward("view", ad.getAdId()).then(res => {
+          //form.trigger("reset");
+          console.log("View event reward success");
+          console.log(res);
+          $('#congrats-modal2').modal('show');
+        }).catch(e => {
+          console.log("View event reward failed");
+          console.log(e.responseJSON.code);
+          if ( e.responseJSON.code == 'ad_limit_reached' ) {
+            $('#congrats-modal3').modal('show');}
+        });
+      }
     if (ad.isLinear()) {
       clearInterval(intervalTimer);
     }
