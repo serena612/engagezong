@@ -363,9 +363,11 @@ function onAdEvent(adEvent) {
       
       if ((engage_counter == 3 || is_ad_engage == 1) && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
         console.log("Hide engage ad");
-        $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();}
+        $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
+        $("#playButton, #pauseButton, #timerAd").css("display","none");}
       else if((google_counter == 3 || is_ad_google == 1) && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
         $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
+        $("#playButton, #pauseButton, #timerAd").css("display","none");
       }
       else{
 
@@ -437,7 +439,7 @@ function onAdEvent(adEvent) {
     }
       break;
     case google.ima.AdEvent.Type.STARTED:
-      if (ad.isLinear() && is_ad_engage == 0) {
+      if (ad.isLinear() && (is_ad_engage == 0 || google_counter < 3)) {
         // For a linear ad, a timer can be started to poll for
         // the remaining time.
         intervalTimer = setInterval(
