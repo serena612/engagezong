@@ -1489,7 +1489,7 @@
 <div class="modal fade" id="game-fullscreen-modal" tabindex="-1" role="dialog" style="width:100%;height:100%;">
     <div class="modal-dialog modal-md" role="document" style="max-width:100%!important;"> 
         <div class="modal-content" style="background:#000;"> 
-            <div class="close-box" onclick="$('#game-fullscreen-modal').find('iframe').remove();$('#game-fullscreen-modal').hide();$('.modal-backdrop').remove();$('body').removeClass('modal-open');$('#playButton').show();$('#adContainer').html('');$(window).scrollTop($('.sec-3').offset().top);" style="background:#1C1E4E;">
+            <div class="close-box" onclick="$('#game-fullscreen-modal').find('iframe').remove();$('#game-fullscreen-modal').hide();$('.modal-backdrop').remove();$('body').removeClass('modal-open');$('#playButton').show();$('#adContainer').html('');$(window).scrollTop($('.sec-3').offset().top); closeVideoAd();" style="background:#1C1E4E;">
                 <img src="{% static 'img/bgclose.png' %}"
                                          height="40" alt="" style="position:absolute;top:0;left:0;">
                 <a data-dismiss="modal" style="" >
@@ -1513,9 +1513,17 @@
                             </video>
                      </div>   
                     <div id="adContainer"></div>
+
+                    <div id="play_btn_cont">
+                        <button id="playButton"><div class="play"></div></button>
+                    </div>
+                    <div id="pause_btn_cont">
+                        <button id="pauseButton"><div class="pause"></div></button>
+                    </div>                    
+                    
+
                   </div>
-                  <button id="playButton">Play</button>
-                  <button id="pauseButton">Pause</button>
+                 
                   <div class="close_video_ad" onclick="closeVideoAd()">x</div>
                   <div class="pink_info">{% translate 'Please resume and watch full video to collect your reward' %}</div>
                   <div id="timerAd"></div>
@@ -1991,7 +1999,7 @@
                         <div class="purple">{% translate 'You have Earned 50 coins by clicking on the video.' %}</div>
                         <div class="pink">{% translate 'Watch and click to earn more!' %}</div>
                         <!-- <div class="tourn_btn">WATCH</div> -->
-                        <div class="tourn_btn" onclick="$('#congrats-modal1').modal('hide');initDesktopAutoplayExample();">{% translate 'WATCH' %}</div>
+                        <div class="tourn_btn" onclick="$('#congrats-modal1').modal('hide'); closeVideoAd(); initDesktopAutoplayExample();">{% translate 'WATCH' %}</div>
                    </div>
             </div>
              <div class="pic_modal"><img src="{% static 'img/50-coins.png' %}" /></div>   
