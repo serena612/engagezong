@@ -7299,18 +7299,80 @@ z-index:99999999999999999999999999;
 color:#FFF;
 }
 
-#playButton, #pauseButton {
-  color: #FFF;
-  position: fixed;
-  top: 48vh;
-  left: 47vw;
-  z-index: 2147483647;
-  padding-top: 3px;
-  border: none;
-  background-color: #2B1B6D;
-  width: 126px;
-  height: 70px;
-  cursor: pointer;
-  display: none;
-  text-transform: uppercase;
+#contentElement{
+    width: 100vw;
+    height: 100vh;
+     position: fixed; /*!!!*/
+  top: 42px;/*!!!*/
+  left: 0px;/*!!!*/
+   
 }
+
+#play_btn_cont, #pause_btn_cont
+{
+  display: none;
+  position: fixed;
+  top: 42px;
+  left: 0px;
+  z-index: 2147483647;
+  width: 100vw;
+  height: calc(100vh - 48px);
+  cursor: pointer;
+  z-index: 9999999999999;
+}
+#playButton, #pauseButton { 
+
+  padding-top: 13px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 45vh;
+  left: 42vw;
+  z-index: 999999999999999999;
+  border: none;
+  background-color: transparent; /* #2B1B6D;*/
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+@media (max-width: 767px)
+{
+  #playButton, #pauseButton { 
+    left: 37vw;
+  }
+}
+@media (width: 375px)
+{
+  #contentElement
+  {
+  top: 0px;/*!!!*/
+  }
+}
+#playButton .play {
+    height: 0;
+    width: 0;
+    margin-left: 25px;
+    border-left: 44px solid #FFF;
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent;
+    top: -3px;
+    position: relative;
+}
+
+#pauseButton .pause {
+height: 20px;
+width: 20px;
+border: none;
+margin-left: 33px;
+border-right: 8px solid #FFF;
+border-left: 8px solid #FFF;
+box-sizing: border-box;
+}
+/* .blackop
+{
+  opacity: 0.3;
+  background-color: #000;
+} */
+/* #game-fullscreen-modal .modal-body.showPause:hover #pauseButton
+{
+  display: block!important;
+} */

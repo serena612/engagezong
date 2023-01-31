@@ -23,23 +23,73 @@ let adsInitialized;
 let autoplayAllowed;
 let autoplayRequiresMuted;
 var intervalTimer;
+var intGlobalAdTimer;
+var intPlayTimer;
+var intPauseTimer;
 var started=false;
 var isLinear=false;
 let globalAd;
- 
+var isAdStarted= false;
+var forcount = false;
+
+let playIcon;
+let pauseIcon;
 /**
  * Initializes IMA setup.
  */
 function initDesktopAutoplayExample() {
   videoContent = document.getElementById('contentElement');
-  playButton = document.getElementById('playButton');
-  pauseButton = document.getElementById('pauseButton');
+  playButton = document.getElementById('play_btn_cont');
+  pauseButton = document.getElementById('pause_btn_cont');
   timerAd = document.getElementById('timerAd');
 
+  playIcon = document.getElementById('playButton');
+  pauseIcon = document.getElementById('pauseButton');
+
+  playIcon.style.display = 'block';
+  pauseIcon.style.display = 'block';
+
+  forcount = false;
+
+  /**************PLay Icon/ Pause Icon */
+  $("#play_btn_cont").mousemove(function( event ) {
+
+    playIcon.style.display = 'block';
+    $("#play_btn_cont").addClass("blackop");
+
+    intPlayTimer = setTimeout(
+      function() {
+        playIcon.style.display = 'none';
+        $("#play_btn_cont").removeClass("blackop");
+      },
+      2000);  
+  });
+
+  $("#pause_btn_cont").mousemove(function( event ) {
+
+    pauseIcon.style.display = 'block';
+    $("#pause_btn_cont").addClass("blackop");
+
+    intPauseTimer = setTimeout(
+      function() {
+        pauseIcon.style.display = 'none';
+        $("#pause_btn_cont").removeClass("blackop");
+      },
+      2000);  
+  });
+
+  /***********************************/
+
+  $("#mainContainer").show();
+  
+  isAdStarted = false;
 
   playButton.style.display = 'none';
   pauseButton.style.display = 'none';
   timerAd.style.display = 'none';
+  // $(".showPause").removeClass("showPause");
+
+  console.log("globalAd first: "+globalAd);
 
   // destroy adsLoader
   adsInitialized = false;
@@ -67,6 +117,7 @@ function initDesktopAutoplayExample() {
       playButton.style.display = 'none';
       pauseButton.style.display = 'block';
       timerAd.style.display = 'block';
+      
     }
   });
   pauseButton.addEventListener('click', () => {
@@ -85,6 +136,57 @@ function initDesktopAutoplayExample() {
   window.scrollTo(0, 1);
   
   isLinear = (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((globalAd))));
+  console.log("isundefiened: "+ (globalAd == undefined));
+
+  playButton.style.display = 'none';
+  pauseButton.style.display = 'none';
+  timerAd.style.display = 'none';
+
+
+
+  intGlobalAdTimer = setInterval(
+    function() {
+       if(!(globalAd == undefined) && isAdStarted && !forcount)
+       {
+        isLinear = (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((globalAd))));
+            if($('#adContainer').html() == "" || !isLinear)
+            {
+              playButton.style.display = 'none';
+              pauseButton.style.display = 'none';
+              timerAd.style.display = 'none';
+              
+              console.log("!isLinear: "+!isLinear);
+            }
+            else{
+              
+              if(autoplayAllowed)
+              {
+                console.log("isLinear: "+isLinear);
+                console.log("autoplayAllowed: "+autoplayAllowed);
+                  playButton.style.display = 'none';
+                  pauseButton.style.display = 'block';
+                  timerAd.style.display = 'block';
+              }
+              else{
+                console.log("isLinear: "+isLinear);
+                console.log("!autoplayAllowed: "+!autoplayAllowed);
+          
+                playButton.style.display = 'block';
+                pauseButton.style.display = 'none';
+                timerAd.style.display = 'block';
+              }
+            }
+            if (!forcount)
+            {
+              $("#mainContainer").show();
+              }
+            
+
+           clearInterval(intGlobalAdTimer);
+           
+       }
+    },
+    300); // every 300ms
 
   if($('#adContainer').html() == "" || !isLinear)
   {
@@ -98,21 +200,25 @@ function initDesktopAutoplayExample() {
     
      if(autoplayAllowed)
      {
-     // console.log("isLinear: "+isLinear);
-     // console.log("autoplayAllowed: "+autoplayAllowed);
+      console.log("isLinear: "+isLinear);
+      console.log("autoplayAllowed: "+autoplayAllowed);
         playButton.style.display = 'none';
         pauseButton.style.display = 'block';
         timerAd.style.display = 'block';
      }
      else{
-      //console.log("isLinear: "+isLinear);
-      //console.log("!autoplayAllowed: "+!autoplayAllowed);
+      console.log("isLinear: "+isLinear);
+      console.log("!autoplayAllowed: "+!autoplayAllowed);
 
       playButton.style.display = 'block';
       pauseButton.style.display = 'none';
       timerAd.style.display = 'block';
      }
   }
+    if (!forcount)
+    {
+      $("#mainContainer").show();
+    }
 }
 
 /**
@@ -320,12 +426,12 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
     if(isLinear)
     {
       playButton.style.display = 'block';
-      pauseButton.style.display = 'none';
+       pauseButton.style.display = 'none';
       timerAd.style.display = 'block';
     }
     else{
       playButton.style.display = 'none';
-      pauseButton.style.display = 'none';
+     pauseButton.style.display = 'none';
       timerAd.style.display = 'none';
     }
 
@@ -358,16 +464,36 @@ function onAdEvent(adEvent) {
       // console.log("Ad creative Id: "+ad.getCreativeAdId());
       console.log("Ad ID: "+ad.getAdId());
       console.log("is_ad_engage: "+is_ad_engage);
+      console.log("engage_counter: " + engage_counter);
+      console.log("google_counter: " + google_counter);
 
-      globalAd = ad;
+      globalAd = ad.getAdId();
       
       if ((engage_counter == 3 || is_ad_engage == 1) && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
         console.log("Hide engage ad");
-        $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
-        $("#playButton, #pauseButton, #timerAd").css("display","none");}
+        console.log("engage_counter after play: " + engage_counter);
+        //$("#mainContainer,#play_btn_cont,#pause_btn_cont,#timerAd,.close_video_ad").hide();
+        closeVideoAd();
+        adsManager.destroy();
+        console.log("Destroyed adsManager");
+        adsLoader.contentComplete();
+        adsLoader.destroy()
+        console.log("Destroyed adsLoader");
+        $("#play_btn_cont, #pause_btn_cont, #timerAd").css("display","none");
+        forcount = true;
+      }        
       else if((google_counter == 3 || is_ad_google == 1) && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
-        $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
-        $("#playButton, #pauseButton, #timerAd").css("display","none");
+        console.log("google_counter after play: " + google_counter);
+        console.log("Hide google ad");
+        //$("#mainContainer,#play_btn_cont,#pause_btn_cont,#timerAd,.close_video_ad").hide();
+        closeVideoAd();
+        adsManager.destroy();
+        console.log("Destroyed adsManager");
+        adsLoader.contentComplete();
+        adsLoader.destroy()
+        console.log("Destroyed adsLoader");
+        $("#play_btn_cont, #pause_btn_cont, #timerAd").css("display","none");
+        forcount = true;
       }
       else{
 
@@ -375,13 +501,14 @@ function onAdEvent(adEvent) {
       $("#mainContainer,.close_video_ad").show();
       if (!ad.isLinear()) {
         videoContent.play();
-      }}
+      }
+    }
       break;
     case google.ima.AdEvent.Type.ALL_ADS_COMPLETED:
       // This is triggered when all ads have done playing
       // Hide ad
-      $("#mainContainer,#playButton, #pauseButton,#timerAd, .close_video_ad").hide();
-      $("#playButton, #pauseButton, #timerAd").css("display","none");
+      $("#mainContainer,#play_btn_cont, #pause_btn_cont,#timerAd, .close_video_ad").hide();
+      $("#play_btn_cont, #pause_btn_cont, #timerAd").css("display","none");
       break;
     case google.ima.AdEvent.Type.CLICK:
       // This is triggered when the visit site button is clicked
@@ -391,7 +518,7 @@ function onAdEvent(adEvent) {
         //form.trigger("reset");
         console.log("Click event reward success");
         console.log(res);
-        if(is_ad_google == 0 || google_counter < 3){
+        if(is_ad_google == 0 || google_counter <= 3){
           $('#congrats-modal1').modal('show');
         }
         
@@ -439,7 +566,8 @@ function onAdEvent(adEvent) {
     }
       break;
     case google.ima.AdEvent.Type.STARTED:
-      if (ad.isLinear() && (is_ad_engage == 0 || google_counter < 3)) {
+      isAdStarted = true;
+      if (ad.isLinear() && (is_ad_engage == 0 || google_counter <= 3)) {
         // For a linear ad, a timer can be started to poll for
         // the remaining time.
         intervalTimer = setInterval(
@@ -452,6 +580,9 @@ function onAdEvent(adEvent) {
       }
       break;
   }
+
+  globalAd = ad.getAdId();
+
 }
 
 /**
@@ -471,7 +602,7 @@ function onAdError(adErrorEvent) {
     // error handling
   
   }
-  $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
+  $("#mainContainer,#play_btn_cont,#pause_btn_cont,#timerAd,.close_video_ad").hide();
   // Fall back to playing content.
   //videoContent.play();
 }
@@ -493,9 +624,20 @@ function onContentResumeRequested() {
 }
 
 function closeVideoAd(){
+
+  console.log("closeVideoAd");
+  
   try {
 
   videoContent.pause();
+
+  videoContent.removeAttribute('src'); // empty source
+  videoContent.load();
+
+
+  globalAd = undefined; // unset
+  delete(globalAd); // this removes the variable completely
+  console.log("globalAd is undefined: ? "+ globalAd); // the result will be undefined
 
   } catch (err) {
   
@@ -503,7 +645,7 @@ function closeVideoAd(){
   
   }
   
-   $("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
+   $("#mainContainer,#play_btn_cont,#pause_btn_cont,#timerAd,.close_video_ad").hide();
    $(window).scrollTop($('.sec-3').offset().top);
 }
 
