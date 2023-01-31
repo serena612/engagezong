@@ -176,11 +176,16 @@ function initDesktopAutoplayExample() {
                 timerAd.style.display = 'block';
               }
             }
+<<<<<<< HEAD
             if (!forcount)
             {
               $("#mainContainer").show();
               }
             
+=======
+
+            $("#mainContainer").show();
+>>>>>>> 49875a82b878c845632570d730aeb331db435ba9
 
            clearInterval(intGlobalAdTimer);
            
@@ -215,10 +220,15 @@ function initDesktopAutoplayExample() {
       timerAd.style.display = 'block';
      }
   }
+<<<<<<< HEAD
     if (!forcount)
     {
       $("#mainContainer").show();
     }
+=======
+
+  $("#mainContainer").show();
+>>>>>>> 49875a82b878c845632570d730aeb331db435ba9
 }
 
 /**
@@ -471,6 +481,7 @@ function onAdEvent(adEvent) {
       
       if ((engage_counter == 3 || is_ad_engage == 1) && (['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
         console.log("Hide engage ad");
+<<<<<<< HEAD
         console.log("engage_counter after play: " + engage_counter);
         //$("#mainContainer,#play_btn_cont,#pause_btn_cont,#timerAd,.close_video_ad").hide();
         closeVideoAd();
@@ -494,6 +505,18 @@ function onAdEvent(adEvent) {
         console.log("Destroyed adsLoader");
         $("#play_btn_cont, #pause_btn_cont, #timerAd").css("display","none");
         forcount = true;
+=======
+        //$("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
+        closeVideoAd();
+        //$("#playButton, #pauseButton, #timerAd").css("display","none");
+        forcount = true;
+      }        
+      else if((google_counter == 3 || is_ad_google == 1) && !(['6178477617', '6180000871', '6180646283', '6180545204'].includes(String((ad.getAdId()))))) {
+        //$("#mainContainer,#playButton,#pauseButton,#timerAd,.close_video_ad").hide();
+        closeVideoAd();
+       // $("#playButton, #pauseButton, #timerAd").css("display","none");
+       forcount = true;
+>>>>>>> 49875a82b878c845632570d730aeb331db435ba9
       }
       else{
 
@@ -567,7 +590,11 @@ function onAdEvent(adEvent) {
       break;
     case google.ima.AdEvent.Type.STARTED:
       isAdStarted = true;
+<<<<<<< HEAD
       if (ad.isLinear() && (is_ad_engage == 0 || google_counter <= 3)) {
+=======
+      if (ad.isLinear() && (is_ad_engage == 0 || google_counter < 3)) {
+>>>>>>> 49875a82b878c845632570d730aeb331db435ba9
         // For a linear ad, a timer can be started to poll for
         // the remaining time.
         intervalTimer = setInterval(
