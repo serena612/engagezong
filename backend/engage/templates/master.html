@@ -2047,6 +2047,21 @@
     </div>
 </div>
 
+
+<div id="upgrade-package-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" style="text-align: center; background-color: #000; border-radius: 10px;">          
+             
+            <div class="modal-body" style="padding-top: 47px; width: 84%; margin: 0px auto 6px;">                    
+                <div style="color:#FF0090">{% translate 'SUBSCRIBERS ONLY!' %}</div>
+                <div style="margin-bottom: 20px;color: #FFF;font-size: 0.8rem;">{% translate 'PLEASE UPGRADE FROM THE PACKAGE TO N50 PACKAGE TO BE ABLE TO JOIN TOURNAMENTS. TO UPGRADE PLEASE CLICK ON THE BUTTON BELOW.' %}</div>                    
+                <div class="btn_upgrade" style="background-color: #FF0090; height: 44px; padding-top: 10px; font-weight: 800; border-radius: 4px; color: #181022; text-align: center; max-width: 100%; margin: 0px auto 20px;">{% translate 'UPGRADE PACKAGE' %}</div>                   
+            </div>
+                
+        </div>
+    </div>
+</div>
+
 {% block javascript %}
 {% if user.is_authenticated %}
             
