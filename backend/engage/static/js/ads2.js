@@ -590,11 +590,7 @@ function onAdEvent(adEvent) {
       break;
     case google.ima.AdEvent.Type.STARTED:
       isAdStarted = true;
-<<<<<<< HEAD
-      if (ad.isLinear() && (is_ad_engage == 0 || google_counter <= 3)) {
-=======
       if (ad.isLinear() && (is_ad_engage == 0 || google_counter < 3)) {
->>>>>>> 49875a82b878c845632570d730aeb331db435ba9
         // For a linear ad, a timer can be started to poll for
         // the remaining time.
         intervalTimer = setInterval(
