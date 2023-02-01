@@ -465,7 +465,7 @@ $(document).on("submit", ".frmregister", function (e) {
 
     setBtnLoading(btn, true);
 
-    data.data.subscription = $('#user_sub_mod').val();
+    data.data.subscription = 'free';//$('#user_sub_mod').val();
     
     console.log("---aaa----");
     console.log(data.data);
