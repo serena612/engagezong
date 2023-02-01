@@ -531,7 +531,7 @@ $(document).on("submit", ".register-otp-form", function (e) {
     }
     
     
-    data.data.subscription = $('#user_sub_mod').val();//$('.frmregister').find('select[name="subscription"]').val();
+    data.data.subscription = 'free'; //$('#user_sub_mod').val();//$('.frmregister').find('select[name="subscription"]').val();
     
     // if($('input[name="code"]').val()!="123456"){
     //     response_msg.html('Please enter a valid pincode!').show();
@@ -579,7 +579,7 @@ $(document).on("submit", ".frmregister2", function (e) {
     
     data.data.refid = refid;
    
-    data.data.subscription = $('.frmregister2').find('select[name="subscription"]').val();
+    data.data.subscription = 'free'; //$('.frmregister2').find('select[name="subscription"]').val();
   
     response_msg.hide();
     var btn = form.find("button[type=submit]");
