@@ -6602,17 +6602,26 @@ or ((width:820px) and (height:1180px)) or ((width:768px) and (height:1024px))
                 $('.frmregister').find('input[name="phone_number"]').addClass('required');
                 $('.content_num').hide();
                 $('.content_num.contentA, .subNow_win').show();
+                
+                if(!checkValidMtnNumber(numberVal))
+                    $('.frmregister').find('.response-msg').html('Please enter a valid MTN number (i.e "0xx xxx xxxxx" or "234 xxx xxx xxxx")').show();
+                else
+                    $('.frmregister').find('.response-msg').html('');
+
              }
             else{
                 $('.frmregister').find('input[name="phone_number"]').removeClass('required');
                 $('.content_num, .subNow_win').hide();
                 $('.content_num.contentB').show();
+                $('.frmregister').find('.response-msg').html('');
+
+                gotoThirdStep();
             }
 
-            if(!checkValidMtnNumber(numberVal))
-                $('.frmregister').find('.response-msg').html('Please enter a valid MTN number (i.e "0xx xxx xxxxx" or "234 xxx xxx xxxx")').show();
-            else
-                $('.frmregister').find('.response-msg').html('');
+            // if(!checkValidMtnNumber(numberVal))
+            //     $('.frmregister').find('.response-msg').html('Please enter a valid MTN number (i.e "0xx xxx xxxxx" or "234 xxx xxx xxxx")').show();
+            // else
+            //     $('.frmregister').find('.response-msg').html('');
         }
 
         $(document).ready(function(){
@@ -6765,7 +6774,7 @@ or ((width:820px) and (height:1180px)) or ((width:768px) and (height:1024px))
 
 function gotoThirdStep()
 {
-    hideFreeModal();
+    // hideFreeModal();
     $('.content_num').hide();
     $('.frmregister').submit();
     var tt= setInterval(function(){
@@ -6788,7 +6797,7 @@ function showFreeModal(){
       }
     
      function resendCode(){
-        $('.frmregister').find('.btn3').click();
+        $('.frmregister').find('.btn_next_pink').click();//$('.frmregister').find('.btn3').click();
         $('.sendagain').css('pointer-events', 'none'); 
         $('.sendagain').css('opacity', '0.7'); 
         setTimeout(() => { 
