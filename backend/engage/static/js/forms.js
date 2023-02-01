@@ -579,7 +579,7 @@ $(document).on("submit", ".frmregister2", function (e) {
     
     data.data.refid = refid;
    
-    data.data.subscription = 'free'; //$('.frmregister2').find('select[name="subscription"]').val();
+    data.data.subscription = $('.frmregister2').find('select[name="subscription"]').val();
   
     response_msg.hide();
     var btn = form.find("button[type=submit]");
