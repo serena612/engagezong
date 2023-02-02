@@ -7298,24 +7298,14 @@ left:5px;
 z-index:99999999999999999999999999;
 color:#FFF;
 }
-
+ 
 #contentElement{
-<<<<<<< HEAD
-    width: 100vw;
-    height: 100vh;
-     position: fixed; /*!!!*/
-  top: 42px;/*!!!*/
-  left: 0px;/*!!!*/
-   
-}
-
-=======
   width: 100vw;
   height: 100vh;
   position: fixed; /*!!!*/
   top: 42px;/*!!!*/
   left: 0px;/*!!!*/
-  
+ 
 }
 @media (width: 375px)
 {
@@ -7324,7 +7314,6 @@ color:#FFF;
   top: 0px;/*!!!*/
   }
 }
->>>>>>> 49875a82b878c845632570d730aeb331db435ba9
 #play_btn_cont, #pause_btn_cont
 {
   display: none;
@@ -7343,7 +7332,7 @@ color:#FFF;
   box-sizing: border-box;
   position: fixed;
   top: 45vh;
-  left: 42vw;
+  left: 45vw;
   z-index: 999999999999999999;
   border: none;
   background-color: transparent; /* #2B1B6D;*/
@@ -7357,16 +7346,6 @@ color:#FFF;
     left: 37vw;
   }
 }
-<<<<<<< HEAD
-@media (width: 375px)
-{
-  #contentElement
-  {
-  top: 0px;/*!!!*/
-  }
-}
-=======
->>>>>>> 49875a82b878c845632570d730aeb331db435ba9
 #playButton .play {
     height: 0;
     width: 0;
@@ -7377,10 +7356,7 @@ color:#FFF;
     top: -3px;
     position: relative;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 49875a82b878c845632570d730aeb331db435ba9
 #pauseButton .pause {
 height: 20px;
 width: 20px;
@@ -7390,10 +7366,6 @@ border-right: 8px solid #FFF;
 border-left: 8px solid #FFF;
 box-sizing: border-box;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 49875a82b878c845632570d730aeb331db435ba9
 /* .blackop
 {
   opacity: 0.3;
