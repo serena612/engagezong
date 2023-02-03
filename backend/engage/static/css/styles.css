@@ -7375,3 +7375,8 @@ box-sizing: border-box;
 {
   display: block!important;
 } */
+
+/*iframe game*/
+#game-fullscreen-modal .modal-dialog .modal-content .info-box iframe.solvemath {
+  margin-left: 8px;
+}

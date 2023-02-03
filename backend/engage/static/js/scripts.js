@@ -976,7 +976,8 @@ $(function () {
                 $('#game-fullscreen-modal').find('.modal-content').css('width',$(window).width());
                 $('#game-fullscreen-modal').find('.modal-content').css('height',$(window).height() + 80);
                 $('#game-fullscreen-modal').find('.info-box').html("");
-                $('#game-fullscreen-modal').find('.info-box').append('<iframe src="/games/'+target+'/" width="100%"  border="0"></iframe>')
+                $('#game-fullscreen-modal').find('.info-box').append('<iframe class="'+ (target == 'solve_math' ? 'solvemath' : '') +'" src="/games/'+target+'/" width="100%"  border="0"></iframe>')
+                
                 $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
                 $('#game-fullscreen-modal').find('iframe').css('border',0);
                 $('#game-fullscreen-modal').modal('show');
