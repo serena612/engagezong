@@ -118,6 +118,14 @@ function initDesktopAutoplayExample() {
       pauseButton.style.display = 'block';
       timerAd.style.display = 'block';
       
+      /* me */
+      intPauseTimer = setTimeout(
+        function() {
+          pauseIcon.style.display = 'none';
+          $("#pause_btn_cont").removeClass("blackop");
+        },
+        2000);  
+       /* \me */
     }
   });
   pauseButton.addEventListener('click', () => {
@@ -166,6 +174,16 @@ function initDesktopAutoplayExample() {
                   playButton.style.display = 'none';
                   pauseButton.style.display = 'block';
                   timerAd.style.display = 'block';
+
+                  /* me */
+                  intPauseTimer = setTimeout(
+                    function() {
+                      pauseIcon.style.display = 'none';
+                      $("#pause_btn_cont").removeClass("blackop");
+                    },
+                    2000);  
+                  /* \me */
+
               }
               else{
                 console.log("isLinear: "+isLinear);
@@ -205,6 +223,16 @@ function initDesktopAutoplayExample() {
         playButton.style.display = 'none';
         pauseButton.style.display = 'block';
         timerAd.style.display = 'block';
+
+        /* me */
+      intPauseTimer = setTimeout(
+        function() {
+          pauseIcon.style.display = 'none';
+          $("#pause_btn_cont").removeClass("blackop");
+        },
+        2000);  
+       /* \me */
+
      }
      else{
       console.log("isLinear: "+isLinear);
@@ -413,6 +441,16 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
       playButton.style.display = 'none';
       pauseButton.style.display = 'block';
       timerAd.style.display = 'block';
+
+      /* me */
+      intPauseTimer = setTimeout(
+        function() {
+          pauseIcon.style.display = 'none';
+          $("#pause_btn_cont").removeClass("blackop");
+        },
+        2000);  
+       /* \me */
+       
     }
     else{
       playButton.style.display = 'none';
