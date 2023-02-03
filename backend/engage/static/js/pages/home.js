@@ -202,7 +202,7 @@ $(".featured-item a").on("click", function(e) {
 })
 
 //handle upgrade subscription click
-$("#upgrade-btn").on("click", function () {
+$("#upgrade-package-pgame-modal").on("click", function () {
   setBtnLoading($(this), true);
 
   function upgrade_subsp() {
@@ -226,12 +226,12 @@ $("#upgrade-btn").on("click", function () {
 
   upgrade_subsp().then(function (_) {
       
-      $("#games-subscription-notifications").modal("hide");
-      setBtnLoading($("#upgrade-btn"), false);
+      $("#upgrade-package-pgame-modal").modal("hide");
+      setBtnLoading($("#upgrade-package-pgame-modal"), false);
       window.location.reload(true);
   }).catch(function (error) {
-    $("#games-subscription-notifications").modal("hide");
-      setBtnLoading($("#upgrade-btn"), false);
+    $("#upgrade-package-pgame-modal").modal("hide");
+      setBtnLoading($("#upgrade-package-pgame-modal"), false);
       showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
   });
 });

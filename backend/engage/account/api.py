@@ -301,6 +301,38 @@ def subscribe_api(phone_number, idbundle, idservice, referrer=None, idchannel=2,
         print(api_call.content, api_call.status_code)
         return api_call.content, api_call.status_code
 
+def upgrade_api(phone_number, idbundle, idservice, referrer=None, idchannel=2, vault=None):  # default channel id is web
+    print("Subscribing", phone_number, "to", idbundle, "service", idservice)
+    command = '/api/User/Upgrade'
+    uniqueid = str(uuid4())
+    data = {'msisdn': phone_number, 
+            'idChannel': idchannel,
+            'idBundle':idbundle,
+            'idService':idservice.upper(),
+            'transactionId':uniqueid,
+            }
+    if referrer:
+        print("Referrer by:", referrer)
+        data['inviteeId'] = str(referrer)
+    if vault:
+        return vault.send(command=command, data=data)       
+    url = API_SERVER_URL+command
+    try: 
+        print(data)
+        api_call = requests.post(url, headers={}, json=data, timeout=3)
+        print(api_call)
+        print(api_call.content)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        # raise SystemExit(e)
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        print(api_call.json())
+        res = api_call.json()['statusCode']
+        return res['message'], res['code']
+    else:
+        print(api_call.content, api_call.status_code)
+        return api_call.content, api_call.status_code
 
 def grant_referral_gift(user, referrer):
     print("User", user, "being referred by", referrer, "instead of", user.referrer)
@@ -335,6 +367,7 @@ def grant_referral_gift(user, referrer):
 
 
 def do_register(self, request, username, subscription):
+    print("inside do_register")
     is_active = False
     is_billed = False
     if 'refid' in request.session:
@@ -1385,20 +1418,23 @@ class UserViewSet(mixins.ListModelMixin,
 
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def upgrade_subscription(self, request, uid):
-        # user = request.user
-        # if user.subscription == SubscriptionPlan.FREE :
-        #     user.subscription = SubscriptionPlan.PAID1
-        #     @notify_when(events=[NotificationTemplate.ONWARDANDUPWARD], is_route=False, is_one_time=False)
-        #     def notify(user, user_notifications):
-        #         """ extra logic if needed """
-        #     notify(user=user)  
-        # else :  
-        #     user.subscription = SubscriptionPlan.PAID2   
-        # user.save()
+        user = request.user
+        print("user" + request.user.mobile)
+        #if user.subscription == SubscriptionPlan.FREE :
+        #user.subscription = SubscriptionPlan.PAID2
+        idservice = SubscriptionPackages.PAID2
+        upgrade_api(request.user.mobile, 3, SubscriptionPackages.PAID2, referrer=None, vault=None)
+        #@notify_when(events=[NotificationTemplate.ONWARDANDUPWARD], is_route=False, is_one_time=False)
+        #def notify(user, user_notifications):
+        #    """ extra logic if needed """
+        #notify(user=user)  
+        #else :  
+        #    user.subscription = SubscriptionPlan.PAID2   
+        #user.save()
 
 
-        # return Response(status=status.HTTP_200_OK)
-        return exceptions.ValidationError('Functionality not yet available.')
+        return Response(status=status.HTTP_200_OK)
+        #return exceptions.ValidationError('Functionality not yet available.')
 
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def add_new_friend(self, request, uid):

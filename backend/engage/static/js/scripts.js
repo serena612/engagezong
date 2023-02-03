@@ -816,20 +816,20 @@ $(function () {
             if($(this).attr('data-target')!="#login-modal"){
                 
                 if($("#userSub").val() == "free" ){
-                    $("#games-subscription-notifications #games-notifications-title").text("Upgrade Subscription");
-                    $("#games-subscription-notifications #games-notifications-body").text("Please upgrade your package to play this game.");
+                    //$("#games-subscription-notifications #games-notifications-title").text("Upgrade Subscription");
+                    //$("#games-subscription-notifications #games-notifications-body").text("Please upgrade your package to play this game.");
+                    $('#upgrade-package-pgame-modal').modal('show');
                 }else if($("#userIsBilled").val() == "False" )
                 { 
                     $("#games-subscription-notifications #games-notifications-title").text("Recharge Line!");
                     $("#games-subscription-notifications #games-notifications-body").text('You don\'t have enough balance to play this game. Please recharge your line and try again.');
+                    $("#games-subscription-notifications").modal({
+                        show: true,
+                        keyboard: true,
+                        backdrop: true,
+                    });
                 }
                 
-
-                $("#games-subscription-notifications").modal({
-                    show: true,
-                    keyboard: true,
-                    backdrop: true,
-                });
             }
             return;
         }
@@ -1001,7 +1001,11 @@ $(function () {
         });
         
     });
-    
+
+    $("#upgrade-btn").on("click", function () {
+        subscribe_api(username, 1, idservice, referrer=referrer, vault=self.client);
+    });
+
     if (is_complete_profile == false) {
        
 
