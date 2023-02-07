@@ -470,6 +470,7 @@ $(document).on("submit", ".frmregister", function (e) {
     console.log("---aaa----");
     console.log(data.data);
     console.log("--aaa-----");
+    $("#reg_code").val("");
 
     postRegister(data.data).then(res => {
         //form.trigger("reset");
@@ -477,12 +478,15 @@ $(document).on("submit", ".frmregister", function (e) {
         form.hide();
         $('body').addClass('tab2');
         $(".register-otp-form").show();
-
-        $(".sendcodemsg").html('A pin code has been sent to you. Please enter the pin code to proceed.').show();       
+        $(".sendcodemsg").html('A pin code has been sent to you. Please enter the pin code to proceed.').show(); 
+             
 
     }).catch(e => {
         if(e.status==306)
-        $(".sendcodemsg").html('The mobile number you have provided already exists!').show();
+        {
+            $("#reg_code").val("1");
+            $(".sendcodemsg").html('The mobile number you have provided already exists!').show();
+        }
         else if(e.status==472) //406 ?
         $(".sendcodemsg").html('The number you have provided is invalid!').show();
         else if(e.status==458)
