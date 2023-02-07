@@ -6541,6 +6541,25 @@ or ((width:820px) and (height:1180px)) or ((width:768px) and (height:1024px))
      margin-top: 7px!important;
  }
     </style>
+
+    <style>
+      .regloader {
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid purple;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 2s linear infinite;
+    display: none;
+    margin: 32px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+    </style>
     <script type="text/javascript" > 
         
         function sendPinCode(){
@@ -6739,6 +6758,8 @@ or ((width:820px) and (height:1180px)) or ((width:768px) and (height:1024px))
             </div>
         </form> 
         </div>
+
+        <div class="regloader"></div>
        <div class="bg"></div>
        <!-- <div class="text">        
         <img src="/static/img/assets/text1.png" class="text1"  />
@@ -6776,13 +6797,16 @@ or ((width:820px) and (height:1180px)) or ((width:768px) and (height:1024px))
 function gotoThirdStep()
 {
     // hideFreeModal();
-    $('.content_num').hide();
+    $('.content_num, .regloader').hide();
     $('.frmregister').submit();
+
     var tt= setInterval(function(){
         if($('.response-msg.sendcodemsg').html().trim() != "")
         {
             if($("#reg_code").val() == "1")
             {
+                $('.regloader').show();
+
                 console.log("inside nb exists");
                 var form = $('.frmregister');
                 var response_msg = form.find(".response-msg");
