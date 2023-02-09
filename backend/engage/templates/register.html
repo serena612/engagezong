@@ -6844,6 +6844,23 @@ function gotoThirdStep()
                 postRegisterOTP(data.data).then(res => {
                     localStorage.removeItem("last_profile_edit");
                     location.href = location.href.replace('/register','');
+                }).catch(e => {
+                    console.log("e", e);
+                    if(e.status==478 || e.status==459)
+                    response_msg.html('Invalid Pincode!').show();
+                    else if(e.status==471) //406 ?
+                    response_msg.html('Exceed maximum allowed attempts! Please try again later.').show();
+                    else if(e.status==472)
+                    response_msg.html('Invalid Phone Number provided!').show();
+                    else if(e.status==481) 
+                    response_msg.html('Your pincode has expired. Please try again.').show();
+                    else if(e.status==514){
+                        $('#wait-modal').modal("show");
+                        get_wait_modal();}
+                    else
+                    response_msg.html('Something went wrong. Please try again later.').show(); //  Error code: '+e.status
+                    setBtnLoading(btn, false);
+                    ///location.reload();
                 });
             }
             else
@@ -6869,6 +6886,7 @@ function showFreeModal(){
         $('.frmregister').find('.btn_next_pink').click();//$('.frmregister').find('.btn3').click();
         $('.sendagain').css('pointer-events', 'none'); 
         $('.sendagain').css('opacity', '0.7'); 
+        sendPinCode();
         setTimeout(() => { 
                 $('.sendagain').css('pointer-events', ''); 
                 $('.sendagain').css('opacity', '1');
