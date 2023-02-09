@@ -6544,16 +6544,19 @@ or ((width:820px) and (height:1180px)) or ((width:768px) and (height:1024px))
 
     <style>
       .regloader {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid purple;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid purple;
     border-radius: 50%;
-    width: 70px;
-    height: 70px;
+    width: 40px;
+    height: 40px;
     animation: spin 2s linear infinite;
     display: none;
-    margin: 10vh auto;
+    margin: 4vh auto;
 }
-
+#txtalreadyexists
+{
+    display: none;
+}
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -6758,7 +6761,8 @@ or ((width:820px) and (height:1180px)) or ((width:768px) and (height:1024px))
             </div>
         </form> 
         </div>
-
+           
+        <div id="txtalreadyexists" style="color: #fff;margin-top: 10vh; text-align: center;"></div> 
         <div class="regloader"></div>
        <div class="bg"></div>
        <!-- <div class="text">        
@@ -6797,7 +6801,7 @@ or ((width:820px) and (height:1180px)) or ((width:768px) and (height:1024px))
 function gotoThirdStep()
 {
     // hideFreeModal();
-    $('.content_num, .regloader').hide();
+    $('.content_num, .regloader, #txtalreadyexists').hide();
     $('.frmregister').submit();
 
     var tt= setInterval(function(){
@@ -6805,7 +6809,8 @@ function gotoThirdStep()
         {
             if($("#reg_code").val() == "1")
             {
-                $('.regloader').show();
+                $("#txtalreadyexists").html($('#msg_code_id').html());
+                $('.regloader, #txtalreadyexists').show();
 
                 console.log("inside nb exists");
                 var form = $('.frmregister');
