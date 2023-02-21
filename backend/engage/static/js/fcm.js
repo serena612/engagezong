@@ -1430,7 +1430,8 @@ $(function () {
       messaging
         .getToken({
           vapidKey:
-            "BJfaeey4LJqGRybfY7shu20U-cKY8W2ywEPxCw1Lo3RRP6dr-meRlg74-qL5eswNln8aEn-P-x37P56GMDjVXZQ",
+            //"BJfaeey4LJqGRybfY7shu20U-cKY8W2ywEPxCw1Lo3RRP6dr-meRlg74-qL5eswNln8aEn-P-x37P56GMDjVXZQ",
+            "BIupobxzHwPR8eaxnVfRKKZhFAMTS6PQr0QIRC7lKSasYKFCIXVO8XSgXP4BMt9Z9xPDU-zxdWqXLODK2mZyHJc",
         })
         .then((currentToken) => {
           if (currentToken) {
@@ -1614,12 +1615,19 @@ $(function () {
   });
  
  
+  firebaseApp.messaging().getToken().then((currentToken) => {
+    if (currentToken) {
+      console.log(currentToken)
+    } else {
+      // Show permission request.
+      console.log(
+        'No Instance ID token available. Request permission to generate one.')
+    }
 
   messaging.onMessage(async function (payload) {
+    console.log('Message received. ', payload);
     var notification = payload.data;
-
-    console.log(payload);
-
+    
     // navigator.serviceWorker.ready
     //   .then((registration) => {
     //     registration.showNotification(notification.title, {
@@ -1808,6 +1816,7 @@ $(function () {
             updateNotificationStatus(value.data.id);
             $('body').removeClass('modal-open');
           })
+          
        }
        
       },
@@ -1847,7 +1856,7 @@ $(function () {
         console.log("error", error);
       });
 
-    
+  })
   });
 
   

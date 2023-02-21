@@ -24,7 +24,43 @@ from engage.tournament.models import (
 )
 from ..core.models import Sticker
 from django.utils.translation import gettext_lazy as _
+from engage.account.constants import SubscriptionPackages, SubscriptionPlan
+from uuid import uuid4
+from engage.settings.base import API_SERVER_URL
+import requests
 from datetime import datetime, timedelta
+
+def send_sms(user, message, vault=None):
+    headers = {'Content-type':'application/json', 
+                'accept': 'text/plain'} # post data
+    command = '/api/User/SendSms'
+    if user.subscription==SubscriptionPlan.FREE:
+        subs = SubscriptionPackages.FREE
+    elif user.subscription==SubscriptionPlan.PAID1:
+        subs = SubscriptionPackages.PAID1
+    else:
+        subs = SubscriptionPackages.PAID2
+    data = {
+            'msisdn': user.mobile,
+            'message': message.replace('<br/>', ''),
+            'message_id': str(uuid4()),
+            'service_id': subs
+            } 
+    if vault:
+        return vault.send(command=command, headers=headers, data=data)
+    url = API_SERVER_URL+command
+    
+    try:
+        api_call = requests.post(url, headers=headers, json=data, timeout=2)
+    except requests.exceptions.RequestException as e:
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        # print(api_call)
+        res = api_call.json()['statusCode']
+        return res['message'], res['code']
+    else:
+        return api_call.content, api_call.status_code
 
 
 @receiver(post_save, sender=TournamentMatch)
@@ -247,7 +283,10 @@ def post_match_save(sender, instance, created, **kwargs):
                     notificationi.link = "/tournaments/"+str(instance.tournament.id)
                     notificationi.text = notificationi.notification.text.replace('tournament_name',instance.tournament.name)
                     notificationi.save()
+                    resp, code = send_sms(user, notificationi.text)
+                    print(resp, code)
             notify(instance.participant)
+
         
 
     else:

@@ -12,6 +12,12 @@ from django.db.models import Value
 from engage.account.models import User
 from engage.services import notify_when
 from engage.core.constants import NotificationTemplate
+from datetime import datetime, timedelta
+from engage.account.constants import SubscriptionPackages, SubscriptionPlan
+from uuid import uuid4
+from engage.settings.base import API_SERVER_URL
+import requests
+
 
 from engage.account.exceptions import (
     GameAccountUnavailable,
@@ -34,6 +40,37 @@ from .serializers import (
 from ..core.models import Sticker
 from ..operator.constants import SubscriptionType
 
+def send_sms(user, message, vault=None):
+    headers = {'Content-type':'application/json', 
+                'accept': 'text/plain'} # post data
+    command = '/api/User/SendSms'
+    if user.subscription==SubscriptionPlan.FREE:
+        subs = SubscriptionPackages.FREE
+    elif user.subscription==SubscriptionPlan.PAID1:
+        subs = SubscriptionPackages.PAID1
+    else:
+        subs = SubscriptionPackages.PAID2
+    data = {
+            'msisdn': user.mobile,
+            'message': message.replace('<br/>', ''),
+            'message_id': str(uuid4()),
+            'service_id': subs
+            } 
+    if vault:
+        return vault.send(command=command, headers=headers, data=data)
+    url = API_SERVER_URL+command
+    
+    try:
+        api_call = requests.post(url, headers=headers, json=data, timeout=2)
+    except requests.exceptions.RequestException as e:
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        # print(api_call)
+        res = api_call.json()['statusCode']
+        return res['message'], res['code']
+    else:
+        return api_call.content, api_call.status_code
 
 class TournamentFilter(django_filters.FilterSet):
     state = django_filters.ChoiceFilter(choices=TournamentState.choices,
@@ -412,25 +449,43 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         partic = tourparts.values_list('participant', flat=True)
         participants = User.objects.filter(id__in=partic)  # participids
         
+        
         count = participants.count()
         print(participants, count)
         if count>0:
-            sched = "Match Schedule for "+tournament.name
+            #sched = "Match Schedule for "+tournament.name
             
             # for match in matches:
-            sched+="<br/>Round "+str(match.round_number)+" - Match "+match.match_name
-            sched+="<br/>Start: "+str(match.start_date)
+            #sched+="<br/>Round "+str(match.round_number)+" - Match "+match.match_name
+            #sched+="<br/>Start: "+str(match.start_date)
 
+            #sched=str(match.start_date)
+
+            sched = (match.start_date+timedelta(hours=1)).strftime("%Y/%m/%d %H:%M")+" Lagos"
+            
             stri_repl = {}
             stri_repl['MATCH_SCHEDULE'] = sched
+            stri_repl['TOURNAMENT_NAME'] = match.tournament.name
+            stri_repl['STARTDATE'] = sched
             
-            @notify_when(events=[NotificationTemplate.MATCH_SCHEDULE], is_route=False,
-                    is_one_time=False, str_repl=stri_repl)
-            def notify(user, user_notifications):
-                """ extra logic if needed """
-
+            
             for user in participants:
+                @notify_when(events=[NotificationTemplate.MATCH_SCHEDULE], is_route=False,
+                        is_one_time=False, str_repl=stri_repl)
+                def notify(user, user_notifications):
+                    """ extra logic if needed """
+                    for notificationi in user_notifications:
+                        print("inside notificationi")
+                        notificationi.text=notificationi.notification.text.replace('TOURNAMENT_NAME',match.tournament.name).replace('STARTDATE',sched)
+                        print(notificationi.text)
+                        notificationi.save()
+                        resp, code = send_sms(user, notificationi.text)
+                        print(resp, code)
                 notify(user=user)
+
+            #for user in participants:
+            #    notify(user=user)
+
             print("tourparts", tourparts)
             print(tourparts.values_list('matches_informed', flat=True))
             # tourparts.matches_informed.add(*match)  # add match to informed
