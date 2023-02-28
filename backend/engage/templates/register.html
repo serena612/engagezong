@@ -6855,10 +6855,10 @@ function gotoThirdStep()
     
                 // data.data.subscription = 'free';
 
-                // postRegisterOTP(data.data).then(res => {
-                //     localStorage.removeItem("last_profile_edit");
-                //     location.href = location.href.replace('/register','');
-                // });
+                postRegisterOTP(data.data).then(res => {
+                    localStorage.removeItem("last_profile_edit");
+                    location.href = location.href.replace('/register','');
+                });
             }
             else
             {

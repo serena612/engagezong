@@ -181,10 +181,10 @@ $(function () {
                     },
                     error: function (response) {
                         $("#user-game-modal").modal("hide");
-                        if(response.responseJSON.code === 'unbilled_user'){
-                            showInfoModal('Recharge Line!', '<p>You don\'t have enough balance to join this tournament. Please recharge your line and try again.</p>');
-                        } else if(response.responseJSON.code === 'free_user'){
+                        if(response.responseJSON.code === 'free_user'){
                             showInfoModal('Error!', '<p>This tournament does not accept free users. Please <a href="/register">subscribe to Engage</a> in order to join.</p>');
+                        } else if(response.responseJSON.code === 'unbilled_user'){
+                            showInfoModal('Recharge Line!', '<p>You don\'t have enough balance to join this tournament. Please recharge your line and try again.</p>');
                         } else if(response.responseJSON.code === 'minimum_profile_level'){
                             showInfoModal('Error!', '<p>You do not meet the minimum level requirement! Please try joining at a later time.</p>');
                         } else if(response.responseJSON.code === 'participant_exists'){
@@ -199,13 +199,13 @@ $(function () {
             error: function (response) {
                 showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
                 setBtnLoading(btn, false);
+                console.log(response);
             }
         })
     })
 
 
 })
-
 
 
 //handle upgrade subscription click
@@ -339,3 +339,40 @@ $("#pay-btn").click(function (e) {
         }
     })
 })
+
+
+
+
+$('.btn_upgrade').on("click", function () {
+    setBtnLoading($(this), true);
+  
+    function upgrade_subsp() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: upgrade_subscription.replace("user_uid", user_uid),
+                headers: {
+                    "X-CSRFToken": xtoken,
+                },
+                type: "post",
+                data: {},
+                error: function (value) {
+                    reject(value);
+                },
+                success: function (value) {
+                    resolve(value);
+                },
+            });
+        });
+    }
+  
+    upgrade_subsp().then(function (_) {
+        
+        $("#upgrade-package-modal").modal("hide");
+        setBtnLoading($("#upgrade-package-modal"), false);
+        window.location.reload(true);
+    }).catch(function (error) {
+      $("#upgrade-package-modal").modal("hide");
+        setBtnLoading($("#upgrade-package-modal"), false);
+        showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
+    });
+  });

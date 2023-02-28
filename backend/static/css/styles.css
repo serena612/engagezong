@@ -6185,7 +6185,13 @@ background:#fff;
 .profile-contain .friends-list.grid li .remove-btn {top:40px;}
 #faq-modal h3,#about h3,#privacy h3,#disclaimer h3,#terms h3{ font-size: 1.1rem;}
 #friends-list li .btns a:nth-child(1){display:none!important;}
-@media (min-width:768px) and (max-width:1200px)
+@media (min-width:768px) and (max-width:954px)
+{
+  .profile-contain .friends-list.grid li {
+    width: 48%;
+  }
+}
+@media (min-width:955px)  
 {
   .profile-contain .friends-list.grid li {
     width: 33%;
@@ -6692,10 +6698,10 @@ body.land #tournament_dv.tobeMob .tournaments-list1#tournaments-list .newsbv-ite
   border: 6px solid #FFF;
 }
 .remove-btn.rem1{
-  display: block;
+  display: none;
 }
 .remove-btn.rem2{
-  display: none;
+  display: block;
   color:#FFF!important;
 }
 #friends-list .btn2.rem2 {
@@ -6747,7 +6753,10 @@ i.fa.fa-times#sidebar-close {
   top: 31px;
   position: absolute;
   right: 19px;
-  z-index: 99999;
+  z-index: 999999999999999999999999999;
+}
+.sidebar .content{
+  z-index: 1;
 }
 .sidebar .sidebar-brand img
 {
@@ -6771,6 +6780,12 @@ i.fa.fa-times#sidebar-close {
 }
 
 /*home page new design*/
+@media (min-width:771px){
+  #friends-list .btn2.rem2 {
+    top: 84px;
+    left: 204px;
+}
+}
 @media (max-width:767px){
   .user_profile_pic {
     display: block;
@@ -6955,6 +6970,211 @@ or (width:390px) or (width:411px)
     left: -61px!important;
 }
 }
+
+
+/*new tournaments popup*/
+.modal.hp_tourn .modal-dialog {
+  width: 600px;
+  max-width: 96vw;
+  top: 20vh;
+}
+.modal.hp_tourn .modal-body {
+  font-size: 16px;
+  min-height: 189px;
+  padding-top: 30px;
+}
+.modal_contenu{
+  padding-left: 178px;
+}
+.purple, .pink {
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+.purple{
+  color:#2C1B6D; 
+}
+.pink {
+  color: #FB186D;
+  margin-bottom: 26px;
+}
+.tourn_btn{
+  width:126px;
+  height:45px;
+  text-align: center;
+  color:#FFF;
+  text-transform: uppercase;
+  background-color: #2B1B6D;
+  cursor: pointer;
+  padding-top: 10px;
+}
+.tourn_btn:hover{
+  opacity: 0.7;
+}
+.modal.hp_tourn .modal-header {
+  padding: 19px 0;
+}
+.pic_modal
+{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+#congrats-modal2 .pic_modal
+{
+  left: 50px;
+  bottom: 10px;
+}
+#congrats-modal2 .modal_contenu {
+  padding-left: 189px;
+}
+.modal.hp_tourn#congrats-modal3 .modal-body{
+  min-height: 170px;
+  padding-top: 20px;
+} 
+#congrats-modal4 .pic_modal {
+  left: 40px;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 192px;
+}
+.modal.hp_tourn#congrats-modal4 .modal-body{
+     padding-top: 16px;
+     min-height: 172px;
+}
+@media ((width:414px) or (width:411px)) and (orientation:portrait){
+  #congrats-modal2 .modal_contenu {
+    padding-left: 155px!important;
+  }
+  #congrats-modal4 .pic_modal {
+    left: 26px!important;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 152px!important;
+}
+  }
+@media (width:412px) and (orientation:portrait){
+#congrats-modal2 .modal_contenu {
+  padding-left: 160px;
+}
+}
+@media (width:393px) and (orientation:portrait){
+  #congrats-modal2 .modal_contenu {
+    padding-left: 146px;
+}
+#congrats-modal2 .pic_modal {
+  left: 34px;
+}
+  }
+  @media (width:393px) and (orientation:portrait){
+#congrats-modal4 .pic_modal {
+  left: 23px!important;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 156px!important;
+}
+    }
+
+  @media (width:390px) and (orientation:portrait){
+    #congrats-modal2 .modal_contenu {
+      padding-left: 140px;
+  }
+  #congrats-modal2 .pic_modal {
+    left: 36px;
+}
+#congrats-modal4 .pic_modal {
+  left: 23px!important;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 156px!important;
+}
+    }
+
+  @media (width:375px) and (orientation:portrait){
+  #congrats-modal2 .modal_contenu {
+    padding-left: 148px;
+}
+#congrats-modal2 .pic_modal {
+  left: 37px;
+  bottom: 10px;
+}
+#congrats-modal4 .pic_modal {
+  left: 29px!important;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 163px!important;
+}
+  }
+
+@media ((width:384px) or (width:353px)) and (orientation:portrait){
+  #congrats-modal2 .modal_contenu {
+    padding-left: 155px!important;
+}
+#congrats-modal2 .pic_modal {
+  left: 34px!important;
+}
+#congrats-modal4 .pic_modal {
+  left: 30px!important;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 163px!important;
+}
+ } 
+@media ((width:360px) or (width:353px)) and (orientation:portrait){
+ .modal_contenu {
+    padding-left: 167px!important;
+ }
+} 
+@media (width:360px) and (orientation:portrait){
+  #congrats-modal2 .modal_contenu {
+     padding-left: 140px!important;
+}
+  #congrats-modal2 .pic_modal {
+    left: 27px;
+}
+#congrats-modal4 .pic_modal {
+  left: 19px;
+}
+#congrats-modal4 .modal_contenu {
+  padding-left: 151px;
+}
+ } 
+@media (width:320px) and (orientation:portrait)
+{
+  .tourn_btn {
+    width: 100px;
+  }
+  .pic_modal img{
+     width:85%;
+  }
+  .modal_contenu {
+    padding-left: 138px!important;
+  }
+  .modal.hp_tourn .modal-body{
+    padding-top: 14px;
+  }
+  #congrats-modal2 .pic_modal {
+    left: 30px;
+  }
+  #congrats-modal2 .modal_contenu{
+    padding-left: 123px!important;
+  }
+}
+@media ((width:240px) or (width:280px)) and (orientation:portrait)
+{
+  .modal_contenu {
+    padding-left: 17px;
+ }
+ .pic_modal
+ {
+  display: none;
+ }
+ #congrats-modal2 .modal_contenu, #congrats-modal4 .modal_contenu {
+  padding-left: 0px!important;
+}
+ 
+}
+/*end new tournaments popup*/
+
 /*Video full screen landscape*/
 #game-fullscreen-modal, #game-fullscreen-modal .modal-content
 {
@@ -7008,4 +7228,155 @@ or (width:390px) or (width:411px)
   width: 100%;
   height: 100%;
 }
+.pink_info
+{
+  color:#FFF;
+  font-size: 11px;
+  background-color: #A3156B;
+  padding: 2px 15px;
+  border-radius: 10px;
+  position: absolute;
+  top:10px;
+  right:15px;
+  z-index: 99999999999;
+  display: none;
+}
 /* end video ads */
+
+/*!!!*/
+.avatar-select.open .avatar-drop{
+  z-index:999!important;
+}
+.profile-contain > .left .stickers-box .imgs-box .game {
+  max-width: 100%;
+  margin: 0px auto!important;
+  display: block;
+  width: 216px!important;
+  padding-top: 0px!important;
+}
+.profile-contain > .left .last-played-games-box .imgs-box a.game.no_game {
+  max-width: 100%;
+  width: 200px!important;
+  margin: 0px auto!important;
+}
+
+/*ddl arrow mainly on iphone*/
+#edit-profile-form select{
+  -webkit-appearance: none!important;
+        -moz-appearance: none!important;
+        appearance: none!important;
+}
+#edit-profile-form i {
+  position: absolute;
+  top: 18px;
+  left: auto;
+  right: 16px;
+  color: #472b93;
+  font-size: 13px;
+}
+/*end ddl arrow mainly on iphone*/
+
+/*Video Ad*/
+#adContainer > div {
+  height: 100%!important;
+  width: 100%!important;
+}
+#adContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 100000;
+  height: 100vh;
+}
+
+#timerAd
+{
+position:fixed;
+bottom:10px;
+left:5px;
+z-index:99999999999999999999999999;
+color:#FFF;
+}
+ 
+#contentElement{
+  width: 100vw;
+  height: 100vh;
+  position: fixed; /*!!!*/
+  top: 42px;/*!!!*/
+  left: 0px;/*!!!*/
+ 
+}
+@media (width: 375px)
+{
+  #contentElement
+  {
+  top: 0px;/*!!!*/
+  }
+}
+#play_btn_cont, #pause_btn_cont
+{
+  display: none;
+  position: fixed;
+  top: 42px;
+  left: 0px;
+  z-index: 2147483647;
+  width: 100vw;
+  height: calc(100vh - 48px);
+  cursor: pointer;
+  z-index: 9999999999999;
+}
+#playButton, #pauseButton { 
+
+  padding-top: 13px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 45vh;
+  left: 46vw;
+  z-index: 999999999999999999;
+  border: none;
+  background-color: transparent; /* #2B1B6D;*/
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+@media (max-width: 767px)
+{
+  #playButton, #pauseButton { 
+    left: 37vw;
+  }
+}
+#playButton .play {
+    height: 0;
+    width: 0;
+    margin-left: 25px;
+    border-left: 44px solid #FFF;
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent;
+    top: -3px;
+    position: relative;
+}
+
+#pauseButton .pause {
+height: 20px;
+width: 20px;
+border: none;
+margin-left: 33px;
+border-right: 8px solid #FFF;
+border-left: 8px solid #FFF;
+box-sizing: border-box;
+}
+/* .blackop
+{
+  opacity: 0.3;
+  background-color: #000;
+} */
+/* #game-fullscreen-modal .modal-body.showPause:hover #pauseButton
+{
+  display: block!important;
+} */
+
+/*iframe game*/
+#game-fullscreen-modal .modal-dialog .modal-content .info-box iframe.solvemath {
+  margin-left: 8px;
+}

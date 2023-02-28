@@ -127,7 +127,7 @@ def fill_prize_list(self):
 
 @shared_task(bind=True)
 def fetch_match_details(self, match_id):
-    prefix = "fetch_match_details"
+    prefix = "fetch_match_details_"+ str(match_id)
     if block_multiple_celery_task_execution(self, prefix):
         return
     match = TournamentMatch.objects.get(
