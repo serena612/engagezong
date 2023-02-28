@@ -367,11 +367,16 @@ if (timeleft < 0) {
     {{ block.super }}
     <div id="user-game-modal" class="modal fade">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            {% if not user.is_subscriber and not tournament.allow_free_users and user.subscription == 'free' %}
+            <div class="modal-content" style="background-color:transparent">
+            {% else %}
+            <div class="modal-content"> 
+            {%endif%}
+                {% if user.is_subscriber or tournament.allow_free_users or user.subscription != 'free' %}
                 <div class="close-box">
                     <a data-dismiss="modal" href=""><i class="fas fa-times"></i></a>
                 </div>
-               
+               {%endif%}
                    
                 {% if not participant and  tournament.started_on %}
                     <div class="modal-header">
@@ -405,20 +410,30 @@ if (timeleft < 0) {
                         </div>
                     </div>  
                     {% elif not user.is_subscriber and not tournament.allow_free_users %}
+
+                    {% if user.subscription == 'free' %}
+                    <div class="modal-content" style="text-align: center; background-color: #1D0F26; border-radius: 10px;"> 
+                    <div class="modal-body" style="padding-top: 47px; width: 84%; margin: 0px auto 6px;">                    
+                        <div style="color:#FF0090">{% translate 'SUBSCRIBERS ONLY!' %}</div>
+                        <div style="margin-bottom: 20px;color: #FFF;font-size: 0.8rem;">{% translate 'PLEASE UPGRADE FROM THE PACKAGE TO N50 PACKAGE TO BE ABLE TO JOIN TOURNAMENTS. TO UPGRADE PLEASE CLICK ON THE BUTTON BELOW.' %}</div>                    
+                        <div class="btn_upgrade" style="cursor: pointer; background-color: #FF0090; height: 44px; padding-top: 10px; font-weight: 800; border-radius: 4px; color: #181022; text-align: center; max-width: 100%; margin: 0px auto 20px;">{% translate 'UPGRADE PACKAGE' %}</div>                   
+                    </div>
+                </div>
+
+                    {% else %}
+
                     <div class="modal-header">
                         <h3 class="box-title">{% translate 'Subscribers Only!' %}</h3>
                         <div class="clear"></div>
                     </div>
                     <div class="modal-body">
-                        <div class="row" style="margin: auto">
-                            {% if user.subscription == 'free' %}
-                            <p>{% translate 'Please upgrade from free package to N50 package to be able to join tournaments. To upgrade, simply deactivate from the free package by sending "DEAC SUB3" to “8561” then send "SUB2" to “8561”.' %}</p>  
-                            {% else %}
-                            <p>{% translate 'Subscribe now to be able to join any upcoming tournament.' %}</p>
-                            {% endif %}
+                        <div class="row" style="margin: auto">                             
+                            <p>{% translate 'Subscribe now to be able to join any upcoming tournament.' %}</p>                             
                         </div>
                     </div>
-                {% elif not can_join %}
+                    {% endif %}  
+
+                  {% elif not can_join %}
                     <div class="modal-header">
                         <h3 class="box-title">{% translate 'Upgrade Subscription' %}</h3>
                         <div class="clear"></div>
