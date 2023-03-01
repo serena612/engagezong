@@ -7215,7 +7215,7 @@
       
     }    
 
-        @media  (max-height: 600px) and (orientation: landscape)
+        /* @media  (max-height: 600px) and (orientation: landscape)
        {
         .sec-1 .logos , .logos, #bodyreg #logoreg{
             width: 19vw!important;
@@ -7225,7 +7225,21 @@
         }
 
        
-    }
+    } */
+
+    @media (max-width: 767px) and (orientation: portrait)
+            {
+
+                .fordesktop .frmregister .input1, .fordesktop .register-otp-form .input1, .frmregister .input1, .register-otp-form .input1 {
+                    max-width: 90%!important;
+                    width: 90%!important;
+                    margin: 0px auto 12px!important;
+                    }
+
+                    .subNow_win {
+                        margin: 0px auto 12px!important;
+                    }
+            }
 
     @media all and (device-width: 1024px) and (device-height: 768px) and (orientation:landscape) {
         .sec-1 .logos , .logos, #bodyreg #logoreg{
