@@ -575,7 +575,7 @@ $(document).on("submit", ".register-otp-form", function (e) {
 })
 
 // Register Form Submit
-$(document).on("submit", ".frmregister2", function (e) {
+$(document).on("submit", ".frmregister.frm2", function (e) {
     e.preventDefault();
     var form = $(this);
     var response_msg = form.find(".response-msg");
@@ -583,7 +583,7 @@ $(document).on("submit", ".frmregister2", function (e) {
     
     data.data.refid = refid;
    
-    data.data.subscription = $('.frmregister2').find('select[name="subscription"]').val();
+    data.data.subscription = 'free'; //$('.frmregister2').find('select[name="subscription"]').val();
   
     response_msg.hide();
     var btn = form.find("button[type=submit]");
