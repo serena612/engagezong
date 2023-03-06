@@ -394,9 +394,14 @@ def do_register(self, request, username, subscription):
         print("unknown subscription", subscription)
         return Response({'error': 'Unknown Subscription'}, status=577)
 
-    
+    print("self",self)
+    if self:
+        response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
+        print("self response",code2)
+    else:
+        response2, code2 = load_data_api(username, "1")  # 1 for wifi
+        print("else response",code2)
 
-    response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
     if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
         if response2['idbundle'] == 1:
             subscription = SubscriptionPlan.FREE
@@ -409,7 +414,14 @@ def do_register(self, request, username, subscription):
     if code2==56 or code2==80 or code2==76 or code2==77 or code2==79 or code2==75 or INTEGRATION_DISABLED or username.startswith('234102'):  # 56 profile does not exist - 76 pending sub - 79 pending unsub - 77 sub - 75 under process
         if code2==56 or code2==80:  # profile does not exist so we send subscription request
             print("subscription request", subscription)
-            response3, code3 = subscribe_api(username, idbundle, idservice, referrer=referrer, vault=self.client)
+            print("self",self)
+            if self:
+                response3, code3 = subscribe_api(username, idbundle, idservice, referrer=referrer, vault=self.client)
+                print("self response",response3)
+            else:
+                response3, code3 = subscribe_api(username, idbundle, idservice, referrer=referrer, vault=None)
+                print("else response",response3)
+                
         if code2==76 or code2==77 or code2==75 or code2==79 or (code2==56 and code3 ==0) or (code2==80 and code3 ==0) or INTEGRATION_DISABLED or username.startswith('234102'): # profile does exist so we create local record based on it
             # request.session.pop('renewing', None)
             if code2==77 or INTEGRATION_DISABLED or username.startswith('234102'):
