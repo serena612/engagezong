@@ -12,14 +12,70 @@ from engage.operator.models import OperatorAd
 from engage.services import notify_when
 from engage.settings.base import SHOWADS
 from engage.account.constants import SubscriptionPlan
-from engage.account.models import UserTransactionHistory
 
+from engage.account.models import UserTransactionHistory
+from datetime import datetime
+from datetime import timedelta
+from django.contrib.auth import get_user_model, login
+
+
+
+from engage.account.api import do_register
+
+
+UserModel = get_user_model()
 
 @notify_when(events=[
     NotificationTemplate.HOME,
     NotificationTemplate.HOW_TO_USE
 ])
+
+def attempt_login_register(request):
+    if 'msisdn' not in request.session or request.user.is_authenticated:
+      print("inside first if")
+      return
+    try:
+        mobilen = request.session['msisdn']
+        user = UserModel.objects.filter(
+            mobile__iexact=mobilen,
+            region=request.region
+        ).first()
+        if user:
+            # user found attempt direct login
+            usermob = str(user.mobile)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        else:
+            # user not found attempt registration
+            usermob = mobilen
+            do_register(None, request, usermob, SubscriptionPlan.FREE)
+    
+    except UserModel.DoesNotExist:
+        usermob = mobilen
+        do_register(None, request, usermob, SubscriptionPlan.FREE)
+
 def home_view(request):
+    print("msisdn", request.user)
+    #request.COOKIES['logged_out'] = datetime.now().isoformat()
+    #print("COOKIE",request.COOKIES['logged_out'])
+    if request.user: #or request.user.is_authenticated:
+        print("inside first if")
+        #print(logged_out)
+        print('logged_out' in request.COOKIES)
+        if 'logged_out' in request.COOKIES:  # check if log out date is present
+          print("inside second if")
+          if datetime.now() - datetime.fromisoformat(request.COOKIES['logged_out']) < timedelta(minutes=3): # check if expired
+              # show logged out page
+              print("pass")
+              pass
+          else:
+              # attempt login/register
+              print("attempt login")
+              attempt_login_register(request)
+        else:
+            # attempt login/register
+            print("else")
+            attempt_login_register(request)
+            
     now = timezone.now()
 
     featured_games = FeaturedGame.objects.all()
@@ -44,7 +100,7 @@ def home_view(request):
         user_id = True
     else:
         user_id = False
-    if request.user and request.user.is_authenticated:
+    if request.user and request.user.is_authenticated :
         user_uid = request.user.uid
     else:
         user_uid = ""
@@ -91,8 +147,9 @@ def register_view(request):
     elif 'headeren' not in request.session and request.is_secure() and 'msisdn' not in request.session:
         gaga = request.build_absolute_uri().replace('https', 'http')
         # return redirect(gaga)
+        return redirect(gaga)
     else :
-       # print(request.headers)
+        # print(request.headers)
         refid = request.GET.get('referrer')
         if refid != "":
             ref = User.objects.filter(uid=refid).first()
@@ -102,7 +159,9 @@ def register_view(request):
             request.session['refid'] = ref.id
         if 'msisdn' in request.session:
             print(request.session['msisdn'])
-            return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
+            usermob = request.session['msisdn']
+            do_register(None, request, usermob, SubscriptionPlan.FREE)
+            #return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
         return render(request, 'register.html', {'wifi':True, 'refid':refid})
 
 def test_register_view(request):
@@ -157,8 +216,8 @@ def clear_session_view(request):
             return redirect('/')
         else:
             request.session.flush()
+            request.COOKIES['logged_out'] = datetime.datetime.now().isoformat()
     return redirect('/register')
-
 
 def new_register_view(request):
     
@@ -215,9 +274,9 @@ def html5_game_view(request, game):
 
 def firebase_sw_view(request):
     return HttpResponse("""
-        importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js');
-        importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-messaging-compat.js');
-        importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-analytics-compat.js');
+        importScripts('https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js');
+        importScripts('https://www.gstatic.com/firebasejs/9.17.1/firebase-messaging-compat.js');
+        importScripts('https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics-compat.js');
 
         firebase.initializeApp({
             apiKey: "AIzaSyClFi6oYdwKrbbTYBSNRdbYmLXJ4uR-vHI",

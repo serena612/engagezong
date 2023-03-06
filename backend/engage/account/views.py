@@ -24,6 +24,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 from engage.settings.base import SHOWADS
+from datetime import datetime
 
 def public_profile_view(request, uid):
     try:
@@ -150,14 +151,23 @@ def logout_view(request):
     request.user.save()
     request.session.flush()
     logout(request)
+    response = redirect('/')  # django.http.HttpResponse
+    response.set_cookie(key='logged_out', value=datetime.now().isoformat())
+    return response
 
-    return redirect('/')
+    #request.COOKIES['logged_out'] = datetime.now().isoformat()
+
+    #return redirect('/')
 
 
 def logout2_view(request):
     request.session.flush()
     logout(request)
-    return redirect('/register')
+    response = redirect('/')  # django.http.HttpResponse
+    response.set_cookie(key='logged_out', value=datetime.now().isoformat())
+    return response
+    #request.COOKIES['logged_out'] = datetime.now().isoformat()
+    #return redirect('/register')
 
 @login_required
 def set_game_linked_account(request):

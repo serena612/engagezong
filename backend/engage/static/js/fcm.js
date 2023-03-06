@@ -23,6 +23,11 @@ $(function () {
   var loading = false;
   var popupsToLoad=0;
   var totalNews=0;
+
+  var myInterval;
+  var interval_delay = 1000;
+  var is_interval_running = false; //Optional
+  var is_active = false;
  
 
   function adjustSettingPopNum(obj){
@@ -1385,7 +1390,41 @@ $(function () {
     getAllNotifications();
   });
 
-  $(document).ready(function(){loadUnreadPopups();})
+  document.addEventListener('visibilitychange', function (event) {
+    if (document.hidden) {
+        console.log('not visible');
+    } else {
+        console.log('is visible');
+        is_active = true;
+    }
+});
+
+  $(document).ready(function(){
+    
+    //loadUnreadPopups();
+
+    $(window).focus(function () {
+      console.log('is active', is_active);
+      clearInterval(myInterval); // Clearing interval if for some reason it has not been cleared yet
+      getAllNotifications();
+      loadUnreadPopups();
+      if  (!is_interval_running && is_active) //Optional
+          myInterval = setInterval(myTimer, interval_delay);
+      
+  }).blur(function () {
+    console.log("not in focus")
+    clearInterval(myInterval); // Clearing interval on window blur
+    is_interval_running = false; //Optional
+});
+  
+});
+
+function myTimer() {
+  is_interval_running = true; 
+  getAllNotifications();
+  loadUnreadPopups();
+};
+
 
   // on claim click
   $("body").delegate(".claim-gift", "click", function () {
@@ -1896,5 +1935,18 @@ $(function () {
    
   // })
 
+  messaging.onBackgroundMessage(async function(payload) {
+    console.log('[firebase-messaging-sw.js] Received background message ', payload);
+    // Customize notification here
+    //const notificationTitle = 'Background Message Title';
+    //const notificationOptions = {
+    //  body: 'Background Message body.',
+    //  icon: '/static/img/notification-icon.png'
+    //};
+  
+    //self.registration.showNotification(notificationTitle,
+    //  notificationOptions);
+    getAllNotifications();
+  });
  
 });

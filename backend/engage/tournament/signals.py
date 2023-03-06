@@ -283,7 +283,10 @@ def post_match_save(sender, instance, created, **kwargs):
                     notificationi.link = "/tournaments/"+str(instance.tournament.id)
                     notificationi.text = notificationi.notification.text.replace('tournament_name',instance.tournament.name)
                     notificationi.save()
-                    resp, code = send_sms(user, notificationi.text)
+                    #resp, code = send_sms(user, notificationi.text)
+                    sms_text = "You have successfully registered to play tournament_name tournament. Practice your skills to win the big prize."
+                    sms_text_replaced = sms_text.replace('tournament_name',instance.tournament.name) 
+                    resp, code = send_sms(user,sms_text_replaced)
                     print(resp, code)
             notify(instance.participant)
 
