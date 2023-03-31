@@ -6,6 +6,7 @@
 {% load humanize %}
 {% get_countries as countries %}
 
+
 <!DOCTYPE html>
 <html>
 
@@ -38,7 +39,7 @@
         <link rel="stylesheet"
               href="{% static 'libs/videojs/video-js.min.css' %}">
 
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=7">
+        <link rel="stylesheet" id="cssfile" href="{% static 'css/styles.css' %}?v=7">
         <link rel="stylesheet" href="{% static 'css/mobile.css' %}?v=7">
     {% endblock %}
 
@@ -77,7 +78,7 @@
             var set_game_account = "{% url 'set-game-account' %}";
             var tournament_join = "{% url 'tournament-join' '$1' %}";
             var sections_log = '/api/users/sections_log/sections_log/';
-
+            var lang_code = '{{ lang_code }}';
             
             function openModal(index,param0,param1,param2){
                 
@@ -200,7 +201,9 @@
                 is_authenticated = true;
                 var get_user_notifications_url = '{% url "fcm-get-user-notifications" %}'; 
                 var get_new_notifications_url = '{% url "fcm-get-new-notifications" %}';
+                var get_new_early_notifications_url = '{% url "fcm-get-new-early-notifications" %}';
                 var get_early_notifications_url = '{% url "fcm-get-early-notifications" %}';
+                var read_all_notifications_url = '{% url "fcm-read-all-notifications" %}';
 
                 var set_notification_status_url = '{% url "fcm-set-notification-status" %}';
                 var claim_gift_url = '{% url "fcm-claim-gift" %}';
@@ -217,6 +220,7 @@
                 var update_log = "{% url 'user-update-log' 'user_uid' %}"; 
                 var check_usercoin = "{% url 'user-check-usercoin' 'user_uid' %}"; 
                 var featured_game_retrieve =  '/api/featured_games/';
+                
             </script>
             <script type="application/javascript"
                 src="{% static 'js/fcm.js' %}"></script>
@@ -417,6 +421,7 @@
                                 <div class="notification-drop">
                                     <div class="heading">
                                         <h4>{% translate 'Notifications' %}</h4>
+                                        <div class="rall">Read All</div>
                                     </div>
 
                                     <ul id="notification-list"
@@ -444,6 +449,40 @@
 
                             </div>
                         {% endif %}
+ 
+ 
+                          <!-- <select id="ddlLaguage" style="display: block!important;" onchange="changeLanguage()">
+                            <option value="en">English</option>
+                            <option value="ar">العربية</option>
+                        </select>   -->
+
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}" />
+                    
+                            <select class="selectpicker" id="ddlLaguage" name="language" style="width: auto; position: relative; top:13px;" onchange="this.form.submit();$('body').css('visibility','hidden');changeLanguage();">
+                              {% get_current_language as LANGUAGE_CODE %}
+                              {% get_available_languages as LANGUAGES %}
+                              {% get_language_info_list for LANGUAGES as languages %}
+                              {% for language in languages %}
+                    
+                                  <option
+                                    value="{{ language.code }}"
+                                    {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}
+                                    data-content='<img src="/static/images/flags/{{ language.code }}.gif"></span>
+                                    <span style="display:inline-block; width:100px; padding-left: 10px; text-shadow:none">
+                                      {{ language.name_local }}
+                                     </span>'>
+                                    {{ language.name_local }}
+                                  </option>
+                    
+                              {% endfor %}
+                            </select>
+                            <!-- <label>{{ LANGUAGE_CODE }}</label> -->
+                        </form>
+
+ 
+ 
                     </div>
                 </div>
             {% endblock %}
@@ -688,7 +727,7 @@
                                 <div class="col-md-12 mb-3">
                                     <input class="input1" required
                                            name="code" step="1"
-                                           placeholder="Enter 6 Digits Code" autocomplete="off">
+                                           placeholder="{% translate 'Enter 6 Digits Code' %}" autocomplete="off">
 
                                         <div class="previous_btn">
                                         <a style="text-decoration: underline;cursor: pointer;" onclick="$('.login-otp-form').fadeOut(function(){ $('.login-otp-form').hide(); $('.login-form').show() })">
@@ -1207,7 +1246,7 @@
                                     <option value="" disabled  hidden>
                                         Country
                                     </option>
-                                    <option value="NG" selected>Nigeria</option>
+                                    <option value="NG" selected>"{% translate 'Nigeria' %}"</option>
                                     <option disabled>---------------</option>
                                     {% for country in countries %}
                                        {% if country.code != 'NG' %}
@@ -1254,7 +1293,7 @@
                                        class="input1 mb-3"
                                        placeholder="Email" required>
                                 <textarea name="message" rows="4" class="input1"
-                                          placeholder="Describe the Problem You're Facing"
+                                          placeholder="{% translate 'Describe the Problem You're Facing' %}"
                                           required></textarea>
 
                                 <div class="text-right">
@@ -1323,7 +1362,7 @@
                             <div class="col-md-12 mb-3">
                                 <input type="text" class="input1" required
                                        name="code"
-                                       placeholder="Enter 6 Digits Code">
+                                       placeholder="{% translate 'Enter 6 Digits Code' %}">
                                 <div class="text-right">
                                     <button type="submit" class="btn3">{% translate 'Next' %}
                                     </button>
@@ -1846,7 +1885,7 @@
                                             </select>
                                             <i class="fa fa-chevron-down" aria-hidden="true" style="right:-17px;"></i>
                                        </div>    
-                                       <div style="float:left;position:relative;margin-right: 22px;"> 
+                                       <div style="float:left;position:relative;margin-right: 22px;"  id="bthdate2"> 
                                         <select name="data_day" required {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
                                                 class="text-center">
                                             {% for day in days %}
@@ -1856,7 +1895,7 @@
                                         </select>
                                         <i class="fa fa-chevron-down" aria-hidden="true" style="right:-17px;"></i>
                                     </div>
-                                    <div style="float:left;position:relative;"> 
+                                    <div style="float:left;position:relative;"  id="bthdate3"> 
                                         <select name="data_year" required {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
                                                 class="text-center"
                                                 id="">
@@ -1881,7 +1920,7 @@
                                                     hidden>
                                                 {% translate 'Country' %}
                                             </option>
-                                            <option value="NG" selected>Nigeria</option>
+                                            <option value="NG" selected>{% translate 'Nigeria' %}</option>
                                             <option disabled>---------------</option>
                                             {% for country in countries %}
                                                 {% if country.code != 'NG' %}
@@ -2106,6 +2145,32 @@ function closeSideMenu()
     document.getElementById('sidebar').classList.remove('active');
 }
 
+function readAllNotifications()
+{
+    $(".notification-dropdown").removeClass("show-notification");
+
+    var notificationsCount = $("#notifications-count").text();
+
+    if (notificationsCount.length >= 1 && $(this).parents('.new-notification').length!=0) {
+      notificationsCount = parseInt(notificationsCount);
+      $("#notifications-count").text(
+        `${notificationsCount > 0 ? notificationsCount - 1 : 0}`
+      );
+      if(notificationsCount > 1)
+        $('#notifications-count').css('background','#EA2D2D');
+      else 
+        $('#notifications-count').css('background','#650f5e');   
+    }
+    else if (notificationsCount.length == 0)
+      $('#notifications-count').css('background','#650f5e');
+
+
+    const notificationId = $(this).data("id");
+    updateNotificationStatus(notificationId);
+    
+    $(this).removeClass('new-notification').addClass('earlier-notification');
+    $(".notification-dropdown").removeClass("show-notification");
+}
 
 screen.orientation.addEventListener("change", function(e) {
     // Do something on change
@@ -2119,6 +2184,90 @@ screen.orientation.addEventListener("change", function(e) {
 
 <input type="hidden" id="userSub" value="{{user.subscription}}" />
 <input type="hidden" id="userIsBilled" value="{{user.is_billed}}" />
+
+<script type="text/javascript">
+      function setCookie(cname, cvalue, exdays) {
+                const d = new Date();
+                d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                let expires = "expires="+ d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for(let i = 0; i <ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            function changeLanguage()
+            { 
+                console.log("ddlLanguage",$('#ddlLaguage').val());
+                if($('#ddlLaguage').val() == "ar")
+                {
+                    $('#cssfile').attr('href','{% static "css/styles.rtl.css" %}');
+                    $('body').addClass('ar');  
+                    setCookie('language','ar',3);                   
+                }
+                else{
+                    $('#cssfile').attr('href','{% static "css/styles.css" %}');
+                    $('body').removeClass('ar');
+                    setCookie('language','en',3); 
+                }
+            }
+
+            $('body').css('visibility','hidden');
+
+            window.addEventListener('load', function () {
+ 
+                try{
+                    var lang = getCookie('language');  
+                    console.log("ddlLanguage",$('#ddlLaguage').val());   
+                    if(lang == "")
+                    {
+                        $('#cssfile').attr('href','{% static "css/styles.rtl.css" %}');
+                        $('body').addClass('ar');  
+                        setCookie('language','ar',3);                   
+                            $('#ddlLaguage').val('ar');
+                    }                            
+
+                    if(lang == "ar" || lang_code == "")
+                {
+                    $('#cssfile').attr('href','{% static "css/styles.rtl.css" %}');
+                    $('body').addClass('ar');  
+                    setCookie('language','ar',3);                   
+                        $('#ddlLaguage').val('ar');
+                }
+                else{
+                    $('#cssfile').attr('href','{% static "css/styles.css" %}');
+                    $('body').removeClass('ar');
+                    setCookie('language','en',3); 
+                        $('#ddlLaguage').val('en'); 
+                }
+
+                    $('body').css('visibility','visible');
+                }
+                catch(e){
+                    $('#cssfile').attr('href','{% static "css/styles.css" %}');
+                        $('body').removeClass('ar');
+                        setCookie('language','en',3); 
+                        $('#ddlLaguage').val('en');
+
+                    $('body').css('visibility','visible');
+            }
+                
+            });
+ 
+</script>
 
 </body>
 </html>
