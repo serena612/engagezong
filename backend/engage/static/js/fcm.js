@@ -29,6 +29,9 @@ $(function () {
   var is_interval_running = false; //Optional
   var is_active = false;
  
+  var defaultlang="en-us";
+  var lang = lang_code;
+  console.log("lang",lang);
 
   function adjustSettingPopNum(obj){
     $("#notifications-popup").find("#notification-popup-"+obj.notification.id).modal({
@@ -60,7 +63,339 @@ $(function () {
     })
   }
   function loadUnreadPopups(){
-    getNewNotifications().then(function (result) {
+    // getNewEarlyNotifications().then(function (result) {
+    //   // set notifications badge >> count
+    //   $("#notifications-count").text(`${result.length}`);
+
+    //   if (result.length >= 1) {
+    //     $('#notifications-count').css('background','#EA2D2D');
+    //     // re-append the notifications
+    //     //$("#notification-list").append(`
+    //       //<li class="header-noti">
+    //       //    <h5>New</h5>
+    //       //</li>
+    //  // `);
+
+    //     result.map((i) => {
+    //       var className='new-notification';
+    //       if(i.last_read !=null && i.last_read !="" && i.last_read !=undefined ){
+    //         className='earlier-notification';
+    //       }
+          
+    //       if (i.notification.action == "text" && i.friend_uid == undefined && i.notification.template=='user_register_for_tournament') {
+    //         $("#notification-list").append(`
+    //         <li class="`+className+`">
+    //             <a
+    //               id="${i.notification.id}"
+    //               data-id="${i.id}"
+    //               url="${i.link}"
+    //               action="${i.notification.action}"
+    //               class="notification"
+    //             >
+    //                 <span class="title">${i.title}</span>
+    //                 <span class="desc">${i.text}</span>
+    //                 <span class="date">${moment(i.created).format(
+    //                   "MMMM DD YYYY, h:mm:ss a"
+    //                 )}</span>
+    //             </a>
+    //         </li>
+    //     `);
+    //       } 
+    //       else if (i.notification.action == "text" && i.friend_uid == undefined && (i.notification.template=='before_match_informative' || i.notification.template=='win_match_informative')) {
+    //         $("#notification-list").append(`
+    //         <li class="`+className+`">
+    //             <a
+    //               id="${i.notification.id}"
+    //               data-id="${i.id}"
+    //               url="${i.link}"
+    //               action="${i.notification.action}"
+    //               class="notification"
+    //             >
+    //                 <span class="title">${i.title}</span>
+    //                 <span class="desc">${i.text}</span>
+    //                 <span class="date">${moment(i.created).format(
+    //                   "MMMM DD YYYY, h:mm:ss a"
+    //                 )}</span>
+    //             </a>
+    //         </li>
+    //     `);
+    //       } 
+    //       else if (i.notification.action == "text" && i.friend_uid == undefined) {
+    //         /////////////////////////////////////////////////////////
+    //         if(i.notification.template == "complete_profile")
+    //         {
+    //             var profileUrl = $('.nav-my-profile').attr('href');
+    //             $("#notification-list").append(`
+    //             <li class="`+className+`">
+    //                 <a
+    //                   id="${i.notification.id}"
+    //                   data-id="${i.id}"
+    //                   url="${i.notification.url}"
+    //                   action="${i.notification.action}"
+    //                   onclick="openEditProfileModal(event)"                      
+    //                   class="notification"
+    //                 >
+    //                     <span class="title">${i.title}</span>  
+    //                     <span class="desc">${i.text}</span>
+    //                     <span class="date">${moment(i.created).format(
+    //                       "MMMM DD YYYY, h:mm:ss a"
+    //                     )}</span>
+    //                 </a>
+    //             </li>
+    //         `);            
+    //         }else{
+    //           console.log("here ");
+
+    //           if(i.notification.url && i.notification.url.indexOf('#home-tournaments') != -1)
+    //           {
+    //             console.log("here 1");
+    //         $("#notification-list").append(`
+    //         <li class="`+className+`">
+    //             <a
+    //               id="${i.notification.id}"
+    //               data-id="${i.id}"
+    //               url="${i.notification.url}"
+    //               action="${i.notification.action}"
+    //               class="notification" onclick="$('.tab-link.tour-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);"
+    //             >
+    //                 <span class="title">${i.title}</span>
+    //                 <span class="desc">${i.text}</span>
+    //                 <span class="date">${moment(i.created).format(
+    //                   "MMMM DD YYYY, h:mm:ss a"
+    //                 )}</span>
+    //             </a>
+    //         </li>
+    //     `);
+    //                 }
+    //                 else if(i.notification.url && i.notification.url.indexOf('#home-games') != -1)
+    //                 {
+                       
+    //               $("#notification-list").append(`
+    //               <li class="`+className+`">
+    //                   <a
+    //                     id="${i.notification.id}"
+    //                     data-id="${i.id}"
+    //                     url="${i.notification.url}"
+    //                     action="${i.notification.action}"
+    //                     class="notification" onclick="$('.games-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);"
+    //             >
+    //                 <span class="title">${i.title}</span>
+    //                 <span class="desc">${i.text}</span>
+    //                 <span class="date">${moment(i.created).format(
+    //                   "MMMM DD YYYY, h:mm:ss a"
+    //                 )}</span>
+    //             </a>
+    //         </li>
+    //     `);
+    //                 }
+    //                 else{
+    //         $("#notification-list").append(`
+    //         <li class="`+className+`">
+    //             <a
+    //               id="${i.notification.id}"
+    //               data-id="${i.id}"
+    //               url="${i.notification.url}"
+    //               action="${i.notification.action}"
+    //               class="notification"
+    //             >
+    //                 <span class="title">${i.title}</span>
+    //                 <span class="desc">${i.text}</span>
+    //                 <span class="date">${moment(i.created).format(
+    //                   "MMMM DD YYYY, h:mm:ss a"
+    //                 )}</span>
+    //             </a>
+    //         </li>
+    //     `);
+
+    //                 }
+
+              
+    //         }
+
+    //       } 
+    //       else {
+    //         var friend_request = i.friend_uid
+    //           ? `
+    //       <div class="col-md-12">
+    //       <div id="accept-new-friend" target="${i.friend_uid}" class="btn2 big" >Accept</div>
+    //       <button id="reject-new-friend" target="${i.friend_uid}" class="btn2 big" >Reject</button>
+    //       </div>
+    //       `
+    //           : "";
+
+    //         $("#notification-list").append(`
+    //         <li class="`+className+`">
+    //             <p 
+    //               id="${i.notification.id}"
+    //               data-id="${i.id}"
+    //               action="${i.notification.action}"
+    //               class="notification"
+    //             >
+    //                 <span class="title">${i.title}</span>
+    //                 <span class="desc">${i.text}</span>
+
+    //                 ${friend_request}
+
+    //                 <span class="date">${moment(i.created).format(
+    //                   "MMMM DD YYYY, h:mm:ss a"
+    //                 )}</span>
+    //             </p>
+    //         </li>
+    //     `);
+    //       }
+
+    //       if (i.notification.action == "video") {
+    //         if (i.notification.video) {
+    //           $("#notifications-popup").append(`
+    //             <div class="modal fade" id="notification-popup-${
+    //               i.notification.id
+    //             }" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${
+    //             i.notification.id
+    //           }Label" aria-hidden="true">
+    //               <div class="modal-dialog" role="document">
+
+    //                 <div class="modal-content">
+    //                   <div class="modal-header">
+    //                     <h5 class="modal-title" id="notification-popup-${
+    //                       i.notification.id
+    //                     }Label">${i.title}</h5>
+    //                   </div>
+    //                   <div class="modal-body">
+    //                     <p class="text-center">${i.text}</p>
+    //                     <video
+    //                     gift-id="${i.notification.id}"
+    //                     gifted-coins="${i.notification.gifted_coins}"
+    //                     id="${
+    //                       i.notification.is_gift && !i.notification.is_claimed
+    //                         ? `engage-gift-${i.notification.id}`
+    //                         : `engage-player`
+    //                     }"
+    //                     class="video-js"
+    //                     preload="auto"
+    //                     poster="/static/img/top-logo.png"
+    //                     data-setup='{}'>
+    //                       <source src="${
+    //                         i.notification.video
+    //                       }" type="video/${i.notification.video
+    //             .split(/[#?]/)[0]
+    //             .split(".")
+    //             .pop()
+    //             .trim()}"></source>
+    //                       <p class="vjs-no-js">
+    //                         To view this video please enable JavaScript, and consider upgrading to a
+    //                         web browser that
+    //                         <a href="https://videojs.com/html5-video-support/" target="_blank">
+    //                           supports HTML5 video
+    //                         </a>
+    //                       </p>
+    //                     </video>
+    //                   </div>
+    //                 </div>
+
+    //               </div>
+    //             </div>
+    //           `);
+    //         }
+    //       }
+    //         if (i.notification.action == "image" && i.is_popup && i.last_read==null) {
+
+    //         var image = (i.notification.translations[lang]==undefined)?i.notification.translations[defaultlang].image:i.notification.translations[lang].image;
+        
+    //         if (
+    //           image &&
+    //           i.notification.is_gift &&
+    //           !i.notification.is_claimed
+    //         ) {
+    //           $("#notifications-popup").append(`
+    //         <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+    //           <div class="modal-dialog" role="document">
+
+    //             <div class="modal-content">
+    //               <div class="modal-header">
+    //                 <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+    //               </div>
+    //               <div class="modal-body">
+    //                 <p class="text-center">${i.text}</p>
+    //                 <a
+    //                 id="${i.notification.id}"
+    //                 gifted_coins="${i.notification.gifted_coins}"
+    //                 class="claim-gift"
+    //               >
+    //                 <img
+    //                 class="notification-img"
+    //                   src="${image}"
+    //                 />
+    //               </a>
+    //               </div>
+    //             </div>
+
+    //           </div>
+    //         </div>
+    //       `);
+    //         } else if (image) {
+    //           var index=0;var tournament_name="";var prize_name="";var prize_image="";
+    //           if(i.link!=null && i.link.indexOf(';')>0){
+    //             tournament_name=i.link.split(';')[0].replace('"','');
+    //             prize_name=i.link.split(';')[1];
+    //             prize_image='/media/'+i.link.split(';')[2];
+    //           }
+            
+    //           if(i.notification.template == 'user_first_tournament'){
+    //           index=1;
+    //           }
+    //           else if(i.notification.template == 'user_second_third_tournament'){
+    //           index=2;
+    //           }
+    //           else if(i.notification.template=='user_outside_the_winning_positions'){
+    //             index=3;
+    //           }
+    //           else if(i.notification.template=='complete_profile'){
+    //             index=4;
+    //           }
+    //           $("#notifications-popup").append(`
+    //         <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+    //           <div class="modal-dialog" role="document">
+
+    //             <div class="modal-content">
+    //               <div class="modal-header">
+    //                 <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+    //               </div>
+    //               <div class="modal-body">
+    //                 <p class="text-center">${i.text} </p>
+    //                 <img
+    //                 class="notification-img" onclick="openModal(`+index+`,'`+tournament_name+`','`+prize_name+`','`+prize_image+`')"
+    //                   src="${image}" />
+    //               </div>
+    //             </div>
+
+    //           </div>
+    //         </div>
+    //       `);
+    //         } else {
+    //           $("#notifications-popup").append(`
+    //         <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+    //           <div class="modal-dialog" role="document">
+
+    //             <div class="modal-content">
+    //               <div class="modal-header">
+    //                 <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+    //               </div>
+    //               <div class="modal-body">
+    //                 <p class="text-center">${i.text}</p>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       `);
+    //         }
+    //       }
+    //     });
+    //   }
+    //   else{
+    //     $('#notifications-count').css('background','#650f5e');
+    //   }
+    // });
+    getNewEarlyNotifications().then(function (result) {
         if(result.length >0){
           var newresult = result.filter(function(i){ 
             return ((i.notification.action == "video" && i.is_popup && i.last_read==null) || (i.notification.action == "image" && i.is_popup && i.last_read==null));
@@ -123,9 +458,10 @@ $(function () {
               }
             }
             if (i.notification.action == "image" && i.is_popup && i.last_read==null) {
+              var image = (i.notification.translations[lang]==undefined)?i.notification.translations[defaultlang].image:i.notification.translations[lang].image;
         
               if (
-                i.notification.image &&
+                image &&
                 i.notification.is_gift &&
                 !i.notification.is_claimed
               ) {
@@ -146,7 +482,7 @@ $(function () {
                     >
                       <img
                       class="notification-img"
-                        src="${i.notification.image}"
+                        src="${image}"
                       />
                     </a>
                     </div>
@@ -155,7 +491,7 @@ $(function () {
                 </div>
               </div>
             `);
-              } else if (i.notification.image) {
+              } else if (image) {
                 var index=0;var tournament_name="";var prize_name="";var prize_image="";
                 if(i.link!=null && i.link.indexOf(';')>0){
                   tournament_name=i.link.split(';')[0].replace('"','');
@@ -187,7 +523,7 @@ $(function () {
                       <p class="text-center">${i.text} </p>
                       <img
                       class="notification-img" onclick="openModal(`+index+`,'`+tournament_name+`','`+prize_name+`','`+prize_image+`')"
-                        src="${i.notification.image}" />
+                        src="${image}" />
                     </div>
                   </div>
 
@@ -250,6 +586,27 @@ $(function () {
       },
     });
   }
+
+  
+  function getNewEarlyNotifications() {
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url: get_new_early_notifications_url,
+        headers: {
+          "X-CSRFToken": csrftoken,
+        },
+        type: "get",
+        data: {},
+        error: function (value) {
+          reject(value);
+        },
+        success: function (value) {
+          resolve(value);
+        },
+      });
+    });
+  }
+
   // get all notifications that has not been read
   function getNewNotifications() {
     return new Promise((resolve, reject) => {
@@ -335,6 +692,43 @@ $(function () {
     });
   }
 
+  function readAllNotifications() {
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url: read_all_notifications_url,
+        headers: {
+          "X-CSRFToken": csrftoken,
+        },
+        type: "post",
+        error: function (value) {
+          reject(value);
+        },
+        success: function (value) {
+          console.log('value',value);
+          $('#user-coins').text(value.coins);
+          resolve(value);
+        },
+      });
+    });
+  }
+
+  //Read all
+  $('.rall').click(function() {
+    console.log("read all clicked");
+    $(".notification-dropdown").removeClass("show-notification");
+
+    var notificationsCount = $("#notifications-count").text();
+
+    
+    notificationsCount = parseInt(notificationsCount);
+    $("#notifications-count").text(
+        `${notificationsCount > 0 ? 0 : 0}`
+      );
+    
+    readAllNotifications();
+    $(this).removeClass('new-notification').addClass('earlier-notification');
+  });
+  
   // on notification clicked
   $(".notification-dropdown").on("click", ".notification", function () {
     $(".notification-dropdown").removeClass("show-notification");
@@ -370,10 +764,16 @@ $(function () {
       if (url && url !== null && url !== "null" && url.length >= 1) {
         window.open(url, "_self").focus();
       }
+      getAllNotifications();
     }
 
     const notificationId = $(this).data("id");
     updateNotificationStatus(notificationId);
+    
+    $(this).removeClass('new-notification').addClass('earlier-notification');
+    $(".notification-dropdown").removeClass("show-notification");
+    //getAllNotifications();
+
   });
 
   // on notifications list >> scroll to bottom
@@ -533,8 +933,9 @@ $(function () {
                 }
 
                 if (i.notification.action == "image") {
+                  var image = (i.notification.translations[lang]==undefined)?i.notification.translations[defaultlang].image:i.notification.translations[lang].image;
                   if (
-                    i.notification.image &&
+                    image &&
                     i.notification.is_gift &&
                     !i.notification.is_claimed
                   ) {
@@ -557,7 +958,7 @@ $(function () {
                           >
                             <img
                               class="notification-img"
-                              src="${i.notification.image}"
+                              src="${image}"
                             />
                           </a>
                         </div>
@@ -566,7 +967,7 @@ $(function () {
                     </div>
                   </div>
                 `);
-                  } else if (i.notification.image) {
+                  } else if (image) {
                     var index=0;var tournament_name="";var prize_name="";var prize_image="";
                     if(i.link!=null && i.link.indexOf(';')>0){
                       tournament_name=i.link.split(';')[0].replace('"','');
@@ -598,7 +999,7 @@ $(function () {
                           <p class="text-center">${i.text} </p>
                           <img
                           class="notification-img" onclick="openModal(`+index+`,'`+tournament_name+`','`+prize_name+`','`+prize_image+`')"
-                            src="${i.notification.image}" />
+                            src="${image}" />
                         </div>
                       </div>
                     </div>
@@ -636,7 +1037,6 @@ $(function () {
   const getAllNotifications = () => {
     if (!loading) {
       loading = true;
-
       current_early_notifications_page = 1;
 
       // reset the notifications list
@@ -652,614 +1052,959 @@ $(function () {
 
       $("#notification-list").empty();
 
-      getNewNotifications().then(function (result) {
-        // set notifications badge >> count
-        $("#notifications-count").text(`${result.length}`);
+      getNewEarlyNotifications().then(function (result) {
+            // set notifications badge >> count
+            var allread = result.filter(function(i) {
+              return i.last_read == null 
+            });
+            console.log("allread",allread)    
+            
+            $("#notifications-count").text(`${allread.length}`);
+    
+            if (result.length >= 1) {
+              $('#notifications-count').css('background','#EA2D2D');
+              // re-append the notifications
+              //$("#notification-list").append(`
+                //<li class="header-noti">
+                //    <h5>New</h5>
+                //</li>
+           // `);
+    
+              result.map((i) => {
+                var className='new-notification';
+                console.log("className", className)
+                console.log("last read",i.last_read)
+                console.log("i",i)
 
-        if (result.length >= 1) {
-          $('#notifications-count').css('background','#EA2D2D');
-          // re-append the notifications
-          $("#notification-list").append(`
-            <li class="header-noti">
-                <h5>New</h5>
-            </li>
-        `);
-
-          result.map((i) => {
-            if (i.notification.action == "text" && i.friend_uid == undefined && i.notification.template=='user_register_for_tournament') {
-              $("#notification-list").append(`
-              <li class="new-notification">
-                  <a
-                    id="${i.notification.id}"
-                    data-id="${i.id}"
-                    url="${i.link}"
-                    action="${i.notification.action}"
-                    class="notification"
-                  >
-                      <span class="title">${i.title}</span>
-                      <span class="desc">${i.text}</span>
-                      <span class="date">${moment(i.created).format(
-                        "MMMM DD YYYY, h:mm:ss a"
-                      )}</span>
-                  </a>
-              </li>
-          `);
-            } 
-            else if (i.notification.action == "text" && i.friend_uid == undefined && (i.notification.template=='before_match_informative' || i.notification.template=='win_match_informative')) {
-              $("#notification-list").append(`
-              <li class="new-notification">
-                  <a
-                    id="${i.notification.id}"
-                    data-id="${i.id}"
-                    url="${i.link}"
-                    action="${i.notification.action}"
-                    class="notification"
-                  >
-                      <span class="title">${i.title}</span>
-                      <span class="desc">${i.text}</span>
-                      <span class="date">${moment(i.created).format(
-                        "MMMM DD YYYY, h:mm:ss a"
-                      )}</span>
-                  </a>
-              </li>
-          `);
-            } 
-            else if (i.notification.action == "text" && i.friend_uid == undefined) {
-              /////////////////////////////////////////////////////////
-              if(i.notification.template == "complete_profile")
-              {
-                  var profileUrl = $('.nav-my-profile').attr('href');
+                
+                if(i.last_read !=null && i.last_read !="" && i.last_read !=undefined ){
+                  className='earlier-notification';
+                }
+                
+                if (i.notification.action == "text" && i.friend_uid == undefined && i.notification.template=='user_register_for_tournament') {
                   $("#notification-list").append(`
-                  <li class="new-notification">
+                  <li class="`+className+`">
                       <a
                         id="${i.notification.id}"
                         data-id="${i.id}"
-                        url="${i.notification.url}"
+                        url="${i.link}"
                         action="${i.notification.action}"
-                        onclick="openEditProfileModal(event)"                      
                         class="notification"
                       >
-                          <span class="title">${i.title}</span>  
+                          <span class="title">${i.title}</span>
                           <span class="desc">${i.text}</span>
                           <span class="date">${moment(i.created).format(
                             "MMMM DD YYYY, h:mm:ss a"
                           )}</span>
                       </a>
                   </li>
-              `);            
-              }else{
-                console.log("here ");
-
-                if(i.notification.url && i.notification.url.indexOf('#home-tournaments') != -1)
-                {
-                  console.log("here 1");
-              $("#notification-list").append(`
-              <li class="new-notification">
-                  <a
-                    id="${i.notification.id}"
-                    data-id="${i.id}"
-                    url="${i.notification.url}"
-                    action="${i.notification.action}"
-                    class="notification" onclick="$('.tab-link.tour-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);"
-                  >
-                      <span class="title">${i.title}</span>
-                      <span class="desc">${i.text}</span>
-                      <span class="date">${moment(i.created).format(
-                        "MMMM DD YYYY, h:mm:ss a"
-                      )}</span>
-                  </a>
-              </li>
-          `);
-                      }
-                      else if(i.notification.url && i.notification.url.indexOf('#home-games') != -1)
-                      {
-                         
-                    $("#notification-list").append(`
-                    <li class="new-notification">
-                        <a
-                          id="${i.notification.id}"
-                          data-id="${i.id}"
-                          url="${i.notification.url}"
-                          action="${i.notification.action}"
-                          class="notification" onclick="$('.games-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);"
-                  >
-                      <span class="title">${i.title}</span>
-                      <span class="desc">${i.text}</span>
-                      <span class="date">${moment(i.created).format(
-                        "MMMM DD YYYY, h:mm:ss a"
-                      )}</span>
-                  </a>
-              </li>
-          `);
-                      }
-                      else{
-              $("#notification-list").append(`
-              <li class="new-notification">
-                  <a
-                    id="${i.notification.id}"
-                    data-id="${i.id}"
-                    url="${i.notification.url}"
-                    action="${i.notification.action}"
-                    class="notification"
-                  >
-                      <span class="title">${i.title}</span>
-                      <span class="desc">${i.text}</span>
-                      <span class="date">${moment(i.created).format(
-                        "MMMM DD YYYY, h:mm:ss a"
-                      )}</span>
-                  </a>
-              </li>
-          `);
-
-                      }
-
-                
-              }
-
-            } 
-            else {
-              var friend_request = i.friend_uid
-                ? `
-            <div class="col-md-12">
-            <div id="accept-new-friend" target="${i.friend_uid}" class="btn2 big" >Accept</div>
-            <button id="reject-new-friend" target="${i.friend_uid}" class="btn2 big" >Reject</button>
-            </div>
-            `
-                : "";
-
-              $("#notification-list").append(`
-              <li class="new-notification">
-                  <p 
-                    id="${i.notification.id}"
-                    data-id="${i.id}"
-                    action="${i.notification.action}"
-                    class="notification"
-                  >
-                      <span class="title">${i.title}</span>
-                      <span class="desc">${i.text}</span>
-
-                      ${friend_request}
-
-                      <span class="date">${moment(i.created).format(
-                        "MMMM DD YYYY, h:mm:ss a"
-                      )}</span>
-                  </p>
-              </li>
-          `);
-            }
-
-            if (i.notification.action == "video") {
-              if (i.notification.video) {
-                $("#notifications-popup").append(`
-                  <div class="modal fade" id="notification-popup-${
-                    i.notification.id
-                  }" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${
-                  i.notification.id
-                }Label" aria-hidden="true">
+              `);
+                } 
+                else if (i.notification.action == "text" && i.friend_uid == undefined && (i.notification.template=='before_match_informative' || i.notification.template=='win_match_informative')) {
+                  $("#notification-list").append(`
+                  <li class="`+className+`">
+                      <a
+                        id="${i.notification.id}"
+                        data-id="${i.id}"
+                        url="${i.link}"
+                        action="${i.notification.action}"
+                        class="notification"
+                      >
+                          <span class="title">${i.title}</span>
+                          <span class="desc">${i.text}</span>
+                          <span class="date">${moment(i.created).format(
+                            "MMMM DD YYYY, h:mm:ss a"
+                          )}</span>
+                      </a>
+                  </li>
+              `);
+                } 
+                else if (i.notification.action == "text" && i.friend_uid == undefined) {
+                  /////////////////////////////////////////////////////////
+                  if(i.notification.template == "complete_profile")
+                  {
+                      var profileUrl = $('.nav-my-profile').attr('href');
+                      $("#notification-list").append(`
+                      <li class="`+className+`">
+                          <a
+                            id="${i.notification.id}"
+                            data-id="${i.id}"
+                            url="${i.notification.url}"
+                            action="${i.notification.action}"
+                            onclick="openEditProfileModal(event)"                      
+                            class="notification"
+                          >
+                              <span class="title">${i.title}</span>  
+                              <span class="desc">${i.text}</span>
+                              <span class="date">${moment(i.created).format(
+                                "MMMM DD YYYY, h:mm:ss a"
+                              )}</span>
+                          </a>
+                      </li>
+                  `);            
+                  }else{
+                    console.log("here ");
+    
+                    if(i.notification.url && i.notification.url.indexOf('#home-tournaments') != -1)
+                    {
+                      console.log("here 1");
+                  $("#notification-list").append(`
+                  <li class="`+className+`">
+                      <a
+                        id="${i.notification.id}"
+                        data-id="${i.id}"
+                        url="${i.notification.url}"
+                        action="${i.notification.action}"
+                        class="notification" onclick="$('.tab-link.tour-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);"
+                      >
+                          <span class="title">${i.title}</span>
+                          <span class="desc">${i.text}</span>
+                          <span class="date">${moment(i.created).format(
+                            "MMMM DD YYYY, h:mm:ss a"
+                          )}</span>
+                      </a>
+                  </li>
+              `);
+                          }
+                          else if(i.notification.url && i.notification.url.indexOf('#home-games') != -1)
+                          {
+                             
+                        $("#notification-list").append(`
+                        <li class="`+className+`">
+                            <a
+                              id="${i.notification.id}"
+                              data-id="${i.id}"
+                              url="${i.notification.url}"
+                              action="${i.notification.action}"
+                              class="notification" onclick="$('.games-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);"
+                      >
+                          <span class="title">${i.title}</span>
+                          <span class="desc">${i.text}</span>
+                          <span class="date">${moment(i.created).format(
+                            "MMMM DD YYYY, h:mm:ss a"
+                          )}</span>
+                      </a>
+                  </li>
+              `);
+                          }
+                          else{
+                  $("#notification-list").append(`
+                  <li class="`+className+`">
+                      <a
+                        id="${i.notification.id}"
+                        data-id="${i.id}"
+                        url="${i.notification.url}"
+                        action="${i.notification.action}"
+                        class="notification"
+                      >
+                          <span class="title">${i.title}</span>
+                          <span class="desc">${i.text}</span>
+                          <span class="date">${moment(i.created).format(
+                            "MMMM DD YYYY, h:mm:ss a"
+                          )}</span>
+                      </a>
+                  </li>
+              `);
+    
+                          }
+    
+                    
+                  }
+    
+                } 
+                else {
+                  var friend_request = i.friend_uid
+                    ? `
+                <div class="col-md-12">
+                <div id="accept-new-friend" target="${i.friend_uid}" class="btn2 big" >Accept</div>
+                <button id="reject-new-friend" target="${i.friend_uid}" class="btn2 big" >Reject</button>
+                </div>
+                `
+                    : "";
+    
+                  $("#notification-list").append(`
+                  <li class="`+className+`">
+                      <p 
+                        id="${i.notification.id}"
+                        data-id="${i.id}"
+                        action="${i.notification.action}"
+                        class="notification"
+                      >
+                          <span class="title">${i.title}</span>
+                          <span class="desc">${i.text}</span>
+    
+                          ${friend_request}
+    
+                          <span class="date">${moment(i.created).format(
+                            "MMMM DD YYYY, h:mm:ss a"
+                          )}</span>
+                      </p>
+                  </li>
+              `);
+                }
+    
+                if (i.notification.action == "video") {
+                  if (i.notification.video) {
+                    $("#notifications-popup").append(`
+                      <div class="modal fade" id="notification-popup-${
+                        i.notification.id
+                      }" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${
+                      i.notification.id
+                    }Label" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+      
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="notification-popup-${
+                                i.notification.id
+                              }Label">${i.title}</h5>
+                            </div>
+                            <div class="modal-body">
+                              <p class="text-center">${i.text}</p>
+                              <video
+                              gift-id="${i.notification.id}"
+                              gifted-coins="${i.notification.gifted_coins}"
+                              id="${
+                                i.notification.is_gift && !i.notification.is_claimed
+                                  ? `engage-gift-${i.notification.id}`
+                                  : `engage-player`
+                              }"
+                              class="video-js"
+                              preload="auto"
+                              poster="/static/img/top-logo.png"
+                              data-setup='{}'>
+                                <source src="${
+                                  i.notification.video
+                                }" type="video/${i.notification.video
+                      .split(/[#?]/)[0]
+                      .split(".")
+                      .pop()
+                      .trim()}"></source>
+                                <p class="vjs-no-js">
+                                  To view this video please enable JavaScript, and consider upgrading to a
+                                  web browser that
+                                  <a href="https://videojs.com/html5-video-support/" target="_blank">
+                                    supports HTML5 video
+                                  </a>
+                                </p>
+                              </video>
+                            </div>
+                          </div>
+      
+                        </div>
+                      </div>
+                    `);
+                  }
+                }
+    
+                if (i.notification.action == "image") {
+                  var image = (i.notification.translations[lang]==undefined)?i.notification.translations[defaultlang].image:i.notification.translations[lang].image;
+                  if (
+                    image &&
+                    i.notification.is_gift &&
+                    !i.notification.is_claimed
+                  ) {
+                    $("#notifications-popup").append(`
+                  <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
                     <div class="modal-dialog" role="document">
-  
+      
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="notification-popup-${
-                            i.notification.id
-                          }Label">${i.title}</h5>
+                          <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
                         </div>
                         <div class="modal-body">
                           <p class="text-center">${i.text}</p>
-                          <video
-                          gift-id="${i.notification.id}"
-                          gifted-coins="${i.notification.gifted_coins}"
-                          id="${
-                            i.notification.is_gift && !i.notification.is_claimed
-                              ? `engage-gift-${i.notification.id}`
-                              : `engage-player`
-                          }"
-                          class="video-js"
-                          preload="auto"
-                          poster="/static/img/top-logo.png"
-                          data-setup='{}'>
-                            <source src="${
-                              i.notification.video
-                            }" type="video/${i.notification.video
-                  .split(/[#?]/)[0]
-                  .split(".")
-                  .pop()
-                  .trim()}"></source>
-                            <p class="vjs-no-js">
-                              To view this video please enable JavaScript, and consider upgrading to a
-                              web browser that
-                              <a href="https://videojs.com/html5-video-support/" target="_blank">
-                                supports HTML5 video
-                              </a>
-                            </p>
-                          </video>
-                        </div>
-                      </div>
-  
-                    </div>
-                  </div>
-                `);
-              }
-            }
-
-            if (i.notification.action == "image") {
-              if (
-                i.notification.image &&
-                i.notification.is_gift &&
-                !i.notification.is_claimed
-              ) {
-                $("#notifications-popup").append(`
-              <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-  
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
-                    </div>
-                    <div class="modal-body">
-                      <p class="text-center">${i.text}</p>
-                      <a
-                      id="${i.notification.id}"
-                      gifted_coins="${i.notification.gifted_coins}"
-                      class="claim-gift"
-                    >
-                      <img
-                      class="notification-img"
-                        src="${i.notification.image}"
-                      />
-                    </a>
-                    </div>
-                  </div>
-  
-                </div>
-              </div>
-            `);
-              } else if (i.notification.image) {
-                var index=0;var tournament_name="";var prize_name="";var prize_image="";
-                if(i.link!=null && i.link.indexOf(';')>0){
-                  tournament_name=i.link.split(';')[0].replace('"','');
-                  prize_name=i.link.split(';')[1];
-                  prize_image='/media/'+i.link.split(';')[2];
-                }
-              
-                if(i.notification.template == 'user_first_tournament'){
-                index=1;
-                }
-                else if(i.notification.template == 'user_second_third_tournament'){
-                index=2;
-                }
-                else if(i.notification.template=='user_outside_the_winning_positions'){
-                  index=3;
-                }
-                else if(i.notification.template=='complete_profile'){
-                  index=4;
-                }
-                $("#notifications-popup").append(`
-              <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-  
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
-                    </div>
-                    <div class="modal-body">
-                      <p class="text-center">${i.text} </p>
-                      <img
-                      class="notification-img" onclick="openModal(`+index+`,'`+tournament_name+`','`+prize_name+`','`+prize_image+`')"
-                        src="${i.notification.image}" />
-                    </div>
-                  </div>
-  
-                </div>
-              </div>
-            `);
-              } else {
-                $("#notifications-popup").append(`
-              <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-  
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
-                    </div>
-                    <div class="modal-body">
-                      <p class="text-center">${i.text}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            `);
-              }
-            }
-          });
-        }
-        else{
-          $('#notifications-count').css('background','#650f5e');
-        }
-
-        getEarlyNotifications().then(function (result) {
-          if (result.pagination.has_next) {
-            early_notifications_has_next = true;
-            current_early_notifications_page = 2;
-          } else {
-            early_notifications_has_next = false;
-          }
-
-          if (result.data.length >= 1) {
-            $("#notification-list").append(`
-            <li class="header-noti">
-                <h5>Earlier</h5>
-            </li>
-          `);
-
-            result.data.map((i) => {
-              if (
-                i.notification.action == "text" &&
-                i.friend_uid == undefined && i.notification.template=='user_register_for_tournament'
-              ) {
-                $("#notification-list").append(`
-                <li class="earlier-notification 5">
-                    <a id="${i.notification.id}"  url="${
-                  i.link
-                }"  data-id="${i.id}" action="${i.notification.action}" class="notification">
-                        <span class="title">${i.title}</span>
-                        <span class="desc">${i.text}</span>
-                        <span class="date">${moment(i.created).format(
-                          "MMMM DD YYYY, h:mm:ss a"
-                        )}</span>
-                    </a>
-                </li>
-            `);
-              } 
-              else if (
-                i.notification.action == "text" &&
-                i.friend_uid == undefined && (i.notification.template=='before_match_informative' || i.notification.template=='win_match_informative')
-              ) {
-                $("#notification-list").append(`
-                <li class="earlier-notification 6">
-                    <a id="${i.notification.id}"  url="${
-                  i.link
-                }"  data-id="${i.id}" action="${i.notification.action}" class="notification">
-                        <span class="title">${i.title}</span>
-                        <span class="desc">${i.text}</span>
-                        <span class="date">${moment(i.created).format(
-                          "MMMM DD YYYY, h:mm:ss a"
-                        )}</span>
-                    </a>
-                </li>
-            `);
-              } 
-              else if (
-                i.notification.action == "text" &&
-                i.friend_uid == undefined 
-              ) {
-                    if(i.title == "Complete profile and get rewarded")
-                    {
-                      $("#notification-list").append(`
-                <li class="earlier-notification 7">
-                    <a id="${i.notification.id}"  url="${
-                  i.notification.url
-                }"  data-id="${i.id}" action="${i.notification.action}" class="notification" href="#settings-modal" onclick="openEditProfileModal(event)">
-                        <span class="title">${i.title}</span>
-                        <span class="desc">${i.text}</span>
-                        <span class="date">${moment(i.created).format(
-                          "MMMM DD YYYY, h:mm:ss a"
-                        )}</span>
-                    </a>
-                </li>
-            `);                     
-                    }
-                    else{
-
-                      if(i.notification.url && i.notification.url.indexOf('#home-tournaments') != -1)
-                      { 
-                $("#notification-list").append(`
-                <li class="earlier-notification 8">
-                    <a id="${i.notification.id}"  url="${
-                  i.notification.url
-                }"  data-id="${i.id}" action="${i.notification.action}" class="notification" onclick="$('.tab-link.tour-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);">
-                        <span class="title">${i.title}</span>
-                        <span class="desc">${i.text}</span>
-                        <span class="date">${moment(i.created).format(
-                          "MMMM DD YYYY, h:mm:ss a"
-                        )}</span>
-                    </a>
-                </li>
-            `);                     
-                    }
-                    else{
-                $("#notification-list").append(`
-                <li class="earlier-notification">
-                    <a id="${i.notification.id}"  url="${
-                  i.notification.url
-                }"  data-id="${i.id}" action="${i.notification.action}" class="notification">
-                        <span class="title">${i.title}</span>
-                        <span class="desc">${i.text}</span>
-                        <span class="date">${moment(i.created).format(
-                          "MMMM DD YYYY, h:mm:ss a"
-                        )}</span>
-                    </a>
-                </li>
-            `);
-
-                        }
-
-
-                    }
-              } else {
-                var friend_request = i.friend_uid
-                  ? `
-              <div class="col-md-12">
-              <div id="accept-new-friend" target="${i.friend_uid}" class="btn2 big" >Accept</div>
-              <button id="reject-new-friend" target="${i.friend_uid}" class="btn2 big" >Reject</button>
-              </div>
-              `
-                  : "";
-
-                $("#notification-list").append(`
-                <li class="earlier-notification 9">
-                    <p id="${i.notification.id}" action="${
-                  i.notification.action
-                }" class="notification">
-                        <span class="title">${i.title}</span>
-                        <span class="desc">${i.text}</span>
-  
-                        ${friend_request}
-  
-                        <span class="date">${moment(i.created).format(
-                          "MMMM DD YYYY, h:mm:ss a"
-                        )}</span>
-                    </p>
-                </li>
-            `);
-              }
-
-              if (i.notification.action == "video") {
-                if (i.notification.video) {
-                  $("#notifications-popup").append(`
-                    <div class="modal fade" id="notification-popup-${
-                      i.notification.id
-                    }" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${
-                    i.notification.id
-                  }Label" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-    
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="notification-popup-${
-                              i.notification.id
-                            }Label">${i.title}</h5>
-                          </div>
-                          <div class="modal-body">
-                            <p class="text-center">${i.text}</p>
-                            <video
-                            gift-id="${i.notification.id}"
-                            gifted-coins="${i.notification.gifted_coins}"
-                            id="${
-                              i.notification.is_gift &&
-                              !i.notification.is_claimed
-                                ? `engage-gift-${i.notification.id}`
-                                : `engage-player`
-                            }"
-                            class="video-js"
-                            preload="auto"
-                            poster="/static/img/top-logo.png"
-                            data-setup='{}'>
-                              <source src="${
-                                i.notification.video
-                              }" type="video/${i.notification.video
-                    .split(/[#?]/)[0]
-                    .split(".")
-                    .pop()
-                    .trim()}"></source>
-                              <p class="vjs-no-js">
-                                To view this video please enable JavaScript, and consider upgrading to a
-                                web browser that
-                                <a href="https://videojs.com/html5-video-support/" target="_blank">
-                                  supports HTML5 video
-                                </a>
-                              </p>
-                            </video>
-                          </div>
-                        </div>
-    
-                      </div>
-                    </div>
-                  `);
-                }
-              }
-
-              if (i.notification.action == "image") {
-                if (
-                  i.notification.image &&
-                  i.notification.is_gift &&
-                  !i.notification.is_claimed
-                ) {
-                  $("#notifications-popup").append(`
-                <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-    
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
-                      </div>
-                      <div class="modal-body">
-                        <p class="text-center">${i.text} </p>
-                        <a
-                        id="${i.notification.id}"
-                        gifted_coins="${i.notification.gifted_coins}"
-                        class="claim-gift"
+                          <a
+                          id="${i.notification.id}"
+                          gifted_coins="${i.notification.gifted_coins}"
+                          class="claim-gift"
                         >
                           <img
                           class="notification-img"
-                            src="${i.notification.image}"
+                            src="${image}"
                           />
                         </a>
+                        </div>
                       </div>
-                    </div>
-    
-                  </div>
-                </div>
-              `);
-                } else if (i.notification.image) {
-                  var index=0;var tournament_name="";var prize_name="";var prize_image="";
-                  if(i.link!=null && i.link.indexOf(';')>0){
-                    tournament_name=i.link.split(';')[0].replace('"','');
-                    prize_name=i.link.split(';')[1];
-                    prize_image='/media/'+i.link.split(';')[2];
-                  }
-                
-                  if(i.notification.template == 'user_first_tournament'){
-                  index=1;
-                  }
-                  else if(i.notification.template == 'user_second_third_tournament'){
-                  index=2;
-                  }
-                  else if(i.notification.template=='user_outside_the_winning_positions'){
-                    index=3;
-                  }
-                  else if(i.notification.template=='complete_profile'){
-                    index=4;
-                  }
-                  $("#notifications-popup").append(`
-                <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-    
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
-                      </div>
-                      <div class="modal-body">
-                        <p class="text-center">${i.text}  </p>
-                        <img
-                          class='notification-img' onclick="openModal(`+index+`,'`+tournament_name+`','`+prize_name+`','`+prize_image+`')"
-                          src="${i.notification.image}" />
-                      </div>
+      
                     </div>
                   </div>
-                </div>
-              `);
-                } else {
-                  $("#notifications-popup").append(`
-                <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-    
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+                `);
+                  } else if (image) {
+                    var index=0;var tournament_name="";var prize_name="";var prize_image="";
+                    if(i.link!=null && i.link.indexOf(';')>0){
+                      tournament_name=i.link.split(';')[0].replace('"','');
+                      prize_name=i.link.split(';')[1];
+                      prize_image='/media/'+i.link.split(';')[2];
+                    }
+                  
+                    if(i.notification.template == 'user_first_tournament'){
+                    index=1;
+                    }
+                    else if(i.notification.template == 'user_second_third_tournament'){
+                    index=2;
+                    }
+                    else if(i.notification.template=='user_outside_the_winning_positions'){
+                      index=3;
+                    }
+                    else if(i.notification.template=='complete_profile'){
+                      index=4;
+                    }
+                    $("#notifications-popup").append(`
+                  <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+      
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+                        </div>
+                        <div class="modal-body">
+                          <p class="text-center">${i.text} </p>
+                          <img
+                          class="notification-img" onclick="openModal(`+index+`,'`+tournament_name+`','`+prize_name+`','`+prize_image+`')"
+                            src="${image}" />
+                        </div>
                       </div>
-                      <div class="modal-body">
-                        <p class="text-center">${i.text}</p>
+      
+                    </div>
+                  </div>
+                `);
+                  } else {
+                    $("#notifications-popup").append(`
+                  <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+      
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+                        </div>
+                        <div class="modal-body">
+                          <p class="text-center">${i.text}</p>
+                        </div>
                       </div>
                     </div>
-    
                   </div>
-                </div>
-              `);
+                `);
+                  }
                 }
-              }
-            });
-          }
+              });
+            }
+
+
+
+
+
+      
+      // getNewNotifications().then(function (result) {
+      //   // set notifications badge >> count
+      //   $("#notifications-count").text(`${result.length}`);
+
+      //   if (result.length >= 1) {
+      //     $('#notifications-count').css('background','#EA2D2D');
+      //     // re-append the notifications
+      //     $("#notification-list").append(`
+      //       <li class="header-noti">
+      //           <h5>New</h5>
+      //       </li>
+      //   `);
+
+      //     result.map((i) => {
+      //       if (i.notification.action == "text" && i.friend_uid == undefined && i.notification.template=='user_register_for_tournament') {
+      //         $("#notification-list").append(`
+      //         <li class="new-notification">
+      //             <a
+      //               id="${i.notification.id}"
+      //               data-id="${i.id}"
+      //               url="${i.link}"
+      //               action="${i.notification.action}"
+      //               class="notification"
+      //             >
+      //                 <span class="title">${i.title}</span>
+      //                 <span class="desc">${i.text}</span>
+      //                 <span class="date">${moment(i.created).format(
+      //                   "MMMM DD YYYY, h:mm:ss a"
+      //                 )}</span>
+      //             </a>
+      //         </li>
+      //     `);
+      //       } 
+      //       else if (i.notification.action == "text" && i.friend_uid == undefined && (i.notification.template=='before_match_informative' || i.notification.template=='win_match_informative')) {
+      //         $("#notification-list").append(`
+      //         <li class="new-notification">
+      //             <a
+      //               id="${i.notification.id}"
+      //               data-id="${i.id}"
+      //               url="${i.link}"
+      //               action="${i.notification.action}"
+      //               class="notification"
+      //             >
+      //                 <span class="title">${i.title}</span>
+      //                 <span class="desc">${i.text}</span>
+      //                 <span class="date">${moment(i.created).format(
+      //                   "MMMM DD YYYY, h:mm:ss a"
+      //                 )}</span>
+      //             </a>
+      //         </li>
+      //     `);
+      //       } 
+      //       else if (i.notification.action == "text" && i.friend_uid == undefined) {
+      //         /////////////////////////////////////////////////////////
+      //         if(i.notification.template == "complete_profile")
+      //         {
+      //             var profileUrl = $('.nav-my-profile').attr('href');
+      //             $("#notification-list").append(`
+      //             <li class="new-notification">
+      //                 <a
+      //                   id="${i.notification.id}"
+      //                   data-id="${i.id}"
+      //                   url="${i.notification.url}"
+      //                   action="${i.notification.action}"
+      //                   onclick="openEditProfileModal(event)"                      
+      //                   class="notification"
+      //                 >
+      //                     <span class="title">${i.title}</span>  
+      //                     <span class="desc">${i.text}</span>
+      //                     <span class="date">${moment(i.created).format(
+      //                       "MMMM DD YYYY, h:mm:ss a"
+      //                     )}</span>
+      //                 </a>
+      //             </li>
+      //         `);            
+      //         }else{
+      //           console.log("here ");
+
+      //           if(i.notification.url && i.notification.url.indexOf('#home-tournaments') != -1)
+      //           {
+      //             console.log("here 1");
+      //         $("#notification-list").append(`
+      //         <li class="new-notification">
+      //             <a
+      //               id="${i.notification.id}"
+      //               data-id="${i.id}"
+      //               url="${i.notification.url}"
+      //               action="${i.notification.action}"
+      //               class="notification" onclick="$('.tab-link.tour-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);"
+      //             >
+      //                 <span class="title">${i.title}</span>
+      //                 <span class="desc">${i.text}</span>
+      //                 <span class="date">${moment(i.created).format(
+      //                   "MMMM DD YYYY, h:mm:ss a"
+      //                 )}</span>
+      //             </a>
+      //         </li>
+      //     `);
+      //                 }
+      //                 else if(i.notification.url && i.notification.url.indexOf('#home-games') != -1)
+      //                 {
+                         
+      //               $("#notification-list").append(`
+      //               <li class="new-notification">
+      //                   <a
+      //                     id="${i.notification.id}"
+      //                     data-id="${i.id}"
+      //                     url="${i.notification.url}"
+      //                     action="${i.notification.action}"
+      //                     class="notification" onclick="$('.games-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);"
+      //             >
+      //                 <span class="title">${i.title}</span>
+      //                 <span class="desc">${i.text}</span>
+      //                 <span class="date">${moment(i.created).format(
+      //                   "MMMM DD YYYY, h:mm:ss a"
+      //                 )}</span>
+      //             </a>
+      //         </li>
+      //     `);
+      //                 }
+      //                 else{
+      //         $("#notification-list").append(`
+      //         <li class="new-notification">
+      //             <a
+      //               id="${i.notification.id}"
+      //               data-id="${i.id}"
+      //               url="${i.notification.url}"
+      //               action="${i.notification.action}"
+      //               class="notification"
+      //             >
+      //                 <span class="title">${i.title}</span>
+      //                 <span class="desc">${i.text}</span>
+      //                 <span class="date">${moment(i.created).format(
+      //                   "MMMM DD YYYY, h:mm:ss a"
+      //                 )}</span>
+      //             </a>
+      //         </li>
+      //     `);
+
+      //                 }
+
+                
+      //         }
+
+      //       } 
+      //       else {
+      //         var friend_request = i.friend_uid
+      //           ? `
+      //       <div class="col-md-12">
+      //       <div id="accept-new-friend" target="${i.friend_uid}" class="btn2 big" >Accept</div>
+      //       <button id="reject-new-friend" target="${i.friend_uid}" class="btn2 big" >Reject</button>
+      //       </div>
+      //       `
+      //           : "";
+
+      //         $("#notification-list").append(`
+      //         <li class="new-notification">
+      //             <p 
+      //               id="${i.notification.id}"
+      //               data-id="${i.id}"
+      //               action="${i.notification.action}"
+      //               class="notification"
+      //             >
+      //                 <span class="title">${i.title}</span>
+      //                 <span class="desc">${i.text}</span>
+
+      //                 ${friend_request}
+
+      //                 <span class="date">${moment(i.created).format(
+      //                   "MMMM DD YYYY, h:mm:ss a"
+      //                 )}</span>
+      //             </p>
+      //         </li>
+      //     `);
+      //       }
+
+      //       if (i.notification.action == "video") {
+      //         if (i.notification.video) {
+      //           $("#notifications-popup").append(`
+      //             <div class="modal fade" id="notification-popup-${
+      //               i.notification.id
+      //             }" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${
+      //             i.notification.id
+      //           }Label" aria-hidden="true">
+      //               <div class="modal-dialog" role="document">
+  
+      //                 <div class="modal-content">
+      //                   <div class="modal-header">
+      //                     <h5 class="modal-title" id="notification-popup-${
+      //                       i.notification.id
+      //                     }Label">${i.title}</h5>
+      //                   </div>
+      //                   <div class="modal-body">
+      //                     <p class="text-center">${i.text}</p>
+      //                     <video
+      //                     gift-id="${i.notification.id}"
+      //                     gifted-coins="${i.notification.gifted_coins}"
+      //                     id="${
+      //                       i.notification.is_gift && !i.notification.is_claimed
+      //                         ? `engage-gift-${i.notification.id}`
+      //                         : `engage-player`
+      //                     }"
+      //                     class="video-js"
+      //                     preload="auto"
+      //                     poster="/static/img/top-logo.png"
+      //                     data-setup='{}'>
+      //                       <source src="${
+      //                         i.notification.video
+      //                       }" type="video/${i.notification.video
+      //             .split(/[#?]/)[0]
+      //             .split(".")
+      //             .pop()
+      //             .trim()}"></source>
+      //                       <p class="vjs-no-js">
+      //                         To view this video please enable JavaScript, and consider upgrading to a
+      //                         web browser that
+      //                         <a href="https://videojs.com/html5-video-support/" target="_blank">
+      //                           supports HTML5 video
+      //                         </a>
+      //                       </p>
+      //                     </video>
+      //                   </div>
+      //                 </div>
+  
+      //               </div>
+      //             </div>
+      //           `);
+      //         }
+      //       }
+
+      //       if (i.notification.action == "image") {
+      //         var image = (i.notification.translations[lang]==undefined)?i.notification.translations[defaultlang].image:i.notification.translations[lang].image;
+      //         if (
+      //           image &&
+      //           i.notification.is_gift &&
+      //           !i.notification.is_claimed
+      //         ) {
+      //           $("#notifications-popup").append(`
+      //         <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+      //           <div class="modal-dialog" role="document">
+  
+      //             <div class="modal-content">
+      //               <div class="modal-header">
+      //                 <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+      //               </div>
+      //               <div class="modal-body">
+      //                 <p class="text-center">${i.text}</p>
+      //                 <a
+      //                 id="${i.notification.id}"
+      //                 gifted_coins="${i.notification.gifted_coins}"
+      //                 class="claim-gift"
+      //               >
+      //                 <img
+      //                 class="notification-img"
+      //                   src="${image}"
+      //                 />
+      //               </a>
+      //               </div>
+      //             </div>
+  
+      //           </div>
+      //         </div>
+      //       `);
+      //         } else if (image) {
+      //           var index=0;var tournament_name="";var prize_name="";var prize_image="";
+      //           if(i.link!=null && i.link.indexOf(';')>0){
+      //             tournament_name=i.link.split(';')[0].replace('"','');
+      //             prize_name=i.link.split(';')[1];
+      //             prize_image='/media/'+i.link.split(';')[2];
+      //           }
+              
+      //           if(i.notification.template == 'user_first_tournament'){
+      //           index=1;
+      //           }
+      //           else if(i.notification.template == 'user_second_third_tournament'){
+      //           index=2;
+      //           }
+      //           else if(i.notification.template=='user_outside_the_winning_positions'){
+      //             index=3;
+      //           }
+      //           else if(i.notification.template=='complete_profile'){
+      //             index=4;
+      //           }
+      //           $("#notifications-popup").append(`
+      //         <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+      //           <div class="modal-dialog" role="document">
+  
+      //             <div class="modal-content">
+      //               <div class="modal-header">
+      //                 <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+      //               </div>
+      //               <div class="modal-body">
+      //                 <p class="text-center">${i.text} </p>
+      //                 <img
+      //                 class="notification-img" onclick="openModal(`+index+`,'`+tournament_name+`','`+prize_name+`','`+prize_image+`')"
+      //                   src="${image}" />
+      //               </div>
+      //             </div>
+  
+      //           </div>
+      //         </div>
+      //       `);
+      //         } else {
+      //           $("#notifications-popup").append(`
+      //         <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+      //           <div class="modal-dialog" role="document">
+  
+      //             <div class="modal-content">
+      //               <div class="modal-header">
+      //                 <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+      //               </div>
+      //               <div class="modal-body">
+      //                 <p class="text-center">${i.text}</p>
+      //               </div>
+      //             </div>
+      //           </div>
+      //         </div>
+      //       `);
+      //         }
+      //       }
+      //     });
+      //   }
+      //   else{
+      //     $('#notifications-count').css('background','#650f5e');
+      //   }
+
+        // getEarlyNotifications().then(function (result) {
+        //   if (result.pagination.has_next) {
+        //     early_notifications_has_next = true;
+        //     current_early_notifications_page = 2;
+        //   } else {
+        //     early_notifications_has_next = false;
+        //   }
+
+        //   if (result.data.length >= 1) {
+        //     $("#notification-list").append(`
+        //     <li class="header-noti">
+        //         <h5>Earlier</h5>
+        //     </li>
+        //   `);
+
+        //     result.data.map((i) => {
+        //       if (
+        //         i.notification.action == "text" &&
+        //         i.friend_uid == undefined && i.notification.template=='user_register_for_tournament'
+        //       ) {
+        //         $("#notification-list").append(`
+        //         <li class="earlier-notification 5">
+        //             <a id="${i.notification.id}"  url="${
+        //           i.link
+        //         }"  data-id="${i.id}" action="${i.notification.action}" class="notification">
+        //                 <span class="title">${i.title}</span>
+        //                 <span class="desc">${i.text}</span>
+        //                 <span class="date">${moment(i.created).format(
+        //                   "MMMM DD YYYY, h:mm:ss a"
+        //                 )}</span>
+        //             </a>
+        //         </li>
+        //     `);
+        //       } 
+        //       else if (
+        //         i.notification.action == "text" &&
+        //         i.friend_uid == undefined && (i.notification.template=='before_match_informative' || i.notification.template=='win_match_informative')
+        //       ) {
+        //         $("#notification-list").append(`
+        //         <li class="earlier-notification 6">
+        //             <a id="${i.notification.id}"  url="${
+        //           i.link
+        //         }"  data-id="${i.id}" action="${i.notification.action}" class="notification">
+        //                 <span class="title">${i.title}</span>
+        //                 <span class="desc">${i.text}</span>
+        //                 <span class="date">${moment(i.created).format(
+        //                   "MMMM DD YYYY, h:mm:ss a"
+        //                 )}</span>
+        //             </a>
+        //         </li>
+        //     `);
+        //       } 
+        //       else if (
+        //         i.notification.action == "text" &&
+        //         i.friend_uid == undefined 
+        //       ) {
+        //             if(i.title == "Complete profile and get rewarded")
+        //             {
+        //               $("#notification-list").append(`
+        //         <li class="earlier-notification 7">
+        //             <a id="${i.notification.id}"  url="${
+        //           i.notification.url
+        //         }"  data-id="${i.id}" action="${i.notification.action}" class="notification" href="#settings-modal" onclick="openEditProfileModal(event)">
+        //                 <span class="title">${i.title}</span>
+        //                 <span class="desc">${i.text}</span>
+        //                 <span class="date">${moment(i.created).format(
+        //                   "MMMM DD YYYY, h:mm:ss a"
+        //                 )}</span>
+        //             </a>
+        //         </li>
+        //     `);                     
+        //             }
+        //             else{
+
+        //               if(i.notification.url && i.notification.url.indexOf('#home-tournaments') != -1)
+        //               { 
+        //         $("#notification-list").append(`
+        //         <li class="earlier-notification 8">
+        //             <a id="${i.notification.id}"  url="${
+        //           i.notification.url
+        //         }"  data-id="${i.id}" action="${i.notification.action}" class="notification" onclick="$('.tab-link.tour-btn').click();$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 1000);">
+        //                 <span class="title">${i.title}</span>
+        //                 <span class="desc">${i.text}</span>
+        //                 <span class="date">${moment(i.created).format(
+        //                   "MMMM DD YYYY, h:mm:ss a"
+        //                 )}</span>
+        //             </a>
+        //         </li>
+        //     `);                     
+        //             }
+        //             else{
+        //         $("#notification-list").append(`
+        //         <li class="earlier-notification">
+        //             <a id="${i.notification.id}"  url="${
+        //           i.notification.url
+        //         }"  data-id="${i.id}" action="${i.notification.action}" class="notification">
+        //                 <span class="title">${i.title}</span>
+        //                 <span class="desc">${i.text}</span>
+        //                 <span class="date">${moment(i.created).format(
+        //                   "MMMM DD YYYY, h:mm:ss a"
+        //                 )}</span>
+        //             </a>
+        //         </li>
+        //     `);
+
+        //                 }
+
+
+        //             }
+        //       } else {
+        //         var friend_request = i.friend_uid
+        //           ? `
+        //       <div class="col-md-12">
+        //       <div id="accept-new-friend" target="${i.friend_uid}" class="btn2 big" >Accept</div>
+        //       <button id="reject-new-friend" target="${i.friend_uid}" class="btn2 big" >Reject</button>
+        //       </div>
+        //       `
+        //           : "";
+
+        //         $("#notification-list").append(`
+        //         <li class="earlier-notification 9">
+        //             <p id="${i.notification.id}" action="${
+        //           i.notification.action
+        //         }" class="notification">
+        //                 <span class="title">${i.title}</span>
+        //                 <span class="desc">${i.text}</span>
+  
+        //                 ${friend_request}
+  
+        //                 <span class="date">${moment(i.created).format(
+        //                   "MMMM DD YYYY, h:mm:ss a"
+        //                 )}</span>
+        //             </p>
+        //         </li>
+        //     `);
+        //       }
+
+        //       if (i.notification.action == "video") {
+        //         if (i.notification.video) {
+        //           $("#notifications-popup").append(`
+        //             <div class="modal fade" id="notification-popup-${
+        //               i.notification.id
+        //             }" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${
+        //             i.notification.id
+        //           }Label" aria-hidden="true">
+        //               <div class="modal-dialog" role="document">
+    
+        //                 <div class="modal-content">
+        //                   <div class="modal-header">
+        //                     <h5 class="modal-title" id="notification-popup-${
+        //                       i.notification.id
+        //                     }Label">${i.title}</h5>
+        //                   </div>
+        //                   <div class="modal-body">
+        //                     <p class="text-center">${i.text}</p>
+        //                     <video
+        //                     gift-id="${i.notification.id}"
+        //                     gifted-coins="${i.notification.gifted_coins}"
+        //                     id="${
+        //                       i.notification.is_gift &&
+        //                       !i.notification.is_claimed
+        //                         ? `engage-gift-${i.notification.id}`
+        //                         : `engage-player`
+        //                     }"
+        //                     class="video-js"
+        //                     preload="auto"
+        //                     poster="/static/img/top-logo.png"
+        //                     data-setup='{}'>
+        //                       <source src="${
+        //                         i.notification.video
+        //                       }" type="video/${i.notification.video
+        //             .split(/[#?]/)[0]
+        //             .split(".")
+        //             .pop()
+        //             .trim()}"></source>
+        //                       <p class="vjs-no-js">
+        //                         To view this video please enable JavaScript, and consider upgrading to a
+        //                         web browser that
+        //                         <a href="https://videojs.com/html5-video-support/" target="_blank">
+        //                           supports HTML5 video
+        //                         </a>
+        //                       </p>
+        //                     </video>
+        //                   </div>
+        //                 </div>
+    
+        //               </div>
+        //             </div>
+        //           `);
+        //         }
+        //       }
+
+        //       if (i.notification.action == "image") {
+        //         var image = (i.notification.translations[lang]==undefined)?i.notification.translations[defaultlang].image:i.notification.translations[lang].image;
+        //         if (
+        //           image &&
+        //           i.notification.is_gift &&
+        //           !i.notification.is_claimed
+        //         ) {
+        //           $("#notifications-popup").append(`
+        //         <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+        //           <div class="modal-dialog" role="document">
+    
+        //             <div class="modal-content">
+        //               <div class="modal-header">
+        //                 <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+        //               </div>
+        //               <div class="modal-body">
+        //                 <p class="text-center">${i.text} </p>
+        //                 <a
+        //                 id="${i.notification.id}"
+        //                 gifted_coins="${i.notification.gifted_coins}"
+        //                 class="claim-gift"
+        //                 >
+        //                   <img
+        //                   class="notification-img"
+        //                     src="${image}"
+        //                   />
+        //                 </a>
+        //               </div>
+        //             </div>
+    
+        //           </div>
+        //         </div>
+        //       `);
+        //         } else if (image) {
+        //           var index=0;var tournament_name="";var prize_name="";var prize_image="";
+        //           if(i.link!=null && i.link.indexOf(';')>0){
+        //             tournament_name=i.link.split(';')[0].replace('"','');
+        //             prize_name=i.link.split(';')[1];
+        //             prize_image='/media/'+i.link.split(';')[2];
+        //           }
+                
+        //           if(i.notification.template == 'user_first_tournament'){
+        //           index=1;
+        //           }
+        //           else if(i.notification.template == 'user_second_third_tournament'){
+        //           index=2;
+        //           }
+        //           else if(i.notification.template=='user_outside_the_winning_positions'){
+        //             index=3;
+        //           }
+        //           else if(i.notification.template=='complete_profile'){
+        //             index=4;
+        //           }
+        //           $("#notifications-popup").append(`
+        //         <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+        //           <div class="modal-dialog" role="document">
+    
+        //             <div class="modal-content">
+        //               <div class="modal-header">
+        //                 <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+        //               </div>
+        //               <div class="modal-body">
+        //                 <p class="text-center">${i.text}  </p>
+        //                 <img
+        //                   class='notification-img' onclick="openModal(`+index+`,'`+tournament_name+`','`+prize_name+`','`+prize_image+`')"
+        //                   src="${image}" />
+        //               </div>
+        //             </div>
+        //           </div>
+        //         </div>
+        //       `);
+        //         } else {
+        //           $("#notifications-popup").append(`
+        //         <div class="modal fade" id="notification-popup-${i.notification.id}" tabindex="-1" role="dialog" aria-labelledby="notification-popup-${i.notification.id}Label" aria-hidden="true">
+        //           <div class="modal-dialog" role="document">
+    
+        //             <div class="modal-content">
+        //               <div class="modal-header">
+        //                 <h5 class="modal-title" id="notification-popup-${i.notification.id}Label">${i.title}</h5>
+        //               </div>
+        //               <div class="modal-body">
+        //                 <p class="text-center">${i.text}</p>
+        //               </div>
+        //             </div>
+    
+        //           </div>
+        //         </div>
+        //       `);
+        //         }
+        //       }
+        //     });
+        //   }
 
           loading = false;
  
@@ -1378,16 +2123,17 @@ $(function () {
           
         });
        
-      });
+  //    });
       
     }
 
      
   }; 
 
-  // on notification clicked
+  // on notification button clicked
   $(".notification-btn").click(function () {
     getAllNotifications();
+    //getNewEarlyNotifications();
   });
 
   document.addEventListener('visibilitychange', function (event) {
@@ -1404,10 +2150,12 @@ $(function () {
     //loadUnreadPopups();
 
     $(window).focus(function () {
-      console.log('is active', is_active);
+      //console.log("in focus")
       clearInterval(myInterval); // Clearing interval if for some reason it has not been cleared yet
-      getAllNotifications();
+
       loadUnreadPopups();
+      getAllNotifications();
+      
       if  (!is_interval_running && is_active) //Optional
           myInterval = setInterval(myTimer, interval_delay);
       
@@ -1421,8 +2169,10 @@ $(function () {
 
 function myTimer() {
   is_interval_running = true; 
-  getAllNotifications();
+
   loadUnreadPopups();
+  getAllNotifications();
+  
 };
 
 
@@ -1460,6 +2210,7 @@ function myTimer() {
         }
 
         $(`#notification-popup-${notification_id}`).modal("toggle");
+        $(this).removeClass('new-notification').addClass('earlier-notification');
       },
     });
   });
@@ -1774,7 +2525,7 @@ function myTimer() {
        }
        else if(value.data.is_popup==true && value.data.notification.action == "image"){
         if (
-          value.data.notification.image &&
+          value.data.notification.translations['en-us'].image &&
           value.data.notification.is_gift &&
           !value.data.notification.is_claimed
         ) {
@@ -1895,7 +2646,7 @@ function myTimer() {
         console.log("error", error);
       });
 
-  })
+  getAllNotifications();})
   });
 
   
@@ -1935,18 +2686,18 @@ function myTimer() {
    
   // })
 
-  messaging.onBackgroundMessage(async function(payload) {
-    console.log('[firebase-messaging-sw.js] Received background message ', payload);
-    // Customize notification here
-    //const notificationTitle = 'Background Message Title';
-    //const notificationOptions = {
-    //  body: 'Background Message body.',
-    //  icon: '/static/img/notification-icon.png'
-    //};
+  // messaging.onBackgroundMessage(async function(payload) {
+  //   console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  //   // Customize notification here
+  //   //const notificationTitle = 'Background Message Title';
+  //   //const notificationOptions = {
+  //   //  body: 'Background Message body.',
+  //   //  icon: '/static/img/notification-icon.png'
+  //   //};
   
-    //self.registration.showNotification(notificationTitle,
-    //  notificationOptions);
-    getAllNotifications();
-  });
+  //   //self.registration.showNotification(notificationTitle,
+  //   //  notificationOptions);
+  //   getAllNotifications();
+  // });
  
 });
