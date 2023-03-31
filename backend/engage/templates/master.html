@@ -5,7 +5,7 @@
 {% load call_method %}
 {% load humanize %}
 {% get_countries as countries %}
-
+{% load l10n %}
 
 <!DOCTYPE html>
 <html>
@@ -80,6 +80,42 @@
             var sections_log = '/api/users/sections_log/sections_log/';
             var lang_code = '{{ lang_code }}';
             
+            var strNext = "{% translate 'Next' %}";
+            var strPrevious = "{% translate 'Previous' %}";
+ 
+
+            var something_wrong_try_later = "{% translate 'Something went wrong. Please try again later.'%}";
+
+            var upcomingstate = "{% translate 'Upcoming' %}";
+            var ongoingstate = "{% translate 'Ongoing' %}";
+            var previousstate = "{% translate 'Previous' %}"; 
+            
+            var winner_transl = {% blocktrans %}"winners" {% endblocktrans %};
+            var leisureGames_transl = {% blocktrans %}"Please login or register to Engage to be able to play leisure games, earn coins, and win multiple prizes" {% endblocktrans %};
+            var featuredGames_transl = {% blocktrans %}"Please login or register to Engage to be able to play featured games and win multiple prizes" {% endblocktrans %};
+            var joinNow_transl = {% blocktrans %}"Please login or register to Engage to be able to join tournaments and compete with others to earn many cash and other prizes" {% endblocktrans %};
+            var getBtn_transl = {% blocktrans %}"Please login or register to Engage to buy coins, increase your balance, and win multiple cash and other prizes" {% endblocktrans %};
+            var redeemGifts_transl = {% blocktrans %}"Please login or register to Engage to redeem gifts and win multiple cash and other prizes" {% endblocktrans %};
+            var join_now = {% blocktrans %}"JOIN NOW" {% endblocktrans %};
+            var pool_prize = {% blocktrans %}"POOL PRIZE" {% endblocktrans %};
+            var register = {% blocktrans %}"REGISTER" {% endblocktrans %};
+            var send_coins = {% blocktrans %}"Send Coins" {% endblocktrans %};
+            var unfriend = {% blocktrans %}"Unfriend" {% endblocktrans %};
+            var view = {% blocktrans %}"VIEW" {% endblocktrans %};
+            var upcoming = {% blocktrans %}"Upcoming" {% endblocktrans %};
+            var previous = {% blocktrans %}"Previous" {% endblocktrans %};
+            var ongoing = {% blocktrans %}"Ongoing" {% endblocktrans %};
+            var profile_join  = {% blocktrans %}"Join Tournaments and Win Cash Prizes!" {% endblocktrans %};
+            var profile_play  = {% blocktrans %}"Click Here and Enjoy" {% endblocktrans %};
+            var view_all = {% blocktrans %}"View All" {% endblocktrans %};
+            var valid_number = {% blocktrans %}"Please enter a valid MTN number (i.e 0xx xxx xxxxx or 234 xxx xxx xxxx" {% endblocktrans %};
+            var pincode_sent = {% blocktrans %}"A pin code has been sent to you. Please enter the pin code to proceed." {% endblocktrans %};
+            var already_exist = {% blocktrans %}"The mobile number you have provided already exists!" {% endblocktrans %};
+            var invalid = {% blocktrans %}"The number you have provided is invalid!" {% endblocktrans %};
+            var pincode_limit = {% blocktrans %}"The max allowed sent pin codes have been reached! Please try again tomorrow." {% endblocktrans %};
+            var connection_error = {% blocktrans %}"No connection available, please try again later." {% endblocktrans %};
+            var error = {% blocktrans %}"Something went wrong. Please try again later." {% endblocktrans %};
+
             function openModal(index,param0,param1,param2){
                 
                  var str="";var title="";var body="";
@@ -411,10 +447,10 @@
                                              class="fas fa-bell"></i></span>
                                 {% if notifications > 0 %}         
                                     <span class="badge badge-pill" style='background:#EA2D2D'
-                                          id="notifications-count">{{ notifications }}</span>
+                                          id="notifications-count">{{ notifications }}</span> <!--{{ notifications }}-->
                                 {% else %}  
                                     <span class="badge badge-pill" 
-                                          id="notifications-count">{{ notifications }}</span>
+                                          id="notifications-count">{{ notifications }}</span> <!--{{ notifications }}-->
                                 {% endif %}             
                                 </span>
 
