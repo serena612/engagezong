@@ -23,6 +23,8 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg.openapi import Schema, TYPE_ARRAY, TYPE_OBJECT, TYPE_STRING
 from engage.core.models import HTML5Game
 import sys, base64, hvac, json
+from django.utils.translation import ugettext_lazy as _
+
 
 from .constants import (
     FriendStatus,
@@ -449,8 +451,8 @@ def do_register(self, request, username, subscription):
                     },
                 )
             if created:
-                user.username= 'player'+str(user.id)
-                user.nickname= 'player'+str(user.id)
+                user.username= _('player'+str(user.id))
+                user.nickname= _('player'+str(user.id))
                 
                 if avatar :
                     user.avatar = avatar
@@ -934,6 +936,7 @@ class UserViewSet(mixins.ListModelMixin,
         msisdn = serializer.validated_data['msisdn']
         resp = {}
         is_billed = False
+        refexist = False
         try:
             refid = serializer.validated_data['refid']
         except:
@@ -953,13 +956,14 @@ class UserViewSet(mixins.ListModelMixin,
         if str(ip) != TRUSTED_IP: # not ip.is_private:
             raise exceptions.PermissionDenied('Request not Allowed!')
         userexist = User.objects.filter(mobile=msisdn)
+        print("refid", refid)
         if subscription not in SubscriptionPlan.values:
             raise exceptions.ValidationError({'new_substatus':'The subscription plan provided is not valid!'})
         elif userexist and userexist.first().subscription==subscription:
             raise exceptions.ValidationError({'new_substatus': 'User already has subscription '+ new_substatus})
         
         else:
-            if refid and refid != "":
+            if refid and refid != "" and refid != None:
                 refexist = User.objects.filter(uid=refid)
                 if not refexist:
                     raise exceptions.ValidationError({'refid':'No referring user with the provided uid was found!'})
@@ -1008,6 +1012,60 @@ class UserViewSet(mixins.ListModelMixin,
                 
             else:
                 num = userexist.update(subscription=subscription, is_billed=is_billed)
+                #print ("init is_billed ",str(userexist.first().is_billed))
+                #print ("init subscription ",str(userexist.first().subscription))
+                #print ("init msisdn ",str(userexist.first().mobile))
+                #print ("init modified ",str(userexist.first().modified))
+                
+                #print ("userexist.query ",str(userexist.query))
+                num = userexist.update(subscription=str(subscription), is_billed=is_billed)
+                
+                
+                #user.nickname = 'carol'
+                #user.save()
+                
+                #print("after update",userexist.first().subscription)
+                #print("after update",str(userexist.first().is_billed))
+                #print("after update",str(userexist.first().modified))
+                #print ("num. ",str(num))
+                
+                #query = 'UPDATE public.account_user SET subscription='+subscription+', is_billed=true where mobile = '+msisdn
+                #print(str(query))
+                #updated_obj = User.objects.raw(query, [User.mobile])
+                
+                #conn = psycopg2.connect(
+                #database="engage", user='dba', password='Va5T5cyu8t2zQcd2', host='10.114.0.3', port= '5432'
+                #)
+
+                #Setting auto commit false
+                #conn.autocommit = True
+
+                #Creating a cursor object using the cursor() method
+                #cursor = conn.cursor()
+
+                #Fetching all the rows before the update
+                #print("Contents of the Employee table: ")
+                #sql = "UPDATE public.account_user SET subscription= 'paid2', is_billed=true where mobile = '2341020000001'"
+                #sql = "UPDATE public.account_user SET username= 'antonio', nickname = 'antonio' where mobile = '2341020000001'"
+                #cursor.execute(sql)
+                #conn.commit()
+                #result=cursor.fetchone()
+                #umber_of_rows=result[0]
+                #print("number_of_rows ",str(number_of_rows))
+                #print("Table updated...... ")
+                
+                
+                #sql1 = "select nickname from public.account_userrr where mobile = '2341020000001'"
+                #cursor.execute(sql1)
+                #conn.commit()
+                #print(cursor.fetchall())
+                
+                #afteruserexist = User.objects.filter(mobile=msisdn)
+                #print("afteruserexist subscription ",afteruserexist.first().subscription)
+                #print("afteruserexist is_billed ",str(afteruserexist.first().is_billed))
+                #print("afteruserexist modified ",str(afteruserexist.first().modified))
+                #print("afteruserexist nickname ",str(afteruserexist.first().nickname))
+                num = 1
                 if num >0:
                     resp['message'] = 'User subscription has been successfully updated!'
                     resp['subscription'] = new_substatus
@@ -1516,7 +1574,7 @@ class UserViewSet(mixins.ListModelMixin,
                 if 'ad_id' in request.session:
                     request.session.pop('ad_id', None)
                 request.session.modified = True
-        if ad_id in OWN_CREATIVES and ad_type != 'engage':
+        if ad_id in OWN_CREATIVES:
             raise SelfAd()
         if 'ad_id' in request.session and ad_type=="click":
             if ad_id == request.session['ad_id']:
@@ -1691,14 +1749,25 @@ class FCMViewSet(mixins.ListModelMixin, viewsets.GenericViewSet, PaginationMixin
 
     @action(detail=False, methods=['get'])
     def get_new_notifications(self, request):
+       recent_notifications = UserNotification.objects.select_related(
+           'notification'
+       ).filter(
+           user=request.user,
+           last_read__isnull=True
+       ).all().order_by('-created')
+       serializer = self.get_serializer(recent_notifications, many=True)
+       return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def get_new_early_notifications(self, request):
         recent_notifications = UserNotification.objects.select_related(
             'notification'
-        ).filter(
-            user=request.user,
-            last_read__isnull=True
+        ).get(
+            user=request.user
         ).all().order_by('-created')
         serializer = self.get_serializer(recent_notifications, many=True)
         return Response(serializer.data)
+    
     
     @action(detail=False, methods=['get'])
     def get_user_notifications(self, request):
@@ -1834,7 +1903,7 @@ class FCMViewSet(mixins.ListModelMixin, viewsets.GenericViewSet, PaginationMixin
             #     return Response({'status': 'fail'},
             #                     status=status.HTTP_304_NOT_MODIFIED)
             user_notification = notification_id
-            if user_notification.notification.is_gift:
+            if user_notification.notification.is_gift and user_notification.is_claimed == False:
                 user_notification.is_claimed = True
                 user_notification.save()
 
@@ -1852,6 +1921,8 @@ class FCMViewSet(mixins.ListModelMixin, viewsets.GenericViewSet, PaginationMixin
         # return Response({'status': 'success'}, status=status.HTTP_200_OK)
 
 
+
+        
     @action(detail=False, methods=['post'])
     def claim_gift(self, request):
         notification_id = request.POST.get('id', None)
@@ -1920,8 +1991,8 @@ class FCMViewSet(mixins.ListModelMixin, viewsets.GenericViewSet, PaginationMixin
                 amount=user_notification.notification.gifted_coins,
                 info = Transaction.NOTIFICATION_CLAIM+' '+ user_notification.notification.title
             )
-
         return Response({'status': 'success','coins':request.user.coins}, status=status.HTTP_200_OK)
+
 
     @action(detail=False, methods=['get'])
     def get_my_coins(self, request):
