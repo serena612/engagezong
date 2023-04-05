@@ -341,7 +341,7 @@ if (timeleft < 0) {
                                         {% endif %}
                                     </div>
                                     <div class="content">
-                                        <span class="name">{{ other.nickname }}</span>
+                                        <span class="name">{{{% translate ' other.nickname' %} }}</span>
                                         <div class="location">
                                             {% with 'flags/'|add:other.country.code|add:'.png' as flag_static %}
                                                 <img src="{% static flag_static %}"

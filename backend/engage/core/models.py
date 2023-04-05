@@ -20,7 +20,11 @@ from .constants import (
 from .managers import BattlePassManager
 from ..account.constants import SubscriptionPlan
 from ..operator.constants import SubscriptionType
+from django.utils.translation import activate, get_language
+from parler.models import TranslatableModel
 
+#language = TranslatableModel.get_current_language()
+#print("Language"+ language)
 
 class Configuration(SingletonModel):
     commission_rate = models.DecimalField(max_digits=10, decimal_places=2,
@@ -53,13 +57,22 @@ class Avatar(models.Model):
         return self.image.name
 
 
-class Game(TimeStampedModel):
+class Game(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        name = models.CharField(max_length=256),
+        description = RichTextField(blank=True, null=True),
+        logoTran = models.ImageField(upload_to='games/icons/'),
+        header_imageTran = models.ImageField(upload_to='games/headers/', blank=True,
+                                     null=True)
+
+    )
+
     support_game = models.CharField('Supported Game',
                                     max_length=32,
                                     choices=SupportedGame.choices,
                                     null=True)
     name = models.CharField(max_length=256)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=True)
     description = RichTextField(blank=True, null=True)
     logo = models.ImageField(upload_to='games/icons/')
     header_image = models.ImageField(upload_to='games/headers/', blank=True,
@@ -90,7 +103,11 @@ class Game(TimeStampedModel):
         super().save(*args, **kwargs)
 
 
-class FeaturedGame(TimeStampedModel):
+class FeaturedGame(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        logoTran = models.ImageField(upload_to='games/icons/'),
+        nameTran = models.CharField(max_length=256),
+    )
     logo = models.ImageField(upload_to='games/icons/')
 
     name = models.CharField(max_length=256)
@@ -102,7 +119,11 @@ class FeaturedGame(TimeStampedModel):
         return self.name
 
 
-class Sticker(TimeStampedModel):
+class Sticker(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        name = models.CharField(max_length=64),
+        imageTran = models.ImageField(upload_to='stickers/')
+    )
     name = models.CharField(max_length=64)
     image = models.ImageField(upload_to='stickers/')
 
@@ -121,7 +142,12 @@ class Trophy(TimeStampedModel):
         verbose_name_plural = 'Trophies'
 
 
-class HTML5Game(TimeStampedModel):
+class HTML5Game(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        descriptionTrans = RichTextField(blank=True, null=True),
+        imageTrans = models.ImageField(upload_to='html5_games/')
+    )
+
     game = models.CharField(max_length=256, choices=HTML5GameOption.choices)
     slug = models.SlugField()
     game_type = models.CharField(max_length=12, choices=HTML5GameType.choices,
@@ -248,8 +274,18 @@ class Package(models.Model):
 
 class Notifications(TranslatableTimeStampedModel):
     translations = TranslatedFields(
-         title2 = models.TextField(null=True),
-         text2 = models.TextField(blank=True, null=True), 
+        titleTran = models.TextField(null=True),
+        textTran = models.TextField(blank=True), 
+        imageTran = models.ImageField(upload_to='templates/', blank=True, null=True),
+        videoTran = models.FileField(upload_to='videos_uploaded/',
+                             blank=True,
+                             null=True,
+                             help_text="MOV, mp4 or webm supported",
+                             validators=[
+                                 FileExtensionValidator(allowed_extensions=[
+                                     'MOV', 'avi', 'mp4', 'webm'
+                                 ])
+                             ])
      )
     template = models.CharField(choices=NotificationTemplate.choices,
                                 null=True, max_length=40)
@@ -279,11 +315,14 @@ class Notifications(TranslatableTimeStampedModel):
     is_popup = models.BooleanField(default=False,verbose_name='display as popup') 
     package = models.ManyToManyField('core.package',verbose_name="Package")
 
-
                                     
     class Meta:
         verbose_name = 'Notification'
         verbose_name_plural = 'Notifications'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['Title'].widget.attrs.update({'class':'form-control'})
 
     def save(self, *args, **kwargs):
         self.is_gift = not not self.gifted_coins
@@ -326,5 +365,10 @@ class Notifications(TranslatableTimeStampedModel):
             raise ValidationError({
                 'event_date': _('Event Date is required')
             })
+    
+    @property
+    def image_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.translations.image.url
 
                          

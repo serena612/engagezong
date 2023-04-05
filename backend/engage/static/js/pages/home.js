@@ -272,6 +272,26 @@ $(window).on('load resize', function() {
 
       $("#tournament_dv").find(".mobileversion").attr("style", "display:block!important");
       $("#tournament_dv").find(".desktopversion").attr("style", "display:none!important");
+
+      var packs =  $("#tournament_dv").find(".mobileversion").find(".package"); 
+      for(var i=0; i < packs.length; i++)
+      {
+        var nbNews = $(packs[i]).find(".newsbv-item").length;
+        var minLen = nbNews * ($(packs[i]).find(".newsbv-item").eq(0).width() + 15); 
+        //minLen = minLen+100;
+        
+        if(width > height)
+          $(packs[i]).find(".list").attr("style", "width: "+(minLen + 140)+"px!important");
+        else
+          $(packs[i]).find(".list").attr("style", "width: "+(minLen)+"px!important");
+        
+   
+      }
+
+      $("#tournament_dv").attr("style","max-height: 7000px!important"); 
+
+      
+
   } else {
       //run portrait script
       $("#tournament_dv").removeClass("tobeMob");
@@ -281,6 +301,10 @@ $(window).on('load resize', function() {
 
       $("#tournament_dv").find(".desktopversion").attr("style", "display:block!important");
       $("#tournament_dv").find(".mobileversion").attr("style", "display:none!important");
+
+      $("#tournament_dv").attr("style","max-height: 1116px!important");
+
+       
   }
 
   if(width > height)

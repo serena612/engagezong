@@ -22,11 +22,11 @@ msgstr ""
 #: engage/core/models.py:302 engage/core/models.py:314
 #: engage/core/models.py:319
 msgid "This field is required."
-msgstr "هذه الخانة مطلوبه."
+msgstr "هذا الحقل ضروري."
 
 #: engage/core/models.py:308
 msgid "Claim Instantly must be selected if coins are set for a TEXT action"
-msgstr "يجب تحديد المطالبة فورًا إذا تم تعيين العملات لإجراء TEXT"
+msgstr "اختيار الادعاء او التبليغ فورا عند تعيين العملات باجراء عملية نصية"
 
 #: engage/core/models.py:324
 msgid "Event Date is required"

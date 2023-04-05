@@ -7,6 +7,8 @@ from engage.account.models import UserGamePlayed
 from .constants import HTML5GameType
 from .models import Notifications, HTML5Game, Avatar, Trophy, Sticker, \
     FeaturedGame
+from parler_rest.serializers import TranslatableModelSerializer
+from parler_rest.fields import TranslatedFieldsField
 
 __all__ = (
     'NotificationsSerializer',
@@ -16,19 +18,22 @@ __all__ = (
 )
 
 
-class FeaturedGameSerializer(serializers.ModelSerializer):
+class FeaturedGameSerializer(TranslatableModelSerializer): #serializers.ModelSerializer
+    translations = TranslatedFieldsField(shared_model=HTML5Game)
     class Meta:
         model = FeaturedGame
         exclude = ('created', 'modified')
 
 
-class NotificationsSerializer(serializers.ModelSerializer):
+class NotificationsSerializer(TranslatableModelSerializer): #serializers.ModelSerializer
+    translations = TranslatedFieldsField(shared_model=Notifications)
     class Meta:
         model = Notifications
         exclude = ('created', 'image',)
 
 
-class HTML5GameSerializer(serializers.ModelSerializer):
+class HTML5GameSerializer(TranslatableModelSerializer): #serializers.ModelSerializer
+    translations = TranslatedFieldsField(shared_model=HTML5Game)
     game = serializers.CharField(source='get_game_display', read_only=True)
     is_locked = serializers.SerializerMethodField()
 
@@ -40,7 +45,7 @@ class HTML5GameSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         if not user.is_authenticated:
             return True
-        
+        #obj.game_type
         if obj.game_type == HTML5GameType.FREE:
             return False
         elif obj.game_type == HTML5GameType.EXCLUSIVE:
@@ -82,8 +87,8 @@ class TrophySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class StickerSerializer(serializers.ModelSerializer):
-
+class StickerSerializer(TranslatableModelSerializer): #serializers.ModelSerializer
+    translations = TranslatedFieldsField(shared_model=Sticker)
     class Meta:
         model = Sticker
         fields = '__all__'

@@ -5,10 +5,11 @@ from ckeditor.fields import RichTextField
 from django.db import models
 from django.utils.text import slugify
 
-from common.models import TimeStampedModel, MetadataModel
+from common.models import TranslatableTimeStampedModel,TimeStampedModel, MetadataModel, TranslatableModel
 from engage.operator.constants import AdType, Currencies
 from engage.tournament.models import TournamentPrizeType # TournamentPrizeList, 
 from django.core.exceptions import ValidationError
+from parler.models import TranslatedFields
 
 
 class Region(TimeStampedModel):
@@ -25,7 +26,11 @@ class Region(TimeStampedModel):
         return self.name
 
 
-class Operator(TimeStampedModel):
+class Operator(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        logoTrans = models.ImageField(upload_to='operators/', blank=True, null=True),
+        descriptionTrans = RichTextField(blank=True, null=True)
+    )
     uuid = models.UUIDField(editable=False, unique=True, default=uuid.uuid4)
     name = models.CharField(max_length=128, unique=True)
     schema = models.SlugField(unique=True)
@@ -41,7 +46,16 @@ class Operator(TimeStampedModel):
         return self.name
 
 
-class OperatorWebsite(TimeStampedModel):
+class OperatorWebsite(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        first_section_imageTrans = models.ImageField(upload_to='home_page_image/',
+                                            null=True,verbose_name='First section image (desktop)'),
+        second_section_imageTrans = models.ImageField(upload_to='home_page_image/',
+                                            null=True,verbose_name='Second section image (mobile)'),
+        first_section_button_titleTrans = models.CharField(max_length=64, blank=True, null=True),
+        about_us_descriptionTrans = RichTextField(blank=False, null=True),
+        terms_descriptionTrans = RichTextField('Terms & Conditions', blank=False, null=True)
+    )
     operator = models.OneToOneField(Operator, on_delete=models.CASCADE)
     first_section_image = models.ImageField(upload_to='home_page_image/',
                                             null=True,verbose_name='First section image (desktop)')
@@ -54,7 +68,12 @@ class OperatorWebsite(TimeStampedModel):
     terms_description = RichTextField('Terms & Conditions', blank=False, null=True)
     
 
-class OperatorHomeSection(models.Model):
+class OperatorHomeSection(TranslatableModel): #models.Model
+    translations = TranslatedFields(
+        imageTrans = models.ImageField('Main Image', upload_to='sections/'),
+        background_imageTrans = models.ImageField(upload_to='sections/background/',
+                                         blank=True, null=True)
+    )
     operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
     image = models.ImageField('Main Image', upload_to='sections/')
     title = models.CharField(max_length=256,blank=True)
@@ -70,7 +89,11 @@ class OperatorHomeSection(models.Model):
         ordering = ['id']
 
 
-class OperatorFaq(models.Model):
+class OperatorFaq(TranslatableModel): #models.Model
+    translations = TranslatedFields(
+        titleTrans = models.TextField(blank=False),
+        descriptionTrans = RichTextField(blank=False)
+    )
     operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
     title = models.TextField(blank=False)
     description = RichTextField(blank=False)
@@ -82,7 +105,12 @@ class OperatorFaq(models.Model):
         ordering = ['id']
 
 
-class OperatorAd(TimeStampedModel):
+class OperatorAd(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        ad_fileTran = models.FileField(upload_to='ads/',verbose_name="Dektop Ad file"),
+        ad_file_mobileTran = models.FileField(upload_to='ads/',verbose_name="Mobile Ad file")
+
+    )
     name = models.CharField(max_length=64)
     ad_file = models.FileField(upload_to='ads/',verbose_name="Dektop Ad file")
     ad_file_mobile = models.FileField(upload_to='ads/',verbose_name="Mobile Ad file")
@@ -101,7 +129,11 @@ class OperatorAd(TimeStampedModel):
         verbose_name_plural = 'Ads'
 
 
-class RedeemPackage(TimeStampedModel):
+class RedeemPackage(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        titleTrans = models.CharField(max_length=256),
+        imageTrans = models.ImageField(upload_to='packages/')
+    )
     operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
     uid = models.UUIDField(default=uuid.uuid4)
     title = models.CharField(max_length=256)

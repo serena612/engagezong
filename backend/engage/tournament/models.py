@@ -7,7 +7,8 @@ from django.utils.text import slugify
 from model_utils import FieldTracker
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from common.models import TimeStampedModel
+from common.models import TranslatableTimeStampedModel,TimeStampedModel
+from parler.models import TranslatedFields
 from .constants import (
     ParticipantStatus,
     BracketFormat,
@@ -21,7 +22,7 @@ from engage.account.constants import (
      SubscriptionPlan
 )
 from django.db.models import Count, F, Q, Prefetch
-from .managers import TournamentQuerySet
+from .managers import TournamentQuerySet, TournamentTranslatableQuerySet
 from django import forms
 from engage.account.models import User
 from engage.core.constants import NotificationTemplate
@@ -157,7 +158,17 @@ def get_prize(phone_number, dataplan, prize_type, subscription):
     return False
 
 
-class Tournament(TimeStampedModel):
+class Tournament(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        nameTran = models.CharField(max_length=512),
+        imageTran = models.ImageField(upload_to='tournaments/', null=True),
+        top_imageTran = models.ImageField(upload_to='tournaments/', null=True,verbose_name='Detail Image'),
+        label_next_timeTran =  models.CharField(max_length=250,blank=True,null=True,verbose_name='Label Next to Time'),
+        descriptionTran = RichTextField(null=True),
+        rulesTran = RichTextField(blank=True, null=True),
+        pool_prizeTran = RichTextField(null=True,blank=True),
+     )
+
     game = models.ForeignKey('core.Game', on_delete=models.PROTECT)
     name = models.CharField(max_length=512)
     slug = models.SlugField(unique=True)
@@ -206,7 +217,8 @@ class Tournament(TimeStampedModel):
     job_id = models.CharField(max_length=64, blank=True, null=True)
     created_by = models.ForeignKey('account.User', on_delete=models.SET_NULL,
                                    null=True)
-    objects = TournamentQuerySet.as_manager()
+    #objects = TournamentQuerySet.as_manager()
+    objects = TournamentTranslatableQuerySet.as_manager()
     tracker = FieldTracker(fields=['end_date'])
     closed_on = models.DateTimeField(blank=True, null=True)
 
@@ -414,7 +426,13 @@ class TournamentPrizeList(TimeStampedModel):
         return f'{self.data_plan} - {self.data_plan_desc} - {self.prize_type}'   
 
 
-class TournamentPrize(TimeStampedModel):
+class TournamentPrize(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        imageTran = models.ImageField(upload_to='prizes/', null=True),
+        titleTran = models.CharField(max_length=256, null=True),
+        prizeTran = models.TextField(blank=True, null=True, verbose_name='Prize Description')
+    )
+
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     position = models.PositiveSmallIntegerField()
     prize_type = models.CharField(max_length=20, null=True,
@@ -457,7 +475,7 @@ class TournamentModerator(TimeStampedModel):
         unique_together = (('tournament', 'moderator'),)
 
 
-class TournamentParticipant(TimeStampedModel):
+class TournamentParticipant(TranslatableTimeStampedModel): #TimeStampedModel
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     participant = models.ForeignKey('account.User', on_delete=models.CASCADE)
     status = models.CharField(max_length=32, choices=ParticipantStatus.choices, default=ParticipantStatus.ACCEPTED)
@@ -505,7 +523,10 @@ class Bracket(TimeStampedModel):
         super().save(*args, **kwargs)
 
 
-class TournamentMatch(TimeStampedModel):
+class TournamentMatch(TranslatableTimeStampedModel): #TimeStampedModel
+    translations = TranslatedFields(
+        match_nameTrans = models.CharField(max_length=256, null=True)
+    )
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     match_name = models.CharField(max_length=256, null=True)
     match_id = models.CharField(max_length=128, null=True, blank=True)

@@ -21,49 +21,48 @@ msgstr ""
 
 #: engage/tournament/admin.py:194
 msgid "An image is required when winners are specified"
-msgstr "مطلوب صورة عند تحديد الفائزين"
+msgstr "الصورة ضرورية عند تحديد الفائزين"
 
 #: engage/tournament/admin.py:230
 msgid "Participant(s): , "
-msgstr "مشارك: ،"
+msgstr " المشارك (ين)"
 
 #: engage/tournament/models.py:331
 msgid "Close Date must be greater than Open Date"
-msgstr "يجب أن يكون تاريخ الإغلاق أكبر من تاريخ الفتح"
+msgstr "يجب على تاريخ الاغلاق ان يكون اكبر من تاريخ الافتتاح"
 
 #: engage/tournament/models.py:336
 msgid "Start Date can't be in the past"
-msgstr "لا يمكن أن يكون تاريخ البدء في الماضي"
+msgstr "تاريخ البدء لا يمكن ان يكون في الماضي"
 
 #: engage/tournament/models.py:340
 msgid "End Date can't be in the past"
-msgstr "لا يجوز أن يكون تاريخ الانتهاء في الماضي"
+msgstr "تاريخ الانتهاء لا يمكن ان يكون في الماضي"
 
 #: engage/tournament/models.py:344
 msgid "End Date must be greater than Start Date"
-msgstr "يجب أن يكون تاريخ الانتهاء أكبر من تاريخ البدء"
+msgstr "تاريخ الانتهاء يجب ان يكون اكبر من تاريخ البدء"
 
 #: engage/tournament/models.py:351
 msgid "Close Date must be at least 6 hours earlier than Start Date"
-msgstr "يجب أن يكون تاريخ الإغلاق قبل 6 ساعات على الأقل من تاريخ البدء"
+msgstr "تاريخ الإقفال يجب ان يكون على الأقل قبل ٦ ساعات من تاريخ البدء"
 
 #: engage/tournament/models.py:355
 msgid "Public open date cannot be smaller than VIP open date"
-msgstr "لا يمكن أن يكون تاريخ الفتح العام أصغر من تاريخ فتح VIP"
+msgstr " لا يمكن لتاريخ الافتتاح العام ان يكون اصغر من تاريخ الافتتاح للشخصيات المهمة"
 
 #: engage/tournament/models.py:359
 msgid "Close date cannot be smaller than public open date"
-msgstr "لا يمكن أن يكون تاريخ الإغلاق أصغر من تاريخ الفتح العام"
+msgstr "لا يمكن لتاريخ الاقفال ان يكوم اصغر من تاريخ الافتتاح العام"
 
 #: engage/tournament/models.py:561
 msgid ""
 "This round number selection is above the rounds numbers set in the "
 "tournament settings"
 msgstr ""
-"يكون اختيار الرقم المستدير هذا أعلى من أرقام الدورات المحددة فيإعدادات "
-"البطولة"
+"رقم هذه الجولة هو اعلى من ارقام الجولات المحددة في اعدادات البطولة"
 
 #: engage/tournament/models.py:565
 msgid ""
 "Match date must be between tournament start date and tournament end date"
-msgstr "يجب أن يكون تاريخ المباراة بين تاريخ بدء البطولة وتاريخ انتهاء البطولة"
+msgstr "تاريخ المبارات يجب ان يكون بين بداية ونهاية البطولة"

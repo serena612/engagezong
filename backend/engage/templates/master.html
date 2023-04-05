@@ -448,6 +448,9 @@
                                 {% if notifications > 0 %}         
                                     <span class="badge badge-pill" style='background:#EA2D2D'
                                           id="notifications-count">{{ notifications }}</span> <!--{{ notifications }}-->
+                                {% elif notifications == 0 %} 
+                                    <span class="badge badge-pill" style='background:#9373bb'
+                                          id="notifications-count">{{ notifications }}</span> 
                                 {% else %}  
                                     <span class="badge badge-pill" 
                                           id="notifications-count">{{ notifications }}</span> <!--{{ notifications }}-->

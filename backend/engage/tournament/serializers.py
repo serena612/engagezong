@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from datetime import  timedelta
 from .models import Tournament, TournamentPrize, TournamentParticipant
+from parler_rest.serializers import TranslatableModelSerializer
+from parler_rest.fields import TranslatedFieldsField
 
 
 UserModel = get_user_model()
@@ -23,7 +25,8 @@ class ReadOnlyTournamentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TournamentSerializer(serializers.ModelSerializer):
+class TournamentSerializer(TranslatableModelSerializer): #serializers.ModelSerializer
+    translations = TranslatedFieldsField(shared_model=Tournament)
     current_participants = serializers.IntegerField(read_only=True)
     is_sold_out = serializers.SerializerMethodField()
     is_expired = serializers.SerializerMethodField()
@@ -114,7 +117,7 @@ class TournamentParticipantSerializer(serializers.ModelSerializer):
         fields = ('id', 'participant', 'status', 'rank', 'created')
 
 
-class TournamentPrizeSerializer(serializers.ModelSerializer):
+class TournamentPrizeSerializer(TranslatableModelSerializer): #serializers.ModelSerializer
     tournament = ReadOnlyTournamentSerializer()
     participants_count = serializers.SerializerMethodField()
 

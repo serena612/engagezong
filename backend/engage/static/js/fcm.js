@@ -727,6 +727,7 @@ $(function () {
     
     readAllNotifications();
     $(this).removeClass('new-notification').addClass('earlier-notification');
+    $('#notifications-count').css('background','#808080');
   });
   
   // on notification clicked
@@ -1060,7 +1061,7 @@ $(function () {
             console.log("allread",allread)    
             
             $("#notifications-count").text(`${allread.length}`);
-    
+            
             if (result.length >= 1) {
               $('#notifications-count').css('background','#EA2D2D');
               // re-append the notifications
@@ -1389,6 +1390,10 @@ $(function () {
                 }
               });
             }
+            if(allread.length==0) {
+              $('#notifications-count').css('background','#800080');
+            }
+              
 
 
 

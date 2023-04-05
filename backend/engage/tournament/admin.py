@@ -14,9 +14,16 @@ from django.contrib import messages as messagesss
 from django.forms.widgets import HiddenInput
 from django.core.exceptions import ValidationError
 from ..tournament.models import get_prize
+from parler.admin import TranslatableAdmin
+from parler.admin import TranslatableTabularInline, TranslatableInlineModelAdmin, TranslatableStackedInline, TranslatableModelMixin, TranslatableModelForm, TranslatableBaseInlineFormSet
+
+from parler.utils.context import switch_language
+from django.forms.models import inlineformset_factory
+from django.conf import settings
 
 
-class TournamentPrizeInlineForm(forms.ModelForm):
+class TournamentPrizeInlineForm(TranslatableModelForm): #forms.ModelForm
+
     def clean(self):
         super(TournamentPrizeInlineForm, self).clean()
         if 'winner' in self.changed_data:  # we only try to grant prize if winner is changed, this is to prevent redundance
@@ -31,7 +38,7 @@ class TournamentPrizeInlineForm(forms.ModelForm):
                     raise ValidationError('Failed to give prize to selected winner. Please try saving again.')
 
 
-class TournamentPrizeInline(CompactInline):
+class TournamentPrizeInline(CompactInline): #TranslatableStackedInline
     model = models.TournamentPrize
     min_num = 0
     form = TournamentPrizeInlineForm
@@ -86,7 +93,7 @@ class TournamentPrizeInline(CompactInline):
         return formfield
    
 
-class TournamentParticipantInline(CompactInline):
+class TournamentParticipantInline(CompactInline): #TranslatableStackedInline
     model = models.TournamentParticipant
     # readonly_fields = ('points', 'rank')
     exclude = ('notify_before_game', 'prize','points', 'rank', 'matches_informed')
@@ -149,7 +156,7 @@ class TournamentParticipantInline(CompactInline):
     
 
 
-class TournamentMatchInlineForm(forms.ModelForm):
+class TournamentMatchInlineForm(TranslatableModelForm): #forms.ModelForm
     def __init__(self, *args, **kwargs):
         super(TournamentMatchInlineForm, self).__init__(*args, **kwargs)
         
@@ -209,7 +216,7 @@ class TournamentMatchInlineForm(forms.ModelForm):
     #         "winners": ParticipantsWidget,  # (attrs={'style': 'width: 100% !important', 'class':'multiselect dropdown-toggle mt-multiselect',})
     #     }
 
-class RequiredFormSet(forms.models.BaseInlineFormSet):
+class RequiredFormSet(TranslatableBaseInlineFormSet): #forms.models.BaseInlineFormSet
     def __init__(self, *args, **kwargs):
         super(RequiredFormSet, self).__init__(*args, **kwargs)
     def clean(self):
@@ -231,7 +238,7 @@ class RequiredFormSet(forms.models.BaseInlineFormSet):
             }])
 
 
-class TournamentMatchInline(CompactInline):
+class TournamentMatchInline(CompactInline): #TranslatableStackedInline
     model = models.TournamentMatch
     form = TournamentMatchInlineForm
     formset = RequiredFormSet
@@ -289,11 +296,15 @@ class TournamentMatchInline(CompactInline):
 
 
 @admin.register(models.Tournament)
-class TournamentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'game', 'start_date', 'end_date', 'start','close')
-    exclude = ('slug', 'job_id', 'created_by','format')
-    inlines = [TournamentMatchInline, TournamentPrizeInline,
-               TournamentParticipantInline]
+class TournamentAdmin(TranslatableAdmin): #admin.ModelAdmin  #TranslatableAdmin
+    # list_display = ('name', 'game', 'start_date', 'end_date', 'start','close')
+    # exclude = ('slug', 'job_id', 'created_by','format')
+    # inlines = [TournamentMatchInline, TournamentPrizeInline,
+    #            TournamentParticipantInline,]
+
+    list_display = ('name', 'game', 'start_date', 'end_date', 'start', 'close')
+    exclude = ('slug', 'job_id', 'created_by', 'format')
+    inlines = [TournamentMatchInline, TournamentPrizeInline, TournamentParticipantInline,]
 
     def change_view(self, request, object_id, extra_context=None):
         extra_context = extra_context or {}
@@ -331,6 +342,9 @@ class TournamentAdmin(admin.ModelAdmin):
     def formfield_for_dbfield(self, db_field, request, **kwargs):
         formfield = super().formfield_for_dbfield(
             db_field, request, **kwargs)
+        #self.patch_translation_field(db_field, formfield, **kwargs)
+        return formfield
+            
         # if self.tournament is not None and self.tournament.state != "upcoming" and formfield is not None:
         #     formfield.disabled = True
         
@@ -343,5 +357,7 @@ class TournamentAdmin(admin.ModelAdmin):
     class Media:
         css = { 'all': ('admin/tournament/bootstrap-4.5.2.min.css', 'css/bootstrap-multiselect.css', 'css/tournament.css')} # 
         js = ('admin/tournament/select2.min.js', 'admin/tournament/bootstrap-multiselect.js', 'admin/tournament/base.js','admin/tournament/moment.min.js', ) # 'admin/tournament/select2.min.js', # 'js/bootstrap-multiselect.js', , 'admin/tournament/select2.multi-checkboxes.js'
-
+    
+    group_fieldsets = True
+#admin.site.register(models.Tournament, TournamentAdmin)
         

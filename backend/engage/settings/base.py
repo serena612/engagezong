@@ -42,6 +42,10 @@ LANGUAGES = [
     ('en-us', _('English')),
 ]
 LANGUAGE_CODE = 'ar'
+
+PARLER_ENABLE_CACHING = True
+PARLER_DEFAULT_ACTIVATE = True
+
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
     os.path.join(BASE_DIR, 'tournament', 'locale'),
@@ -90,13 +94,15 @@ INSTALLED_APPS = [
     # 'django_otp.plugins.otp_totp',
 ]
 
+#PARLER_DEFAULT_LANGUAGE_CODE = 'en'
+
 PARLER_LANGUAGES = {
     None: (
-        {'code': 'en-us',}, # English
+        {'code': 'en',}, # English
         {'code': 'ar',}, # Arabic
     ),
     'default': {
-        'fallbacks': ['en-us'],
+        'fallbacks': ['en'],
         'hide_untranslated': False,
     }
 }
@@ -126,6 +132,7 @@ MIDDLEWARE = [
     'engage.account.middlewares.LastSeenMiddleware',
     'axes.middleware.AxesMiddleware',
     'common.middleware.AccountExpiry',
+
     
 ]
 
@@ -484,4 +491,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_GAGADED_PROTO', 'https')
 TRUSTED_IP = '157.230.100.145'
 SHOWADS = False
 DISABLE_PIN = True
+
+#SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 

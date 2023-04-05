@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.forms import ModelForm
 from jet.admin import CompactInline
+from parler.admin import TranslatableAdmin, TranslatableModelForm, TranslatableStackedInline
 
 from .models import (
     Operator,
@@ -13,9 +14,9 @@ from .models import (
     RedeemPackage
 )
 from ..core.fields import SVGAndImageFormField
+# -*- coding: utf-8 -*-
 
-
-class OperatorHomeSectionModelForm(ModelForm):
+class OperatorHomeSectionModelForm(TranslatableModelForm): #ModelForm
     class Meta:
         model = OperatorHomeSection
         exclude = []
@@ -23,12 +24,28 @@ class OperatorHomeSectionModelForm(ModelForm):
             'icon': SVGAndImageFormField,
         }
 
+# class OperatorFaqModelForm(TranslatableModelForm): #ModelForm
+#     class Meta:
+#         model = OperatorFaq
+#         exclude = []
+#         field_classes = {
+#             'icon': SVGAndImageFormField,
+#         }
+
+# class RedeemPackageModelForm(TranslatableModelForm): #ModelForm
+#     class Meta:
+#         model = RedeemPackage
+#         exclude = []
+#         field_classes = {
+#             'icon': SVGAndImageFormField,
+#         }
 
 class OperatorFaqInline(CompactInline):
     model = OperatorFaq
+    #form = OperatorFaqModelForm
 
 
-class OperatorWebsiteInline(admin.StackedInline):
+class OperatorWebsiteInline(TranslatableStackedInline): # admin.StackedInline
     model = OperatorWebsite
     min_num = 1
     max_num = 1
@@ -50,12 +67,13 @@ class PurchaseCoinInline(CompactInline):
 
 class RedeemPackageInline(CompactInline):
     model = RedeemPackage
+    #form = RedeemPackageModelForm
     exclude = ('uid',)
     min_num = 1
 
 
 @admin.register(Operator)
-class OperatorAdmin(admin.ModelAdmin):
+class OperatorAdmin(TranslatableAdmin):  #admin.ModelAdmin
     list_display = ('name', 'region', 'created')
     exclude = ('schema',)
     inlines = [
@@ -80,5 +98,5 @@ class RegionAdmin(admin.ModelAdmin):
 
 
 @admin.register(OperatorAd)
-class OperatorAdAdmin(admin.ModelAdmin):
+class OperatorAdAdmin(TranslatableAdmin): #admin.ModelAdmin
     list_display = ('name', 'ad_type', 'start_date', 'end_date', 'created', 'modified')

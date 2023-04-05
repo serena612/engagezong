@@ -7,18 +7,23 @@ from .constants import Gender, SubscriptionPlan
 from .models import UserNotification, FriendList, UserFavoriteFriend, \
     UserGamePlayed
 from ..core.serializers import HTML5GameSerializer
+from parler_rest.serializers import TranslatableModelSerializer
+from parler_rest.fields import TranslatedFieldsField
 
 UserModel = get_user_model()
 
 
-class NotificationSerializer(serializers.ModelSerializer):
+class NotificationSerializer(TranslatableModelSerializer):  #serializers.ModelSerializer
+    translations = TranslatedFieldsField(shared_model=Notifications)
     title = serializers.SerializerMethodField()
     text = serializers.SerializerMethodField()
 
     class Meta:
         model = Notifications
-        fields = ('id', 'action', 'title', 'text', 'url', 'image', 'video', 'template',
-                  'is_gift', 'gifted_coins', 'created','is_popup')
+        #fields = ('id', 'action', 'title', 'text', 'url', 'image', 'video', 'template',
+        #          'is_gift', 'gifted_coins', 'created','is_popup','translations')
+        fields = ('id','title', 'text', 'action','url','template',
+                  'is_gift', 'gifted_coins', 'created','is_popup','translations')
 
     def get_title(self, obj):
         return obj.title #_safe_string_formatter(user=self.context['request'].user, data=obj.title)
@@ -32,7 +37,8 @@ class UserNotificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserNotification
-        exclude = ('user', 'last_read', 'is_sent', )
+        #exclude = ('user', 'last_read', 'is_sent', )
+        fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -45,7 +51,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         fields = ('uid', 'username', 'country', 'flag', 'avatar', 'level',
-                  'profile_image')
+                  'profile_image','nickname')
 
     def get_country(self, obj):
         return obj.country.name

@@ -1,3 +1,4 @@
+
 var tournaments_has_next = true;
 var tournaments_page = 1;
 var state='all'
@@ -14,6 +15,11 @@ var post_contact_engage_url = "/api/contact/engage/";
 var post_contact_support_url = "/api/contact/support/";
 var sections_log = '/api/users/sections_log/sections_log/';
 //End URLS
+
+
+var defaultlang="en-us";
+var lang = lang_code;
+console.log("lang",lang);
 
 function hoo(){
     if(t>=1){
@@ -205,7 +211,7 @@ function fillTopUpcomingTournaments(data){
        
         var state='upcoming';
         
-
+        locale.setlocale(locale.LC_TIME, 'en_US.UTF-8');
         var start_date = convertDateToUTC(new Date(item.tournament_started));
         var options = { month: 'long'};
         var html = `
@@ -224,7 +230,7 @@ function fillTopUpcomingTournaments(data){
                         <a rel="bookmark"
                         href="/tournaments/${item.slug}">${item.name}</a>
                     </h4>
-                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate()} <span class="up_on_pre_year">, ${start_date.getFullYear()} </span> - <span style='color:#F6236F;'>${tConvert(start_date)}  ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
+                    <h3 class="newsb-date">${new Intl.DateTimeFormat('en-US', options).format(start_date)} ${start_date.getDate().toLocaleString(dateLang, options)} <span class="up_on_pre_year">, ${start_date.getFullYear().toLocaleString(dateLang, options)} </span> - <span style='color:#F6236F;'>${tConvert(start_date).toLocaleString(dateLang, options)}  ${item.label_next_time!=null ? item.label_next_time : '' }</span></h3>
                     <div class='middle-text'>
                         <div class='image1'>
                             <i class='fas fa-male'></i>
@@ -245,7 +251,7 @@ function fillTopUpcomingTournaments(data){
                    </p>`;
                  
                 
-                html+=`<div class='pool_prize'><span>POOL PRIZE</span>
+                html+=`<div class='pool_prize'><span>`+pool_prize+`</span>
                     <i class="fas fa-trophy"></i>
                     ${item.pool_prize !=null ? item.pool_prize : ''}  
                     <span>${item.pool_prize_amount !=null ? item.pool_prize_amount : '&nbsp;' } </span>
@@ -253,7 +259,7 @@ function fillTopUpcomingTournaments(data){
                 
               
                 html+=`<div class='label'>${state}</div>`;
-                if(state=='ongoing' && item.live_link){
+                if(state==ongoing && item.live_link){
                     html+=`<i class='fa fa-eye'></i>
                            <a class='watch_live' onclick=openLiveModal('${item.live_link}')>WATCH LIVE NOW</a>`;
                 }
@@ -1103,6 +1109,10 @@ function getHtml5games(type, btn) {
 
             value.results.forEach((item) => {
                 // ${is_authenticated ?  'onclick="showVideoAd()"' : ''}
+                
+
+                var image = (item.translations[lang]==undefined)?item.translations[defaultlang].image:item.translations[lang].image;
+
                 var html = `
                     <li>
                         <a class="html5-game ${item.is_locked ? 'is-locked' : ''}" 
@@ -1110,7 +1120,7 @@ function getHtml5games(type, btn) {
                            data-toggle="${is_authenticated ? '' : 'modal'}"
                            >
                             <div class="img">
-                                <img src="${item.image}" alt="${item.game}">
+                                <img src="${image}" alt="${item.game}">
                             </div>
                             <span>${item.game}</span>
                         </a>
@@ -1240,7 +1250,7 @@ var winners_ajax = null;
 //     box.append(
 //         `
 //             <tr class="loading-tr">
-//                 <td><img class='loading-img' src='/static/img/loading1.gif' /></td>
+//                 <td><img class='loading-img' src='/loading1.gif' /></td>
 //             </tr>
 //         `
 //     );
@@ -1302,7 +1312,7 @@ function getWinners(game, tournament) {
     box.append(
         `
             <tr class="loading-tr">
-                <td><img class='loading-img white' src='/static/img/loading1.gif' /></td>
+                <td><img class='loading-img white' src='/loading1.gif' /></td>
             </tr>
         `
     );
@@ -1570,16 +1580,18 @@ $(function () {
                                 }
 
                             data.results.forEach((item) => {
-                                
+                                log.console(item)
 
                                 if (option == "games") {
+                                    log.console("item" + item)
+                                    log.console("item+ ${item}")
                                     html = `
                                         <li>
                                             <a class="html5-game ${item.is_locked? 'is-locked': ''}"  data-target="${is_authenticated ? item.slug : '#login-modal'}" 
                                             data-toggle="${is_authenticated ? '' : 'modal'}">
                                                 <div class="search-left">
                                                     <div class="img">
-                                                        <img src="${item.image}" alt="${item.slug}" />
+                                                        <img src="${item.translations.en-us.image}" alt="${item.slug}" />
                                                     </div>
                                                 </div>
                 
@@ -1844,7 +1856,7 @@ function getJoinedTournaments(uid, box, size) {
 
                             <div class="text-right">
                                 <a href="/tournaments/${item.slug}"
-                                class="btn2">VIEW</a>
+                                class="btn2">`+view+`</a>
                             </div>
                         </div>
                     </li>
@@ -1944,7 +1956,7 @@ function getUpcomingTournaments(uid, type, box, btn) {
 
                             <div class="text-right">
                                 <a href="/tournaments/${item.slug}"
-                                class="btn2">VIEW</a>
+                                class="btn2">`+view+`</a>
                             </div>
                         </div>
                     </li>
@@ -2045,7 +2057,7 @@ function getPlayedTournaments(uid, box, btn) {
 
                             <div class="text-right">
                                 <a href="/tournaments/${item.slug}"
-                                class="btn2">VIEW</a>
+                                class="btn2">`+view+`</a>
                             </div>
                         </div>
                     </li>

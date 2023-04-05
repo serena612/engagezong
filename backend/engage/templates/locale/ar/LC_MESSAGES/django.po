@@ -20,20 +20,20 @@ msgstr ""
 
 #: engage/templates/FAQ.html:8
 msgid "FAQ"
-msgstr "التعليمات"
+msgstr "الأسئلة الشائعة"
 
 #: engage/templates/about.html:9 engage/templates/master.html:1706
 msgid "ENGAGE AND MORE"
-msgstr "المشاركة والمزيد"
+msgstr "الانخراط/المشاركة والمزيد"
 
 #: engage/templates/admin/base.html:275
 msgid "OK"
-msgstr "نعم"
+msgstr "حسنا"
 
 #: engage/templates/admin/base.html:288 engage/templates/profile.html:75
 #: engage/templates/profile.html:537
 msgid "Settings"
-msgstr "إعدادات"
+msgstr "الاعدادات"
 
 #: engage/templates/admin/base.html:302 engage/templates/admin/base.html:311
 #: engage/templates/admin/iframes/cash.html:24
@@ -45,7 +45,7 @@ msgstr "إعدادات"
 #: engage/templates/admin/iframes/subunsub.html:23
 #: engage/templates/admin/iframes/subunsub.html:32
 msgid "Engage"
-msgstr "Engage"
+msgstr "انغايج"
 
 #: engage/templates/admin/captcha_login.html:33
 msgid "Please correct the error below."
@@ -60,17 +60,18 @@ msgstr "الرجاء تصحيح الخطأ أدناه."
 msgid ""
 "You are authenticated as %(username)s, but are not authorized to access this "
 "page. Would you like to login to a different account?"
-msgstr "%(username)s لقد تمت مصادقتك  "
+msgstr " لقد تم مصادقة اسم المستخدم %(username)s ولكن لست مخولا بالدخول "
 
 #: engage/templates/admin/captcha_login.html:87
 msgid ""
 " You have been locked out for '+aux[1]+ ' minute(s).<br>Please <a href=\"./"
 "\">try again</a> later."
-msgstr "لقد تم حظر دخولك"
+msgstr "لقد تم حظر دخولك .<br>الرجاء <a href=\"./"
+"\">المحاولة </a> لاحقًا." 
 
 #: engage/templates/admin/captcha_login.html:117
 msgid "OTP Device:"
-msgstr "جهاز OTP:"
+msgstr "برنامج  OTP:"
 
 #: engage/templates/admin/captcha_login.html:122
 msgid "OTP Token:"
@@ -78,7 +79,7 @@ msgstr "رمز OTP:"
 
 #: engage/templates/admin/captcha_login.html:131
 msgid "Forgotten your password or username?"
-msgstr "هل نسيت كلمة المرور أو اسم المستخدم؟"
+msgstr "هل نسيت كلمة المرور أو اسم المستخدم الخاص بك؟"
 
 #: engage/templates/admin/captcha_login.html:135
 msgid "Log in"
@@ -90,11 +91,11 @@ msgstr "الإجراءات الأخيرة"
 
 #: engage/templates/admin/custom_index.html:8
 msgid "All users"
-msgstr "جميع المستخدمين"
+msgstr "كافة المستخدمين"
 
 #: engage/templates/admin/custom_index.html:16
 msgid "None available"
-msgstr "لا شيء متاح"
+msgstr "غير متاح"
 
 #: engage/templates/admin/custom_index.html:30
 msgid "Unknown content"
@@ -102,15 +103,14 @@ msgstr "محتوى غير معروف"
 
 #: engage/templates/disclaimer.html:9 engage/templates/profile.html:571
 msgid "Disclaimer"
-msgstr "عدم اعطاء رأي"
+msgstr "التنصل من المسؤولية"
 
 #: engage/templates/disclaimer.html:13 engage/templates/master.html:1659
 msgid ""
 "All the information on this website is published in good faith and for "
 "general information purpose only."
 msgstr ""
-"يتم نشر جميع المعلومات الواردة في هذا الموقع بحسن نية ولأجللغرض المعلومات "
-"العامة فقط."
+"كافة المعلومات الموجودة على هذا الرابط منشورة بحسن نية ولغرض معلومات عامة فقط "
 
 #: engage/templates/disclaimer.html:15 engage/templates/master.html:1661
 msgid ""
@@ -119,7 +119,7 @@ msgid ""
 "you find on this website (MTN Engage), is strictly at your own risk. MTN "
 "Engage will not be liable for any losses and/or damages in connection with "
 "the use of our website."
-msgstr "لا تقدم MTN Engage أي ضمانات بشأن الاكتمال"
+msgstr "ان موقع الالكتروني لا يقدم اية ضمانات حول الكمال، الموثوقية ودقة المعلومات. كل الاجراءات التي تتخذها والمبنية على المعلومانت الموجودة على هذا الموقع تقع على مسؤوليتك الخاصة. لن يكون موقع انغايج مسؤولا عن اية خسائر او اضرار متعلقة باستعمال الموقع الالكتروني الخاص بنا"
 
 #: engage/templates/disclaimer.html:17
 msgid ""
@@ -131,8 +131,7 @@ msgid ""
 "without notice and may occur before we have the opportunity to remove a link "
 "which may have gone "
 msgstr ""
-"من موقعنا على شبكة الإنترنت ، يمكنك زيارة مواقع الويب الأخرى باتباع "
-"الارتباطات التشعبية"
+""" يمكنكم زيارة مواقع الكترونية اخرى من خلال موقعنا وذلك عبر تتبع روابط اخرى. بالرغم من محاولاتنا الجاهدة لتأمين روابط نوعية واخلاقية، ليست لدينا اي سيطرة على محتوى وطبيعة هذه الروابط. الروابط المتصلة بمواقع الكترونية اخرى لا توحي بتوصيات لمحتوى هذه المواقع. يمكن لاصحاب هذه المواقع ومحتواها ان يتغير من دون سابق انذارمن غير ان يتسنى لنا الوقت لازالة الرابط والذي قد يكون قد اختفى."
 
 #: engage/templates/disclaimer.html:19 engage/templates/master.html:1665
 msgid ""
@@ -140,7 +139,7 @@ msgid ""
 "different privacy policies and terms which are beyond our control. Please be "
 "sure to check the Privacy Policies of these sites as well as their \"Terms "
 "of Service\" before engaging in any business or uploading any information."
-msgstr "يرجى العلم أيضًا أنه عند مغادرة موقعنا"
+msgstr "الرجاء اخذ الحذر انه عند الخروج من موقعنا، يمكن لمواقع اخرى ان تتمتع بسياسة خصوصية مختلفة وخارجة عن سيطرتنا. الرجاء التأكد من السياسات الخصوصية وشروط الخدمة قبل البدء اوتحميل اية معلومات. "
 
 #: engage/templates/index.html:18
 msgid "\"winners\" "
@@ -150,47 +149,47 @@ msgstr "\"الفائزين\" "
 msgid ""
 "\"Please login or register to Engage to be able to play leisure games, earn "
 "coins, and win multiple prizes\" "
-msgstr "\"يرجى تسجيل الدخول أو التسجيل للانخراط لتتمكن من لعب ألعاب الترفيه\" "
+msgstr "\"الرجاء تسجيل الدخول او التسجيل على انغايج   لامكانية اللعب، كسب العملات النقدية وجوائز مختلفة\" "
 
 #: engage/templates/index.html:20
 msgid ""
 "\"Please login or register to Engage to be able to play featured games and "
 "win multiple prizes\" "
 msgstr ""
-"\"يرجى تسجيل الدخول أو التسجيل في Engage لتتمكن من لعب الألعاب المميزة\" "
+"\" الرجاء تسجيل الدخول او التسجيل على انغايج   لامكانية اللعب، وكسب جوائز عديدة \ " "
 
 #: engage/templates/index.html:21
 msgid ""
 "\"Please login or register to Engage to be able to join tournaments and "
 "compete with others to earn many cash and other prizes\" "
 msgstr ""
-"\"يرجى تسجيل الدخول أو التسجيل في Engage لتتمكن من الانضمام إلى البطولات\" "
+"\"الرجاء تسجيل الدخول او التسجيل على انغايج بامكانية المشاركة في المسابقات وربح المال وجوائز اخرى\" "
 
 #: engage/templates/index.html:22
 msgid ""
 "\"Please login or register to Engage to buy coins, increase your balance, "
 "and win multiple cash and other prizes\" "
-msgstr "\"يرجى تسجيل الدخول أو التسجيل في Engage لشراء العملات المعدنية\" "
+msgstr "\"لرجاء تسجيل الدخول او التسجيل لشراء العملات، زيادة رصيدك وربج العديد من الاموال وجوائز اخرى\" "
 
 #: engage/templates/index.html:23
 msgid ""
 "\"Please login or register to Engage to redeem gifts and win multiple cash "
 "and other prizes\" "
-msgstr "\"يرجى تسجيل الدخول أو التسجيل في Engage لاسترداد الهدايا\" "
+msgstr "\"رجاء تسجيل الدخول او التسجيل لاستبدال الجوائز وربح العديد من الاموال وجوائز أخرى \" "
 
 #: engage/templates/index.html:24
 #, fuzzy
 #| msgid "JOIN NOW"
 msgid "\"JOIN NOW\" "
-msgstr "\"الان نضم\" "
+msgstr "\"الان إنضم  \" "
 
 #: engage/templates/index.html:205
 msgid "PLAY, WIN AND EARN COINS"
-msgstr "العب واربح واكسب العملات المعدنية"
+msgstr "العب واربح واكسب العملات"
 
 #: engage/templates/index.html:206
 msgid "PLAY ANY OF THE FEATURED GAMES"
-msgstr "العب أيًا من الألعاب المميزة"
+msgstr "لعب احدى الألعاب الموجودة "
 
 #: engage/templates/index.html:274 engage/templates/master.html:361
 #: engage/templates/profile.html:107 engage/templates/public-profile.html:85
@@ -199,63 +198,63 @@ msgstr "البطولات"
 
 #: engage/templates/index.html:275
 msgid "Play Games"
-msgstr "العاب"
+msgstr "اللعب"
 
 #: engage/templates/index.html:281
 msgid "ALL"
-msgstr "الكل"
+msgstr "جميع"
 
 #: engage/templates/index.html:285
 msgid "Upcoming"
-msgstr "القادم"
+msgstr "المرتقب"
 
 #: engage/templates/index.html:288
 msgid "Ongoing"
-msgstr "جاري التنفيذ"
+msgstr "المستمرة "
 
 #: engage/templates/index.html:292
 msgid "Previous"
-msgstr "سابق"
+msgstr "السابقة"
 
 #: engage/templates/index.html:295
 msgid "All Games Tournaments"
-msgstr "جميع بطولات الألعاب"
+msgstr "جميع مباريات البطولة"
 
 #: engage/templates/index.html:310
 msgid "PREMIUM"
-msgstr "الممتازة"
+msgstr "متميز"
 
 #: engage/templates/index.html:314
 msgid "FREE"
-msgstr "مجانا"
+msgstr "مجاني"
 
 #: engage/templates/index.html:499 engage/templates/master.html:499
 #: engage/templates/master.html:532
 msgid "WINNERS"
-msgstr "الفائزين"
+msgstr "الرابحون"
 
 #: engage/templates/index.html:501
 msgid "Games Tournaments"
-msgstr "بطولات الألعاب"
+msgstr "مباريات البطولة "
 
 #: engage/templates/index.html:523
 msgid "Last Updated:"
-msgstr "التحديث الاخير:"
+msgstr "آخر تحديث"
 
 #: engage/templates/index.html:562
 msgid "Ad Image/Video Here"
-msgstr "صورة الإعلان / الفيديو هنا"
+msgstr "ضافة الصورة/ الفيديو هن"
 
 #: engage/templates/index.html:571 engage/templates/register.html:6684
 #: engage/templates/register1.html:4324 engage/templates/register2.html:4308
 #: engage/templates/register3.html:4355 engage/templates/tournament.html:161
 msgid "Join Now"
-msgstr "نضم الان"
+msgstr "انضم الان"
 
 #: engage/templates/index.html:582 engage/templates/profile.html:550
 #: engage/templates/profile.html:775
 msgid "Share Engage"
-msgstr "شارك Engage"
+msgstr "شارك في موقع انغايج"
 
 #: engage/templates/index.html:599 engage/templates/profile.html:792
 msgid "COPY"
@@ -263,15 +262,15 @@ msgstr "نسخ"
 
 #: engage/templates/master.html:391
 msgid "LOGIN / SIGNUP"
-msgstr "الدخول التسجيل فى الموقع"
+msgstr " تسجيل الدخول/التسجيل"
 
 #: engage/templates/master.html:398
 msgid "My Profile"
-msgstr "ملفي"
+msgstr " ملفي الشخصي"
 
 #: engage/templates/master.html:416
 msgid "Notifications"
-msgstr "إشعارات"
+msgstr "الاشعارات"
 
 #: engage/templates/master.html:471 engage/templates/master.html:520
 msgid "TOURNAMENTS"
@@ -281,11 +280,11 @@ msgstr "البطولات"
 #: engage/templates/master.html:487 engage/templates/master.html:494
 #: engage/templates/master.html:501
 msgid "new"
-msgstr "الجديد"
+msgstr "جديج"
 
 #: engage/templates/master.html:478 engage/templates/master.html:523
 msgid "GAMES"
-msgstr "ألعاب"
+msgstr "المباريات"
 
 #: engage/templates/master.html:485 engage/templates/master.html:526
 msgid "PRIZES"
@@ -293,11 +292,11 @@ msgstr "الجوائز"
 
 #: engage/templates/master.html:492 engage/templates/master.html:529
 msgid "REDEEM"
-msgstr "يسترد"
+msgstr "استبدال"
 
 #: engage/templates/master.html:542
 msgid "MY PROFILE"
-msgstr "ملفي"
+msgstr " ملفي الشخصي"
 
 #: engage/templates/master.html:576 engage/templates/master.html:1570
 #: engage/templates/profile.html:557
@@ -307,15 +306,15 @@ msgstr "أسئلة وأجوبة"
 #: engage/templates/master.html:582 engage/templates/profile.html:566
 #: engage/templates/terms.html:9
 msgid "Terms & Conditions"
-msgstr "البنود و الظروف"
+msgstr "الأحكام والشروط"
 
 #: engage/templates/master.html:588 engage/templates/profile.html:555
 msgid "About"
-msgstr "عن"
+msgstr "حول"
 
 #: engage/templates/master.html:592
 msgid "Contact Engage"
-msgstr "اتصل بـ Engage"
+msgstr "التواصل مع انغايج"
 
 #: engage/templates/master.html:596
 msgid "Support"
@@ -331,13 +330,13 @@ msgstr "تسجيل الدخول"
 #, fuzzy
 #| msgid "MTN Number"
 msgid "Enter MTN Number"
-msgstr "أدخل رقم MTN"
+msgstr "أدخل رقم م ت ن"
 
 #: engage/templates/master.html:664 engage/templates/master.html:700
 #: engage/templates/master.html:711 engage/templates/master.html:1299
 #: engage/templates/master.html:1328
 msgid "Next"
-msgstr "التالي"
+msgstr "متابعة"
 
 #: engage/templates/master.html:670
 msgid "Don’t have an account?"
@@ -345,36 +344,36 @@ msgstr "ليس لديك حساب؟"
 
 #: engage/templates/master.html:672
 msgid "Register!"
-msgstr "يسجل!"
+msgstr "التسجيل!"
 
 #: engage/templates/master.html:695 engage/templates/master.html:706
 #: engage/templates/register2.html:4310 engage/templates/register3.html:4357
 #: engage/templates/wait.html:46
 msgid "Change Number"
-msgstr "تغيير رقم"
+msgstr "تغيير الرقم "
 
 #: engage/templates/master.html:736
 msgid "Please wait for confirmation"
-msgstr "يرجى انتظار التأكيد"
+msgstr "الرجاء انتظار التأكيد"
 
 #: engage/templates/master.html:754 engage/templates/profile.html:363
 #: engage/templates/profile.html:482
 msgid "Loading..."
-msgstr "جار التحميل..."
+msgstr " التحميل"
 
 #: engage/templates/master.html:760
 #, fuzzy
 #| msgid "Closed"
 msgid "Close"
-msgstr "مغلق"
+msgstr "اغلاق"
 
 #: engage/templates/master.html:763
 msgid "Please wait while we process your request..."
-msgstr "يرجى الانتظار بينما نعالج طلبك..."
+msgstr "الرجاء الانتظار ريثما يتم مراجعة طلبك"
 
 #: engage/templates/master.html:793
 msgid "CONTACT ENGAGE"
-msgstr "تواصل معنا"
+msgstr "التواصل مع انغايج "
 
 #: engage/templates/master.html:1161 engage/templates/master.html:1261
 #: engage/templates/profile.html:755
@@ -383,55 +382,55 @@ msgstr "إرسال"
 
 #: engage/templates/master.html:1191
 msgid "CONTACT SUPPORT"
-msgstr "اتصل بالدعم"
+msgstr "الاتصال بالدعم"
 
 #: engage/templates/master.html:1221
 msgid "I Need Support With"
-msgstr "أحتاج إلى دعم"
+msgstr "أحتاج إلى الدعم ب"
 
 #: engage/templates/master.html:1224
 msgid "Unable to subscribe to Engage"
-msgstr "تعذر الاشتراك في Engage"
+msgstr "عدم القدرة على الاشتراك في انغايج "
 
 #: engage/templates/master.html:1227
 msgid "Problem with account access"
-msgstr "مشكلة في الوصول إلى الحساب"
+msgstr "مشكلة مع القدرة على الولوج الى الحساب"
 
 #: engage/templates/master.html:1230
 msgid "Locked or suspended account issue"
-msgstr "قضية حساب مغلق أو معلق"
+msgstr " حساب مقفل أو معلق"
 
 #: engage/templates/master.html:1232
 msgid "Queries about tournaments"
-msgstr "استفسارات حول البطولات"
+msgstr "اسئلة حول البطولات"
 
 #: engage/templates/master.html:1235
 msgid "Games not working for me"
-msgstr "الألعاب لا تعمل من أجلي"
+msgstr "العاب لا تناسبني"
 
 #: engage/templates/master.html:1238
 msgid "Help using Engage"
-msgstr "ساعد في استخدام Engage"
+msgstr "لمساعدة عبر استعمال انغايج"
 
 #: engage/templates/master.html:1241
 msgid "Help with paid features"
-msgstr "مساعدة في الميزات المدفوعة"
+msgstr "المساعدة عبر محتويات/سمات مدفوعة "
 
 #: engage/templates/master.html:1244
 msgid "Question about Prizes"
-msgstr "سؤال عن الجوائز"
+msgstr "اسىلة حول الجوائز"
 
 #: engage/templates/master.html:1247
 msgid "Redeem Coins queries"
-msgstr "استعلامات استبدال العملات المعدنية"
+msgstr "اسئلة حول استبدال العملات النقدية"
 
 #: engage/templates/master.html:1250
 msgid "Other problem or issue"
-msgstr "مشكلة أو قضية أخرى"
+msgstr "مشاكل أو مسائل أخرى"
 
 #: engage/templates/master.html:1305
 msgid "You already have an account?"
-msgstr "لديك حساب بالفعل؟"
+msgstr "لديك حساب منشأ "
 
 #: engage/templates/master.html:1307
 msgid "Login!"
@@ -439,19 +438,19 @@ msgstr "تسجيل الدخول!"
 
 #: engage/templates/master.html:1351
 msgid "RECOVER PASSWORD"
-msgstr "إستعادة كلمة المرور"
+msgstr "استرداد كلمة السر"
 
 #: engage/templates/master.html:1362
 msgid "Enter your registered email to receive the password reset"
-msgstr "أدخل بريدك الإلكتروني المسجل لتلقي إعادة تعيين كلمة المرور"
+msgstr "ادخل بريدك الالكاروني المسجل كي يصلك تغيير كلمة السر"
 
 #: engage/templates/master.html:1365
 msgid "RESET PASSWORD"
-msgstr "إعادة تعيين كلمة المرور"
+msgstr "تغيير كلمة السر"
 
 #: engage/templates/master.html:1418
 msgid "Purchase"
-msgstr "شراء"
+msgstr "الشراء"
 
 #: engage/templates/master.html:1421 engage/templates/prizes.html:248
 #: engage/templates/prizes.html:277 engage/templates/profile.html:657
@@ -459,11 +458,11 @@ msgstr "شراء"
 #: engage/templates/public-profile.html:480
 #: engage/templates/tournament.html:444
 msgid "Cancel"
-msgstr "يلغي"
+msgstr "الغاء"
 
 #: engage/templates/master.html:1496
 msgid "Please resume and watch full video to collect your reward"
-msgstr "يرجى استئناف ومشاهدة الفيديو الكامل لتحصيل مكافأتك"
+msgstr "لرجاء المتابعة ومشاهدة الفيديو بأكمله لكسب جائزتك "
 
 #: engage/templates/master.html:1626
 msgid "PRIVACY POLICY"
@@ -474,14 +473,14 @@ msgid ""
 "To be transparent with your users about what personal information you "
 "collect and what you do with it, you are required to publish a Privacy "
 "Policy agreement on your website or give in-app access to it."
-msgstr "أن تكون شفافًا مع المستخدمين بشأن ماهية المعلومات الشخصية"
+msgstr "كي تكون شفافا مع البيانات الشخصية الني يتم جمعها وما تفعلونه بها، من واجبكم نشر اتفاقية السياسة  على موقعكم الالكتروني او السماح بالولوج اليها من خلال التطبيق"
 
 #: engage/templates/master.html:1633
 msgid ""
 "Websites usually post a link to the complete Privacy Policy agreement from "
 "the footer of the website, whereas apps generally add the Privacy Policy to "
 "an \"About\" or \"Legal\" menu."
-msgstr "عادةً ما تنشر مواقع الويب رابطًا لاتفاقية سياسة الخصوصية الكاملة"
+msgstr "عادة تنشر المواقع الالكترونية اتفاقية سياسة الخصوصية باكملها عند اسفل الصفحة بينما تقوم التطبيقات باضافة سياسة الخصوصية على القائمة"
 
 #: engage/templates/master.html:1635
 #, fuzzy
@@ -491,11 +490,11 @@ msgstr "عادةً ما تنشر مواقع الويب رابطًا لاتفاق
 msgid ""
 "Another popular location for ecommerce store apps and websites is the "
 "checkout page, or account registration page if you don\\"
-msgstr "موقع شائع آخر لتطبيقات ومواقع متاجر التجارة الإلكترونية"
+msgstr "موقع آخر لتطبيقات التجارة الكترونية هو عند صفحات الدفع او تسجيل الدخول "
 
 #: engage/templates/master.html:1654
 msgid "DISCLAIMER"
-msgstr "تنصل"
+msgstr "التنصل من المسؤولية"
 
 #: engage/templates/master.html:1663
 #, fuzzy
@@ -516,24 +515,23 @@ msgid ""
 "without notice and may occur before we have the opportunity to remove a link "
 "which may have gone \\"
 msgstr ""
-"من موقعنا على شبكة الإنترنت ، يمكنك زيارة مواقع الويب الأخرى باتباع "
-"الارتباطات التشعبية"
+"يمكنكم زيارة مواقع الكترونية اخرى من خلال موقعنا وذلك عبر تتبع روابط اخرى. بالرغم من محاولاتنا الجاهدة لتأمين روابط نوعية واخلاقية، ليست لدينا اي سيطرة على محتوى وطبيعة هذه الروابط. الروابط المتصلة بمواقع الكترونية اخرى لا توحي بتوصيات لمحتوى هذه المواقع. يمكن لاصحاب هذه المواقع ومحتواها ان يتغير من دون سابق انذارمن غير ان يتسنى لنا الوقت لازالة الرابط والذي قد يكون قد اختفى."
 
 #: engage/templates/master.html:1683
 msgid "TERMS & CONDITIONS"
-msgstr "البنود و الظروف"
+msgstr "الاحكام والشروط"
 
 #: engage/templates/master.html:1760
 msgid "MTN Number"
-msgstr "رقم MTN"
+msgstr "رقم م ت ن"
 
 #: engage/templates/master.html:1767
 msgid "Name"
-msgstr "اسم"
+msgstr "الاسم"
 
 #: engage/templates/master.html:1775
 msgid "Email"
-msgstr "بريد إلكتروني"
+msgstr "البريد الالكتروني "
 
 #: engage/templates/master.html:1784
 msgid "Date Of Birth"
@@ -541,15 +539,15 @@ msgstr "تاريخ الولادة"
 
 #: engage/templates/master.html:1867
 msgid "Nationality"
-msgstr "جنسية"
+msgstr "الجنسية"
 
 #: engage/templates/master.html:1874
 msgid "Country"
-msgstr "دولة"
+msgstr "البلد"
 
 #: engage/templates/master.html:1890
 msgid "Gender"
-msgstr "جنس تذكير أو تأنيث"
+msgstr "الجنس"
 
 #: engage/templates/master.html:1895
 msgid "Male"
@@ -561,7 +559,7 @@ msgstr "أنثى"
 
 #: engage/templates/master.html:1907
 msgid "State"
-msgstr "ولاية"
+msgstr "الوضع العائلي"
 
 #: engage/templates/master.html:1963 engage/templates/master.html:1985
 msgid "CONGRATULATIONS"
@@ -569,27 +567,27 @@ msgstr "تهانينا"
 
 #: engage/templates/master.html:1967
 msgid "You have Earned 50 coins by clicking on the video."
-msgstr "لقد ربحت 50 قطعة نقدية من خلال النقر على الفيديو."
+msgstr "لقد ربحت ٥٠ عملة وذلك عبر الضغط على الفيديو"
 
 #: engage/templates/master.html:1968
 msgid "Watch and click to earn more!"
-msgstr "شاهد وانقر لتكسب المزيد!"
+msgstr "شاهد واضغط لكسب المزيد!"
 
 #: engage/templates/master.html:1970
 msgid "WATCH"
-msgstr "يشاهد"
+msgstr "المشاهدة"
 
 #: engage/templates/master.html:1989
 msgid "You have earned 5 coins for watching!"
-msgstr "لقد ربحت 5 عملات معدنية مقابل المشاهدة!"
+msgstr "لقد ربحت ٥ عملات بسبب المشاهدة"
 
 #: engage/templates/master.html:1990
 msgid "Earn 50 coins by clicking on the video."
-msgstr "اربح 50 قطعة نقدية بالضغط على الفيديو."
+msgstr "اربح ٥٠ عملة من خلال مشاهدة الفيديو"
 
 #: engage/templates/master.html:2008
 msgid "LIMIT REACHED"
-msgstr "بلغ الحد"
+msgstr "بلوغ الحد"
 
 #: engage/templates/master.html:2014
 msgid "earn more coins later."
@@ -597,7 +595,7 @@ msgstr "كسب المزيد من العملات لاحقًا."
 
 #: engage/templates/master.html:2016 engage/templates/master.html:2038
 msgid "CLOSE"
-msgstr "أغلق"
+msgstr "اغلاق"
 
 #: engage/templates/master.html:2031
 msgid "VIDEO NOT READY YET"
@@ -609,7 +607,7 @@ msgstr "الفيديو التالي ليس جاهزًا بعد ،"
 
 #: engage/templates/master.html:2036
 msgid "please try again later"
-msgstr "الرجاء معاودة المحاولة في وقت لاحق"
+msgstr "الرجاء المحاولة لاحقا"
 
 #: engage/templates/privacy.html:9 engage/templates/profile.html:568
 msgid "Privacy Policy"
@@ -622,7 +620,7 @@ msgstr "جوائز البطولات"
 #: engage/templates/prizes.html:42 engage/templates/profile.html:125
 #: engage/templates/profile.html:673
 msgid "Redeem Coins"
-msgstr "استبدال العملات المعدنية"
+msgstr "استبدال العملات"
 
 #: engage/templates/prizes.html:47 engage/templates/prizes.html:98
 #, python-format
@@ -633,11 +631,11 @@ msgstr "%(coins)s رصيد Engage Coins الخاص بك"
 
 #: engage/templates/prizes.html:58
 msgid "ALL PRIZES"
-msgstr "كل الجوائز"
+msgstr "جميع الجوائز"
 
 #: engage/templates/prizes.html:62
 msgid "CASH"
-msgstr "السيولة النقدية"
+msgstr " نقدي"
 
 #: engage/templates/prizes.html:66
 msgid "TICKETS"
@@ -645,20 +643,20 @@ msgstr "التذاكر"
 
 #: engage/templates/prizes.html:70
 msgid "DATA PACKAGES"
-msgstr "حزم البيانات"
+msgstr "حزم بيانات"
 
 #: engage/templates/prizes.html:132
 #, python-format
 msgid "Engage Coins required: %(coins)s"
-msgstr "%(coins)s :العملات المعدنية المطلوبة"
+msgstr "%(coins)s :عملات نقدية مطلوبة"
 
 #: engage/templates/prizes.html:235
 msgid "Redeem Gift"
-msgstr "استرداد قيمة الهدية"
+msgstr "استبدال الجائزة"
 
 #: engage/templates/prizes.html:241
 msgid "You need (NbrCoins) coins to Redeem. Confirm to proceed?"
-msgstr "تحتاج إلى عملات (NbrCoins) للاسترداد. هل تريد التأكيد للمتابعة؟"
+msgstr "تحتاج الى العملات للاستبدال. التأكيد للمتابعة"
 
 #: engage/templates/prizes.html:245 engage/templates/prizes.html:274
 #: engage/templates/profile.html:654 engage/templates/profile.html:820
@@ -667,27 +665,27 @@ msgstr "تحتاج إلى عملات (NbrCoins) للاسترداد. هل تري�
 #: engage/templates/register1.html:4345 engage/templates/register2.html:4329
 #: engage/templates/register3.html:4376
 msgid "Confirm"
-msgstr "يتأكد"
+msgstr "التأكيد"
 
 #: engage/templates/prizes.html:264
 msgid "Buy Coins"
-msgstr "شراء عملات معدنية"
+msgstr "شراء العملات "
 
 #: engage/templates/profile.html:84 engage/templates/profile.html:118
 msgid "Engage coins"
-msgstr "إشراك العملات المعدنية"
+msgstr "عملات انغايج"
 
 #: engage/templates/profile.html:98 engage/templates/public-profile.html:81
 msgid "Profile"
-msgstr "حساب تعريفي"
+msgstr "الملف الشخصي"
 
 #: engage/templates/profile.html:102 engage/templates/public-profile.html:82
 msgid "Friends"
-msgstr "اصحاب"
+msgstr "الاصدقاء"
 
 #: engage/templates/profile.html:143
 msgid "Last Played Games"
-msgstr "آخر الألعاب التي تم لعبها"
+msgstr "المباريات الملعوبة آخرا"
 
 #: engage/templates/profile.html:146 engage/templates/profile.html:181
 #: engage/templates/profile.html:198 engage/templates/profile.html:215
@@ -700,7 +698,7 @@ msgstr "مشاهدة الكل"
 
 #: engage/templates/profile.html:178
 msgid "Joined tournaments"
-msgstr "انضم إلى البطولات"
+msgstr "لبطولات المشتركة"
 
 #: engage/templates/profile.html:195 engage/templates/public-profile.html:184
 msgid "Stickers"
@@ -712,11 +710,11 @@ msgstr "الجوائز"
 
 #: engage/templates/profile.html:242 engage/templates/public-profile.html:231
 msgid "FRIENDS"
-msgstr "اصحاب"
+msgstr "الأصدقاء"
 
 #: engage/templates/profile.html:252
 msgid "Search users and friends"
-msgstr "بحث المستخدمين والأصدقاء"
+msgstr "البحث عن المستخدمين والأصدقاء"
 
 #: engage/templates/profile.html:268
 msgid "Upcoming tournaments"
@@ -724,11 +722,11 @@ msgstr "البطولات القادمة"
 
 #: engage/templates/profile.html:306
 msgid "Played tournaments"
-msgstr "البطولات التي لعبها"
+msgstr "البطولات الملعوبة "
 
 #: engage/templates/profile.html:350 engage/templates/profile.html:644
 msgid "Unlock VIP"
-msgstr "افتح VIP"
+msgstr "الغاء قفل الشخصيات المهمة"
 
 #: engage/templates/profile.html:357
 msgid "Activity Points"
@@ -736,15 +734,15 @@ msgstr "نقاط النشاط"
 
 #: engage/templates/profile.html:400
 msgid "Buy This Stage and get the following:"
-msgstr "اشترِ هذه المرحلة واحصل على ما يلي:"
+msgstr "اشترِ هذه المرحلة واحصل على  التالية:"
 
 #: engage/templates/profile.html:403
 msgid "Free Movie"
-msgstr "فيلم مجانا"
+msgstr "افلام مجانية"
 
 #: engage/templates/profile.html:408
 msgid "Coins"
-msgstr "عملات معدنية"
+msgstr "عملات"
 
 #: engage/templates/profile.html:415
 msgid "GB"
@@ -760,11 +758,11 @@ msgstr "شراء"
 
 #: engage/templates/profile.html:462 engage/templates/profile.html:473
 msgid "Points"
-msgstr "نقاط"
+msgstr "النقاط"
 
 #: engage/templates/profile.html:477
 msgid "Done"
-msgstr "فعله"
+msgstr "منجز"
 
 #: engage/templates/profile.html:543
 msgid "Edit Profile"
@@ -776,41 +774,41 @@ msgstr "ترقية العضوية"
 
 #: engage/templates/profile.html:560
 msgid "Contact Support"
-msgstr "اتصل بالدعم"
+msgstr "الاتصال بالدعم/ طلب المساعدة"
 
 #: engage/templates/profile.html:576
 msgid "Logout"
-msgstr "تسجيل خروج"
+msgstr " الخروج"
 
 #: engage/templates/profile.html:626
 msgid "You don\\"
-msgstr "أنت لا \\"
+msgstr " انتهيت \\"
 
 #: engage/templates/profile.html:629
 #, fuzzy
 #| msgid "Friends"
 msgid "Add friends"
-msgstr "اصحاب"
+msgstr "اضافة اصدقاء"
 
 #: engage/templates/profile.html:649
 msgid "Are you sure you want to unlock VIP access to the battlepass?"
-msgstr "هل أنت متأكد أنك تريد فتح وصول VIP إلى ممر المعركة؟"
+msgstr "هل انت متأكد من أنك تريد فك الولوج الى الشخصيات المهمة الى ممر المعركة"
 
 #: engage/templates/profile.html:675
 msgid "Select a Package"
-msgstr "حدد حزمة"
+msgstr "اختيار الطرد"
 
 #: engage/templates/profile.html:695
 msgid "Bonus"
-msgstr "علاوة"
+msgstr "اضافة"
 
 #: engage/templates/profile.html:719
 msgid "BUY NOW"
-msgstr "اشتري الآن"
+msgstr "الشراء الآن"
 
 #: engage/templates/profile.html:740
 msgid "Send Coins"
-msgstr "إرسال عملات معدنية"
+msgstr "إرسال عملات"
 
 #: engage/templates/profile.html:745
 msgid "Enter Amount"
@@ -822,76 +820,76 @@ msgstr "انذار"
 
 #: engage/templates/profile.html:816
 msgid "Are you sure you want to remove this friend?"
-msgstr "هل أنت متأكد أنك تريد إزالة هذا الصديق؟"
+msgstr "هل أنت متأكد أنك تريد حذف هذا الصديق؟"
 
 #: engage/templates/public-profile.html:58
 #, fuzzy
 #| msgid "Friends"
 msgid "Remove Friend"
-msgstr "اصحاب"
+msgstr "حذف صديق"
 
 #: engage/templates/public-profile.html:64
 msgid "Friend Request Sent"
-msgstr "تم ارسال طلب صداقة"
+msgstr "تم ارسال طلب الصداقة"
 
 #: engage/templates/public-profile.html:73
 #, fuzzy
 #| msgid "Friends"
 msgid "Add Friend"
-msgstr "اصحاب"
+msgstr "اضافة صديق"
 
 #: engage/templates/public-profile.html:422
 #, fuzzy
 #| msgid "Register!"
 msgid "Register"
-msgstr "يسجل!"
+msgstr "التسجيل"
 
 #: engage/templates/public-profile.html:451
 #, fuzzy
 #| msgid "Are you sure you want to remove this friend?"
 msgid "Are you sure you want to send this user a friend request?"
-msgstr "هل أنت متأكد أنك تريد إزالة هذا الصديق؟"
+msgstr "هل انت متأكد أنك تريد أن ترسل طلب صداقة لهذا المستخدم ؟"
 
 #: engage/templates/register.html:52 engage/templates/register1.html:52
 #: engage/templates/register2.html:52 engage/templates/register3.html:52
 msgid "winners"
-msgstr ""
+msgstr "الفائزين"
 
 #: engage/templates/register.html:53 engage/templates/register1.html:53
 #: engage/templates/register2.html:53 engage/templates/register3.html:53
 msgid ""
 "Please login or register to Engage to be able to play leisure games, earn "
 "coins, and win multiple prizes"
-msgstr "يرجى تسجيل الدخول أو التسجيل للانخراط لتتمكن من لعب ألعاب الترفيه"
+msgstr "الرجاء تسجيل الدخول او التسجيل لامكانية اللعب، كسب العملات وربح جوائز عديدة"
 
 #: engage/templates/register.html:54 engage/templates/register1.html:54
 #: engage/templates/register2.html:54 engage/templates/register3.html:54
 msgid ""
 "Please login or register to Engage to be able to play featured games and win "
 "multiple prizes"
-msgstr "يرجى تسجيل الدخول أو التسجيل في Engage لتتمكن من لعب الألعاب المميزة"
+msgstr "الرجاء تسجيل الدخول او التسجيل لامكانية اللعب وكسب جوائز عديدة"
 
 #: engage/templates/register.html:55 engage/templates/register1.html:55
 #: engage/templates/register2.html:55 engage/templates/register3.html:55
 msgid ""
 "Please login or register to Engage to be able to join tournaments and "
 "compete with others to earn many cash and other prizes"
-msgstr "يرجى تسجيل الدخول أو التسجيل في Engage لتتمكن من الانضمام إلى البطولات"
+msgstr " الرجاء تسجيل الدخول او التسجيل لامكانية المشاركة في البطولات ومنافسة الآخرين لكسب المال وجوائز أخرى"
 
 #: engage/templates/register.html:56 engage/templates/register1.html:56
 #: engage/templates/register2.html:56 engage/templates/register3.html:56
 msgid ""
 "Please login or register to Engage to buy coins, increase your balance, and "
 "win multiple cash and other prizes"
-msgstr "يرجى تسجيل الدخول أو التسجيل في Engage لشراء العملات ، وزيادة رصيدك"
+msgstr "الرجاء تسجيل الدخول او التسجيل لشراء العملات، زيادة الرصيد وكسب المال والعديد من الجوائز"
 
 #: engage/templates/register.html:57 engage/templates/register1.html:57
 #: engage/templates/register2.html:57 engage/templates/register3.html:57
 msgid ""
 "Please login or register to Engage to redeem gifts and win multiple cash and "
 "other prizes"
-msgstr ""
-"يرجى تسجيل الدخول أو التسجيل في Engage لاسترداد الهدايا والفوز بعدة أموال"
+msgstr "الرجاء تسجيل الدخول او التسجيل لاستبدال الجوائز وكسب المال وجوائز أخرى"
+""
 
 #: engage/templates/register.html:58 engage/templates/register1.html:58
 #: engage/templates/register2.html:58 engage/templates/register3.html:58
@@ -905,7 +903,7 @@ msgstr "التالي"
 
 #: engage/templates/register.html:6666
 msgid "Select your subscription Preference"
-msgstr "حدد تفضيلات الاشتراك الخاص بك"
+msgstr "إختر تفضيل الإشتراك"
 
 #: engage/templates/register.html:6677 engage/templates/register1.html:4316
 #: engage/templates/register2.html:4300 engage/templates/register3.html:4347
@@ -915,37 +913,37 @@ msgstr "N50 يوميا"
 #: engage/templates/register.html:6680 engage/templates/register1.html:4319
 #: engage/templates/register2.html:4303 engage/templates/register3.html:4350
 msgid "Free"
-msgstr "حر"
+msgstr "مجاني"
 
 #: engage/templates/register.html:6698 engage/templates/register1.html:4337
 #: engage/templates/register2.html:4322 engage/templates/register3.html:4369
 msgid "A pincode was sent to the provided phone number."
-msgstr "تم إرسال رمز سري إلى رقم الهاتف المقدم."
+msgstr "تم إرسال رمز التفعيل على رقم الهاتف الذي تم تزويده"
 
 #: engage/templates/register.html:6699 engage/templates/register1.html:4338
 #: engage/templates/register2.html:4323 engage/templates/register3.html:4370
 msgid "Please enter it to proceed."
-msgstr "الرجاء إدخاله للمتابعة."
+msgstr "لرجاء ادخال الرقم للمتابعة"
 
 #: engage/templates/register.html:6711 engage/templates/register.html:6723
 #: engage/templates/register1.html:4351 engage/templates/register2.html:4335
 #: engage/templates/register3.html:4382
 msgid "Didn't receive pincode? "
-msgstr "لم تستلم الرمز السري؟"
+msgstr "لم تتلقى رمز التفعيل ؟"
 
 #: engage/templates/register.html:6711 engage/templates/register.html:6723
 #: engage/templates/register1.html:4351 engage/templates/register2.html:4335
 #: engage/templates/register3.html:4382
 msgid "Send again"
-msgstr "أعد الإرسال"
+msgstr "الإرسال مجددا "
 
 #: engage/templates/register.html:6751
 msgid "I ACCEPT"
-msgstr "انا موافق"
+msgstr "أقبل "
 
 #: engage/templates/register.html:6752
 msgid "GO BACK"
-msgstr "عُد"
+msgstr "الرجوع"
 
 #: engage/templates/register1.html:4313 engage/templates/register2.html:4297
 #: engage/templates/register3.html:4344
@@ -954,19 +952,19 @@ msgstr "N30 يوميا"
 
 #: engage/templates/registration/password_change_done.html:4
 msgid "Documentation"
-msgstr "توثيق"
+msgstr "التوثيق"
 
 #: engage/templates/registration/password_change_done.html:4
 msgid "Change password"
-msgstr "غير كلمة السر"
+msgstr "تغيير كلمة المرور"
 
 #: engage/templates/registration/password_change_done.html:7
 msgid "Log out"
-msgstr "تسجيل خروج"
+msgstr " الخروج"
 
 #: engage/templates/registration/password_change_done.html:12
 msgid "Home"
-msgstr "مسكن"
+msgstr "القائمة الرئيسية"
 
 #: engage/templates/registration/password_change_done.html:13
 msgid "Password change"
@@ -974,57 +972,57 @@ msgstr "تغيير كلمة السر"
 
 #: engage/templates/registration/password_change_done.html:18
 msgid "Your password was changed."
-msgstr "الباسورد الخاص بك تم تغييرة."
+msgstr "لقد تم تعديل كلمة السر."
 
 #: engage/templates/registration/password_change_done.html:19
 msgid "Change it again"
-msgstr "قم بتغييره مرة أخرى"
+msgstr "تغييرها مجدداَ"
 
 #: engage/templates/tournament.html:43 engage/templates/tournament.html:88
 msgid "Tournament Started"
-msgstr "بدأت البطولة"
+msgstr "بدأ البطولة"
 
 #: engage/templates/tournament.html:81
 msgid "Tournament Starts in"
-msgstr "تبدأ البطولة في"
+msgstr "البطولة تبدأ خلال"
 
 #: engage/templates/tournament.html:102
 msgid "Summary"
-msgstr "ملخص"
+msgstr "الخلاصة"
 
 #: engage/templates/tournament.html:106 engage/templates/tournament.html:111
 msgid "Participants"
-msgstr "مشاركون"
+msgstr "المشاركون"
 
 #: engage/templates/tournament.html:123
 msgid "Practice"
-msgstr "ممارسة"
+msgstr "تدرب"
 
 #: engage/templates/tournament.html:128
 msgid "Waiting List"
-msgstr "قائمة الانتظار"
+msgstr "لائحة الانتظار"
 
 #: engage/templates/tournament.html:132 engage/templates/tournament.html:143
 #: engage/templates/tournament.html:150 engage/templates/tournament.html:166
 msgid "Expired"
-msgstr "منتهية الصلاحية"
+msgstr "منتهي الصلاحية"
 
 #: engage/templates/tournament.html:135
 msgid "joined"
-msgstr "انضم"
+msgstr "مشارك"
 
 #: engage/templates/tournament.html:146 engage/templates/tournament.html:157
 #: engage/templates/tournament.html:173
 msgid "Closed"
-msgstr "مغلق"
+msgstr "مقفل"
 
 #: engage/templates/tournament.html:153
 msgid "In progress"
-msgstr "في تَقَدم"
+msgstr "جارية"
 
 #: engage/templates/tournament.html:170
 msgid "IN PROGRESS"
-msgstr "في تَقَدم"
+msgstr "جارية "
 
 #: engage/templates/tournament.html:208
 msgid "Tournament Details"
@@ -1032,15 +1030,15 @@ msgstr "تفاصيل البطولة"
 
 #: engage/templates/tournament.html:215
 msgid "Game"
-msgstr "لعبة"
+msgstr "اللعبة"
 
 #: engage/templates/tournament.html:223
 msgid "Platform"
-msgstr "منصة"
+msgstr "المنصة"
 
 #: engage/templates/tournament.html:232
 msgid "Time"
-msgstr "وقت"
+msgstr "الوقت"
 
 #: engage/templates/tournament.html:268
 msgid "Tournament Prizes"
@@ -1048,7 +1046,7 @@ msgstr "جوائز البطولة"
 
 #: engage/templates/tournament.html:277
 msgid "Place"
-msgstr "مكان"
+msgstr "المكان"
 
 #: engage/templates/tournament.html:291
 msgid "Tournament Rules"
@@ -1056,72 +1054,71 @@ msgstr "قواعد البطولة"
 
 #: engage/templates/tournament.html:381 engage/templates/tournament.html:402
 msgid "Cannot join!"
-msgstr "لا يمكن الانضمام!"
+msgstr "غير قادر على المشاركة!"
 
 #: engage/templates/tournament.html:386
 msgid ""
 "You cannot join this tournament since it has already started. Register to "
 "other tournaments now and win multiple prizes"
 msgstr ""
-"لا يمكنك الانضمام إلى هذه البطولة لأنها بدأت بالفعل. سجل فيالبطولات الأخرى "
-"الآن والفوز بجوائز متعددة"
+"لا يمكنك المشاركة في هذه البطولة بما انها قد بدأت. تسجل الآن في بطولة أخرى لربح جوائز عديدة"
 
 #: engage/templates/tournament.html:392
 msgid "Good Luck!"
-msgstr "حظ سعيد!"
+msgstr "حظ موفق!"
 
 #: engage/templates/tournament.html:397
 msgid "This tournament is ongoing, enjoy the game. Good Luck!!"
-msgstr "هذه البطولة مستمرة ، استمتع باللعبة. حظ سعيد!!"
+msgstr "لقد بدأت البطولة ، استمتع باللعبة. حظاً موفقاً!!"
 
 #: engage/templates/tournament.html:407
 msgid ""
 "You cannot join this tournament since it's closed. Register to other "
 "tournaments now and win multiple prizes"
 msgstr ""
-"لا يمكنك الانضمام إلى هذه البطولة لأنها مغلقة. سجل في الآخرينالبطولات الآن "
-"والفوز بجوائز متعددة"
+"لا يمكنك المشاركة في هذه البطولة بما انها قد اقفلت. تسجل الآن في بطولة أخرى لربح جوائز عديدة"
 
 #: engage/templates/tournament.html:412
 msgid "Subscribers Only!"
-msgstr "المشتركون فقط!"
+msgstr "المسجلون فقط!"
 
 #: engage/templates/tournament.html:418
 msgid ""
 "Please upgrade from free package to N50 package to be able to join "
 "tournaments. To upgrade, simply deactivate from the free package by sending "
 "\"DEAC SUB3\" to “8561” then send \"SUB2\" to “8561”."
-msgstr ""
+msgstr "الرجاء تحديث الاشتراك من الصفقة المجانية الى صفقة ن٥٠ كي تستطيع المشاركة في البطولات. للتحديث فقط قم بايقاف الصفقة المجانية وذلك عبر ارسال"
+"\"DEAC SUB3\" الى “8561” ثم \"SUB2\" الى “8561”."
 
 #: engage/templates/tournament.html:420
 msgid "Subscribe now to be able to join any upcoming tournament."
-msgstr "اشترك الآن لتتمكن من الانضمام إلى أي بطولة قادمة."
+msgstr "تسجل الآن كي تستطيع المشاركة في البطولات القادمة"
 
 #: engage/templates/tournament.html:426
 msgid "Upgrade Subscription"
-msgstr "ترقية الاشتراك"
+msgstr "تحديث الاشتراك"
 
 #: engage/templates/tournament.html:433
 msgid ""
 "You are allowed to join one tournament per day. Please upgrade your package "
 "to join multiple tournaments per day"
-msgstr ""
-"يُسمح لك بالانضمام إلى دورة واحدة يوميًا. الرجاء ترقية الحزمة الخاصة "
-"بكللانضمام إلى بطولات متعددة يوميًا"
+msgstr "يسمح لك بالشتراك في بطولة واحدة يومياً. الرجاء تحديث الاشتراك كي تتمكن من المشاركة في بطولات متعددة يومياً"
+""
 
 #: engage/templates/tournament.html:437
 msgid "Upgrade"
-msgstr "تطوير"
+msgstr "تحديث"
 
 #: engage/templates/tournament.html:451
 msgid "Your profile level is {{ user.level }}!"
-msgstr "مستوى ملفك الشخصي"
+msgstr " {{ user.level }} مستوى ملفك الشخصي هو  "
 
 #: engage/templates/tournament.html:456
 msgid ""
 "The minimum profile level required to join this tournament is {{ tournament."
 "minimum_profile_level }}"
-msgstr "الحد الأدنى من مستوى الملف الشخصي المطلوب للانضمام إلى هذه البطولة"
+msgstr "{{ tournament المستوى الادنى للملف الشخصى المطلوب للمشاركة في البطولة هو"
+"minimum_profile_level }}"
 
 #: engage/templates/tournament.html:478 engage/templates/tournament.html:485
 #: engage/templates/tournament.html:535 engage/templates/tournament.html:542
@@ -1129,18 +1126,17 @@ msgid ""
 "Game account is your in-game ID. You need to create it in the game itself to "
 "be eligible to participate in the tournament."
 msgstr ""
-"حساب اللعبة هو معرفك داخل اللعبة. تحتاج إلى إنشائه في اللعبة نفسهاأن تكون "
-"مؤهلاً للمشاركة في البطولة."
+"حساب اللعبة هو هويتك داخل اللعبة. تحتاج الى انشاء هوية داخل اللعبة نفسها كي تكون مؤهلاً للمشاركة في البطولة "
 
 #: engage/templates/tournament.html:481 engage/templates/tournament.html:488
 #: engage/templates/tournament.html:538 engage/templates/tournament.html:545
 msgid "Enter your game account"
-msgstr "أدخل حساب اللعبة الخاص بك"
+msgstr "أدخل حساب اللعبة"
 
 #: engage/templates/tournament.html:495 engage/templates/tournament.html:552
 msgid "Submit"
-msgstr "إرسال"
+msgstr "تقديم"
 
 #: engage/templates/wait.html:40
 msgid "Subscription status is being updated please wait..."
-msgstr "يتم تحديث حالة الاشتراك الرجاء الانتظار ..."
+msgstr " الرجاء الانتظار ريثما يتم تحديث اشتراكك "

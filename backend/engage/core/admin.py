@@ -23,7 +23,7 @@ class ConfigurationAdmin(SingletonModelAdmin):
 
 
 @admin.register(models.Game)
-class GameAdmin(admin.ModelAdmin):
+class GameAdmin(TranslatableAdmin): #admin.ModelAdmin
     list_display = ('name', 'is_active', 'created')
     exclude = ('slug',)
 
@@ -34,12 +34,12 @@ class TrophyAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Sticker)
-class StickerAdmin(admin.ModelAdmin):
+class StickerAdmin(TranslatableAdmin): #admin.ModelAdmin
     list_display = ('name', 'created', 'modified')
 
 
 @admin.register(models.HTML5Game)
-class HTML5GameAdmin(admin.ModelAdmin):
+class HTML5GameAdmin(TranslatableAdmin): #admin.ModelAdmin
     list_display = ('game', 'full_game_type', 'created', 'modified')
     exclude = ('slug',)
 
@@ -88,7 +88,7 @@ class NotificationAdmin(TranslatableAdmin): # admin.ModelAdmin
         super().save_model(request, obj, form, change)
         # if is_active == "on" and template == NotificationTemplate.INSTANT.value:
             # NotificationsService.bulk(obj)
-            
+   
             
 
     class Media:
@@ -96,5 +96,5 @@ class NotificationAdmin(TranslatableAdmin): # admin.ModelAdmin
 
 
 @admin.register(models.FeaturedGame)
-class FeaturedGameAdmin(admin.ModelAdmin):
+class FeaturedGameAdmin(TranslatableAdmin): #admin.ModelAdmin
     list_display = ('name', 'created', 'modified')

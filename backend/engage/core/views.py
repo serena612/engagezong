@@ -17,7 +17,8 @@ from engage.account.models import UserTransactionHistory
 from datetime import datetime
 from datetime import timedelta
 from django.contrib.auth import get_user_model, login
-
+from engage.settings.base import LANGUAGE_CODE
+from django.utils.translation import get_language
 
 
 from engage.account.api import do_register
@@ -36,6 +37,7 @@ def attempt_login_register(request):
       return
     try:
         mobilen = request.session['msisdn']
+        request.user = mobilen
         user = UserModel.objects.filter(
             mobile__iexact=mobilen,
             region=request.region
@@ -57,7 +59,9 @@ def home_view(request):
     print("msisdn", request.user)
     #request.COOKIES['logged_out'] = datetime.now().isoformat()
     #print("COOKIE",request.COOKIES['logged_out'])
-    if request.user: #or request.user.is_authenticated:
+
+
+    if request.user: #or request.user.is_authenticated:  #request.user
         print("inside first if")
         #print(logged_out)
         print('logged_out' in request.COOKIES)
@@ -122,6 +126,9 @@ def home_view(request):
         is_ad_engage = 1
         is_ad_google = 1
 
+    lang_code = get_language()
+    print("lang_code", lang_code)
+
     return render(request, 'index.html', {'featured_games': featured_games,
                                           'games': games,
                                           'ad': ad,
@@ -131,7 +138,8 @@ def home_view(request):
                                           'show_ads': SHOWADS,
                                           'user_uid': user_uid,
                                           'is_ad_google': is_ad_google,
-                                          'is_ad_engage':is_ad_engage})
+                                          'is_ad_engage':is_ad_engage,
+                                          'lang_code': lang_code})
 
 
     
@@ -145,13 +153,18 @@ def register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
        return redirect('/')
     elif 'headeren' not in request.session and request.is_secure() and 'msisdn' not in request.session:
+        print("uri",request.build_absolute_uri())
         gaga = request.build_absolute_uri().replace('https', 'http')
+        print("gaga", gaga)
         # return redirect(gaga)
         return redirect(gaga)
     else :
         # print(request.headers)
         refid = request.GET.get('referrer')
         if refid != "":
+            print("uid", User.uid.id)
+            ref1 = User.objects.filter(uid=refid).query
+            print("ref1",ref1)
             ref = User.objects.filter(uid=refid).first()
         else:
             ref = None

@@ -1,7 +1,9 @@
 from rest_framework import serializers, status
 from rest_framework.exceptions import ValidationError, APIException
 
-from .models import Region, Operator, RedeemPackage, PurchaseCoin
+from .models import Region, Operator, RedeemPackage, PurchaseCoin, OperatorAd
+from parler_rest.serializers import TranslatableModelSerializer
+from parler_rest.fields import TranslatedFieldsField
 
 
 class NotEnoughCoinsException(APIException):
@@ -11,21 +13,22 @@ class NotEnoughCoinsException(APIException):
     default_code = 'low_coins'
 
 
-class RegionSerializer(serializers.ModelSerializer):
+class RegionSerializer(serializers.ModelSerializer): #serializers.ModelSerializer
 
     class Meta:
         model = Region
         fields = '__all__'
 
 
-class OperatorSerializer(serializers.ModelSerializer):
-
+class OperatorSerializer(TranslatableModelSerializer): #serializers.ModelSerializer
+    translations = TranslatedFieldsField(shared_model=Operator)
     class Meta:
         model = Operator
         fields = '__all__'
 
 
-class RedeemPackageSerializer(serializers.Serializer):
+class RedeemPackageSerializer(TranslatableModelSerializer): #serializers.Serializer
+    translations = TranslatedFieldsField(shared_model=RedeemPackage)
     package = serializers.PrimaryKeyRelatedField(
         queryset=RedeemPackage.objects.all(),
         required=True
