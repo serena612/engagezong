@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 
+
 {% block javascript %}
     <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
     <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
@@ -15,6 +16,7 @@
     <script>
         var is_ad_google = '{{ is_ad_google }}';
         var is_ad_engage = '{{ is_ad_engage }}';
+        var lang_code = '{{ lang_code }}';
         var winner_transl = {% blocktrans %}"winners" {% endblocktrans %};
         var leisureGames_transl = {% blocktrans %}"Please login or register to Engage to be able to play leisure games, earn coins, and win multiple prizes" {% endblocktrans %};
         var featuredGames_transl = {% blocktrans %}"Please login or register to Engage to be able to play featured games and win multiple prizes" {% endblocktrans %};
@@ -22,6 +24,14 @@
         var getBtn_transl = {% blocktrans %}"Please login or register to Engage to buy coins, increase your balance, and win multiple cash and other prizes" {% endblocktrans %};
         var redeemGifts_transl = {% blocktrans %}"Please login or register to Engage to redeem gifts and win multiple cash and other prizes" {% endblocktrans %};
         var join_now = {% blocktrans %}"JOIN NOW" {% endblocktrans %};
+        var pool_prize = {% blocktrans %}"POOL PRIZE" {% endblocktrans %};
+        var register = {% blocktrans %}"REGISTER" {% endblocktrans %};
+        var send_coins = {% blocktrans %}"Send Coins" {% endblocktrans %};
+        var unfriend = {% blocktrans %}"Unfriend" {% endblocktrans %};
+        var view = {% blocktrans %}"VIEW" {% endblocktrans %};
+        var upcoming = {% blocktrans %}"Upcoming" {% endblocktrans %};
+        var previous = {% blocktrans %}"Previous" {% endblocktrans %};
+        var ongoing = {% blocktrans %}"Ongoing" {% endblocktrans %};
         $('nav').removeClass('hih')
     </script>
 
@@ -128,6 +138,17 @@
 
 {% block content %}
     <section class="sec-2">
+    <div class="max-page-width" style="margin-bottom: 80px;">
+            <div class="row">
+                <div class="col-md-6"> 
+                    <div onclick="$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 2000);$('.tour-btn').click()" style="display: block;cursor:pointer;margin-top:7px;"><img src="/static/img/join-tournaments-english.png" style="width:100%" border="0" /></div> 
+                 </div>
+                 <div class="col-md-6">
+                     <div onclick="$('html, body').animate({ scrollTop: $('#tournaments').offset().top }, 2000);$('.games-btn').click()" style="display: block;cursor:pointer;"><img src="/static/img/play-hundred-english.png" style="width:100%" border="0" /></div> 
+                 </div>
+            </div>
+        </div>
+        
         <div class="slid-parent max-page-width">
             {% for section in operator.operatorhomesection_set.all %}
                 <div>
@@ -207,7 +228,11 @@
         <!-- <h1 class='h1_home'>{% translate 'PLAY, WIN AND EARN COINS' %}</h3>     
         <h3 class='h3_home'>{% translate 'PLAY ANY OF THE FEATURED GAMES' %}</h3> -->
         <div class="text-center">
+            {% if lang_code == 'ar' %}
+            <img src="/static/img/arabic/Homepage-are-you-an-engager.png" id="are_you_engager" />
+            {% else %}
             <img src="/static/img/Homepage-are-you-an-engager.png" id="are_you_engager" />
+            {% endif %}
         </div>
         <div class="text-center">
             <img src="/static/img/whitePic.png" id="are_you_engager" style="margin-bottom: 16px;" />
@@ -511,7 +536,7 @@
                         {% endif %}
                         {% endfor %}
                     </select>
-                    <div class="drp_select"><select class='drp_tournament' placeholder="Search for a tournament here" >
+                    <div class="drp_select"><select class='drp_tournament' placeholder="{% translate 'Search for a tournament here' %}" >
                         {% for tournament in previous_tournaments %}
                             {% if tournament.current_participants > 0 %}
                               <option value="{{tournament.id}}" date="{{ tournament.modified|date:"d M Y" }} {{tournament.modified|time:"h:i A"}}" label="{{tournament.label_next_time}}" game="{{tournament.game.slug}}"  gname="{{tournament.name}}" participants="{{tournament.current_participants}}/{{tournament.max_participants}}"> {{tournament.name}} </font></option>
