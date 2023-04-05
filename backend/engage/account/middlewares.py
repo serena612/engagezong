@@ -3,16 +3,24 @@ from datetime import timedelta
 
 from django.utils import timezone
 
-from engage.account.models import UserActivity
+from engage.account.models import UserActivity, User
 from engage.core.constants import NotificationTemplate
 from engage.operator.models import Region
 from engage.services import _with, notify_when
 from django.utils.translation import activate, get_language
+from django.utils.deprecation import MiddlewareMixin
+from engage.settings.base import LANGUAGE_CODE
+from contextlib import suppress
+
+from django.conf import settings
+from engage.tournament.models import Tournament
+from django.utils import translation
+from .models import UserNotification
 
 class LastSeenMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response
-
+    
     @staticmethod
     def check_dormant_diff(last_seen, days):
         return timezone.now() - last_seen >= timedelta(days=days)
@@ -56,16 +64,27 @@ class LastSeenMiddleware(object):
             def notify(user, user_notifications):
                 """ extra logic if needed """
             notify(user=user)
+    
+        
 
     def __call__(self, request):
         # TODO: to be cached
-       
+
+
         request.region = Region.objects.get(id=1)
+        
+
         language = get_language()
         print("Language"+ language)
-        #activate(language)
-        # if user is authenticated update the last_seen field & set this user as an active user on this day
+
         if request.user.is_authenticated:
-            self.update_last_seen(request.user)
+            coins_received = UserNotification.objects.filter(
+                    user=request.user,
+                    notification__template=NotificationTemplate.DAILY,
+                    created = timezone.now().date()).first()
+            if not coins_received:
+                self.update_last_seen(request.user)
+            
+            
 
         return self.get_response(request)

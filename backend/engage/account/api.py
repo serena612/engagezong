@@ -24,6 +24,7 @@ from drf_yasg.openapi import Schema, TYPE_ARRAY, TYPE_OBJECT, TYPE_STRING
 from engage.core.models import HTML5Game
 import sys, base64, hvac, json
 from django.utils.translation import ugettext_lazy as _
+from engage.account.middlewares import LastSeenMiddleware
 
 
 from .constants import (
@@ -471,6 +472,14 @@ def do_register(self, request, username, subscription):
             
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             request.session['user_id'] = user.pk
+            print('request.session user_id',user.pk)
+            if request.user.is_authenticated:
+                LastSeenMiddleware.update_last_seen(request.user)
+                #@notify_when(events=[NotificationTemplate.DAILY],
+                #            is_route=False, is_one_time=False)
+                #def notify(user, user_notifications):
+                #    """ extra logic if needed """
+                #notify(user=user)
             return redirect('/')
             # return Response({'message': response2}, status=514)
         
@@ -1078,6 +1087,7 @@ class UserViewSet(mixins.ListModelMixin,
                     # raise exceptions.APIException("Error in updating user subscription!")
                     return Response({'error': 'Error in updating user subscription!'}, status=473)
 
+        print("update_user_substatus is_authenticated",request.user.is_authenticated)
     @swagger_auto_schema(responses={
         200: Schema(type=TYPE_OBJECT,
         properties={
