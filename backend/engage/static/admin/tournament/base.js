@@ -375,11 +375,11 @@ $('#id_time_compared_to_gmt').attr('placeholder','i.e +2 or -5');
                 $('.field-close_date').find('ul.errorlist').hide();
                 $('.field-close_date').prepend("<ul class='errorlist'> <li>Close Date must be greater than Open Date</li> </ul>" );
             } 
-            // Case 5: close and start date (6hrs diff)
-            else if(typeof close_date !== 'undefined' && typeof start_date !== 'undefined' && start_date.diff(close_date, 'hours', true)<=6){
+            // Case 5: close and start date (2hrs diff)
+            else if(typeof close_date !== 'undefined' && typeof start_date !== 'undefined' && start_date.diff(close_date, 'hours', true)<=2){
                 $('.field-close_date').addClass('errors');
                 $('.field-close_date').find('ul.errorlist').hide();
-                $('.field-close_date').prepend("<ul class='errorlist'> <li>Close Date must be at least 6 hours earlier than Start Date</li> </ul>" );
+                $('.field-close_date').prepend("<ul class='errorlist'> <li>Close Date must be at least 2 hours earlier than Start Date</li> </ul>" );
             } else {
                 $('.field-close_date').removeClass('errors');
                 $('.field-close_date').find('ul.errorlist').hide();

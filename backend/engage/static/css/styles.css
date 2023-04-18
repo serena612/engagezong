@@ -3507,6 +3507,7 @@ footer .bottom .right .social a {
   width: 100%;
   border-radius: 25px;
   height:100%;
+  max-height:140px;
 }
 
 .tournament-details-header .right {
@@ -3538,6 +3539,7 @@ footer .bottom .right .social a {
 
 .tournament-details-header .date span {
   color: #9627b4;
+  text-transform: capitalize;
 }
 
 .tournament-details-header .p-text,
@@ -7391,3 +7393,5 @@ box-sizing: border-box;
   text-decoration: underline;
   cursor: pointer;
 }
+.btn_upgrade.is-loading{opacity:0.5;
+pointer-events: none;}

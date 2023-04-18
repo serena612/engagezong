@@ -1756,3 +1756,11 @@ footer .bottom .middle li{padding-right: 6px;
     padding-top: 30%!important;
   }
 }
+@media (max-width:400px){
+.tournament-details-header .date > div{
+float:inherit!important;display:block;clear: both;}
+.tournament-details-header .date{
+text-align:left;}
+
+.tournament-details-header .date .pull-left.exceptcss{line-height: 0px; margin-bottom: 18px;}
+}

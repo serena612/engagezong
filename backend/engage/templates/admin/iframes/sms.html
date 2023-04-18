@@ -1,0 +1,45 @@
+{% extends "admin/index.html" %}
+{% load i18n static %}
+{% block content %}
+
+<style type="text/css">
+     #content.colMS {
+        width: calc(100vw - 300px)!important;
+    max-width: calc(100vw - 300px)!important;
+    margin-right: 0px!important;
+    height: calc(100vh - 62px);
+}
+	#content.colMS iframe{
+	    width:100%!important;
+		height:100%!important;
+		margin-right: 0px!important;
+	}
+    @media (max-width:960px) {
+        #content.colMS {
+    width: 95vw!important;
+    max-width: 95vw!important;
+        }
+    }
+</style>
+
+<iframe src="/dashboard/app/dashboards#/view/bed05190-d2f4-11ed-ac4b-bb9f417f0f06?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-7d%2Fd%2Cto%3Anow))&show-time-filter=true" height="600" width="800"></iframe>
+{% endblock %}
+{% block sidebar %}
+{% endblock %}
+
+{# Setup browser tab label #}
+{% block title %}{% trans "Engage" %} |  {% trans "Engage" %}{% endblock %}
+
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            <!-- <img src="{% static 'images/logo-icon.png' %}" alt="engage"
+                 height="50%" width="50%">
+            <br><br> -->
+            <span> {% trans "Engage" %} </span>
+        </a>
+    </h1>
+
+   
+{% endblock %}

@@ -1385,7 +1385,7 @@ function get_participants() {
             },
             type: "get",
             data: {
-                size: 12,
+                size: 1000,
                 slug: tournament_slug,
                 page: participants_page,
             },

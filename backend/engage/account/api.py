@@ -819,7 +819,7 @@ class UserViewSet(mixins.ListModelMixin,
     serializer_class = serializers.UserSerializer
     permission_classes = (permissions.AllowAny,)
     lookup_field = 'uid'
-    search_fields = ('nickname',)
+    search_fields = ('nickname','mobile',)
 
     def get_queryset(self):
         user = self.request.user
@@ -1148,7 +1148,7 @@ class UserViewSet(mixins.ListModelMixin,
         elif not userexist.first().is_active:
             return Response({'error': 'User\'s subscription is already cancelled!'}, status=474)
         else:
-            num = userexist.update(is_active=False, subscription='free')
+            num = userexist.update(is_billed=False, subscription='free')
             if num >0:
                 resp['message'] = 'User subscription has been successfully cancelled!'
                 resp['username'] = userexist.first().username
@@ -1216,7 +1216,7 @@ class UserViewSet(mixins.ListModelMixin,
         elif not userexist.first().is_billed:
             return Response({'error': 'User\'s subscription is already disabled!'}, status=474)
         else:
-            num = userexist.update(is_billed=False)
+            num = userexist.update(is_billed=False,subscription='free')
             if num >0:
                 resp['message'] = 'User subscription has been successfully disabled!'
                 resp['username'] = userexist.first().username
@@ -1447,7 +1447,13 @@ class UserViewSet(mixins.ListModelMixin,
             user_section_log.save()                                             
         return Response(status=status.HTTP_200_OK)
     
-    
+
+    @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
+    def check_userstatus(self, request,uid):
+        redFlag  = False
+        user = User.objects.get(uid=uid)
+        return Response({'status':user.subscription},status=status.HTTP_200_OK)
+      
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def check_usercoin(self, request,uid):
         redFlag  = False

@@ -32,12 +32,13 @@ import requests
 from engage.settings.base import PRIZE_SERVER_URL
 
 
-def request_data_prize(phone_number, dataplan, subscription, vault=None):  # default channel id is web
+def request_data_prize(tournamentid,phone_number, dataplan, subscription, vault=None):  # default channel id is web
     print("Requesting for", phone_number, "dataplan:", dataplan)
     command = '/api/Features/request_data_prize'
     data = {'msisdn': phone_number, 
             'dataplan': dataplan,
-            'package': subscription
+            'package': subscription,
+            'tournamentid':tournamentid
             }
     if vault:
         return vault.send(command=command, data=data)       
@@ -56,12 +57,13 @@ def request_data_prize(phone_number, dataplan, subscription, vault=None):  # def
         return api_call.content, api_call.status_code
 
 
-def request_cash_prize(phone_number, amount, subscription, vault=None):  # default channel id is web
+def request_cash_prize(tournamentid,phone_number, amount, subscription, vault=None):  # default channel id is web
     print("Requesting cash for", phone_number, "amount:", amount)
     command = '/api/Features/request_cash_prize'
     data = {'msisdn': phone_number, 
             'amount': str(amount),
-            'package': subscription
+            'package': subscription,
+            'tournamentid':tournamentid
             }
     if vault:
         return vault.send(command=command, data=data)       
@@ -123,7 +125,7 @@ def confirm_request_data(phone_number, idbundle, vault=None):  # default channel
     else:
         return api_call.content, api_call.status_code
 
-def get_prize(phone_number, dataplan, prize_type, subscription):
+def get_prize(phone_number, dataplan, prize_type, subscription,tournamentid):
     print("Attempting to grant", prize_type, dataplan, "to", phone_number)
     if subscription == SubscriptionPlan.FREE:
         subs = SubscriptionPackages.FREE
@@ -134,7 +136,7 @@ def get_prize(phone_number, dataplan, prize_type, subscription):
     subs = subs.upper()
     print("subs", subs)
     if prize_type == 'data':
-        reply, code = request_data_prize(phone_number, dataplan.data_plan, subs)
+        reply, code = request_data_prize(tournamentid,phone_number, dataplan.data_plan, subs)
         print(reply, code)
         if code==0:
             pending, code2 = check_pending_requests_data(phone_number)
@@ -145,7 +147,7 @@ def get_prize(phone_number, dataplan, prize_type, subscription):
                 if code3==0: # success
                     return True
     elif prize_type == 'cash':
-        reply, code = request_cash_prize(phone_number, dataplan, subs)
+        reply, code = request_cash_prize(tournamentid,phone_number, dataplan, subs)
         print(reply, code)
         if code==0:
             # pending, code2 = check_pending_requests_data(phone_number)
@@ -250,7 +252,7 @@ class Tournament(TranslatableTimeStampedModel): #TimeStampedModel
         ).values('winner').annotate(
             winner_name=F('winner__nickname'),
             win_count=Count('winner')
-        ).values('winner_name','win_count').order_by('-win_count').all()[:3]
+        ).values('winner_name','win_count').order_by('position').all()[:3]	
            
 
 
@@ -358,9 +360,9 @@ class Tournament(TranslatableTimeStampedModel): #TimeStampedModel
         if self.start_date and self.close_date :    
             delta = self.start_date - self.close_date 
             # hours = delta.total_seconds() / 3600
-            if delta < timedelta(hours=6):
+            if delta < timedelta(hours=2):
                 raise ValidationError({
-                    'close_date': _('Close Date must be at least 6 hours earlier than Start Date')
+                    'close_date': _('Close Date must be at least 2 hours earlier than Start Date')
                 })
         if self.open_date and self.free_open_date and self.free_open_date < self.open_date:
             raise ValidationError({

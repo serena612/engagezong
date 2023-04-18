@@ -253,6 +253,7 @@
                 var friends_list_reject = '{% url "friendlist-reject-friend-request" %}';
                 var user_uid = '{{ user.uid }}'
                 var upgrade_subscription = "{% url 'user-upgrade-subscription' 'user_uid' %}";
+                var check_user_status = "{% url 'user-check-userstatus' 'user_uid' %}"; 
                 var update_log = "{% url 'user-update-log' 'user_uid' %}"; 
                 var check_usercoin = "{% url 'user-check-usercoin' 'user_uid' %}"; 
                 var featured_game_retrieve =  '/api/featured_games/';
@@ -1807,7 +1808,7 @@
         </div>
     </div>
 </div>
-{% if user.is_authenticated %}
+<!-- {% if user.is_authenticated %}
     <div id="settings-modal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -2038,7 +2039,7 @@
     </div>
     
  
-{% endif %}
+{% endif %} -->
 
 <div id="congrats-modal1" class="modal fade hp_tourn">
     <div class="modal-dialog">

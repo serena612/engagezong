@@ -37,6 +37,7 @@ from .serializers import (
     TournamentPrizeSerializer,
     TournamentWinnerSerializer
 )
+from ..tournament.models import get_prize
 from ..core.models import Sticker
 from ..operator.constants import SubscriptionType
 
@@ -248,6 +249,15 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         if count :
             raise TournamentCloseException()
 
+        for tournament_prize in prizes :
+            winner = tournament_prize.winner
+            prize_type = tournament_prize.prize_type
+            if prize_type == 'cash':
+                prize = tournament_prize.cash_amount
+            else:
+                prize = tournament_prize.actual_data_package
+            if not get_prize(winner.mobile, prize, prize_type, winner.subscription,tournament.id):
+                raise TournamentCloseException()
 
         tournament.end_date = timezone.now()
         tournament.closed_on = timezone.now()
@@ -593,8 +603,9 @@ class TournamentWinnerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def list(self, request, *args, **kwargs):
        
         game = request.query_params['game']
-        tournament = request.query_params['tournament']
+        tournament = request.query_params.get('tournament', None)
 
+        
         if game and game!= '':
             queryset = TournamentPrize.objects.filter(
                 winner__isnull=False,
@@ -604,7 +615,7 @@ class TournamentWinnerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             ).values('winner').annotate(
                 winner_name=F('winner__nickname'),
                 win_count=Count('winner')
-            ).values('winner_name').order_by('-win_count').all()
+            ).values('winner_name').order_by('position').all()	
         else :
             queryset = TournamentPrize.objects.filter(
                 winner__isnull=False,
@@ -613,5 +624,5 @@ class TournamentWinnerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             ).values('winner').annotate(
                 winner_name=F('winner__nickname'),
                 win_count=Count('winner')
-            ).values('winner_name').order_by('-win_count').all()
+            ).values('winner_name').order_by('position').all()	
         return Response(list(queryset), status=status.HTTP_200_OK)

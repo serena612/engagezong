@@ -202,7 +202,7 @@ $(".featured-item a").on("click", function(e) {
 })
 
 //handle upgrade subscription click
-$("#upgrade-package-pgame-modal").on("click", function () {
+$("#upgrade-package-pgame-modal .modal-content").on("click", function () {
   setBtnLoading($(this), true);
 
   function upgrade_subsp() {

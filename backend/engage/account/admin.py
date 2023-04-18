@@ -69,7 +69,7 @@ class UserTransactionInline(admin.TabularInline):
 
 @admin.register(models.User)
 class UserAdmin(UserAdmin):
-    list_display = ('username', 'nickname', 'subscription', 'date_joined', 'last_login', 'last_updated')
+    list_display = ('username', 'nickname', 'subscription','coins', 'mobile','date_joined', 'last_login', 'last_updated')
     readonly_fields = ('last_login', 'date_joined', 'coins','game_nicknames', 'subscription')
     fieldsets = (
         (None, {'fields': ('avatar', 'nickname', 'username', 'password', 'coins', 'subscription', 'last_login', 'date_joined','game_nicknames')}),
@@ -78,6 +78,7 @@ class UserAdmin(UserAdmin):
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         })
     )
+    search_fields = ['nickname','mobile']
     inlines = [UserTransactionInline, UserFriendInline]
 
     def date_joined(self, obj):
@@ -148,11 +149,11 @@ class StaffUser(models.User):
 admin.site.register(StaffUser, MiniUserAdmin)
 
 class EndUserAdmin(UserAdmin):
-    list_display = ('username', 'nickname', 'subscription', 'date_joined', 'last_login', 'last_updated')
+    list_display = ('username', 'nickname', 'subscription','coins', 'mobile', 'date_joined', 'last_login', 'last_updated')
     list_filter = ['is_active', 'is_superuser', ]
     readonly_fields = ('last_login', 'date_joined', 'coins','game_nicknames', 'subscription')
     fieldsets = (
-        (None, {'fields': ('avatar', 'nickname', 'username', 'password', 'coins', 'subscription', 'last_login', 'date_joined','game_nicknames')}),
+        (None, {'fields': ('avatar', 'nickname', 'username', 'mobile', 'password', 'coins', 'subscription', 'last_login', 'date_joined','game_nicknames')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'mobile', 'country')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_superuser', 'groups', 'user_permissions'),

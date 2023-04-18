@@ -424,6 +424,7 @@ JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
         {'name': 'account.user','label': 'Cash','url': '/admin/cashdash/','permissions': ['account.user']},
         {'name': 'account.user','label': 'Datasync','url': '/admin/datasync/','permissions': ['account.user']},
         {'name': 'account.user','label': '(Un)Subscribe','url': '/admin/subunsub/','permissions': ['account.user']},
+        {'name': 'account.user','label': 'Sms','url': '/admin/sms/','permissions': ['account.user']},
     ]},
 ]
 

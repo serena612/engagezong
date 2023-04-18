@@ -76,3 +76,5 @@
 .submit-row{
     overflow: visible!important;
 }
+
+#tournamentparticipant_set-group .inline-navigation .add-row{ display:none!important;}

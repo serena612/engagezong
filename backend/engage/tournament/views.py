@@ -76,13 +76,19 @@ def tournament_view(request, slug):
         tournament_started = tournament.start_date + timedelta(hours=int(tournament.time_compared_to_gmt))
     if tournament.time_compared_to_gmt and int(tournament.time_compared_to_gmt)<0 :  # '-' in 
         tournament_started = tournament.start_date - timedelta(hours=int(tournament.time_compared_to_gmt))
-
-
+    
+    tournament_closed = tournament.close_date
+    if tournament.time_compared_to_gmt and int(tournament.time_compared_to_gmt)>=0 :  # '+' in 
+        tournament_closed = tournament.close_date + timedelta(hours=int(tournament.time_compared_to_gmt))
+    if tournament.time_compared_to_gmt and int(tournament.time_compared_to_gmt)<0 :  # '-' in 
+        tournament_closed = tournament.close_date - timedelta(hours=int(tournament.time_compared_to_gmt))
+    
     return render(request, 'tournament.html', {'tournament': tournament,
                                                'user': user,
                                                'starts_in_full': starts_in_full,
                                                'game_account': game_account,
                                                'tournament_started': tournament_started,
+                                               'tournament_closed': tournament_closed,
                                                'participant': participant,
                                                'can_join': can_join,
                                                'currentDate':now})

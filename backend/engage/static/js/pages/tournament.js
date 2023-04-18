@@ -344,7 +344,38 @@ $("#pay-btn").click(function (e) {
 })
 
 
-
+$('.register_btn').on("click", function () {
+    function check_user_new_status() {
+        $("#user-game-modal").modal("hide");
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: check_user_status.replace("user_uid", user_uid),
+                headers: {
+                    "X-CSRFToken": xtoken,
+                },
+                type: "post",
+                data: {},
+                error: function (value) {
+                    reject(value);
+                },
+                success: function (value) {
+                    resolve(value);
+                    console.log("value",value,value.status);
+                    //check if not same status
+                    if(value.status != $('#userSub').val())
+                    {
+                        window.location.reload();
+                    }
+                    else {
+                        $("#user-game-modal").modal("show"); 
+                    }
+                    
+                },
+            });
+        });
+    }
+    check_user_new_status();
+})
 
 $('.btn_upgrade').on("click", function () {
     setBtnLoading($(this), true);
@@ -371,11 +402,23 @@ $('.btn_upgrade').on("click", function () {
     upgrade_subsp().then(function (_) {
         
         $("#upgrade-package-modal").modal("hide");
-        setBtnLoading($("#upgrade-package-modal"), false);
-        window.location.reload(true);
+        $("#upgrade-package-modal").find('.btn_upgrade').removeClass("is-loading");
+        $("#upgrade-package-modal").find('.btn_upgrade').prop("disabled", false);
+
+
+        $("#user-game-modal").modal("hide");
+        $("#user-game-modal").find('.btn_upgrade').removeClass("is-loading");
+        $("#user-game-modal").find('.btn_upgrade').prop("disabled", false);
+
+        //window.location.reload(true);
     }).catch(function (error) {
       $("#upgrade-package-modal").modal("hide");
-        setBtnLoading($("#upgrade-package-modal"), false);
+      $("#upgrade-package-modal").find('.btn_upgrade').removeClass("is-loading");
+      $("#upgrade-package-modal").find('.btn_upgrade').prop("disabled", false);
+
+      $("#user-game-modal").modal("hide");
+      $("#user-game-modal").find('.btn_upgrade').removeClass("is-loading");
+      $("#user-game-modal").find('.btn_upgrade').prop("disabled", false);
         showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
     });
   });

@@ -20,22 +20,24 @@ from parler.admin import TranslatableTabularInline, TranslatableInlineModelAdmin
 from parler.utils.context import switch_language
 from django.forms.models import inlineformset_factory
 from django.conf import settings
+from django.forms.widgets import TextInput
+
 
 
 class TournamentPrizeInlineForm(TranslatableModelForm): #forms.ModelForm
 
     def clean(self):
         super(TournamentPrizeInlineForm, self).clean()
-        if 'winner' in self.changed_data:  # we only try to grant prize if winner is changed, this is to prevent redundance
-            winner = self.cleaned_data.get('winner')
-            prize_type = self.cleaned_data.get('prize_type')
-            if winner:
-                if prize_type == 'cash':
-                    prize = self.cleaned_data.get('cash_amount')
-                else:
-                    prize = self.cleaned_data.get('actual_data_package')
-                if not get_prize(winner.mobile, prize, prize_type, winner.subscription):
-                    raise ValidationError('Failed to give prize to selected winner. Please try saving again.')
+    #     if 'winner' in self.changed_data:  # we only try to grant prize if winner is changed, this is to prevent redundance
+    #         winner = self.cleaned_data.get('winner')
+    #         prize_type = self.cleaned_data.get('prize_type')
+    #         if winner:
+    #             if prize_type == 'cash':
+    #                 prize = self.cleaned_data.get('cash_amount')
+    #             else:
+    #                 prize = self.cleaned_data.get('actual_data_package')
+    #             if not get_prize(winner.mobile, prize, prize_type, winner.subscription):
+    #                 raise ValidationError('Failed to give prize to selected winner. Please try saving again.')
 
 
 class TournamentPrizeInline(CompactInline): #TranslatableStackedInline
@@ -110,16 +112,56 @@ class TournamentParticipantInline(CompactInline): #TranslatableStackedInline
             self.tournament = obj
             
         return super().get_formset(request, obj, **kwargs)
+    
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         formfield = super().formfield_for_foreignkey(db_field, request, **kwargs)
         if db_field.name == 'participant':
+            #linked_account_users = UserGameLinkedAccount.objects.filter(tournament=self.tournament).values_list('user', flat=True)
+            #formfield.queryset = formfield.queryset.filter(id__in=linked_account_users, is_staff=False)
+            #participant = models.User.objects.get(id=formfield.queryset.filter(id__in=linked_account_users, is_staff=False))
+            
+            
+            #queryset = models.User.objects.filter(id__in=linked_account_users, is_staff=False)
+            #kwargs['queryset'] = queryset
+            
+            
+            #kwargs['widget'] = forms.TextInput(attrs={'readonly': 'readonly'})
+            
+            #kwargs['widget'] = TextInput()
+            # Hide the default Select widget
+            #kwargs['widget'].is_hidden = True
             subquery = UserGameLinkedAccount.objects.filter(user=OuterRef('id'), tournament=self.tournament)
-            combined_query = formfield.queryset.annotate(
-                    # tourn = Cast(Subquery(subquery.values('tournament')[:1]), output_field=TextField()),
-                    gnickname = Cast(Subquery(subquery.values('account')[:1]), output_field=TextField())
-                ).filter(is_staff=False)
-            formfield.queryset = combined_query
+            if self.tournament :
+                formfield.queryset = formfield.queryset.filter(tournamentparticipant__tournament=self.tournament.id) \
+                    .filter(is_staff=False)
+                combined_query = formfield.queryset.annotate(
+                        gnickname = Cast(Subquery(subquery.values('account')[:1]), output_field=TextField())
+                    )
+                formfield.queryset = combined_query.distinct()
+                # print(formfield.queryset.values_list())
+                #print("values=",formfield.queryset.values_list('pk', flat=True))
+                # formfield.queryset = formfield.queryset# .filter(Q(usergamelinkedaccount__tournament_id=self.tournament.id) & Q(tournamentparticipant__status="accepted")) # .select_related('usergamelinkedaccount')
+                # print(queryset)
         return formfield
+        #return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    
+    # def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+    #     formfield = super().formfield_for_foreignkey(db_field, request, **kwargs)
+    #     if db_field.name == 'participant':
+    #         kwargs['widget'] = TextInput()
+    #     return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    #         # linked_account_users = UserGameLinkedAccount.objects.filter(tournament=self.tournament).values_list('user', flat=True)
+    #         # formfield.queryset = formfield.queryset.filter(id__in=linked_account_users, is_staff=False)
+
+
+    #         #subquery = UserGameLinkedAccount.objects.filter(user=OuterRef('id'), tournament=self.tournament)
+    #         #combined_query = formfield.queryset.annotate(
+    #                  # tourn = Cast(Subquery(subquery.values('tournament')[:1]), output_field=TextField()),
+    #         #         gnickname = Cast(Subquery(subquery.values('account')[:1]), output_field=TextField())
+    #         #     ).filter(is_staff=False)
+    #         #formfield.queryset = combined_query
+    #     #return formfield
 
 
     def formfield_for_dbfield(self, db_field, request, **kwargs):
@@ -138,13 +180,40 @@ class TournamentParticipantInline(CompactInline): #TranslatableStackedInline
         if obj and obj.starts_in_full == "In Progress":
             return False
         else:
-            return True
+            return False
     
     def has_delete_permission(self, request, obj=None):
         if obj and obj.starts_in_full == "In Progress":
             return False
         else:
             return True
+
+    def get_formset(self, request, obj=None, **kwargs):
+        if obj:
+            self.tournament = obj
+        return super().get_formset(request, obj, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # Get the selected User instance from the form data
+        participant_id = cleaned_data.get('participant')
+        if participant_id:
+            participant = models.User.objects.get(id=participant_id)
+        
+            # Set the MSISDN value for the participant field
+            msisdn_value = participant.mobile
+            print("msisdn_value ",msisdn_value)
+            self.cleaned_data['participant'] = f"{participant} ({msisdn_value})"
+        return self.cleaned_data
+    
+    def clean(self):
+        super().clean()
+        for form in self.forms:
+            participant_id = form.cleaned_data.get('participant')
+            if participant_id:
+                # Retrieve the MSISDN value for the selected participant
+                msisdn = models.User.objects.filter(id=participant_id).values_list('msisdn', flat=True).first()
+                form.cleaned_data['participant'] = f'{participant_id} ({msisdn})'
 
     # def has_change_permission(self, request, obj=None):
     #     if not obj:
@@ -153,9 +222,15 @@ class TournamentParticipantInline(CompactInline): #TranslatableStackedInline
     #         return False
     #     else:
     #         return True
-    
+    class Meta:
+        model = models.TournamentParticipant
+        fields = '__all__'
+        widgets = {
+            'participant': TextInput(attrs={'readonly': 'readonly'}),
+        }
 
 
+        
 class TournamentMatchInlineForm(TranslatableModelForm): #forms.ModelForm
     def __init__(self, *args, **kwargs):
         super(TournamentMatchInlineForm, self).__init__(*args, **kwargs)
@@ -304,7 +379,7 @@ class TournamentAdmin(TranslatableAdmin): #admin.ModelAdmin  #TranslatableAdmin
 
     list_display = ('name', 'game', 'start_date', 'end_date', 'start', 'close')
     exclude = ('slug', 'job_id', 'created_by', 'format')
-    inlines = [TournamentMatchInline, TournamentPrizeInline, TournamentParticipantInline,]
+    inlines = [TournamentMatchInline, TournamentPrizeInline,] #TournamentParticipantInline,]
 
     def change_view(self, request, object_id, extra_context=None):
         extra_context = extra_context or {}

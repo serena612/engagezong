@@ -11,14 +11,15 @@
     </script>
     <script src="{% static 'js/pages/tournament.js' %}"></script>
     <script>
-         var tournamentDate = '{{ tournament_started|date:"M d, Y" }} {{ tournament_started|time:"h:i:s" }}';
+         //var tournamentDate = '{{ tournament_started|date:"M d, Y" }} {{ tournament_started|time:"h:i:s" }}';
+         var tournamentDate = '{{ tournament_closed|date:"M d, Y" }} {{ tournament_closed|time:"H:i:s" }}';
          var countDownDate = new Date(tournamentDate).getTime();
          // Run myfunc every second
     var myfunc = setInterval(function() {
 
 var now = new Date().getTime();
 var timeleft = countDownDate - now;
-    
+
 // Calculating the days, hours, minutes and seconds left
 var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
 var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -40,11 +41,14 @@ if (timeleft < 0) {
     document.getElementById("ctmins").innerHTML = "";
     document.getElementById("ctsecs").innerHTML = "";
 
-    document.getElementById("is_started").innerHTML =  "{% translate 'Tournament Started' %}";    
+    //document.getElementById("is_started").innerHTML =  "{% translate 'Tournament Started' %}";  
+    //document.getElementById("is_started").innerHTML ="";
+    document.getElementById("is_closed").innerHTML =  "{% translate 'Registration Closed' %}";  
     document.getElementById("ct_down").style.display = "none";
     //document.getElementById("end").innerHTML = "TIME UP!!";
     //////location.reload();
 }
+ 
 }, 1000);
  
     </script>
@@ -54,11 +58,13 @@ if (timeleft < 0) {
             margin-right: 6px;
         }
         .pull-left{
-            float: left!important;
+            float: left!important;font-size: 0.9rem;margin-right:10px;    font-weight: bold;
         }
         .countdown
         {
             margin-left: 6px;
+            color: #9627b4;
+            font-weight: bold;
         }
     </style>
 {% endblock %}
@@ -73,30 +79,41 @@ if (timeleft < 0) {
                          alt="tournament-image" class="t-img">
                 </div>
                 
+                console.log("tournament.state ",tournament.state)
                 <div class="right">
                     <h2 class="name">{{ tournament.name }}</h2>
                     <h2 class="game">{{ tournament.game.name }}</h2>
-                    <h2 class="date">
+                    <div class="date">
                         {% if tournament.state == 'upcoming' %}
-                            <div class="pull-left" id="is_started">{% translate 'Tournament Starts in' %} </div> 
+                            <div class="pull-left" id="is_started">{% translate 'Tournament Starts on' %} </div> 
                             <!-- <span>{{ starts_in_full }}</span> -->
-                            <span class="countdown pull-left" id="ct_down">
+                            <span>{{tournament_started}}</span>
+                            {% if tournament.label_next_time %}
+                            <span> - {{tournament.label_next_time }}</span>
+                            {% endif %}
+
+                            <!-- <span class="countdown pull-left" id="ct_down">
                                 <p id="ctdays" ></p> <p id="cthours"></p> <p id="ctmins"></p> <p id="ctsecs"></p> <div style="clear:both"></div>
-                                <!-- <h2 id="end"></h2> -->
-                            </span>
+                                </span> -->
+                          
+                                <h2 id="end"></h2>
+                                <div class="pull-left" id="is_closed"><b>{% translate 'REGISTRATION CLOSES IN' %} </b></div> 
+                                <span class="countdown pull-left" id="ct_down">
+                                    <p id="ctdays" ></p> <p id="cthours"></p> <p id="ctmins"></p> <p id="ctsecs"></p> <div style="clear:both"></div>
+                                </span>
+
+                                <div class="pull-left">/ {{ tournament_closed|date:"M d, Y" }} / {{ tournament_closed|time:"h:i A" }} 
+                                    {% if tournament.label_next_time %}
+                                      <b> - {{tournament.label_next_time }}</b>
+                                    {% endif %}
+                                  </div>
                         {% else %}
                             {% translate 'Tournament Started' %} / {{ tournament_started|date:"M d, Y" }} / {{ tournament_started|time:"h:i A" }} <span></span>  
                         {% endif %}
 
-                        {% if tournament.state == 'upcoming' %}
-                        <div class="pull-left">/ {{ tournament_started|date:"M d, Y" }} / {{ tournament_started|time:"h:i A" }} </div>
-                        {% endif %}
-
-                        {% if tournament.label_next_time %}
-                          {{tournament.label_next_time }}
-                        {% endif %}
+                        
                         <div style="clear: both;"></div>
-                        </h2>
+                    </div>
                     <ul class="tabs-box tabs-container">
                         <li><a href="#summary" data-id="#summary-box"
                                class="is-with-side-friends active">{% translate 'Summary' %}</a>
@@ -157,9 +174,10 @@ if (timeleft < 0) {
                                         data-target="#user-game-modal"> {% translate 'Closed' %}</a>      
                                     
                                     {% else %} 
-                                        <a data-toggle="modal"
-                                         data-target="#user-game-modal">{% translate 'Register' %}</a>
-                                    {% endif %}
+                                        <!-- <a data-toggle="modal"
+                                         data-target="#user-game-modal" class="register_btn">{% translate 'Register' %}</a> -->
+                                         <a  class="register_btn">{% translate 'Register' %}</a>
+                                         {% endif %}
 
                                 {% else %}
                                     {% if tournament.end_date < currentDate or  tournament.closed_on %}

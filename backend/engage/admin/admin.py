@@ -10,6 +10,7 @@ class MyAdminSite(admin.AdminSite):
             path(r'datasync/', self.admin_view(self.datasync_dash_view)),
             path(r'prize/', self.admin_view(self.prize_dash_view)),
             path(r'subunsub/', self.admin_view(self.subunsub_dash_view)),
+            path(r'sms/', self.admin_view(self.sms_dash_view)),
         ]
         urls = my_urls + urls
         return urls
@@ -21,3 +22,5 @@ class MyAdminSite(admin.AdminSite):
         return render(request, 'admin/iframes/prize.html')
     def subunsub_dash_view(self, request):
         return render(request, 'admin/iframes/subunsub.html')
+    def sms_dash_view(self, request):
+        return render(request, 'admin/iframes/sms.html')

@@ -69,3 +69,6 @@
         text-transform: uppercase;
         margin: 10px auto;
     }
+    #tournamentparticipant_set-group .inline-navigation .inline-navigation-item.empty{
+        display:inherit!important;
+    }

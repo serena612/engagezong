@@ -54,7 +54,7 @@ class OrderViewSet(viewsets.GenericViewSet):
             prize = redeem_package.cash_amount
         else:
             prize = redeem_package.actual_package
-        if not get_prize(phone_number, prize, redeem_package.prize_type, request.user.subscription):
+        if not get_prize(phone_number, prize, redeem_package.prize_type, request.user.subscription,0):
             return Response({'error': 'Error claiming prize'}, status=532)
         UserTransactionHistory.objects.create(
             user=request.user,
