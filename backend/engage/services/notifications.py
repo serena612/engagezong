@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.db.models import Q
 from engage.account.constants import Transaction
 
+from engage.account.constants import Transaction
 
 # engage constants
 from engage.core.constants import NotificationTemplate
@@ -201,9 +202,13 @@ class Notifications(FCM):
 
     @classmethod
     @_with(log=True, threading=True)
-    def bulk(cls, notification,users):
+    def bulk(cls, notification):
         users = User.objects.all()
+        package_ids = [x.id for x in notification.package.all()]
         for user in users:
+            
+            if (user.subscription=='free' and  1 in package_ids) or  (user.subscription=='paid1' and 2 in package_ids) or (user.subscription=='paid2' and 3 in package_ids) :
+                    
                 obj, created = UserNotification.objects.get_or_create(
                     user=user,
                     notification=notification,

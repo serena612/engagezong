@@ -723,6 +723,10 @@ nav .top-nav .right .drop-box a span {
   padding-top: 1px;
 }
 
+
+
+
+
 nav .top-nav .right .drop-box a:hover {
   background: rgba(0, 0, 0, 0.1);
 }
@@ -782,11 +786,20 @@ nav .bottom-nav ul li a {
   padding: 18px;
   color: white;
   position: relative;
-}
 
+
+
+
+
+}
+a.li_go_premium {
+    padding-left: 43px!important;
+    color:#fff;
+    position:relative;cursor:pointer;
+}
 nav .bottom-nav ul li a:hover {
   text-decoration: none;
-  color: #f9196d;
+  color: #f9196d!important;
 }
 
 .social-fixed {
@@ -7368,6 +7381,11 @@ border-right: 8px solid #FFF;
 border-left: 8px solid #FFF;
 box-sizing: border-box;
 }
+
+.earlier-notification {
+background: #fff;
+}
+
 /* .blackop
 {
   opacity: 0.3;
@@ -7395,3 +7413,19 @@ box-sizing: border-box;
 }
 .btn_upgrade.is-loading{opacity:0.5;
 pointer-events: none;}
+
+
+.s-menu a.li_go_premium { padding-left: 43px; background: #472b93;}
+
+#prizes_page .prize-box .name p:nth-child(2) {
+    top: 0px; 
+     border-top: 0;
+    margin-top: 0px;
+}
+#prizes_page #prize-grid-1 .prize-box .name > p:nth-child(1) {
+  height: 0px;
+  line-height: inherit!important; 
+  padding: 0;
+  margin: 0;
+}
+#go-premium-modal{} /*{display:block;}*/

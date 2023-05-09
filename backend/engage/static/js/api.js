@@ -30,6 +30,37 @@ function hoo(){
    
 
 
+       $("#li_go_premium").on("click", function () {
+        setBtnLoading($(this), true);
+      
+        function upgrade_subsp() {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: upgrade_subscription.replace("user_uid", user_uid),
+                    headers: {
+                        "X-CSRFToken": xtoken,
+                    },
+                    type: "post",
+                    data: {},
+                    error: function (value) {
+                        reject(value);
+                    },
+                    success: function (value) {
+                        resolve(value);
+                    },
+                });
+            });
+        }
+      
+        upgrade_subsp().then(function (_) {
+            window.location.reload(true);
+        }).catch(function (error) {
+            showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
+        });
+      });
+    
+    
+
 // login phone
 function postLogin(data) {
 

@@ -95,6 +95,8 @@ class User(AbstractUser, TimeStampedModel):
     seen_coins = models.BooleanField(default=False)
     referrer = models.ForeignKey('self', on_delete=models.SET_NULL,
                                blank=True, null=True)
+    go_premium_sent = models.BooleanField(default=False)
+
     def _get_nicknames(self) :
         result = ''
         games= Game.objects.filter(is_active=True)

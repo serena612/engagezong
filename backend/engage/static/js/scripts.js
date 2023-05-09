@@ -976,7 +976,10 @@ $(function () {
                 $('#game-fullscreen-modal').find('.modal-content').css('width',$(window).width());
                 $('#game-fullscreen-modal').find('.modal-content').css('height',$(window).height() + 80);
                 $('#game-fullscreen-modal').find('.info-box').html("");
-                $('#game-fullscreen-modal').find('.info-box').append('<iframe class="'+ (target == 'solve_math' ? 'solvemath' : '') +'" src="/games/'+target+'/" width="100%"  border="0"></iframe>')
+                $('#game-fullscreen-modal').find('.info-box').append('<iframe class="'+ (target == 'solve_math' ? 'solvemath' : '') +'" src="/games/'+target+'/" width="100%"  border="0"></iframe>');
+                
+                //New:
+                $('#game-fullscreen-modal').find('.modal-body').addClass(target);
                 
                 $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
                 $('#game-fullscreen-modal').find('iframe').css('border',0);
@@ -1007,34 +1010,34 @@ $(function () {
         subscribe_api(username, 1, idservice, referrer=referrer, vault=self.client);
     });
 
-    if (is_complete_profile == false) {
+    // if (is_complete_profile == false) {
        
 
-        var now = new Date();
-        var day = now.getDate();
-        var month = now.getMonth()+1;
-        var year = now.getFullYear();
+    //     var now = new Date();
+    //     var day = now.getDate();
+    //     var month = now.getMonth()+1;
+    //     var year = now.getFullYear();
         
-        var seen_day = parseInt(is_created_now.split(' ')[1].split(',')[0]);
-        var seen_month = months.indexOf(is_created_now.split(' ')[0])+1;
-        var seen_year = is_created_now.split(',')[1];
-        if(day==seen_day && month==seen_month && year==seen_year){
-            var lastCheck = localStorage.getItem('last_profile_edit')
-            if (!lastCheck) {
-                localStorage.setItem('last_profile_edit', now.toString())
-                openEditProfileModal()
-            } else {
-                const diffTime = Math.abs(now - new Date(lastCheck));
-                var diffHours = diffTime / 1000 / 60 / 60;
-                if (diffHours >= 24) {
-                    localStorage.setItem('last_profile_edit', now.toString())
-                    openEditProfileModal()
-                }
-            }
-        }
+    //     var seen_day = parseInt(is_created_now.split(' ')[1].split(',')[0]);
+    //     var seen_month = months.indexOf(is_created_now.split(' ')[0])+1;
+    //     var seen_year = is_created_now.split(',')[1];
+    //     if(day==seen_day && month==seen_month && year==seen_year){
+    //         var lastCheck = localStorage.getItem('last_profile_edit')
+    //         if (!lastCheck) {
+    //             localStorage.setItem('last_profile_edit', now.toString())
+    //             openEditProfileModal()
+    //         } else {
+    //             const diffTime = Math.abs(now - new Date(lastCheck));
+    //             var diffHours = diffTime / 1000 / 60 / 60;
+    //             if (diffHours >= 24) {
+    //                 localStorage.setItem('last_profile_edit', now.toString())
+    //                 openEditProfileModal()
+    //             }
+    //         }
+    //     }
         
         
-    }
+    // }
 });
 
 function copyToClipboard(txt) {

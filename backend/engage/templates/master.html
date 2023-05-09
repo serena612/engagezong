@@ -7,6 +7,10 @@
 {% get_countries as countries %}
 {% load l10n %}
 
+{{ my_date|localize }}
+{{ my_number|localize }}
+
+
 <!DOCTYPE html>
 <html>
 
@@ -206,7 +210,10 @@
                     appId: "1:615474016768:web:7cfa190a078416cc3a9ee5",
                     measurementId: "G-4FTX1VRLYN"
                   };
-                var user_subscription = '{{ user.subscription }}';
+                //var user_subscription = '{{ user.subscription }}';
+                var user_subscription = '{{ user.subscription.strip}}';
+
+
                 var profileData = {
                     'avatar_id': {% if user.avatar %}'{{ user.avatar.id }}'{% else %}''{% endif %},
                     'avatar_url': {% if user.avatar %}'{{ user.avatar.image.url }}'{% else %}''{% endif %},
@@ -257,6 +264,7 @@
                 var update_log = "{% url 'user-update-log' 'user_uid' %}"; 
                 var check_usercoin = "{% url 'user-check-usercoin' 'user_uid' %}"; 
                 var featured_game_retrieve =  '/api/featured_games/';
+                var update_go_premium_flag = "{% url 'user-update-go-premium-flag' 'user_uid' %}"
                 
             </script>
             <script type="application/javascript"
@@ -280,6 +288,16 @@
         {
             .rotate_dev, #game-fullscreen-modal #rtdev.rotate_dev{
                 display: block;               
+            }
+             .speed_racer .rotate_dev, #game-fullscreen-modal .speed_racer #rtdev.rotate_dev,
+            .sliding_bricks .rotate_dev, #game-fullscreen-modal .sliding_bricks #rtdev.rotate_dev,
+            .ski_rush .rotate_dev, #game-fullscreen-modal .ski_rush #rtdev.rotate_dev,
+            .reversi .rotate_dev, #game-fullscreen-modal .reversi #rtdev.rotate_dev,
+            .pac_maker .rotate_dev, #game-fullscreen-modal .pac_maker #rtdev.rotate_dev,
+            .kickups .rotate_dev, #game-fullscreen-modal .kickups #rtdev.rotate_dev,
+            .galactic_war .rotate_dev, #game-fullscreen-modal .galactic_war #rtdev.rotate_dev,
+            .fruit_matching .rotate_dev, #game-fullscreen-modal .fruit_matching #rtdev.rotate_dev{
+                display: none!important; 
             }
         }
         @media screen and (orientation:landscape)
@@ -585,6 +603,15 @@
                         {% endif%}
                     </a>
                 </li>
+                {% if user.is_authenticated and user.subscription == "free"%}
+                <li>
+                    <a  class="li_go_premium">{% translate 'GO PREMIUM' %}
+                        <i class="fa fa-solid fa-crown" style="color: #feb930!important;position: absolute;background: transparent;font-size: 18px;top: 19px;left: 10px;display:block;"></i>
+                        
+                    </a>
+                </li>
+                {% endif %}
+                
             </ul>
         </div>
     {% endblock %}
@@ -614,6 +641,14 @@
             <li>
                 <a href='/#winners' id="li_winners">{% translate 'WINNERS' %}</a>
             </li>
+            {% if user.is_authenticated and user.subscription == "free"%}
+            <li>
+                <a class="li_go_premium" id="li_go_premium">
+                
+                <i class="fa fa-solid fa-crown" style="color: #feb930!important;position: absolute;background: transparent;font-size: 18px;top: 11px;left: 14px;display:block;"></i>{% translate 'GO PREMIUM' %}</a>
+                
+            </li>
+            {% endif %}
         </ul>
 
         {% if user.avatar %}
@@ -1808,7 +1843,7 @@
         </div>
     </div>
 </div>
-<!-- {% if user.is_authenticated %}
+{% if user.is_authenticated %}
     <div id="settings-modal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -1926,7 +1961,7 @@
                                             </select>
                                             <i class="fa fa-chevron-down" aria-hidden="true" style="right:-17px;"></i>
                                        </div>    
-                                       <div style="float:left;position:relative;margin-right: 22px;"  id="bthdate2"> 
+                                       <div style="float:left;position:relative;margin-right: 22px;"> 
                                         <select name="data_day" required {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
                                                 class="text-center">
                                             {% for day in days %}
@@ -1936,7 +1971,7 @@
                                         </select>
                                         <i class="fa fa-chevron-down" aria-hidden="true" style="right:-17px;"></i>
                                     </div>
-                                    <div style="float:left;position:relative;"  id="bthdate3"> 
+                                    <div style="float:left;position:relative;"> 
                                         <select name="data_year" required {% if user.profile.birthdate %} style="pointer-events: none;" {% endif %}
                                                 class="text-center"
                                                 id="">
@@ -2039,7 +2074,7 @@
     </div>
     
  
-{% endif %} -->
+{% endif %}
 
 <div id="congrats-modal1" class="modal fade hp_tourn">
     <div class="modal-dialog">
@@ -2159,6 +2194,26 @@
         </div>
     </div>
 </div>
+
+
+{% if user.is_authenticated and user.subscription == "free" and user.go_premium_sent == False%}
+<div id="go-premium-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" style="text-align: center; background-color: #0D132D; ">          
+            <div class="modal-body" style="padding: 20px 0 52px 0;margin: 0px auto 6px;">                    
+                <div class="close-box" style="background: transparent; float: right; margin-bottom: 52px; margin-right: 17px;">
+                    <a data-dismiss="modal" href=""><i class="fas fa-times" style="color: black; background-color: #EF0C75; cursor: pointer; width: 27px; height: 28px; text-align: center; padding-top: 3px; border-radius: 20px; top: 31px; position: absolute; right: 19px;"></i></a>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <img src='/static/img/premium_puic.jpg'/>
+                </div>                    
+               <div class="btn_upgrade" style="cursor: pointer; background-color: #FF0090; font-weight: bold; color: #181022; text-align: center; max-width: 292px; margin: 33px auto 0; height: 57px; line-height: 57px; text-transform: uppercase; font-size: 25px;">{% translate 'I Agree' %}</div>                   
+            </div>
+        </div>
+    </div>
+</div>
+ {% endif %}
+
 
 {% block javascript %}
 {% if user.is_authenticated %}

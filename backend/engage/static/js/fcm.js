@@ -1,6 +1,94 @@
 $(function () {
   var csrftoken = xtoken;
   var isIphone = (/iphone/i.test(navigator.userAgent) || /ipod/i.test(navigator.userAgent)) && !this.isIE && !this.isMicrosoftEdge;
+ 
+//   function callOncePerDay(user) {
+//   var lastCalled = localStorage.getItem('lastCalled_'+ user );
+//   var now = new Date().getTime();
+  
+
+//   if (!lastCalled || (now - lastCalled > 24 * 60 * 60 * 1000)) {
+    
+//     localStorage.setItem('lastCalled_'+user, now);
+//     if($('#go-premium-modal').length!=0){
+//     $('#go-premium-modal').modal('show');
+//     go_premium_sent.go_premium_sent = true
+//     }
+//   }
+// }
+
+function callOncePerDay(user) {
+  var lastCalled = localStorage.getItem('lastCalled_'+ user );
+  var now = new Date();
+
+  // Get the start of the current day by setting the hours, minutes, seconds, and milliseconds to zero
+  var startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  if (!lastCalled || (new Date(lastCalled) < startOfDay)) {
+    localStorage.setItem('lastCalled_'+user, now);
+    if($('#go-premium-modal').length!=0){
+      $('#go-premium-modal').modal('show');
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          url: update_go_premium_flag.replace("user_uid", user_uid),
+          headers: {
+            "X-CSRFToken": xtoken,
+          },
+          type: "post",
+          data: {},
+          error: function (value) {
+              reject(value);
+          },
+          success: function (value) {
+              resolve(value);
+            },
+        });
+      });
+    }
+  }
+}
+
+$(document).ready(function(){
+      if (user_uid){
+        callOncePerDay(user_uid);
+        $(".li_go_premium,#go-premium-modal .btn_upgrade").on("click", function () {
+          function upgrade_subsp() {
+              return new Promise((resolve, reject) => {
+                  $.ajax({
+                      url: upgrade_subscription.replace("user_uid", user_uid),
+                      headers: {
+                          "X-CSRFToken": xtoken,
+                      },
+                      type: "post",
+                      data: {},
+                      error: function (value) {
+                          reject(value);
+                      },
+                      success: function (value) {
+                          resolve(value);
+                      },
+                  });
+              });
+          }
+        
+          upgrade_subsp().then(function (_) {
+            $("#go-premium-modal").modal("hide");
+            $("#go-premium-modal").find('.btn_upgrade').removeClass("is-loading");
+            $("#go-premium-modal").find('.btn_upgrade').prop("disabled", false);
+
+            $("#li_go_premium").modal("hide");
+            $("#li_go_premium").find('.li_go_premium').removeClass("is-loading");
+            $("#li_go_premium").find('.li_go_premium').prop("disabled", false);
+
+          }).catch(function (error) {
+              showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
+          });
+        });
+      }
+})
+
+  
+  
   var firebaseConfig = {
     apiKey: "AIzaSyClFi6oYdwKrbbTYBSNRdbYmLXJ4uR-vHI",
     authDomain: "engageplaywin-4b74b.firebaseapp.com",
@@ -32,6 +120,7 @@ $(function () {
   var defaultlang="en-us";
   var lang = lang_code;
   console.log("lang",lang);
+  
 
   function adjustSettingPopNum(obj){
     $("#notifications-popup").find("#notification-popup-"+obj.notification.id).modal({
