@@ -3,7 +3,7 @@
 {% block content %}
 
 <style type="text/css">
-     #content.colMS {
+ /* #content.colMS {
         width: calc(100vw - 300px)!important;
     max-width: calc(100vw - 300px)!important;
     margin-right: 0px!important;
@@ -19,10 +19,41 @@
     width: 95vw!important;
     max-width: 95vw!important;
         }
+    }*/
+    
+             #content.colMS {
+        width: calc(100vw - 58px)!important;
+    max-width: calc(100vw - 58px)!important;
+    margin-right: 0px!important;
+    height: calc(100vh - 62px);
+        }
+.menu-pinned   #content.colMS {
+        width: calc(100vw - 300px)!important;
+    max-width: calc(100vw - 300px)!important;
+    margin-right: 0px!important;
+    height: calc(100vh - 62px);
+    }
+	#content.colMS iframe{
+	    width:100%!important;
+		height:100%!important;
+		margin-right: 0px!important;
+	}
+    @media (max-width:960px) {
+        #content.colMS {
+    width: 90vw!important;
+    max-width: 90vw!important;
+        }
+        .menu-pinned   #content.colMS {
+        width: 90vw!important;
+    max-width: 90vw!important;
+    margin-right: 0px!important;
+    height: calc(100vh - 62px);
+}
     }
 </style>
 
-<iframe src="/dashboard/app/dashboards#/view/1347fc30-7bc2-11ed-9647-df3973163513?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-7d%2Fd,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,syncColors:!f,useMargins:!t),panels:!((embeddableConfig:(enhancements:()),gridData:(h:18,i:'0ac35bd3-0299-45db-a07f-45b8a0725be3',w:48,x:0,y:0),id:c9824f40-7bb9-11ed-9647-df3973163513,panelIndex:'0ac35bd3-0299-45db-a07f-45b8a0725be3',type:visualization,version:'7.17.8'),(embeddableConfig:(enhancements:()),gridData:(h:17,i:fcb8ff1b-f522-4c03-87fe-1cf61701343c,w:48,x:0,y:18),id:'3ac9ed50-7bc1-11ed-9647-df3973163513',panelIndex:fcb8ff1b-f522-4c03-87fe-1cf61701343c,type:visualization,version:'7.17.8'),(embeddableConfig:(enhancements:()),gridData:(h:22,i:'438e4e5b-0aec-44bc-a694-da786a07b0b4',w:48,x:0,y:35),id:dd6cfd20-7bc3-11ed-9647-df3973163513,panelIndex:'438e4e5b-0aec-44bc-a694-da786a07b0b4',type:search,version:'7.17.8')),query:(language:kuery,query:''),tags:!(),timeRestore:!f,title:Datasync,viewMode:view)&show-time-filter=true" height="600" width="800"></iframe>
+<!--<iframe src="/dashboard/app/dashboards#/view/1347fc30-7bc2-11ed-9647-df3973163513?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-7d%2Fd,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,syncColors:!f,useMargins:!t),panels:!((embeddableConfig:(enhancements:()),gridData:(h:18,i:'0ac35bd3-0299-45db-a07f-45b8a0725be3',w:48,x:0,y:0),id:c9824f40-7bb9-11ed-9647-df3973163513,panelIndex:'0ac35bd3-0299-45db-a07f-45b8a0725be3',type:visualization,version:'7.17.8'),(embeddableConfig:(enhancements:()),gridData:(h:17,i:fcb8ff1b-f522-4c03-87fe-1cf61701343c,w:48,x:0,y:18),id:'3ac9ed50-7bc1-11ed-9647-df3973163513',panelIndex:fcb8ff1b-f522-4c03-87fe-1cf61701343c,type:visualization,version:'7.17.8'),(embeddableConfig:(enhancements:()),gridData:(h:22,i:'438e4e5b-0aec-44bc-a694-da786a07b0b4',w:48,x:0,y:35),id:dd6cfd20-7bc3-11ed-9647-df3973163513,panelIndex:'438e4e5b-0aec-44bc-a694-da786a07b0b4',type:search,version:'7.17.8')),query:(language:kuery,query:''),tags:!(),timeRestore:!f,title:Datasync,viewMode:view)&show-time-filter=true" height="600" width="800"></iframe>-->
+<iframe src="/dashboard/app/dashboards#/view/1347fc30-7bc2-11ed-9647-df3973163513?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-7d%2Fd%2Cto%3Anow))&show-time-filter=true" height="600" width="800"></iframe>
 {% endblock %}
 {% block sidebar %}
 {% endblock %}

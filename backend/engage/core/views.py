@@ -19,9 +19,12 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model, login
 from engage.settings.base import LANGUAGE_CODE
 from django.utils.translation import get_language
-
+import uuid
 
 from engage.account.api import do_register
+
+import logging    # first of all import the module
+logging.basicConfig(filename='log.txt', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 
 
 UserModel = get_user_model()
@@ -141,6 +144,10 @@ def home_view(request):
                                           'is_ad_engage':is_ad_engage,
                                           'lang_code': lang_code})
 
+
+def secured_view(request):
+   logging.debug ("Accessing secured page")
+   return render(request, 'secured.html', {})
 
     
 def about_view(request):

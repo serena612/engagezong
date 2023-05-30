@@ -2,7 +2,7 @@
 {% load i18n static %}
 {% block content %}
 <style type="text/css">
-      #content.colMS {
+/* #content.colMS {
         width: calc(100vw - 300px)!important;
     max-width: calc(100vw - 300px)!important;
     margin-right: 0px!important;
@@ -18,10 +18,41 @@
     width: 95vw!important;
     max-width: 95vw!important;
         }
+    }*/
+    
+            #content.colMS {
+        width: calc(100vw - 58px)!important;
+    max-width: calc(100vw - 58px)!important;
+    margin-right: 0px!important;
+    height: calc(100vh - 62px);
+        }
+.menu-pinned   #content.colMS {
+        width: calc(100vw - 300px)!important;
+    max-width: calc(100vw - 300px)!important;
+    margin-right: 0px!important;
+    height: calc(100vh - 62px);
+    }
+	#content.colMS iframe{
+	    width:100%!important;
+		height:100%!important;
+		margin-right: 0px!important;
+	}
+    @media (max-width:960px) {
+        #content.colMS {
+    width: 90vw!important;
+    max-width: 90vw!important;
+        }
+        .menu-pinned   #content.colMS {
+        width: 90vw!important;
+    max-width: 90vw!important;
+    margin-right: 0px!important;
+    height: calc(100vh - 62px);
+}
     }
 </style>
 
-<iframe id="frame" name="frame" src="/dashboard/app/dashboards#/view/4d5b3bd0-7bc2-11ed-9647-df3973163513?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-7d%2Fd,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,syncColors:!f,useMargins:!t),panels:!((embeddableConfig:(enhancements:()),gridData:(h:19,i:ba7b0556-cc99-4e2f-a00a-a106f1b4e8b0,w:48,x:0,y:0),id:a25132b0-7bb9-11ed-9647-df3973163513,panelIndex:ba7b0556-cc99-4e2f-a00a-a106f1b4e8b0,type:visualization,version:'7.17.8'),(embeddableConfig:(enhancements:()),gridData:(h:22,i:feaffb49-926a-4fa5-ab44-ab8d8a6d1809,w:48,x:0,y:19),id:ec00bf90-7bc1-11ed-9647-df3973163513,panelIndex:feaffb49-926a-4fa5-ab44-ab8d8a6d1809,type:visualization,version:'7.17.8'),(embeddableConfig:(enhancements:()),gridData:(h:20,i:'86f54137-ff92-4ea0-9335-7cbb0b0788da',w:48,x:0,y:41),id:'855542f0-7bc3-11ed-9647-df3973163513',panelIndex:'86f54137-ff92-4ea0-9335-7cbb0b0788da',type:search,version:'7.17.8')),query:(language:kuery,query:''),tags:!(),timeRestore:!f,title:Cash,viewMode:view)&show-time-filter=true" style="flex-grow:1;border:none;margin:0;padding:0;"  height="600" width="800"></iframe>
+<!--<iframe id="frame" name="frame" src="/dashboard/app/dashboards#/view/4d5b3bd0-7bc2-11ed-9647-df3973163513?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-7d%2Fd,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,syncColors:!f,useMargins:!t),panels:!((embeddableConfig:(enhancements:()),gridData:(h:19,i:ba7b0556-cc99-4e2f-a00a-a106f1b4e8b0,w:48,x:0,y:0),id:a25132b0-7bb9-11ed-9647-df3973163513,panelIndex:ba7b0556-cc99-4e2f-a00a-a106f1b4e8b0,type:visualization,version:'7.17.8'),(embeddableConfig:(enhancements:()),gridData:(h:22,i:feaffb49-926a-4fa5-ab44-ab8d8a6d1809,w:48,x:0,y:19),id:ec00bf90-7bc1-11ed-9647-df3973163513,panelIndex:feaffb49-926a-4fa5-ab44-ab8d8a6d1809,type:visualization,version:'7.17.8'),(embeddableConfig:(enhancements:()),gridData:(h:20,i:'86f54137-ff92-4ea0-9335-7cbb0b0788da',w:48,x:0,y:41),id:'855542f0-7bc3-11ed-9647-df3973163513',panelIndex:'86f54137-ff92-4ea0-9335-7cbb0b0788da',type:search,version:'7.17.8')),query:(language:kuery,query:''),tags:!(),timeRestore:!f,title:Cash,viewMode:view)&show-time-filter=true" style="flex-grow:1;border:none;margin:0;padding:0;"  height="600" width="800"></iframe>-->
+<iframe id="frame" name="frame" src="/dashboard/app/dashboards#/view/4d5b3bd0-7bc2-11ed-9647-df3973163513?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-7d%2Fd%2Cto%3Anow))&show-time-filter=true" style="flex-grow:1;border:none;margin:0;padding:0;" height="600" width="800"></iframe>
 {% endblock %}
 {% block sidebar %}
 {% endblock %}
