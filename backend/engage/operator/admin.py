@@ -11,7 +11,8 @@ from .models import (
     OperatorHomeSection,
     Region,
     PurchaseCoin,
-    RedeemPackage
+    RedeemPackage,
+    SubConfiguration
 )
 from ..core.fields import SVGAndImageFormField
 # -*- coding: utf-8 -*-
@@ -24,25 +25,26 @@ class OperatorHomeSectionModelForm(TranslatableModelForm): #ModelForm
             'icon': SVGAndImageFormField,
         }
 
-# class OperatorFaqModelForm(TranslatableModelForm): #ModelForm
-#     class Meta:
-#         model = OperatorFaq
-#         exclude = []
-#         field_classes = {
-#             'icon': SVGAndImageFormField,
-#         }
+class OperatorFaqModelForm(TranslatableModelForm): #ModelForm
+    class Meta:
+        model = OperatorFaq
+        exclude = []
+        fields = '__all__'
+#        field_classes = {
+#            'icon': SVGAndImageFormField,
+#        }
 
-# class RedeemPackageModelForm(TranslatableModelForm): #ModelForm
-#     class Meta:
-#         model = RedeemPackage
-#         exclude = []
-#         field_classes = {
-#             'icon': SVGAndImageFormField,
-#         }
+class RedeemPackageModelForm(TranslatableModelForm): #ModelForm
+    class Meta:
+        model = RedeemPackage
+        exclude = []
+        field_classes = {
+            'icon': SVGAndImageFormField,
+        }
 
 class OperatorFaqInline(CompactInline):
     model = OperatorFaq
-    #form = OperatorFaqModelForm
+    form = OperatorFaqModelForm
 
 
 class OperatorWebsiteInline(TranslatableStackedInline): # admin.StackedInline
@@ -67,10 +69,20 @@ class PurchaseCoinInline(CompactInline):
 
 class RedeemPackageInline(CompactInline):
     model = RedeemPackage
-    #form = RedeemPackageModelForm
+    form = RedeemPackageModelForm
     exclude = ('uid',)
     min_num = 1
 
+class SubConfigurationInline(CompactInline):
+    model = SubConfiguration
+    exclude = ('uid',)
+    min_num = 1
+
+    def has_add_permission(self, request, obj=None):
+        if obj and obj.starts_in_full == "In Progress":
+            return False
+        else:
+            return False
 
 @admin.register(Operator)
 class OperatorAdmin(TranslatableAdmin):  #admin.ModelAdmin
@@ -82,6 +94,7 @@ class OperatorAdmin(TranslatableAdmin):  #admin.ModelAdmin
         OperatorFaqInline,
         RedeemPackageInline,
         PurchaseCoinInline,
+        SubConfigurationInline
     ]
 
     def change_view(self, request, object_id, form_url='', extra_context=None):

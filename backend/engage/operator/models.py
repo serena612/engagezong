@@ -176,3 +176,13 @@ class PurchaseCoin(TimeStampedModel):
     @property
     def total(self):
         return self.coins + int(self.coins * (self.bonus / 100))
+    
+
+class SubConfiguration(TimeStampedModel):
+    operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
+    uid = models.UUIDField(default=uuid.uuid4)
+    subThroughUssd = models.BooleanField(default=False,verbose_name="Subscription through USSD")
+
+    class Meta:
+        verbose_name = 'Subscription through USSD'
+        verbose_name_plural = 'Subscription through USSD'

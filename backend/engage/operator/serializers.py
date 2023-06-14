@@ -1,7 +1,7 @@
 from rest_framework import serializers, status
 from rest_framework.exceptions import ValidationError, APIException
 
-from .models import Region, Operator, RedeemPackage, PurchaseCoin, OperatorAd
+from .models import Region, Operator, RedeemPackage, PurchaseCoin, OperatorAd, SubConfiguration
 from parler_rest.serializers import TranslatableModelSerializer
 from parler_rest.fields import TranslatedFieldsField
 
@@ -46,5 +46,11 @@ class RedeemPackageSerializer(TranslatableModelSerializer): #serializers.Seriali
 class PurchaseCoinsSerializer(serializers.Serializer):
     coins_plan = serializers.PrimaryKeyRelatedField(
         queryset=PurchaseCoin.objects.all(),
+        required=True
+    )
+
+class SubConfigurationSerializer(serializers.Serializer):
+    is_sub = serializers.PrimaryKeyRelatedField(
+        queryset=SubConfiguration.objects.all(),
         required=True
     )

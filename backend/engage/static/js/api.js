@@ -46,14 +46,22 @@ function hoo(){
                         reject(value);
                     },
                     success: function (value) {
+                        value.is_sub
                         resolve(value);
+                        if (value.is_sub == 'false')
+                        {
+                            window.location.href="/secured"
+                        }
+                        else{
+                            window.location.reload(true);
+                        }
                     },
                 });
             });
         }
       
         upgrade_subsp().then(function (_) {
-            window.location.reload(true);
+            //window.location.reload(true);
         }).catch(function (error) {
             showInfoModal('Error!', '<p>Something went wrong, please try again later.</p>')
         });

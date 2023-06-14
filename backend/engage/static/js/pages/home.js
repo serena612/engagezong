@@ -215,10 +215,21 @@ $("#upgrade-package-pgame-modal .modal-content").on("click", function () {
               type: "post",
               data: {},
               error: function (value) {
-                  reject(value);
+                resolve(value);
               },
               success: function (value) {
+                  value.is_sub
                   resolve(value);
+                  if (value.is_sub == 'false')
+                  {
+                    window.location.href="/secured"
+                  }
+                  else{
+                    $("#upgrade-package-pgame-modal").modal("hide");
+                    setBtnLoading($("#upgrade-package-pgame-modal"), false);
+                    window.location.reload(true);
+                  }
+                  
               },
           });
       });
@@ -226,9 +237,9 @@ $("#upgrade-package-pgame-modal .modal-content").on("click", function () {
 
   upgrade_subsp().then(function (_) {
       
-      $("#upgrade-package-pgame-modal").modal("hide");
-      setBtnLoading($("#upgrade-package-pgame-modal"), false);
-      window.location.reload(true);
+      // $("#upgrade-package-pgame-modal").modal("hide");
+      // setBtnLoading($("#upgrade-package-pgame-modal"), false);
+      //window.location.reload(true);
   }).catch(function (error) {
     $("#upgrade-package-pgame-modal").modal("hide");
       setBtnLoading($("#upgrade-package-pgame-modal"), false);

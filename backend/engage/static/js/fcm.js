@@ -65,7 +65,13 @@ $(document).ready(function(){
                           reject(value);
                       },
                       success: function (value) {
-                          resolve(value);
+                        value.is_sub
+                        resolve(value);
+                        if (value.is_sub == 'false')
+                        {
+                          window.location.href="/secured"
+                        }
+                    
                       },
                   });
               });
