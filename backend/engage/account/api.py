@@ -17,7 +17,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import permissions
-from engage.operator.models import RedeemPackage
+from engage.operator.models import RedeemPackage, SubConfiguration
 from uuid import uuid4
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg.openapi import Schema, TYPE_ARRAY, TYPE_OBJECT, TYPE_STRING
@@ -63,6 +63,25 @@ from .constants import (
 from engage.operator.models import RedeemPackage
 from .exceptions import AdLimitReached, AdAlreadyClicked, SelfAd
 from engage.core.models import HTML5Game
+
+import logging
+from logging.handlers import TimedRotatingFileHandler
+from django.shortcuts import render, redirect
+
+#logging.basicConfig(filename="log.txt", format='%(asctime)s %(message)s',level=logging.DEBUG)
+
+log_filename = "logs/engagelog.log"
+logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+
+# Create a timed rotating file handler
+file_handler = TimedRotatingFileHandler(log_filename, when="midnight", interval=1, backupCount=10)
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+
+# Add the file handler to the root logger
+logging.getLogger("").addHandler(file_handler)
+
+
 UserModel = get_user_model()
 OWN_CREATIVES = ['6178477617', '6180000871', '6180646283', '6180545204']
 
@@ -336,6 +355,31 @@ def upgrade_api(phone_number, idbundle, idservice, referrer=None, idchannel=2, v
     else:
         print(api_call.content, api_call.status_code)
         return api_call.content, api_call.status_code
+    
+def write_cdr(phone_number,vault=None):
+    command = '/api/User/InfoLog'
+    data = {'msisdn': phone_number, 
+            'type': 'secured',
+            'idservice':'P50',
+            'responsecode':0,
+            'description':'Success',
+            }
+    
+    if vault:
+        return vault.send(command=command, data=data)       
+    url = API_SERVER_URL+command
+    try: 
+        api_call = requests.post(url, headers={}, json=data, timeout=3)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        # raise SystemExit(e)
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        print(api_call.json())
+        res = api_call.json()['statusCode']
+        return res['message'], res['code']
+    else:
+        return api_call.content, api_call.status_code
 
 def grant_referral_gift(user, referrer):
     print("User", user, "being referred by", referrer, "instead of", user.referrer)
@@ -399,10 +443,14 @@ def do_register(self, request, username, subscription):
 
     print("self",self)
     if self:
+        logger.info('load_data_api request', username)
         response2, code2 = load_data_api(username, "1", self.client)  # 1 for wifi
+        logger.info('load_data_api response', response2, code2)
         print("self response",code2)
     else:
+        logger.info('load_data_api request', username)
         response2, code2 = load_data_api(username, "1")  # 1 for wifi
+        logger.info('load_data_api response', response2, code2)
         print("else response",code2)
 
     if code2==76 or code2==77 or code2==79 or code2==75:  # here we set subscription to idbundle since user already has subscribed somehow using another mean
@@ -478,7 +526,7 @@ def do_register(self, request, username, subscription):
                 #@notify_when(events=[NotificationTemplate.DAILY],
                 #            is_route=False, is_one_time=False)
                 #def notify(user, user_notifications):
-                #    """ extra logic if needed """
+            request.session.save()
                 #notify(user=user)
             return redirect('/')
             # return Response({'message': response2}, status=514)
@@ -630,9 +678,13 @@ class AuthViewSet(viewsets.GenericViewSet):
         
         otp = request.POST.get('code')
         if usermob:
+            logger.info('verify_pincode request', usermob,otp)
             response, code = verify_pincode(usermob, otp, vault=self.client)  # what if he is registered on api but not here and loaddata check if pendingsub
+            logger.info('verify_pincode request',response, code)
         if (usermob and code==0) or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED or usermob.startswith('234102') or DISABLE_PIN:
+            logger.info('load_data_api request', usermob)
             response2, code2 = load_data_api(usermob, "1", self.client)  # 1 for wifi
+            logger.info('load_data_api response', usermob,response2, code2)
             
             if code2==56 or code2==75 or code2==76 or code2==77 or code2==79 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED or usermob.startswith('234102'):  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub
                 
@@ -855,6 +907,8 @@ class UserViewSet(mixins.ListModelMixin,
             return serializers.RemoveSubscriptionSerializer
         elif self.action == 'disable_user_subscription':
             return serializers.DisableSubscriptionSerializer
+        elif self.action == 'expiry_on_renewal':
+            return serializers.ExpiryOnRenewalSerializer
         return serializers.UserSerializer
 
     @action(['POST'], detail=False, permission_classes=[permissions.IsAuthenticated])
@@ -969,7 +1023,8 @@ class UserViewSet(mixins.ListModelMixin,
         if subscription not in SubscriptionPlan.values:
             raise exceptions.ValidationError({'new_substatus':'The subscription plan provided is not valid!'})
         elif userexist and userexist.first().subscription==subscription:
-            raise exceptions.ValidationError({'new_substatus': 'User already has subscription '+ new_substatus})
+            if subscription==SubscriptionPlan.PAID2 and userexist.first().is_billed==1:
+                raise exceptions.ValidationError({'new_substatus': 'User already has subscription '+ new_substatus})
         
         else:
             if refid and refid != "" and refid != None:
@@ -1223,7 +1278,32 @@ class UserViewSet(mixins.ListModelMixin,
                 return Response(resp, status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'Error in disabling user subscription!'}, status=475)
-  
+    
+    @action(['POST'], detail=False)  # , permission_classes=[permissions.IsAuthenticated]
+    def expiry_on_renewal(self, request): 
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        msisdn = serializer.validated_data['msisdn']
+        resp = {}
+        # print(request.META.get('HTTP_X_FORWARDED_FOR'))
+        ip = ip_address(request.META.get('HTTP_X_FORWARDED_FOR').split(",")[0])
+        print(ip, str(ip)!=TRUSTED_IP)
+        if str(ip) != TRUSTED_IP: # not ip.is_private:
+            raise exceptions.PermissionDenied('Request not Allowed!')
+        userexist = User.objects.filter(mobile=msisdn)
+        if not userexist:
+            raise exceptions.ValidationError({'msisdn': 'No User exists with the number '+ msisdn})
+        elif not userexist.first().is_billed:
+            return Response({'error': 'User\'s subscription is already disabled!'}, status=474)
+        else:
+            num = userexist.update(is_billed=False)
+            if num >0:
+                resp['message'] = 'User subscription has been successfully disabled!'
+                resp['username'] = userexist.first().username
+                return Response(resp, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Error in disabling user subscription!'}, status=475)
+            
 
     @action(['GET'], detail=True)
     def friends(self, request, uid):
@@ -1505,22 +1585,20 @@ class UserViewSet(mixins.ListModelMixin,
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def upgrade_subscription(self, request, uid):
         user = request.user
-        print("user" + request.user.mobile)
-        #if user.subscription == SubscriptionPlan.FREE :
-        #user.subscription = SubscriptionPlan.PAID2
         idservice = SubscriptionPackages.PAID2
-        upgrade_api(request.user.mobile, 3, SubscriptionPackages.PAID2, referrer=None, vault=None)
-        #@notify_when(events=[NotificationTemplate.ONWARDANDUPWARD], is_route=False, is_one_time=False)
-        #def notify(user, user_notifications):
-        #    """ extra logic if needed """
-        #notify(user=user)  
-        #else :  
-        #    user.subscription = SubscriptionPlan.PAID2   
-        #user.save()
+
+        is_sub = SubConfiguration.objects.filter(subThroughUssd=True).values_list('subThroughUssd', flat=True)
+        
+        if is_sub:
+            upgrade_api(request.user.mobile, 3, SubscriptionPackages.PAID2, referrer=None, vault=None)
+            return Response(status=status.HTTP_200_OK)
+        else:
+            write_cdr(request.user.mobile,vault=None)
+            return Response({'is_sub' : 'false'},status=status.HTTP_200_OK)
+       
 
 
-        return Response(status=status.HTTP_200_OK)
-        #return exceptions.ValidationError('Functionality not yet available.')
+        
 
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def add_new_friend(self, request, uid):
@@ -1643,6 +1721,27 @@ class UserViewSet(mixins.ListModelMixin,
         else:
             raise exceptions.ValidationError({'error':'Invalid arguments'})
             
+    @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
+    def update_go_premium_flag(self, request, uid):
+        if 'msisdn' in request.session:
+            user = User.objects.filter(
+                mobile=request.session['msisdn']
+            ).first()
+            if user:
+                user.go_premium_sent = True
+                user.save()
+        else:
+            user = User.objects.filter(
+                uid=uid
+            ).first()
+            if user:
+                user.go_premium_sent = True
+                user.save()
+
+        
+
+        return Response(status=status.HTTP_200_OK)
+
 
 
 class FriendViewSet(mixins.ListModelMixin,
@@ -1778,7 +1877,7 @@ class FCMViewSet(mixins.ListModelMixin, viewsets.GenericViewSet, PaginationMixin
     def get_new_early_notifications(self, request):
         recent_notifications = UserNotification.objects.select_related(
             'notification'
-        ).get(
+        ).filter(
             user=request.user
         ).all().order_by('-created')
         serializer = self.get_serializer(recent_notifications, many=True)
