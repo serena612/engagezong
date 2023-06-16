@@ -18,8 +18,12 @@ from dotenv import load_dotenv
 from engage.celery import app
 from django.utils.translation import gettext_lazy as _
 
+import psycopg2
+from django.conf import settings
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 # load the env file
 # u should put the .env file in the main root dir (outside backend folder)
@@ -130,6 +134,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'engage.account.middlewares.LastSeenMiddleware',
+    'engage.account.middlewares.CloseDbConnectionsMiddleware',
     'axes.middleware.AxesMiddleware',
     'common.middleware.AccountExpiry',
 
@@ -184,13 +189,33 @@ DATABASES = {
 #         'HOST': '10.153.104.178',
 #         'PORT': '5432',
 #     }
-   'default': {
+#    'default': {
+#         'ENGINE':  'django.db.backends.postgresql_psycopg2',
+#         #'minconn':1,
+#         #'maxconn':10,
+#         'NAME': 'test_db',
+#         'USER': 'mighty',
+#         'PASSWORD': 'password',
+#         'HOST': '164.92.224.12',
+#         'PORT': '5432',
+#         #'idle_timeout':60,  # set the idle timeout to 60 seconds
+#         #'OPTIONS': {
+#         #    'isolation_level': psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT, 'read committed'
+#         #},
+#     },
+    'singleton': {
         'ENGINE':  'django.db.backends.postgresql_psycopg2',
+        #'minconn':1,
+        #'maxconn':10,
         'NAME': 'test_db',
         'USER': 'mighty',
         'PASSWORD': 'password',
         'HOST': '164.92.224.12',
         'PORT': '5432',
+        #'idle_timeout':60,  # set the idle timeout to 60 seconds
+        #'OPTIONS': {
+        #    'isolation_level': psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT, 'read committed'
+        #},
     }
 #    'default': {
 #         'ENGINE':  'django.db.backends.postgresql_psycopg2',
@@ -203,6 +228,45 @@ DATABASES = {
 }
 
 # AUTH Model
+
+class DatabaseConnection:
+    connection = None
+
+    @classmethod
+    def get_connection(cls):
+        if cls.connection is None:
+            cls.connection = psycopg2.connect(
+                host=settings.DATABASES['default']['HOST'],
+                port=settings.DATABASES['default']['PORT'],
+                dbname=settings.DATABASES['default']['NAME'],
+                user=settings.DATABASES['default']['USER'],
+                password=settings.DATABASES['default']['PASSWORD']
+            )
+        return cls.connection
+    
+class SingletonDatabaseRouter:
+    def db_for_read(self, model, **hints):
+        return self.get_db_alias(model)
+
+    def db_for_write(self, model, **hints):
+        return self.get_db_alias(model)
+
+    def allow_relation(self, obj1, obj2, **hints):
+        return obj1._meta.app_label == 'myapp' or \
+               obj2._meta.app_label == 'myapp'
+
+    def allow_migrate(self, db, app_label, model_name=None, **hints):
+        return db == 'singleton' and app_label == 'myapp'
+
+    def get_db_alias(self, model):
+        return 'singleton'
+
+    def get_db(self, alias=None):
+        if alias == 'singleton':
+            return DatabaseConnection.get_connection()
+        return None
+    
+DATABASE_ROUTERS = ['BASE_DIR.settings.base.SingletonDatabaseRouter']
 
 AUTH_USER_MODEL = 'account.User'
 
@@ -425,6 +489,8 @@ JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
         {'name': 'account.user','label': 'Datasync','url': '/admin/datasync/','permissions': ['account.user']},
         {'name': 'account.user','label': '(Un)Subscribe','url': '/admin/subunsub/','permissions': ['account.user']},
         {'name': 'account.user','label': 'Sms','url': '/admin/sms/','permissions': ['account.user']},
+        {'name': 'account.user','label': 'General Report','url': '/admin/generalreport/','permissions': ['account.user']},
+        {'name': 'account.user','label': 'Redeemed Prizes','url': '/admin/redeemedprizes/','permissions': ['account.user']},
     ]},
 ]
 
@@ -447,6 +513,7 @@ FCM_CONFIG = {
     'appId': os.getenv('FCM_APP_ID'),
     'measurementId': os.getenv('FCM_MEASUREMENT_ID'),
 }
+
 
 # Regions
 REGION_COOKIE_NAME = 'region'
