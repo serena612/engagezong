@@ -212,11 +212,15 @@ class FriendList(TimeStampedModel):
 
     tracker = FieldTracker(fields=['status'])
 
+    
     class Meta:
         unique_together = (('user', 'friend'),)
         verbose_name_plural = 'Friends List'
        
-
+    def __init__(self, args, *kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['friend'].widget.attrs['disabled'] = True
+        
     def other(self, user):
         if self.user == user:
             return self.friend
