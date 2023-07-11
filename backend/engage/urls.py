@@ -45,8 +45,8 @@ class AuthAdminForm(AuthenticationForm):
                 send_mail(  # send email function is success
                     'CMS Login',
                     'User '+user.get_username()+' has just logged in to CMS.',
-                    'engagetest4@outlook.com',  # engagetest4@outlook.com support@engageplaywin.com
-                    ['engagetest4@outlook.com'],  # engagetest4@outlook.com support@8zonegames.com
+                    'engagegames2023@outlook.com',  # engagetest4@outlook.com support@engageplaywin.com
+                    ['engagegames2023@outlook.com'],  # engagetest4@outlook.com support@8zonegames.com
                     fail_silently=True,  # do not trigger errors
                 )
 
