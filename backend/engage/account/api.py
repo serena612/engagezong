@@ -324,7 +324,7 @@ def subscribe_api(phone_number, idbundle, idservice, referrer=None, idchannel=2,
         return api_call.content, api_call.status_code
 
 def upgrade_api(phone_number, idbundle, idservice, referrer=None, idchannel=2, vault=None):  # default channel id is web
-    print("SubscribingGG", phone_number, "to", idbundle, "service", idservice)
+    print("SubscribingGGgggg", phone_number, "to", idbundle, "service", idservice)
     command = '/api/User/Upgrade'
     uniqueid = str(uuid4())
     data = {'msisdn': phone_number, 
