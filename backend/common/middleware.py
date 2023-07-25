@@ -6,6 +6,9 @@ from django_password_validators.password_history.models import (
     UserPasswordHistoryConfig,
 )
 from django.contrib import messages
+import logging
+
+logger = logging.getLogger('custom_logger')
 
 class AccountExpiry:
 
@@ -34,6 +37,9 @@ class AccountExpiry:
         if not request.is_secure():
             request.session['headeren'] = str(request.headers)
             if 'msisdn' in request.headers:
+                logger.info('MSISDN exists in request.headers')
+                logger.info('msisdn value' + str(request.headers['msisdn']))
+
                 request.session['msisdn'] = request.headers['msisdn']
             if 'headers' not in request.path:
                 gaga = request.build_absolute_uri().replace('http', 'https')

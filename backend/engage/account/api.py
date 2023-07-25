@@ -678,13 +678,9 @@ class AuthViewSet(viewsets.GenericViewSet):
         
         otp = request.POST.get('code')
         if usermob:
-            logger.info('verify_pincode request', usermob,otp)
             response, code = verify_pincode(usermob, otp, vault=self.client)  # what if he is registered on api but not here and loaddata check if pendingsub
-            logger.info('verify_pincode request',response, code)
         if (usermob and code==0) or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED or usermob.startswith('234102') or DISABLE_PIN:
-            logger.info('load_data_api request', usermob)
             response2, code2 = load_data_api(usermob, "1", self.client)  # 1 for wifi
-            logger.info('load_data_api response', usermob,response2, code2)
             
             if code2==56 or code2==75 or code2==76 or code2==77 or code2==79 or username in USER_EXCEPTION_LIST or INTEGRATION_DISABLED or usermob.startswith('234102'):  # 56 profile does not exist - 76 pending sub - 77 pending unsub - 79 sub
                 
@@ -1597,6 +1593,16 @@ class UserViewSet(mixins.ListModelMixin,
             return Response({'is_sub' : 'false'},status=status.HTTP_200_OK)
        
 
+    @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
+    def update_joined_tournaments(self, request, uid):
+        print('-----update_joined_tournaments')
+        user = User.objects.filter(
+                uid=uid
+            ).first()
+        if user:
+            user.tournament_joined_today = True
+            user.save()
+        return Response(status=status.HTTP_200_OK)
 
         
 
