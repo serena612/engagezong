@@ -183,7 +183,8 @@ class EncryptedMessageSender:
 
 def send_pincode(phone_number, idnetwork="1", vault=None):
     headers = {'msisdn': phone_number,
-                'idnetwork': idnetwork} # post data
+                'idnetwork': idnetwork,
+                'Content-Type': 'application/json'} # post data
     command = '/api/User/SendPincode'
     print(phone_number)
     if vault:
@@ -191,7 +192,8 @@ def send_pincode(phone_number, idnetwork="1", vault=None):
     url = API_SERVER_URL+command
     
     try:
-        api_call = requests.post(url, headers=headers, data={}, timeout=1)
+        #api_call = requests.post(url, headers=headers, data={}, timeout=1, verify=False)
+        api_call = requests.post(url, headers=headers, json={}, verify=False)
     except requests.exceptions.RequestException as e:
         print(e)
         return 'Server error', 555
@@ -500,8 +502,8 @@ class AuthViewSet(viewsets.GenericViewSet):
 
                                         user.save()
 
-                                    @notify_when(events=[NotificationTemplate.LOGIN],
-                                                is_route=False, is_one_time=False)
+                                    # @notify_when(events=[NotificationTemplate.LOGIN],
+                                    #             is_route=False, is_one_time=False)
                                     def notify(user, user_notifications):
                                         """ extra logic if needed """
                                     notify(user=user)
