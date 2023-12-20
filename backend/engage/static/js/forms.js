@@ -409,7 +409,7 @@ $(document).on("submit", ".frmregister", function (e) {
        return;
    
     if(!checkValidMtnNumber($('input[name="phone_number"]').val())) {
-        response_msg.html('Please enter a valid MTN number (i.e "0xx xxx xxxxx" or "234 xxx xxx xxxx")').show(); 
+        response_msg.html('Please enter a valid Zong number (i.e "0xx xxx xxxxx" or "234 xxx xxx xxxx")').show(); 
         return;
     }  
     else{

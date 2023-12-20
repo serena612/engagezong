@@ -132,31 +132,31 @@ class Notifications(FCM):
 
                     return obj, False
 
-                elif event == NotificationTemplate.ONCE_A_MONTH:
-                    package_ids = [x.id for x in notification.package.all()]
-                    if (user.subscription=='free' and  1 in package_ids) or  (user.subscription=='paid1' and 2 in package_ids) or (user.subscription=='paid2' and 3 in package_ids) :
-                        obj, created = UserNotification.objects.get_or_create(
-                            user=user,
-                            notification=notification,
-                            title=title,
-                            text=text,
-                            is_sent=True,
-                            created__year=now.year,
-                            created__month=now.month,
-                            is_popup=notification.is_popup
-                        )
-                elif event == NotificationTemplate.LOGIN:
-                    package_ids = [x.id for x in notification.package.all()]
-                    if (user.subscription=='free' and  1 in package_ids) or  (user.subscription=='paid1' and 2 in package_ids) or (user.subscription=='paid2' and 3 in package_ids) :
-                        obj, created = UserNotification.objects.get_or_create(
-                            user=user,
-                            notification=notification,
-                            title=title,
-                            text=text,
-                            is_sent=True,
-                            created__day=now.day,
-                            is_popup=notification.is_popup
-                        )
+                # elif event == NotificationTemplate.ONCE_A_MONTH:
+                #     package_ids = [x.id for x in notification.package.all()]
+                #     if (user.subscription=='free' and  1 in package_ids) or  (user.subscription=='paid1' and 2 in package_ids) or (user.subscription=='paid2' and 3 in package_ids) :
+                #         obj, created = UserNotification.objects.get_or_create(
+                #             user=user,
+                #             notification=notification,
+                #             title=title,
+                #             text=text,
+                #             is_sent=True,
+                #             created__year=now.year,
+                #             created__month=now.month,
+                #             is_popup=notification.is_popup
+                #         )
+                # elif event == NotificationTemplate.LOGIN:
+                #     package_ids = [x.id for x in notification.package.all()]
+                #     if (user.subscription=='free' and  1 in package_ids) or  (user.subscription=='paid1' and 2 in package_ids) or (user.subscription=='paid2' and 3 in package_ids) :
+                #         obj, created = UserNotification.objects.get_or_create(
+                #             user=user,
+                #             notification=notification,
+                #             title=title,
+                #             text=text,
+                #             is_sent=True,
+                #             created__day=now.day,
+                #             is_popup=notification.is_popup
+                #         )
                 else:
                     package_ids = [x.id for x in notification.package.all()]
                     if (user.subscription=='free' and  1 in package_ids) or  (user.subscription=='paid1' and 2 in package_ids) or (user.subscription=='paid2' and 3 in package_ids) :

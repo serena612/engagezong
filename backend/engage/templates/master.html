@@ -455,7 +455,7 @@ src="{% static 'js/api.js' %}?v=6"></script>
         <div class="bottom">
             <div class="row">
                 <div class="col-md-3 left">
-                    <p>© <span class="currentyear"></span>&nbsp;MTN Engage</p>
+                    <p>© <span class="currentyear"></span>&nbsp;Zong Engage</p>
                 </div>
                 <div class="col-md-6">
                     <ul class="middle">
@@ -484,14 +484,14 @@ src="{% static 'js/api.js' %}?v=6"></script>
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-3 right">
+                <!-- <div class="col-md-3 right">
                     <div class="social">
                         <a href=""><i class="fab fa-youtube"></i></a>
                         <a href=""><i class="fab fa-twitch"></i></a>
                         <a href=""><i class="fab fa-twitter"></i></a>
                         <a href=""><i class="fab fa-facebook-f"></i></a>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </footer>
@@ -544,7 +544,7 @@ src="{% static 'js/api.js' %}?v=6"></script>
                                 <div class="col-md-12 mb-3">
                                     <input type="text" step="1" class="input1"
                                            name="phone_number"
-                                           placeholder="Enter MTN Number" autocomplete="off"
+                                           placeholder="Enter Zong Number" autocomplete="off"
                                            required>
                                     <div class="text-right">
                                         <button type="submit" class="btn3">
@@ -1049,7 +1049,7 @@ src="{% static 'js/api.js' %}?v=6"></script>
                                        placeholder="Username" required>
                                 <input name="phone_number" type="number"
                                        class="input1 mb-3"
-                                       placeholder="MTN Phone Number" required>
+                                       placeholder="Zong Phone Number" required>
                                 <select name="country" class="input1 mb-3"
                                         required>
                                     <option value="" disabled  hidden>
@@ -1141,7 +1141,7 @@ src="{% static 'js/api.js' %}?v=6"></script>
                             <div class="col-md-12 mb-3">
                                 <input type="text" class="input1"
                                        name="phone_number"
-                                       placeholder="Enter MTN Number"
+                                       placeholder="Enter Zong Number"
                                        required>
                                 <div class="text-right">
                                     <button type="submit" class="btn3">{% translate 'Next' %}
@@ -1535,7 +1535,7 @@ src="{% static 'js/api.js' %}?v=6"></script>
                 <div class="content">
                     <p>All the information on this website is published in good faith and for general information purpose only.</p>
 
-                    <p>MTN Engage does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (MTN Engage), is strictly at your own risk. MTN Engage will not be liable for any losses and/or damages in connection with the use of our website.</p>
+                    <p>Zong Engage does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (Zong Engage), is strictly at your own risk. Zong Engage will not be liable for any losses and/or damages in connection with the use of our website.</p>
     
                     <p>From our website, you can visit other websites by following hyperlinks to such external sites. While we strive to provide only quality links to useful and ethical websites, we have no control over the content and nature of these sites. These links to other websites do not imply a recommendation for all the content found on these sites. Site owners and content may change without notice and may occur before we have the opportunity to remove a link which may have gone 'bad'.</p>
     
@@ -1633,7 +1633,7 @@ src="{% static 'js/api.js' %}?v=6"></script>
                                     </div>
                                 </div>
                                 <div class="input2 mb-3">
-                                    <label for="">{% translate 'MTN Number' %}</label>
+                                    <label for="">{% translate 'Zong Number' %}</label>
                                     <div class="right">
                                         <input name="mobile" type="text" required readonly='readonly'
                                                value="{{ user.mobile|default_if_none:"" }}">
@@ -1816,6 +1816,20 @@ src="{% static 'js/api.js' %}?v=6"></script>
         </div>
     </div>
 {% endif %}
+
+<div id="unsub-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" style="text-align: center; background-color: #1D0F26; border-radius: 10px;">          
+             
+            <div class="modal-body" style="padding-top: 47px; width: 84%; margin: 0px auto 6px;">                    
+                <div style="color:#FF0090">{% translate 'UNSUBSCRIBTION!' %}</div>
+                <div style="margin-bottom: 20px;color: #FFF;font-size: 0.8rem;">{% translate 'You were successfully unsubscribed from Engage service. Hope to see you again soon!' %}</div>                    
+                <div class="btn_upgrade" style="cursor: pointer; background-color: #FF0090; height: 44px; padding-top: 10px; font-weight: 800; border-radius: 4px; color: #181022; text-align: center; max-width: 100%; margin: 0px auto 20px;">{% translate 'UNSUBSCRIPTION' %}</div>                   
+            </div>
+                
+        </div>
+    </div>
+</div>
 
 {% block javascript %}
 {% if user.is_authenticated %}

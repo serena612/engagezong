@@ -53,14 +53,18 @@
                                 </a>
                             {% endif %}    
                         </li>
-                        <li><a
-                                id="practice"
-                                href=""
-                                data-link-android="{{ tournament.game.android_link }}"
-                                data-link-ios="{{ tournament.game.ios_link }}"
-                                data-link-pc="{{ tournament.game.pc_link }}"
-                                target="_blank"
-                        >{% translate 'Practice' %}</a>
+                        <li>
+                            {% if tournament.leader_board_link %}
+                                <a id="practice" href="{{ tournament.leader_board_link }}" target="_blank">
+                            {% else %}
+                                <a id="practice" href="{% if tournament.leader_board_link %}{{ tournament.leader_board_link }}{% endif %}"
+                                    data-link-android="{{ tournament.game.android_link }}"
+                                    data-link-ios="{{ tournament.game.ios_link }}"
+                                    data-link-pc="{{ tournament.game.pc_link }}"
+                                    target="_blank">
+                            {% endif %}
+                                {% translate 'Practice' %}
+                                </a>
                         </li>
                         <li id="joinStatus">
                         {% if participant %}
