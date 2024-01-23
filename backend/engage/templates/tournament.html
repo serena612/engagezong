@@ -54,16 +54,32 @@
                             {% endif %}    
                         </li>
                         <li>
-                            {% if tournament.leader_board_link %}
-                                <a id="practice" href="{{ tournament.leader_board_link }}" target="_blank">
+                            <!-- {% if tournament.leader_board_link %}
+                                <a id="practice" href="{{ tournament.leader_board_link }}" target="_blank"> -->
+
+                            {% if 'HTML5' in tournament.game.slug %}
+                        
+                                <a href="#leaderboard" data-id="#leaderboard-box" id="leaderboard-button">
+                                    {% translate 'Leaderboard' %}
+                                
+
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#leaderboard-button').on('click', function () {
+                                            fetchLeaderboard();
+                                        });
+
+                                    });
+
+                                </script>
                             {% else %}
                                 <a id="practice" href="{% if tournament.leader_board_link %}{{ tournament.leader_board_link }}{% endif %}"
                                     data-link-android="{{ tournament.game.android_link }}"
                                     data-link-ios="{{ tournament.game.ios_link }}"
                                     data-link-pc="{{ tournament.game.pc_link }}"
                                     target="_blank">
+                                    {% translate 'Practice' %}
                             {% endif %}
-                                {% translate 'Practice' %}
                                 </a>
                         </li>
                         <li id="joinStatus">
