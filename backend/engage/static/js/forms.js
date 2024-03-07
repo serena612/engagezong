@@ -110,12 +110,13 @@ $(document).on("submit", ".login-form", function (e) {
         response_msg.html('The max allowed sent pin codes have been reached! Please try again tomorrow.').show();
         else if(e.status==555)
         response_msg.html('No connection available, please try again later.').show();
+        else if(e.status==480)
+        //response_msg.html('Your subscription has ended. Please renew your subscription <a href="/register">here</a>.').show();
+        window.location.href = "/register";
         else
         response_msg.html('Something went wrong. Please try again later.').show();  // Error code: '+e.status
         setBtnLoading(btn, false);
 
-        
-        
     });
 })
 
@@ -184,16 +185,17 @@ $(document).on("submit", ".login-otp-form", function (e) {
         response_msg.html('Exceed maximum allowed attempts! Please try again later.').show();
         else if(e.status==472)
         response_msg.html('Invalid Phone Number provided!').show();
-        else if(e.status==480)
-        response_msg.html('Your subscription has ended. Please renew your subscription <a href="/register">here</a>.').show();
+        else if(e.status==480 || e.status==514)
+        //response_msg.html('Your subscription has ended. Please renew your subscription <a href="/register">here</a>.').show();
+        window.location.href = "/register";
         else if(e.status==481) 
         response_msg.html('Your pincode has expired. Please try again.').show();
-        else if(e.status==514){
-            $('#login-modal').modal("hide");
-            // $('.login-form').trigger("reset");
-            $('#wait-modal').modal("show");
-             get_wait_modal();
-        }
+        // else if(e.status==514){
+        //     $('#login-modal').modal("hide");
+        //     // $('.login-form').trigger("reset");
+        //     $('#wait-modal').modal("show");
+        //      get_wait_modal();
+        // }
         else
         response_msg.html('Something went wrong. Please try again later.').show();  //  Error code: '+e.status
         setBtnLoading(btn, false);
@@ -237,8 +239,9 @@ function get_wait_modal() {
 function checkValidMtnNumber(number){
     var valid=true;
     var telcoPrefixes = [803, 806,703, 706, 813, 816, 810,  814, 903];
-    var xpref=[7025, 7026, 703, 704, 706, 803, 806, 810, 813, 814, 816, 903, 906,913,916,102]; //added 102 for test
+    //var xpref=[7025, 7026, 703, 704, 706, 803, 806, 810, 813, 814, 816, 903, 906,913,916,102]; //added 102 for test
 
+    var xpref=[3];
 
     //get value from textbox
 	phoneInputValue = number;
@@ -255,18 +258,22 @@ function checkValidMtnNumber(number){
 	}else if(inputLength === 11){
 
 				//get mobile number prefix - 706 or 703 - depending on telco
-				mobilePrefix = Number(phoneInputValue.substr(1,3));
+				mobilePrefix = Number(phoneInputValue.substr(1,1));
                 if(mobilePrefix==702)
                 mobilePrefix = Number(phoneInputValue.substr(1,4));
 				firstFigure = Number(phoneInputValue[0]);
 
 				//check if mobile prefix exists in telcoPrefixes array
-				checkArray = in_array(mobilePrefix, xpref);
-				if(checkArray === false){
-					valid=false;
-				}else if(checkArray >=0 && firstFigure === 0){
-					valid=true;
-				}else{
+				// checkArray = in_array(mobilePrefix, xpref);
+				// if(checkArray === false){
+				// 	valid=false;
+				// }else if(checkArray >=0 && firstFigure === 0){
+				// 	valid=true;
+				// }
+                if (firstFigure === 0) {
+                    valid=true;
+                }
+                else{
 					valid=false;
 
 				}

@@ -69,7 +69,7 @@ def send_sms(user, message, vault=None):
     url = API_SERVER_URL+command
     
     try:
-        api_call = requests.post(url, headers=headers, json=data, timeout=2)
+        api_call = requests.post(url, headers=headers, json=data, timeout=2, verify=False)
     except requests.exceptions.RequestException as e:
         print(e)
         return 'Server error', 555
@@ -87,7 +87,7 @@ def test_page():
     url = API_SERVER_URL+command
     
     try:
-        api_call = requests.post(url, headers=headers,timeout=2)
+        api_call = requests.post(url, headers=headers,timeout=2, verify=False)
     except requests.exceptions.RequestException as e:
         print(e)
         return 'Server error', 555
@@ -191,9 +191,10 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     @transaction.atomic()
     def start(self, request, slug):
         tournament = self.get_object()
-        
+        print("start")
         
         if tournament.started_on:
+            print("")
             raise TournamentStartException() 
 
         room_size = tournament.game.room_size
@@ -248,11 +249,11 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         tournament.closed_on = timezone.now()
         tournament.save()
         tournament.send_notification_close()
-        if is_closed == True:
-           return Response(
-                {"detail": "Tournament closed but error in granting prizes, please check with technical team!"},
-                status=status.HTTP_406_NOT_ACCEPTABLE
-            )
+        # if is_closed == True:
+        #    return Response(
+        #         {"detail": "Tournament closed but error in granting prizes, please check with technical team!"},
+        #         status=status.HTTP_406_NOT_ACCEPTABLE
+        #     )
         return redirect(request.META["HTTP_REFERER"])
 
 
@@ -264,8 +265,9 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         linked_account = user.usergamelinkedaccount_set.filter(
             game=tournament.game
         ).first()
-        if not linked_account:
-            raise GameAccountUnavailable()
+        if ("html5" or "HTML5") not in tournament.slug:
+            if not linked_account:
+                raise GameAccountUnavailable()
 
         if not tournament.allow_free_users:
             if user.subscription == SubscriptionType.FREE: 
@@ -462,7 +464,7 @@ class TournamentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
 
             #sched=str(match.start_date)
 
-            sched = (match.start_date+timedelta(hours=1)).strftime("%Y/%m/%d %H:%M")+" Lagos"
+            sched = (match.start_date+timedelta(hours=5)).strftime("%Y/%m/%d %H:%M")+" Islamabad"
             
             stri_repl = {}
             stri_repl['MATCH_SCHEDULE'] = sched

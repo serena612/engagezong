@@ -570,6 +570,9 @@
                             <li>
                                 <hr>
                             </li>
+                            <li><a href="#unsub-modal"
+                                onclick="callBothFunctions()">{% translate 'Unsubscribe' %}</a></li>
+                            <li>
                             <li><a  class='logout' style='cursor:pointer' onclick=fn_logout("{% url 'logout' %}")>{% translate 'Logout' %}</a></li>
                             
                         </ul>
@@ -825,4 +828,13 @@
             </div>
         </div>
     </div>
+
+<script>
+    function callBothFunctions() {
+        unsubscribe();
+        fn_logout("{% url 'logout' %}");
+    }
+    </script>
+
+
 {% endblock %}

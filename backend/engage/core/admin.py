@@ -78,8 +78,8 @@ class NotificationAdmin(TranslatableAdmin): # admin.ModelAdmin
     list_filter = ('is_active',)
     exclude = ('is_claimed', 'is_gift')
 
-    def get_queryset(self, request):
-        return super().get_queryset(request).filter(~Q(template=NotificationTemplate.INSTANT))
+    # def get_queryset(self, request):
+    #     return super().get_queryset(request).filter(~Q(template=NotificationTemplate.INSTANT))
 
     def save_model(self, request, obj, form, change):
         is_active = request.POST.get('is_active', 'off')

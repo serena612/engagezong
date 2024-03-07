@@ -902,10 +902,28 @@ $(document).ready(function(){
                 }
                 else if (
                   i.notification.action == "text" &&
+                  i.friend_uid == undefined  && i.notification.template=='user_register_for_html5'
+                ) {
+                  $("#notification-list").append(`
+                  <li class="earlier-notification 1">
+                      <p id="${i.notification.id}" data-id="${i.id}" url="${
+                    i.link
+                  }" action="${i.notification.action}" class="notification">
+                          <span class="title">${i.title}</span>
+                          <span class="desc">${i.text}</span>
+                          <span class="date">${moment(i.created).format(
+                            "MMMM DD YYYY, h:mm:ss a"
+                          )}</span>
+                      </p>
+                  </li>
+              `);
+                }
+                else if (
+                  i.notification.action == "text" &&
                   i.friend_uid == undefined  && (i.notification.template=='before_match_informative' || i.notification.template=='win_match_informative')
                 ) {
                   $("#notification-list").append(`
-                  <li class="earlier-notification 2">
+                  <li class=" earlier-notification 2">
                       <p id="${i.notification.id}" data-id="${i.id}" url="${
                     i.link
                   }" action="${i.notification.action}" class="notification">
@@ -1168,6 +1186,25 @@ $(document).ready(function(){
                 }
                 
                 if (i.notification.action == "text" && i.friend_uid == undefined && i.notification.template=='user_register_for_tournament') {
+                  $("#notification-list").append(`
+                  <li class="`+className+`">
+                      <a
+                        id="${i.notification.id}"
+                        data-id="${i.id}"
+                        url="${i.link}"
+                        action="${i.notification.action}"
+                        class="notification"
+                      >
+                          <span class="title">${i.title}</span>
+                          <span class="desc">${i.text}</span>
+                          <span class="date">${moment(i.created).format(
+                            "MMMM DD YYYY, h:mm:ss a"
+                          )}</span>
+                      </a>
+                  </li>
+              `);
+                } 
+                if (i.notification.action == "text" && i.friend_uid == undefined && i.notification.template=='user_register_for_html5') {
                   $("#notification-list").append(`
                   <li class="`+className+`">
                       <a

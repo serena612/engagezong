@@ -381,11 +381,18 @@ function hashchanged() {
                 var user_uid = '{{ user.uid }}'
                 var upgrade_subscription = "{% url 'user-upgrade-subscription' 'user_uid' %}";
                 var check_user_status = "{% url 'user-check-userstatus' 'user_uid' %}"; 
+                var check_user_coins = "{% url 'user-check-usercoins' 'user_uid' %}";
                 var update_log = "{% url 'user-update-log' 'user_uid' %}"; 
                 var check_usercoin = "{% url 'user-check-usercoin' 'user_uid' %}"; 
+                var unsubscribe_api = "{% url 'user-unsubscribe-api' 'user_uid' %}";
                 var featured_game_retrieve =  '/api/featured_games/';
                 var update_go_premium_flag = "{% url 'user-update-go-premium-flag' 'user_uid' %}"
                 var update_joined_tournaments = "{% url 'user-update-joined-tournaments' 'user_uid' %}";
+                var update_total_coins = "{% url 'user-update-total-coins' 'user_uid' %}";
+                var check_billed_user = "{% url 'user-check-billeduser' 'user_uid' %}";
+                var update_billed_status = "{% url 'user-update-billedstatus' 'user_uid' %}";
+                
+                var leaderboard_results = "{% url 'user-leaderboard-results' 'user_uid' %}";
 
             </script>
             <script type="application/javascript"
@@ -566,6 +573,13 @@ function hashchanged() {
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=G-C0XVDBF16H"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    <form action="" method="POST" target="_blank" style="display:none;" id = "formgameid" name = "formgameid">
+        <input type="hidden" id="m" name="m" value="{{encrypted_data}}"/>
+        <input type="hidden" id="g" name="g"/>
+        <input type="hidden" id="t" name="t"/>
+        <input type="submit" id="btn-form-submit"/>
+    </form>
 
 <nav class="hih">
     <div class="top-nav">
@@ -835,11 +849,11 @@ function hashchanged() {
         {% endif %}
         
         <hr style="opacity: 1!important; margin: 56px 20px 10px!important; background-color: #2C2F36!important"/>
-        <div class="smedias" style="margin: 0px 20px;padding-top: 20px;">
+        <!-- <div class="smedias" style="margin: 0px 20px;padding-top: 20px;">
             <a href="https://www.facebook.com/people/Engageplaywin/100087993253458/" target="_blank" style="display:block;float:left;margin: 0px 7px 0px 18px;padding: 0px;cursor: pointer;"><img src="{% static 'img/facebook.png' %}" border="0" style="width: 32px;" /></a>
             <a href="https://www.instagram.com/mtnengageplaywin/" target="_blank" style="display:block;float:left;margin: 0px 7px 0px 33px;padding: 0px;cursor: pointer;"><img src="{% static 'img/instagram.png' %}" border="0" style="width: 32px;" /></a>
             <a href="https://www.youtube.com/@mtnengage2468" target="_blank" style="display:block;float:left;margin: 0px 7px 0px 39px;padding: 0px;cursor: pointer;"><img src="{% static 'img/youtube.png' %}" border="0" style="width: 39px;margin-top:3px" /></a>
-    </div>
+    </div> -->
         
     </div>
 </aside>
@@ -2491,6 +2505,7 @@ screen.orientation.addEventListener("change", function(e) {
 
 <input type="hidden" id="userSub" value="{{user.subscription}}" />
 <input type="hidden" id="userIsBilled" value="{{user.is_billed}}" />
+<input type="hidden" id="userCoins" value="{{user.coins}}" />
 
 <script type="text/javascript">
       function setCookie(cname, cvalue, exdays) {

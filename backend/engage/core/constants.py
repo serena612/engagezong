@@ -21,6 +21,7 @@ class SupportedGame(LabelChoices):
     FIFA = 'fifa', 'Fifa'
     FREE_FIRE = 'free_fire', 'Free Fire'
     FARLIGHT84 = 'Farlight84', 'farlight84'
+    LudoSTAR = 'Ludo_STAR', 'Ludo STAR'
 
 class EventType(LabelChoices):
     SHOW = 'show', 'SHOWS'
@@ -182,13 +183,13 @@ class NotificationAction(LabelChoices):
 
 
 class NotificationTemplate(LabelChoices):
-    INSTANT = 'instant', 'Instant One Time'
+    # INSTANT = 'instant', 'Instant One Time'
     EVENT = 'event', 'Event'
 
     SEND_COINS = 'send_coins', 'Send Coins'
 
     DAILY = 'daily', 'Daily'
-    EVERY_14_DAYS = 'every_14_days', 'Every 14 Days'
+    # EVERY_14_DAYS = 'every_14_days', 'Every 14 Days'
     ONCE_A_MONTH = 'once_a_month', 'Once A Month'
 
     HOME = 'home', 'When User Reach Home Dashboard'
@@ -207,7 +208,7 @@ class NotificationTemplate(LabelChoices):
 
     ACTIVE_5_DAYS = 'active_5_days', '5 Active Days After Joining'
     ACTIVE_10_DAYS = 'active_10_days', '10 Active Days After Joining'
-    ACTIVE_30_DAYS = 'active_30_days', '30 Active Days After Joining'
+    # ACTIVE_30_DAYS = 'active_30_days', '30 Active Days After Joining'
 
     DORMANT_3_DAYS = 'dormant_3_days', 'Dormant 3 Days'
     DORMANT_5_DAYS = 'dormant_5_days', 'Dormant 5 Days'
@@ -216,6 +217,7 @@ class NotificationTemplate(LabelChoices):
     USER_FIRST_TOURNAMENT = 'user_first_tournament', 'User Who Is First In Any Tournament'
     USER_SECOND_THIRD_TOURNAMENT = 'user_second_third_tournament', 'Users Who Win A Prize (2nd and more)'
     USER_OUTSIDE_THE_WINNING_POSITIONS = 'user_outside_the_winning_positions', 'User Outside The Winning Positions'
+    USER_REGISTER_FOR_html5 = 'user_register_for_html5', 'User Registers For A Html5'
 
     HAPPY_BIRTHDAY = 'happy_birthday', 'Happy Birthday'
 

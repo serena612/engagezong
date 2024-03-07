@@ -646,6 +646,34 @@ function openEditProfileModal(event) {
      })
 }
 
+function unsubscribe() {
+    $.ajax({
+        url: unsubscribe_api,
+        headers: {
+            "X-CSRFToken": xtoken,
+        },
+        type: "post",
+        data: {},
+        error: function (value) {
+        },
+        success: function (value) {
+        }, 
+    }) 
+  }
+
+function fn_logout(url){
+if(!$('.logout').hasClass('freeze')){
+    window.location.href=url;
+    $('.logout').addClass('freeze');
+}
+}
+
+
+function callBothFunctions() {
+    unsubscribe();
+    fn_logout("{% url 'logout' %}");
+}
+
 
 function openLiveModal(link){
     var modal = $('#live-modal');
@@ -839,6 +867,26 @@ function setBtnLoading(btn, status) {
     $(btn).prop("disabled", status);
 }
 
+function update_totalcoins() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: update_total_coins.replace("user_uid", user_uid),
+            headers: {
+                "X-CSRFToken": xtoken,
+            },
+            type: "post",
+            data: {},
+            error: function (value) {
+                reject(value);
+            },
+            success: function (value) {
+                value.is_sub
+                    resolve(value);
+            },
+        });
+    });
+}
+
 $(function () {
     function getCookie(name) {
         var cookieValue = null;
@@ -858,202 +906,276 @@ $(function () {
 
     var csrftoken = getCookie("csrftoken");
 
-    $("body").delegate(".html5-game", "click", function (e) {
-        e.preventDefault();
-        
-        if ($(this).hasClass("is-locked")){
-            if($(this).attr('data-target')!="#login-modal"){
-                
-                if($("#userSub").val() == "free" ){
-                    //$("#games-subscription-notifications #games-notifications-title").text("Upgrade Subscription");
-                    //$("#games-subscription-notifications #games-notifications-body").text("Please upgrade your package to play this game.");
-                    $('#upgrade-package-pgame-modal').modal('show');
-                }else if($("#userIsBilled").val() == "False" )
-                { 
-                    $("#games-subscription-notifications #games-notifications-title").text("Recharge Line!");
-                    $("#games-subscription-notifications #games-notifications-body").text('You don\'t have enough balance to play this game. Please recharge your line and try again.');
-                    $("#games-subscription-notifications").modal({
-                        show: true,
-                        keyboard: true,
-                        backdrop: true,
-                    });
-                }
-                
+    function handleGameModal() {
+
+        $("body").delegate(".html5-game", "click", function (e) {
+            e.preventDefault();
+            
+                if ($(this).hasClass("is-locked")){
+                    if($(this).attr('data-target')!="#login-modal"){
+                        // Join games based on coins value
+
+                        // if($("#userCoins").val() < 800){
+                        //     $("#games-subscription-notifications #games-notifications-title").text("Get more coins!");
+                        //     $("#games-subscription-notifications #games-notifications-body").text('You don\'t have enough coins to play this game.');
+                        //     $("#games-subscription-notifications").modal({
+                        //         show: true,
+                        //         keyboard: true,
+                        //         backdrop: true,
+                        //     });
+                        // }
+                        // else{
+                        //     update_totalcoins();
+                        //     $(this).removeClass("is-locked");
+                        //     handleGameModal();
+                        // }
+
+                        //Join games based on subscription value
+                        if($("#userSub").val() == "free" ){
+                            //$("#games-subscription-notifications #games-notifications-title").text("Upgrade Subscription");
+                            //$("#games-subscription-notifications #games-notifications-body").text("Please upgrade your package to play this game.");
+                            $('#upgrade-package-pgame-modal').modal('show');
+                        }else if($("#userIsBilled").val() == "False" )
+                        { 
+                            $("#games-subscription-notifications #games-notifications-title").text("Recharge Line!");
+                            $("#games-subscription-notifications #games-notifications-body").text('You don\'t have enough balance to play this game. Please recharge your line and try again.');
+                            $("#games-subscription-notifications").modal({
+                                show: true,
+                                keyboard: true,
+                                backdrop: true,
+                            });
+                        }
+                        
+                    }
+                    return;
             }
-            return;
-        }
-        $("#remove-friend-modal").modal("hide");
         
-        var target = $(this).attr("data-target");
-    //    if(user_subscription=='paid2'){
-    //         $("#googleadd-modal").modal("show");
 
-    //        $('.closeAdd').click(function(){
-    //         if($("#googleadd-modal video,#googleadd-modal iframe").length>0)
-    //         $("#googleadd-modal video,#googleadd-modal iframe")[0].src += "?autoplay=0";});
-    //         $('#googleadd-modal video,#googleadd-modal iframe').on('ended', function(){
-    //             $.ajax({
-    //                 url: `/games/${target}/`,
-    //                 headers: {
-    //                     "X-CSRFToken": csrftoken,
-    //                 },
-    //                 async: false,
-    //                 type: "get",
-    //                 data: {},
-    //                 error: function (value) {
+                $("#remove-friend-modal").modal("hide");
+                
+                var target = $(this).attr("data-target");
+            //    if(user_subscription=='paid2'){
+            //         $("#googleadd-modal").modal("show");
+
+            //        $('.closeAdd').click(function(){
+            //         if($("#googleadd-modal video,#googleadd-modal iframe").length>0)
+            //         $("#googleadd-modal video,#googleadd-modal iframe")[0].src += "?autoplay=0";});
+            //         $('#googleadd-modal video,#googleadd-modal iframe').on('ended', function(){
+            //             $.ajax({
+            //                 url: `/games/${target}/`,
+            //                 headers: {
+            //                     "X-CSRFToken": csrftoken,
+            //                 },
+            //                 async: false,
+            //                 type: "get",
+            //                 data: {},
+            //                 error: function (value) {
+                                
+            //                     var {
+            //                         responseText,
+            //                         status
+            //                     } = value;
+            //                     if (status === 404) {
+            //                         $("#games-notifications #games-notifications-title").text("GAME NOT FOUND");
+            //                         $("#games-notifications #games-notifications-body").text("Game Not Found");
+            //                     }
+                            
+            //                     else if (status === 403) {
+            //                         $("#games-notifications #games-notifications-title").text("Free Subscription");
+            //                         $("#games-notifications #games-notifications-body").text(responseText);
+                                
+            //                      }
+            //                     else if (status === 410) {
+            //                         $("#games-notifications #games-notifications-title").text("Premium Games");
+            //                         $("#games-notifications #games-notifications-body").text(responseText);
+                                    
+                                    
+            //                     }
+            //                     else {
+            //                         $("#games-notifications #games-notifications-title").text("Error");
+            //                         $("#games-notifications #games-notifications-body").text("Something Went Wrong");
+            //                     }
+                                
+            //                     $("#games-notifications").modal({
+            //                         show: true,
+            //                         keyboard: true,
+            //                         backdrop: true,
+            //                     });
+                            
+            //                 },
+            //                 success: function (value) {
+            //                     var isIOS = /(iphone)/i.test(navigator.userAgent);
+            //                     var isAnroid = navigator.userAgent.toLocaleLowerCase().indexOf("android") > -1;
+                            
+                                
+                            
+            //                     if(isIOS || isAnroid){
+            //                     //window.location.href=`/games/${target}/`;
+            //                     $('#game-fullscreen-modal').find('.modal-content').css('width',$(window).width());
+            //                     $('#game-fullscreen-modal').find('.modal-content').css('height',$(window).height() + 80);
+            //                     $('#game-fullscreen-modal').find('.info-box').html("");
+            //                     $('#game-fullscreen-modal').find('.info-box').append('<iframe src="https://engage.devapp.co/games/'+target+'/" width="100%"  border="0"></iframe>')
+            //                     $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
+            //                     $('#game-fullscreen-modal').find('iframe').css('border',0);
+            //                     $('#game-fullscreen-modal').modal('show');
+            //                     $(window).resize(function(){
+            //                         $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
+            //                         $('#game-fullscreen-modal').find('iframe').css('width',$(window).width());
+            //                         $('#game-fullscreen-modal').find('.modal-content').css('width',$(window).width());
+            //                         $('#game-fullscreen-modal').find('.modal-content').css('height',$(window).height() + 80);
+            //                     })
+            //                   }
+            //                   else{
+            //                     $('.a_link').remove();
+            //                     var a = document.createElement('a');
+            //                     a.href = `/games/${target}/`;
+            //                     a.className='a_link';
+            //                     a.setAttribute('target', '_blank');
+            //                     a.click();
+            //                   }
+            //                 },
+            //             });
+            //         });
+            //         return;
+            //     }
+
+            $.ajax({
+                    url: `/games/${target}/`,
+                    headers: {
+                        "X-CSRFToken": csrftoken,
+                    },
+                    async: false,
+                    type: "get",
+                    data: {},
+                    error: function (value) {
                         
-    //                     var {
-    //                         responseText,
-    //                         status
-    //                     } = value;
-    //                     if (status === 404) {
-    //                         $("#games-notifications #games-notifications-title").text("GAME NOT FOUND");
-    //                         $("#games-notifications #games-notifications-body").text("Game Not Found");
-    //                     }
-                      
-    //                     else if (status === 403) {
-    //                         $("#games-notifications #games-notifications-title").text("Free Subscription");
-    //                         $("#games-notifications #games-notifications-body").text(responseText);
-                           
-    //                      }
-    //                     else if (status === 410) {
-    //                         $("#games-notifications #games-notifications-title").text("Premium Games");
-    //                         $("#games-notifications #games-notifications-body").text(responseText);
+                        var {
+                            responseText,
+                            status
+                        } = value;
+                        if (status === 404) {
+                            $("#games-notifications #games-notifications-title").text("GAME NOT FOUND");
+                            $("#games-notifications #games-notifications-body").text("Game Not Found");
+                        }
+                    
+                        else if (status === 403) {
+                            $("#games-notifications #games-notifications-title").text("Free Subscription");
+                            $("#games-notifications #games-notifications-body").text(responseText);
+                        
+                        }
+                        else if (status === 410) {
+                            $("#games-notifications #games-notifications-title").text("Premium Games");
+                            $("#games-notifications #games-notifications-body").text(responseText);
                             
                             
-    //                     }
-    //                     else {
-    //                         $("#games-notifications #games-notifications-title").text("Error");
-    //                         $("#games-notifications #games-notifications-body").text("Something Went Wrong");
-    //                     }
+                        }
+                        else {
+                            $("#games-notifications #games-notifications-title").text("Error");
+                            $("#games-notifications #games-notifications-body").text("Something Went Wrong");
+                        }
                         
-    //                     $("#games-notifications").modal({
-    //                         show: true,
-    //                         keyboard: true,
-    //                         backdrop: true,
-    //                     });
-                       
-    //                 },
-    //                 success: function (value) {
-    //                     var isIOS = /(iphone)/i.test(navigator.userAgent);
-    //                     var isAnroid = navigator.userAgent.toLocaleLowerCase().indexOf("android") > -1;
-                       
-                         
-                     
-    //                     if(isIOS || isAnroid){
-    //                     //window.location.href=`/games/${target}/`;
-    //                     $('#game-fullscreen-modal').find('.modal-content').css('width',$(window).width());
-    //                     $('#game-fullscreen-modal').find('.modal-content').css('height',$(window).height() + 80);
-    //                     $('#game-fullscreen-modal').find('.info-box').html("");
-    //                     $('#game-fullscreen-modal').find('.info-box').append('<iframe src="https://engage.devapp.co/games/'+target+'/" width="100%"  border="0"></iframe>')
-    //                     $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
-    //                     $('#game-fullscreen-modal').find('iframe').css('border',0);
-    //                     $('#game-fullscreen-modal').modal('show');
-    //                     $(window).resize(function(){
-    //                         $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
-    //                         $('#game-fullscreen-modal').find('iframe').css('width',$(window).width());
-    //                         $('#game-fullscreen-modal').find('.modal-content').css('width',$(window).width());
-    //                         $('#game-fullscreen-modal').find('.modal-content').css('height',$(window).height() + 80);
-    //                     })
-    //                   }
-    //                   else{
-    //                     $('.a_link').remove();
-    //                     var a = document.createElement('a');
-    //                     a.href = `/games/${target}/`;
-    //                     a.className='a_link';
-    //                     a.setAttribute('target', '_blank');
-    //                     a.click();
-    //                   }
-    //                 },
-    //             });
-    //         });
-    //         return;
-    //     }
-
-        $.ajax({
-            url: `/games/${target}/`,
-            headers: {
-                "X-CSRFToken": csrftoken,
-            },
-            async: false,
-            type: "get",
-            data: {},
-            error: function (value) {
-                
-                var {
-                    responseText,
-                    status
-                } = value;
-                if (status === 404) {
-                    $("#games-notifications #games-notifications-title").text("GAME NOT FOUND");
-                    $("#games-notifications #games-notifications-body").text("Game Not Found");
-                }
-              
-                else if (status === 403) {
-                    $("#games-notifications #games-notifications-title").text("Free Subscription");
-                    $("#games-notifications #games-notifications-body").text(responseText);
-                   
-                 }
-                else if (status === 410) {
-                    $("#games-notifications #games-notifications-title").text("Premium Games");
-                    $("#games-notifications #games-notifications-body").text(responseText);
+                        $("#games-notifications").modal({
+                            show: true,
+                            keyboard: true,
+                            backdrop: true,
+                        });
                     
-                    
-                }
-                else {
-                    $("#games-notifications #games-notifications-title").text("Error");
-                    $("#games-notifications #games-notifications-body").text("Something Went Wrong");
-                }
-                
-                $("#games-notifications").modal({
-                    show: true,
-                    keyboard: true,
-                    backdrop: true,
+                    },
+                    success: function (value) {
+                        openG(target);
+                    }
                 });
-               
-            },
-            success: function (value) {
-                var isIOS = /(iphone)/i.test(navigator.userAgent);
-                var isAnroid = navigator.userAgent.toLocaleLowerCase().indexOf("android") > -1;
-               
-                var isAnroid = navigator.userAgent.toLocaleLowerCase().indexOf("android") > -1;
-                var isIpadPro = navigator.userAgent.indexOf("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15")>-1 && navigator.userAgent.indexOf("AppleWebKit/605.1.15 (KHTML, like Gecko)")>-1;
-                
-               
-               // if(isIOS || isAnroid || isIpadPro){
-                //window.location.href=`/games/${target}/`;
-                $('#game-fullscreen-modal').find('.modal-content').css('width',$(window).width());
-                $('#game-fullscreen-modal').find('.modal-content').css('height',$(window).height() + 80);
-                $('#game-fullscreen-modal').find('.info-box').html("");
-                $('#game-fullscreen-modal').find('.info-box').append('<iframe class="'+ (target == 'solve_math' ? 'solvemath' : '') +'" src="/games/'+target+'/" width="100%"  border="0"></iframe>');
-                
-                //New:
-                $('#game-fullscreen-modal').find('.modal-body').addClass(target);
-                
-                $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
-                $('#game-fullscreen-modal').find('iframe').css('border',0);
-                $('#game-fullscreen-modal').modal('show');
-                $('#game-fullscreen-modal').addClass('show');
-                $('#game-fullscreen-modal').show();
-                $(window).resize(function(){
-                    $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
-                    $('#game-fullscreen-modal').find('iframe').css('width',$(window).width());
-                    $('#game-fullscreen-modal').find('.modal-content').css('width',$(window).width());
-                    $('#game-fullscreen-modal').find('.modal-content').css('height',$(window).height() + 80);
-                })
-             // }
-            //   else{
-            //     $('.a_link').remove();
-            //     var a = document.createElement('a');
-            //     a.href = `/games/${target}/`;
-            //     a.className='a_link';
-            //     a.setAttribute('target', '_blank');
-            //     a.click();
-            //   }
-            },
-        });
+
+            // old games 
+
+                // $.ajax({
+                //     url: `/games/${target}/`,
+                //     headers: {
+                //         "X-CSRFToken": csrftoken,
+                //     },
+                //     async: false,
+                //     type: "get",
+                //     data: {},
+                //     error: function (value) {
+                        
+                //         var {
+                //             responseText,
+                //             status
+                //         } = value;
+                //         if (status === 404) {
+                //             $("#games-notifications #games-notifications-title").text("GAME NOT FOUND");
+                //             $("#games-notifications #games-notifications-body").text("Game Not Found");
+                //         }
+                    
+                //         else if (status === 403) {
+                //             $("#games-notifications #games-notifications-title").text("Free Subscription");
+                //             $("#games-notifications #games-notifications-body").text(responseText);
+                        
+                //         }
+                //         else if (status === 410) {
+                //             $("#games-notifications #games-notifications-title").text("Premium Games");
+                //             $("#games-notifications #games-notifications-body").text(responseText);
+                            
+                            
+                //         }
+                //         else {
+                //             $("#games-notifications #games-notifications-title").text("Error");
+                //             $("#games-notifications #games-notifications-body").text("Something Went Wrong");
+                //         }
+                        
+                //         $("#games-notifications").modal({
+                //             show: true,
+                //             keyboard: true,
+                //             backdrop: true,
+                //         });
+                    
+                //     },
+                //     success: function (value) {
+                //         var isIOS = /(iphone)/i.test(navigator.userAgent);
+                //         var isAnroid = navigator.userAgent.toLocaleLowerCase().indexOf("android") > -1;
+                    
+                //         var isAnroid = navigator.userAgent.toLocaleLowerCase().indexOf("android") > -1;
+                //         var isIpadPro = navigator.userAgent.indexOf("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15")>-1 && navigator.userAgent.indexOf("AppleWebKit/605.1.15 (KHTML, like Gecko)")>-1;
+                        
+                    
+                //     // if(isIOS || isAnroid || isIpadPro){
+                //         //window.location.href=`/games/${target}/`;
+                //         $('#game-fullscreen-modal').find('.modal-content').css('width',$(window).width());
+                //         $('#game-fullscreen-modal').find('.modal-content').css('height',$(window).height() + 80);
+                //         $('#game-fullscreen-modal').find('.info-box').html("");
+                //         $('#game-fullscreen-modal').find('.info-box').append('<iframe class="'+ (target == 'solve_math' ? 'solvemath' : '') +'" src="/games/'+target+'/" width="100%"  border="0"></iframe>');
+                        
+                //         //New:
+                //         $('#game-fullscreen-modal').find('.modal-body').addClass(target);
+                        
+                //         $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
+                //         $('#game-fullscreen-modal').find('iframe').css('border',0);
+                //         $('#game-fullscreen-modal').modal('show');
+                //         $('#game-fullscreen-modal').addClass('show');
+                //         $('#game-fullscreen-modal').show();
+                //         $(window).resize(function(){
+                //             $('#game-fullscreen-modal').find('iframe').css('height',$(window).height());
+                //             $('#game-fullscreen-modal').find('iframe').css('width',$(window).width());
+                //             $('#game-fullscreen-modal').find('.modal-content').css('width',$(window).width());
+                //             $('#game-fullscreen-modal').find('.modal-content').css('height',$(window).height() + 80);
+                //         })
+                //     // }
+                //     //   else{
+                //     //     $('.a_link').remove();
+                //     //     var a = document.createElement('a');
+                //     //     a.href = `/games/${target}/`;
+                //     //     a.className='a_link';
+                //     //     a.setAttribute('target', '_blank');
+                //     //     a.click();
+                //     //   }
+                //     },
+                // });
         
-    });
+                
+            });
+        }
+
+    handleGameModal();
 
     $("#upgrade-btn").on("click", function () {
         subscribe_api(username, 1, idservice, referrer=referrer, vault=self.client);
@@ -1088,6 +1210,13 @@ $(function () {
         
     // }
 });
+
+function openG(gameName){ 
+    $('#formgameid').attr('action', 'https://games.zongengage.com.pk/games/get');
+    $("#g").val(gameName);
+    $("#t").val();
+    $('#btn-form-submit').click();
+}
 
 function copyToClipboard(txt) {
     var m = document;

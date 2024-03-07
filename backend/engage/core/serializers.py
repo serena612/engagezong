@@ -48,11 +48,18 @@ class HTML5GameSerializer(TranslatableModelSerializer): #serializers.ModelSerial
         #obj.game_type
         if obj.game_type == HTML5GameType.FREE:
             return False
+        #locked
         elif obj.game_type == HTML5GameType.EXCLUSIVE:
             return (user.subscription == SubscriptionPlan.FREE or user.is_billed == False) and \
                    UserGamePlayed.objects.filter(user=user, game=obj).exists()
         else:
-            return (user.subscription == SubscriptionPlan.FREE or user.is_billed == False)
+            return True
+        
+        # elif obj.game_type == HTML5GameType.EXCLUSIVE:
+        #     return (user.subscription == SubscriptionPlan.FREE or user.is_billed == False) and \
+        #            UserGamePlayed.objects.filter(user=user, game=obj).exists()
+        # else:
+        #     return (user.subscription == SubscriptionPlan.FREE or user.is_billed == False)
 
 
 class AvatarSerializer(serializers.ModelSerializer):

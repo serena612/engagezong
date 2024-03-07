@@ -6172,14 +6172,14 @@ background:#fff;
 #faq-modal .content{ height: 673px;overflow-x: hidden;overflow-y: auto;}
 .close-box{cursor: pointer;}
 #about-modal  .page-box.infopage,#faq-modal  .page-box.infopage,#terms-modal .page-box.infopage{padding: 0px!important;width:100%;max-height: calc(100vh - 280px);height:auto;min-height:auto!important;}
-#about-modal .modal-content,#faq-modal .modal-content,#terms-modal .modal-content,#disclaimer-modal .modal-content,#privacy-modal .modal-content{max-width: 834px;margin:0 auto;}
+#about-modal .modal-content,#faq-modal .modal-content,#terms-modal .modal-content,#disclaimer-modal .modal-content,#unsub-modal .modal-content, #privacy-modal .modal-content{max-width: 834px;margin:0 auto;}
 #about-modal .page-box .page-title,#faq-modal .page-box .page-title,#terms-modal .page-box .page-title{padding-left:0px;font-size: 25px;text-align: center;}
 #about-modal .page-box .text-container .content,#faq-modal .page-box .text-container .content,
-#privacy-modal .page-box .text-container .content,#disclaimer-modal .page-box .text-container .content,#terms-modal .page-box .text-container .content
+#privacy-modal .page-box .text-container .content,#disclaimer-modal .page-box .text-container .content,#unsub-modal .page-box .text-container .content, #terms-modal .page-box .text-container .content
 { width: 100%;padding-bottom: 9px; margin: 0 auto;padding-top: 8px;}
 .settings-links-list li a{ color: #472b93!important;cursor: pointer;}
 .page-box .text-container p { color: #000;font-size: 1.3rem;}
-#about-modal .content, #faq-modal .content,#terms-modal  .content,#disclaimer-modal .content,#privacy-modal .content{
+#about-modal .content, #faq-modal .content,#terms-modal  .content,#disclaimer-modal .content,#unsub-modal .content, #privacy-modal .content{
   margin: 2% 6% 2% 6%;
   max-height: inherit;/*480px;*/
   overflow-y: auto;
@@ -6187,8 +6187,8 @@ background:#fff;
   width:100%;
   padding: 0 35px 0 10px!important;
 }
-#privacy-modal .page-box,#disclaimer-modal .page-box,#terms-modal .page-box{padding:0!important;}
-#about-modal p, #faq-modal p,#terms-modal p,#disclaimer-modal p,#privacy-modal p{  font-size: 1.1rem;}
+#privacy-modal .page-box,#disclaimer-modal .page-box,#unsub-modal .page-box, #terms-modal .page-box{padding:0!important;}
+#about-modal p, #faq-modal p,#terms-modal p,#disclaimer-modal p,#unsub-modal p,#privacy-modal p{  font-size: 1.1rem;}
 @media (max-width:310px){
   .my-coins-box, .my-coins-box-mobile {font-size: 0.8rem;}
 }

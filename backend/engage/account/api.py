@@ -25,7 +25,7 @@ from engage.core.models import HTML5Game
 import sys, base64, hvac, json
 from django.utils.translation import ugettext_lazy as _
 from engage.account.middlewares import LastSeenMiddleware
-
+from engage.account.models import Profile
 
 from .constants import (
     FriendStatus,
@@ -222,7 +222,7 @@ def send_pincode(phone_number, idnetwork="1", vault=None):
     url = API_SERVER_URL+command
     
     try:
-        api_call = requests.post(url, headers=headers, data={}, timeout=2)
+        api_call = requests.post(url, headers=headers, data={}, timeout=2, verify=False)
     except requests.exceptions.RequestException as e:
         print(e)
         return 'Server error', 555
@@ -251,7 +251,7 @@ def verify_pincode(phone_number, pincode, vault=None):
     url = API_SERVER_URL+command
     
     try:
-        api_call = requests.post(url, headers=headers, json=data, timeout=2)
+        api_call = requests.post(url, headers=headers, json=data, timeout=2, verify=False)
     except requests.exceptions.RequestException as e:  
         print(e)
         return 'Server error', 555
@@ -273,7 +273,7 @@ def load_data_api(phone_number, idnetwork, vault=None):
     if vault:
         return vault.send(command=command, headers=headers)
     try:
-        api_call = requests.post(url, headers=headers, data={}, timeout=2)
+        api_call = requests.post(url, headers=headers, data={}, timeout=2, verify=False)
     except requests.exceptions.RequestException as e:  
         print(e)
         return 'Server error', 555
@@ -284,6 +284,41 @@ def load_data_api(phone_number, idnetwork, vault=None):
         res = apijson['statusCode']
         if res['code'] == 76 or res['code'] == 77 or res['code'] == 79: # 76 pending sub - 77 pending unsub - 79 sub
             return apijson['profile'], res['code']
+        else:
+            return res['message'], res['code']
+    else:
+        return api_call.content, api_call.status_code
+
+def check_billed_user_api(msisdn, vault=None): 
+    command = '/api/User/SendBilling'
+    headers = {'msisdn': msisdn, 
+            'idnetwork': '1',
+            'Content-Type': 'application/json'
+            } 
+    data = {'msisdn': msisdn
+            }
+    
+    if vault:
+        return vault.send(command=command, data=data)  
+         
+    url = API_SERVER_URL+command
+    try: 
+        api_call = requests.post(url, headers=headers, json=data, timeout=3, verify=False)
+       
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        # raise SystemExit(e)
+        print(e)
+        return 'Server error', 555
+
+    if api_call.status_code==200:
+        
+        apijson = api_call.json()
+        print(apijson)
+
+        res = apijson['statusCode']
+        res_isbilled = apijson['isbilled']
+        if res['code'] == 0: 
+            return res_isbilled['isbilled'], res['code']
         else:
             return res['message'], res['code']
     else:
@@ -308,7 +343,7 @@ def subscribe_api(phone_number, idbundle, idservice, referrer=None, idchannel=2,
     url = API_SERVER_URL+command
     try: 
         print(data)
-        api_call = requests.post(url, headers={}, json=data, timeout=3)
+        api_call = requests.post(url, headers={}, json=data, timeout=3, verify=False)
         print(api_call)
         print(api_call.content)
     except requests.exceptions.RequestException as e:  # This is the correct syntax
@@ -323,6 +358,36 @@ def subscribe_api(phone_number, idbundle, idservice, referrer=None, idchannel=2,
         print(api_call.content, api_call.status_code)
         return api_call.content, api_call.status_code
 
+def unsubscribe_api(phone_number,IdChannel,IdBundle,referrer=None,vault=None):  # default channel id is web
+    print("Unsubscribing", phone_number)
+    command = '/api/User/UnSubscribe'
+    data = {'msisdn': phone_number, 
+            'IdChannel':IdChannel,
+            'IdBundle':IdBundle,
+            }
+    if referrer:
+        print("Referrer by:", referrer)
+        data['inviteeId'] = str(referrer)
+    if vault:
+        return vault.send(command=command, data=data)       
+    url = API_SERVER_URL+command
+    try: 
+        print(data)
+        api_call = requests.post(url, headers={}, json=data, timeout=3, verify=False)
+        print(api_call)
+        print(api_call.content)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        # raise SystemExit(e)
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code==200:
+        print(api_call.json())
+        res = api_call.json()['statusCode']
+        return res['message'], res['code']
+    else:
+        print(api_call.content, api_call.status_code)
+        return api_call.content, api_call.status_code
+    
 def upgrade_api(phone_number, idbundle, idservice, referrer=None, idchannel=2, vault=None):  # default channel id is web
     print("SubscribingGGgggg", phone_number, "to", idbundle, "service", idservice)
     command = '/api/User/Upgrade'
@@ -341,7 +406,7 @@ def upgrade_api(phone_number, idbundle, idservice, referrer=None, idchannel=2, v
     url = API_SERVER_URL+command
     try: 
         print(data)
-        api_call = requests.post(url, headers={}, json=data, timeout=3)
+        api_call = requests.post(url, headers={}, json=data, timeout=3, verify=False)
         print(api_call)
         print(api_call.content)
     except requests.exceptions.RequestException as e:  # This is the correct syntax
@@ -355,7 +420,76 @@ def upgrade_api(phone_number, idbundle, idservice, referrer=None, idchannel=2, v
     else:
         print(api_call.content, api_call.status_code)
         return api_call.content, api_call.status_code
+
+
+def leaderboard_api(game,idtournament,referrer=None, vault=None): 
+    command = 'api/Leaderboard/List'
+    data = {'page': 0,
+            'pageSize': 100,
+            'idtournament': idtournament,
+            'game': game}
     
+    if referrer:
+        print("Referrer by:", referrer)
+        data['inviteeId'] = str(referrer)
+    if vault:
+        return vault.send(command=command, data=data)       
+    url = 'https://api.engageplaywin.com:7002/'+command
+    try: 
+        api_call = requests.post(url, headers={}, json=data, timeout=3, verify=False)
+        print(api_call)
+        print(api_call.content)
+    except requests.exceptions.RequestException as e:  
+        print(e)
+        return 'Server error', 555
+    if api_call.status_code == 200:
+        print(api_call.json())
+        res_list = api_call.json().get('list', [])
+        response_data = []
+        for entry in res_list:
+            response_data.append({
+                'username': entry.get('username'),
+                'score': entry.get('score'),
+                'nickname': entry.get('nickname')
+            })
+        return Response(response_data, status=status.HTTP_200_OK)
+    else:
+        print(api_call.content, api_call.status_code)
+        return api_call.content, api_call.status_code
+    
+
+def sendbilling_api(phone_number,idnetwork,vault=None):  # default channel id is web
+    command = '/api/User/SendBilling'
+    headers = {'msisdn': phone_number, 
+            'idnetwork': idnetwork,
+            'Content-Type': 'application/json'
+            } 
+    data = {'msisdn': phone_number
+            }
+    
+    if vault:
+        return vault.send(command=command, data=data)  
+         
+    url = API_SERVER_URL+command
+    try: 
+        api_call = requests.post(url, headers=headers, json=data, timeout=3, verify=False)
+       
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        # raise SystemExit(e)
+        print(e)
+        return 'Server error', 555
+
+    if api_call.status_code==200:
+        
+        apijson = api_call.json()
+        print(apijson)
+        res = apijson['profile']
+        return res['isbilled']
+    else:
+        return api_call.content, api_call.status_code
+
+
+
 def write_cdr(phone_number,vault=None):
     command = '/api/User/InfoLog'
     data = {'msisdn': phone_number, 
@@ -369,7 +503,7 @@ def write_cdr(phone_number,vault=None):
         return vault.send(command=command, data=data)       
     url = API_SERVER_URL+command
     try: 
-        api_call = requests.post(url, headers={}, json=data, timeout=3)
+        api_call = requests.post(url, headers={}, json=data, timeout=3, verify=False)
     except requests.exceptions.RequestException as e:  # This is the correct syntax
         # raise SystemExit(e)
         print(e)
@@ -586,6 +720,16 @@ class AuthViewSet(viewsets.GenericViewSet):
             return Response({}, status=status.HTTP_200_OK)
 
     @action(methods=['POST'], detail=False)
+    def send_billing(self, request):
+        
+        res = sendbilling_api(request.user.mobile, '1', vault=None)
+        if res == True:
+            return Response({}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'unbilled user'}, status=800)
+        
+        
+    @action(methods=['POST'], detail=False)
     def verify_mobile(self, request):
         username = request.data.get('phone_number')
         print("verifying", username)
@@ -608,8 +752,19 @@ class AuthViewSet(viewsets.GenericViewSet):
                 is_staff=False
                 ).first()
                 if not user :
-                   #return Response({'error': 'Invalid Number'}, status=472)
-                   mobile = username
+                   return Response({'error': 'Profile does not exist'}, status=480)
+                
+                user_sub = UserModel.objects.filter(
+                mobile__iexact=username,
+                region=request.region,
+                is_superuser=False,
+                is_staff=False,
+                is_active = True
+                ).first()
+                if not user_sub :
+                   return Response({'error': 'Profile does not exist'}, status=480)
+
+                   #mobile = username
         except UserModel.DoesNotExist:
             # return Response({'error': 'Invalid Number'}, status=472)
             mobile = username
@@ -1342,6 +1497,11 @@ class UserViewSet(mixins.ListModelMixin,
     @transaction.atomic()
     def profile(self, request):
         user = request.user
+        
+        profile_user = user.profile.objects.filter(user_id = user.id).first()
+        if not profile_user:
+            Profile.objects.get_or_create(user_id = user.id) 
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -1528,7 +1688,21 @@ class UserViewSet(mixins.ListModelMixin,
     def check_userstatus(self, request,uid):
         redFlag  = False
         user = User.objects.get(uid=uid)
-        return Response({'status':user.subscription},status=status.HTTP_200_OK)
+        return Response({'status':user.subscription,'billed':user.is_billed},status=status.HTTP_200_OK)
+    
+
+    @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
+    def check_billeduser(self, request,uid):
+        print("^^^^check_billeduser")
+        is_billed = check_billed_user_api(request.session['msisdn'])
+        return Response({'is_billed':is_billed},status=status.HTTP_200_OK)
+    
+
+    @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
+    def check_usercoins(self, request,uid):
+        redFlag  = False
+        user = User.objects.get(uid=uid)
+        return Response({'status':user.coins},status=status.HTTP_200_OK)
       
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def check_usercoin(self, request,uid):
@@ -1591,8 +1765,39 @@ class UserViewSet(mixins.ListModelMixin,
         else:
             write_cdr(request.user.mobile,vault=None)
             return Response({'is_sub' : 'false'},status=status.HTTP_200_OK)
-       
 
+
+    @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
+    def leaderboard_results(self, request, uid):
+        print("///// leaderboard_results")
+        
+        game_name = request.data.get('game')
+        tournament_id = request.data.get('idtournament')
+        print(game_name, tournament_id)
+    
+        result = leaderboard_api(game_name, tournament_id, referrer=None, vault=None)
+        # Modify the response as needed based on the result from `leaderboard_api`
+        if isinstance(result, Response):
+            return result
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+           
+    @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
+    def unsubscribe_api(self, request, uid):
+        user = request.user
+        print("user" + request.user.mobile)
+        #if user.subscription == SubscriptionPlan.FREE :
+        #user.subscription = SubscriptionPlan.PAID2
+        if (user.subscription == SubscriptionPlan.PAID1):
+            idbundle = 1
+        elif (user.subscription == SubscriptionPlan.PAID2):
+            idbundle = 2
+        elif (user.subscription == SubscriptionPlan.PAID3):
+            idbundle = 3
+        unsubscribe_api(request.user.mobile,2, idbundle, referrer=None, vault=None)
+
+        return Response(status=status.HTTP_200_OK)
+    
     @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
     def update_joined_tournaments(self, request, uid):
         print('-----update_joined_tournaments')
@@ -1601,6 +1806,17 @@ class UserViewSet(mixins.ListModelMixin,
             ).first()
         if user:
             user.tournament_joined_today = True
+            user.save()
+        return Response(status=status.HTTP_200_OK)
+    
+    @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
+    def update_total_coins(self, request, uid):
+        print('-----update_total_coins')
+        user = User.objects.filter(
+                uid=uid
+            ).first()
+        if user:
+            user.coins = user.coins - 10
             user.save()
         return Response(status=status.HTTP_200_OK)
 
@@ -1743,9 +1959,27 @@ class UserViewSet(mixins.ListModelMixin,
             if user:
                 user.go_premium_sent = True
                 user.save()
-
+        return Response(status=status.HTTP_200_OK)
+    
+    @action(['POST'], detail=True, permission_classes=[permissions.IsAuthenticated])
+    def update_billedstatus(self, request, uid):
+        userStatus_str = request.data.get('userStatus')
+        userStatus = True if userStatus_str.lower() == 'true' else False
         
-
+        if 'msisdn' in request.session:
+            user = User.objects.filter(
+                mobile=request.session['msisdn']
+            ).first()
+            if user:
+                user.is_billed = userStatus
+                user.save()
+        else:
+            user = User.objects.filter(
+                uid=uid
+            ).first()
+            if user:
+                user.is_billed = userStatus
+                user.save()
         return Response(status=status.HTTP_200_OK)
 
 

@@ -6,9 +6,16 @@ from django_password_validators.password_history.models import (
     UserPasswordHistoryConfig,
 )
 from django.contrib import messages
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+import base64
+
 import logging
 
 logger = logging.getLogger('custom_logger')
+# Replace 'YOUR_SECRET_KEY' with your actual secret key (must be the same as the one used for encryption).
+secret_key = b'esport@12345678'  # Must be 32 or 16 bytes long for AES-256 or AES-128
+
 
 class AccountExpiry:
 
@@ -32,15 +39,21 @@ class AccountExpiry:
 
 
     def __call__(self, request):
-        
+        cipher = AES.new(secret_key, AES.MODE_CBC)
+
         # print(request.is_secure())
         if not request.is_secure():
             request.session['headeren'] = str(request.headers)
             if 'msisdn' in request.headers:
                 logger.info('MSISDN exists in request.headers')
                 logger.info('msisdn value' + str(request.headers['msisdn']))
-
-                request.session['msisdn'] = request.headers['msisdn']
+                
+                decrypted_value = unpad(cipher.decrypt(request.headers['msisdn']), AES.block_size)
+                # decrypted_value will be bytes; convert it to a string if needed.
+                decrypted_value = decrypted_value.decode('utf-8')
+                print("Decrypted value:", decrypted_value)
+                request.session['msisdn'] = decrypted_value
+                #request.session['msisdn'] = request.headers['msisdn']
             if 'headers' not in request.path:
                 gaga = request.build_absolute_uri().replace('http', 'https')
                 # return redirect(gaga)  # this forces http to https redirection, do not enable on local, just on deployment

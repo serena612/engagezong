@@ -31,6 +31,7 @@ import requests
 from datetime import datetime, timedelta
 
 def send_sms(user, message, vault=None):
+    print("send sms")
     headers = {'Content-type':'application/json', 
                 'accept': 'text/plain'} # post data
     command = '/api/User/SendSms'
@@ -51,7 +52,7 @@ def send_sms(user, message, vault=None):
     url = API_SERVER_URL+command
     
     try:
-        api_call = requests.post(url, headers=headers, json=data, timeout=2)
+        api_call = requests.post(url, headers=headers, json=data, timeout=2, verify=False)
     except requests.exceptions.RequestException as e:
         print(e)
         return 'Server error', 555
@@ -84,13 +85,13 @@ def post_match_save(sender, instance, created, **kwargs):
         exist.update(enabled=False)
         exist.delete()
     
-    PeriodicTask.objects.create(
-        crontab=schedule,
-        name=f'Send Notification Before Match {instance.id}',
-        task='engage.tournament.tasks.fetch_match_details',
-        args=f'[{instance.id}]',
-        start_time=started_date
-    )
+    # PeriodicTask.objects.create(
+    #     crontab=schedule,
+    #     name=f'Send Notification Before Match {instance.id}',
+    #     task='engage.tournament.tasks.fetch_match_details',
+    #     args=f'[{instance.id}]',
+    #     start_time=started_date
+    # )
 
 @receiver(m2m_changed, sender=TournamentMatch.winners.through)
 def winners_changed(sender, instance, **kwargs):   
@@ -276,19 +277,34 @@ def post_match_save(sender, instance, created, **kwargs):
 
         # USER_REGISTER_FOR_TOURNAMENT
         else:
-            @notify_when(events=[NotificationTemplate.USER_REGISTER_FOR_TOURNAMENT], is_route=False, is_one_time=False)
-            def notify(user, user_notifications):
-                """ extra logic if needed """
-                for notificationi in user_notifications:
-                    notificationi.link = "/tournaments/"+str(instance.tournament.id)
-                    notificationi.text = notificationi.notification.text.replace('tournament_name',instance.tournament.name)
-                    notificationi.save()
-                    #resp, code = send_sms(user, notificationi.text)
-                    sms_text = "You have successfully registered to play tournament_name tournament. Practice your skills to win the big prize."
-                    sms_text_replaced = sms_text.replace('tournament_name',instance.tournament.name) 
-                    resp, code = send_sms(user,sms_text_replaced)
-                    print(resp, code)
-            notify(instance.participant)
+            if 'html5' in instance.tournament.slug.lower():
+                @notify_when(events=[NotificationTemplate.USER_REGISTER_FOR_html5], is_route=False, is_one_time=False)
+                def notify(user, user_notifications):
+                    """ extra logic if needed """
+                    for notificationi in user_notifications:
+                        notificationi.link = "/tournaments/"+str(instance.tournament.id)
+                        notificationi.text = notificationi.notification.text.replace('tournament_name',instance.tournament.name)
+                        notificationi.save()
+                        #resp, code = send_sms(user, notificationi.text)
+                        sms_text = "Get ready to Engage! You have successfully registered to play tournament_name tournament. Please click here to enter the tournament details page."
+                        sms_text_replaced = sms_text.replace('tournament_name',instance.tournament.name) 
+                        resp, code = send_sms(user,sms_text_replaced)
+                        print(resp, code)
+                notify(instance.participant)
+            else:
+                @notify_when(events=[NotificationTemplate.USER_REGISTER_FOR_TOURNAMENT], is_route=False, is_one_time=False)
+                def notify(user, user_notifications):
+                    """ extra logic if needed """
+                    for notificationi in user_notifications:
+                        notificationi.link = "/tournaments/"+str(instance.tournament.id)
+                        notificationi.text = notificationi.notification.text.replace('tournament_name',instance.tournament.name)
+                        notificationi.save()
+                        #resp, code = send_sms(user, notificationi.text)
+                        sms_text = "You have successfully registered to play tournament_name tournament. Practice your skills to win the big prize."
+                        sms_text_replaced = sms_text.replace('tournament_name',instance.tournament.name) 
+                        resp, code = send_sms(user,sms_text_replaced)
+                        print(resp, code)
+                notify(instance.participant)
 
         
 

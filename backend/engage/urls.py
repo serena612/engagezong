@@ -34,7 +34,10 @@ class AuthAdminForm(AuthenticationForm):
 
     #if not settings.DEBUG:
     captcha = ReCaptchaField(widget=ReCaptchaV3)
+    
     def confirm_login_allowed(self, user):  # override method to send mail
+        print("CMSSSS username",user.get_username())
+
         if not user.is_active:
             raise ValidationError(
                 self.error_messages["inactive"],
@@ -45,8 +48,8 @@ class AuthAdminForm(AuthenticationForm):
                 send_mail(  # send email function is success
                     'CMS Login',
                     'User '+user.get_username()+' has just logged in to CMS.',
-                    'engagegames2023@outlook.com',  # engagetest4@outlook.com support@engageplaywin.com
-                    ['engagegames2023@outlook.com'],  # engagetest4@outlook.com support@8zonegames.com
+                    'zongengage.pk@outlook.com',  # engagetest4@outlook.com support@engageplaywin.com engagegames2023@outlook.com
+                    ['zongengage.pk@outlook.com'],  # engagetest4@outlook.com support@8zonegames.com engagegames2023@outlook.com
                     fail_silently=True,  # do not trigger errors
                 )
 

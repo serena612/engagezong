@@ -49,11 +49,16 @@ class SubscriptionPlan(LabelChoices):
     FREE = 'free', 'Free'
     PAID1 = 'paid1', 'Paid 1'
     PAID2 = 'paid2', 'Paid 2'
+    PAID3 = 'paid3', 'Paid 3'
+    DAILY = 'daily', 'Daily'
+    WEEKLY = 'weekly', 'Weekly'
+    MONTHLY = 'Monthly', 'monthly'
 
 class SubscriptionPackages(LabelChoices):
     FREE = 'free', 'Free'
-    PAID1 = 'p30', 'P30'
-    PAID2 = 'p50', 'P50'
+    PAID1 = 'daily', 'Daily'
+    PAID2 = 'weekly', 'Weekly'
+    PAID3 = 'Monthly', 'monthly'
 
 
 class SectionLog(LabelChoices):

@@ -44,7 +44,7 @@ def request_data_prize(tournamentid,phone_number, dataplan, subscription, vault=
         return vault.send(command=command, data=data)       
     url = PRIZE_SERVER_URL+command
     try: 
-        api_call = requests.post(url, headers={}, json=data, timeout=3)
+        api_call = requests.post(url, headers={}, json=data, timeout=3, verify=False)
     except requests.exceptions.RequestException as e:  # This is the correct syntax
         # raise SystemExit(e)
         print(e)
@@ -69,7 +69,7 @@ def request_cash_prize(tournamentid,phone_number, amount, subscription, vault=No
         return vault.send(command=command, data=data)       
     url = PRIZE_SERVER_URL+command
     try: 
-        api_call = requests.post(url, headers={}, json=data, timeout=3)
+        api_call = requests.post(url, headers={}, json=data, timeout=3, verify=False)
     except requests.exceptions.RequestException as e:  # This is the correct syntax
         # raise SystemExit(e)
         print(e)
@@ -90,7 +90,7 @@ def check_pending_requests_data(phone_number, vault=None):  # default channel id
         return vault.send(command=command, data=data)       
     url = PRIZE_SERVER_URL+command
     try: 
-        api_call = requests.post(url, headers={}, json=data, timeout=3)
+        api_call = requests.post(url, headers={}, json=data, timeout=3, verify=False)
     except requests.exceptions.RequestException as e:  # This is the correct syntax
         # raise SystemExit(e)
         print(e)
@@ -113,7 +113,7 @@ def confirm_request_data(phone_number, idbundle, vault=None):  # default channel
         return vault.send(command=command, data=data)       
     url = PRIZE_SERVER_URL+command
     try: 
-        api_call = requests.post(url, headers={}, json=data, timeout=3)
+        api_call = requests.post(url, headers={}, json=data, timeout=3, verify=False)
     except requests.exceptions.RequestException as e:  # This is the correct syntax
         # raise SystemExit(e)
         print(e)
@@ -133,6 +133,8 @@ def get_prize(phone_number, dataplan, prize_type, subscription,tournamentid):
         subs = SubscriptionPackages.PAID1
     elif subscription == SubscriptionPlan.PAID2:
         subs = SubscriptionPackages.PAID2
+    elif subscription == SubscriptionPlan.PAID3:
+        subs = SubscriptionPackages.PAID3
     subs = subs.upper()
     print("subs", subs)
     if prize_type == 'data':
@@ -157,6 +159,8 @@ def get_prize(phone_number, dataplan, prize_type, subscription,tournamentid):
             #     print(msg, code3)
             #     if code3==0: # success
             return True
+    elif prize_type == 'others':
+        return True
     return False
 
 
@@ -179,7 +183,7 @@ class Tournament(TranslatableTimeStampedModel): #TimeStampedModel
     
 
     live_link = models.URLField(blank=True, null=True)
-    
+    leader_board_link = models.URLField(blank=True, null=True)
     
     minimum_profile_level = models.PositiveIntegerField(default=0)
     give_sticker = models.BooleanField('Give stickers to participants?',

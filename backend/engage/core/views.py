@@ -21,21 +21,32 @@ from engage.settings.base import LANGUAGE_CODE
 from django.utils.translation import get_language
 import uuid
 import csv
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives import padding
+from base64 import b64encode
+from base64 import b64decode
 
 from engage.account.api import do_register
 from engage.tournament.api import test_page
+import webbrowser
 
 import logging
+
+from base64 import b64decode
+from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from os import urandom
 
 logger = logging.getLogger('custom_logger')
 
 
 UserModel = get_user_model()
 
-@notify_when(events=[
-    NotificationTemplate.HOME,
-    NotificationTemplate.HOW_TO_USE
-])
+# @notify_when(events=[
+#     NotificationTemplate.HOME,
+#     NotificationTemplate.HOW_TO_USE
+# ])
 
 def attempt_login_register(request):
     if 'msisdn' not in request.session or request.user.is_authenticated:
@@ -43,19 +54,23 @@ def attempt_login_register(request):
       return
     try:
         mobilen = request.session['msisdn']
-        request.user = mobilen
+        # request.user = mobilen
         user = UserModel.objects.filter(
             mobile__iexact=mobilen,
-            region=request.region
+            region=request.region,
+            is_active = True
+            #is_billed = True
         ).first()
         if user:
             # user found attempt direct login
             usermob = str(user.mobile)
+            request.user = mobilen
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         else:
             # user not found attempt registration
-            usermob = mobilen
-            do_register(None, request, usermob, SubscriptionPlan.FREE)
+            # usermob = mobilen
+            # do_register(None, request, usermob, SubscriptionPlan.FREE)
+            return
     
     except UserModel.DoesNotExist:
         usermob = mobilen
@@ -63,19 +78,105 @@ def attempt_login_register(request):
 
 
 def empty_view(request):
+    # print("empty_viewwww")
+    # if 'msisdn' in request.session:
+    #     print("request.headers.get('Msisdn')",request.session['msisdn'])
+    #     with open('msisdn.csv', 'a') as file:
+    #         writer = csv.writer(file)
+    #         writer.writerow([request.session['msisdn']])
+    #         #file.write(request.session['msisdn'])
+    # return redirect('/home')
     print("empty_viewwww")
     if 'msisdn' in request.session:
-        print("request.headers.get('Msisdn')",request.session['msisdn'])
-        with open('msisdn.csv', 'a') as file:
-            writer = csv.writer(file)
-            writer.writerow([request.session['msisdn']])
-            #file.write(request.session['msisdn'])
-    return redirect('/home')
+        if not request.user.is_authenticated:
+            redirect_url = 'https://games.zongengage.com.pk/Landing'
+            return redirect(redirect_url)
+            #return redirect('https://mtn.engageplaywin.com/Landing')
+        else:
+            return redirect('/home')
+    elif request.user.is_authenticated:
+        return redirect('/home')
+    else:
+        return redirect('https://games.zongengage.com.pk/Landing')
 
+def decrypt_msisdn(key, encrypted_msisdn):
+    key = b64decode(key)
+    
+    # Reverse the replacements in the encrypted MSISDN
+    encrypted_msisdn = encrypted_msisdn.replace("dsslsshd", "/").replace("dsplussd", "+")
+    
+    # Decode the base64-encoded encrypted MSISDN
+    iv_and_ciphertext = b64decode(encrypted_msisdn.encode('utf-8'))
+    
+    # Split IV and ciphertext
+    iv = iv_and_ciphertext[:16]
+    ciphertext = iv_and_ciphertext[16:]
+    
+    # Initialize the decryption cipher
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
+    decryptor = cipher.decryptor()
+    
+    # Decrypt and unpad the data
+    decrypted_data = decryptor.update(ciphertext) + decryptor.finalize()
+    unpadder = padding.PKCS7(128).unpadder()
+    unpadded_data = unpadder.update(decrypted_data) + unpadder.finalize()
+    
+    # Decode the UTF-8 data to get the original MSISDN
+    msisdn = unpadded_data.decode('utf-8')
+    
+    return msisdn
+
+def encrypt_msisdn(msisdn):
+    key = 'ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg='
+    cipher_suite = Fernet(key)
+    encrypted_msisdn = cipher_suite.encrypt(msisdn.encode())
+    return encrypted_msisdn
+
+def encrypt_msisdn(key, msisdn):
+    key = b64decode(key)
+    iv = urandom(16)
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
+    encryptor = cipher.encryptor()
+    padder = padding.PKCS7(128).padder()
+    padded_data = padder.update(msisdn.encode('utf-8')) + padder.finalize()
+    ciphertext = encryptor.update(padded_data) + encryptor.finalize()
+
+    iv_and_ciphertext = iv + ciphertext
+    base64_encrypted_msisdn = b64encode(iv_and_ciphertext).decode('utf-8')
+    base64_encrypted_msisdn_new = base64_encrypted_msisdn.replace("/", "dsslsshd").replace("+", "dsplussd")
+    print('$$$$$$$$$ base64_encrypted_msisdn_new', base64_encrypted_msisdn_new)
+    return base64_encrypted_msisdn_new
 
 def home_view(request):
     logger.info('This is home view')
     print("msisdn", request.user)
+    key = "Zjg0ZGJhYmI1MzJjNTEwMTNhZjIwYWE2N2QwZmQ1MzU="  # Replace with your encryption key
+    encrypted_msisdn = request.GET.get('app', '')  # Replace with the encrypted MSISDN
+    profile = request.GET.get('p', '')
+    
+    if encrypted_msisdn:
+        decrypted_msisdn = decrypt_msisdn(key, encrypted_msisdn)
+        if decrypted_msisdn.startswith('03'):
+            without_0 = decrypted_msisdn[1:]
+            decrypted_msisdn = '92' + without_0
+        print("^^^Decrypted msisdn", decrypted_msisdn)
+    
+    #if decrypted_msisdn:
+        request.session['msisdn'] = decrypted_msisdn
+
+        if profile:
+            mobilen = request.session['msisdn']
+            request.user = mobilen
+            user = UserModel.objects.filter(
+                mobile__iexact=mobilen,
+                region=request.region,
+            
+                ).first()
+            if user:
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                return redirect ('/profile')
+            
+
     #request.COOKIES['logged_out'] = datetime.now().isoformat()
     #print("COOKIE",request.COOKIES['logged_out'])
 
@@ -92,20 +193,20 @@ def home_view(request):
         print("inside first if")
         #print(logged_out)
         print('logged_out' in request.COOKIES)
-        if 'logged_out' in request.COOKIES:  # check if log out date is present
-          print("inside second if")
-          if datetime.now() - datetime.fromisoformat(request.COOKIES['logged_out']) < timedelta(minutes=5): # check if expired
-              # show logged out page
-              print("pass")
-              pass
-          else:
-              # attempt login/register
-              print("attempt login")
-              attempt_login_register(request)
-        else:
-            # attempt login/register
-            print("else")
-            attempt_login_register(request)
+        # if 'logged_out' in request.COOKIES:  # check if log out date is present
+        #   print("inside second if")
+        #   if datetime.now() - datetime.fromisoformat(request.COOKIES['logged_out']) < timedelta(minutes=5): # check if expired
+        #       # show logged out page
+        #       print("pass")
+        #       pass
+        #   else:
+        #       # attempt login/register
+        #       print("attempt login")
+        #       attempt_login_register(request)
+        # else:
+        #     # attempt login/register
+        #     print("else")
+        attempt_login_register(request)
     else:
       print("CHC-request.user not found")
             
@@ -114,22 +215,15 @@ def home_view(request):
     featured_games = FeaturedGame.objects.all()
     games = Game.objects.all()
 
-        ad = OperatorAd.objects.filter(
-            (Q(start_date__gte=now) & Q(end_date__lte=now)) |
-            (Q(start_date__isnull=True) & Q(end_date__isnull=True)),
-            regions__in=[request.region]
-        ).order_by('?').first()
+    ad = OperatorAd.objects.filter(
+        (Q(start_date__gte=now) & Q(end_date__lte=now)) |
+        (Q(start_date__isnull=True) & Q(end_date__isnull=True)),
+        regions__in=[request.region]
+    ).order_by('?').first()
 
-
-
-
-
-
-
-        events = Event.objects.filter(
-            regions__in=[request.region]
-        ).all().order_by('?')[:20]
-
+    events = Event.objects.filter(
+        regions__in=[request.region]
+    ).all().order_by('?')[:20]
 
 
      # previous_tournaments = Tournament.objects.select_related('game').prefetch_related(
@@ -163,10 +257,19 @@ def home_view(request):
             is_ad_google = 0
         else:
             is_ad_google = 1
+
+        key = 'Zjg0ZGJhYmI1MzJjNTEwMTNhZjIwYWE2N2QwZmQ1MzU='
+        msisdn = getattr(request.user, 'mobile', None)  # Replace 'msisdn_attribute_name' with the actual attribute name
+        if msisdn:
+            encrypted_data = encrypt_msisdn(key, msisdn)
+        else:
+            # Handle the case where MSISDN is not available for the authenticated user
+            print("MSISDN not available for the authenticated user")
     
     else:
         is_ad_engage = 1
         is_ad_google = 1
+        encrypted_data = ''
 
     lang_code = get_language()
     print("lang_code", lang_code)
@@ -181,7 +284,8 @@ def home_view(request):
                                           'user_uid': user_uid,
                                           'is_ad_google': is_ad_google,
                                           'is_ad_engage':is_ad_engage,
-                                          'lang_code': lang_code})
+                                          'lang_code': lang_code,
+                                          'encrypted_data':encrypted_data})
 
 def hometest_view(request):
 
@@ -334,30 +438,33 @@ def landing_view(request):
 def register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):
        return redirect('/')
-    elif 'headeren' not in request.session and request.is_secure() and 'msisdn' not in request.session:
-        print("uri",request.build_absolute_uri())
-        gaga = request.build_absolute_uri().replace('https', 'http')
-        print("gaga", gaga)
-        # return redirect(gaga)
-        return redirect(gaga)
-    else :
-        # print(request.headers)
-        refid = request.GET.get('referrer')
-        if refid != "":
-            print("uid", User.uid.id)
-            ref1 = User.objects.filter(uid=refid).query
-            print("ref1",ref1)
-            ref = User.objects.filter(uid=refid).first()
-        else:
-            ref = None
-        if ref:
-            request.session['refid'] = ref.id
-        if 'msisdn' in request.session:
-            print(request.session['msisdn'])
-            usermob = request.session['msisdn']
-            do_register(None, request, usermob, SubscriptionPlan.FREE)
-            #return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
-        return render(request, 'register.html', {'wifi':True, 'refid':refid})
+    # elif 'headeren' not in request.session and request.is_secure() and 'msisdn' not in request.session:
+    #     print("uri",request.build_absolute_uri())
+    #     gaga = request.build_absolute_uri().replace('https', 'http')
+    #     print("gaga", gaga)
+    #     # return redirect(gaga)
+    #     return redirect(gaga)
+    # else :
+    #     # print(request.headers)
+    #     refid = request.GET.get('referrer')
+    #     if refid != "":
+    #         print("uid", User.uid.id)
+    #         ref1 = User.objects.filter(uid=refid).query
+    #         print("ref1",ref1)
+    #         ref = User.objects.filter(uid=refid).first()
+    #     else:
+    #         ref = None
+    #     if ref:
+    #         request.session['refid'] = ref.id
+    #     if 'msisdn' in request.session:
+    #         print(request.session['msisdn'])
+    #         usermob = request.session['msisdn']
+    #         do_register(None, request, usermob, SubscriptionPlan.FREE)
+    #         #return render(request, 'register2.html', {'wifi':False, 'refid':refid, 'msisdn':request.session['msisdn']})
+    #     return render(request, 'register.html', {'wifi':True, 'refid':refid})
+    
+
+    return redirect('http://games.zongengage.com.pk/subscription')
 
 def test_register_view(request):
     if request.user and request.user.is_authenticated or ('user_id' in request.session and 'renewing' not in request.session):

@@ -64,7 +64,7 @@ def send_sms(user, message, vault=None):
     url = API_SERVER_URL+command
     
     try:
-        api_call = requests.post(url, headers=headers, json=data, timeout=2)
+        api_call = requests.post(url, headers=headers, json=data, timeout=2, verify=False)
     except requests.exceptions.RequestException as e:
         print(e)
         return 'Server error', 555
@@ -109,14 +109,14 @@ def fill_prize_list(self):
                         setattr(item, 'data_plan_desc', package[key])
                     else:
                         setattr(item, key.lower(), package[key])
-                    setattr(item, 'prize_type', 'data')
+                    setattr(item, 'prize_type', 'daraz voucher')
                 item.save()
             else:
                 m = TournamentPrizeList(operator=package['OPERATOR'],
                     amount=package['AMOUNT'],
                     data_plan=package['DATA_PLAN'],
                     data_plan_desc=package['DATAPLAN_DESC'],
-                    prize_type='data'
+                    prize_type='daraz voucher'
                     )
                 m.save()
         # get all packages that have been removed and delete them
